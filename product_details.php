@@ -1821,7 +1821,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         </div>
                         <!-- Product Information Section -->
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 pro-info">
-                             
+                              <h4><span><?php echo htmlspecialchars($product_data[0]["ProductName"]); ?></span></h4>
                               <div class="rating">
                                  <i class="fa fa-star d-star"></i>
                                  <i class="fa fa-star d-star"></i>
