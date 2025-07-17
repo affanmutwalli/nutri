@@ -1,0 +1,141 @@
+.shiprocket-tracking {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tracking-step {
+    position: relative;
+    padding: 20px 0 20px 30px;
+    border-left: 2px solid #e0e0e0;
+}
+
+.tracking-step:last-child {
+    border-left: 2px solid transparent;
+}
+
+.tracking-step:before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 25px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #e0e0e0;
+}
+
+.tracking-step.current:before {
+    background: #00b050;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #00b050;
+}
+
+.tracking-time {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.tracking-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tracking-info .status {
+    font-weight: 600;
+    color: #333;
+}
+
+.tracking-info .location {
+    font-size: 14px;
+    color: #666;
+}
+
+.tracking-step.current .tracking-info .status {
+    color: #00b050;
+}
+
+/* Existing tracking styles enhancement */
+.track {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.step:not(:last-child):after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -50%;
+    width: 100%;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 0;
+}
+
+.step.active:not(:last-child):after {
+    background: #00b050;
+}
+
+.step .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.step.active .icon {
+    background: #00b050;
+    color: #fff;
+}
+
+.step .text {
+    font-size: 14px;
+    color: #666;
+}
+
+.step.active .text {
+    color: #00b050;
+    font-weight: 600;
+}
+
+.shipping-info {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.shipping-info h5 {
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.shipping-info p {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.shipping-info strong {
+    color: #333;
+}

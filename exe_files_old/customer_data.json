@@ -1,0 +1,28 @@
+[
+    {
+        "productId": "6",
+        "quantity": "1",
+        "price": "\u20b9239.00 INR",
+        "size": "1000 ml | Pack of 1",
+        "customerName": "Muddassar Kazi",
+        "customerEmail": "iammaddyk@gmail.com",
+        "customerPhone": "8329566751",
+        "shippingAddress": "near nadaf galli",
+        "city": "Sangli",
+        "pincode": "416410",
+        "state": ""
+    },
+    {
+        "productId": "6",
+        "quantity": "1",
+        "price": "\u20b9239.00 INR",
+        "size": "1000 ml | Pack of 1",
+        "customerName": "Muddassar Kazi",
+        "customerEmail": "iammaddyk@gmail.com",
+        "customerPhone": "8329566751",
+        "shippingAddress": "near nadaf galli",
+        "city": "Sangli",
+        "pincode": "416410",
+        "state": "Maharashtra"
+    }
+]

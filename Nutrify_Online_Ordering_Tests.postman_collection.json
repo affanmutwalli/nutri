@@ -1,0 +1,108 @@
+{
+	"info": {
+		"name": "Nutrify Online Ordering Tests",
+		"description": "Test collection for Nutrify online ordering system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "System Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/test_system_health.php",
+					"host": ["{{base_url}}"],
+					"path": ["test_system_health.php"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Session Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/check_session.php",
+					"host": ["{{base_url}}"],
+					"path": ["check_session.php"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place Online Order (Registered Customer)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test Customer\",\n    \"email\": \"test@example.com\",\n    \"phone\": \"9876543210\",\n    \"address\": \"123 Test Street, Test Area\",\n    \"landmark\": \"Near Test Mall\",\n    \"pincode\": \"400001\",\n    \"state\": \"Maharashtra\",\n    \"city\": \"Mumbai\",\n    \"final_total\": 500,\n    \"paymentMethod\": \"Online\",\n    \"CustomerId\": 1,\n    \"customerType\": \"Registered\",\n    \"products\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"Test Product\",\n            \"code\": \"TP001\",\n            \"size\": \"Medium\",\n            \"quantity\": \"1\",\n            \"offer_price\": \"500\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/exe_files/rcus_place_order_online.php",
+					"host": ["{{base_url}}"],
+					"path": ["exe_files", "rcus_place_order_online.php"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place COD Order (for comparison)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test Customer COD\",\n    \"email\": \"testcod@example.com\",\n    \"phone\": \"9876543211\",\n    \"address\": \"456 Test Street, Test Area\",\n    \"landmark\": \"Near Test School\",\n    \"pincode\": \"400002\",\n    \"state\": \"Maharashtra\",\n    \"city\": \"Mumbai\",\n    \"final_total\": 300,\n    \"paymentMethod\": \"COD\",\n    \"CustomerId\": 1,\n    \"customerType\": \"Registered\",\n    \"products\": [\n        {\n            \"id\": \"2\",\n            \"name\": \"Test Product COD\",\n            \"code\": \"TP002\",\n            \"size\": \"Large\",\n            \"quantity\": \"1\",\n            \"offer_price\": \"300\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/exe_files/rcus_place_order_cod.php",
+					"host": ["{{base_url}}"],
+					"path": ["exe_files", "rcus_place_order_cod.php"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Razorpay Payment Callback (Mock)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"order_db_id\": \"ON000001\",\n    \"razorpay_payment_id\": \"pay_test123456789\",\n    \"razorpay_order_id\": \"order_test123456789\",\n    \"razorpay_signature\": \"test_signature_hash\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/exe_files/razorpay_callback.php",
+					"host": ["{{base_url}}"],
+					"path": ["exe_files", "razorpay_callback.php"]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost/nutrify",
+			"type": "string"
+		}
+	]
+}

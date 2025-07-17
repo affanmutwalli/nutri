@@ -1,0 +1,30 @@
+[25-May-2025 09:36:22 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'admin'@'localhost' (using password: YES) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php:3
+Stack trace:
+#0 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php(3): mysqli->__construct()
+#1 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/exe_login.php(2): include_once('/home/tyrat3w3m...')
+#2 {main}
+  thrown in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php on line 3
+[25-May-2025 09:36:43 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'admin'@'localhost' (using password: YES) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php:3
+Stack trace:
+#0 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php(3): mysqli->__construct()
+#1 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/exe_login.php(2): include_once('/home/tyrat3w3m...')
+#2 {main}
+  thrown in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php on line 3
+[25-May-2025 09:36:54 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'admin'@'localhost' (using password: YES) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php:3
+Stack trace:
+#0 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php(3): mysqli->__construct()
+#1 /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/exe_login.php(2): include_once('/home/tyrat3w3m...')
+#2 {main}
+  thrown in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/db_connect.php on line 3
+[15-Jun-2025 15:21:03 UTC] PHP Warning:  session_start(): Session ID is too long or contains illegal characters. Only the A-Z, a-z, 0-9, &quot;-&quot;, and &quot;,&quot; characters are allowed in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:21:03 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /opt/alt/php82/var/lib/php/session) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:21:03 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 23
+[15-Jun-2025 15:22:10 UTC] PHP Warning:  session_start(): Session ID is too long or contains illegal characters. Only the A-Z, a-z, 0-9, &quot;-&quot;, and &quot;,&quot; characters are allowed in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:22:10 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /opt/alt/php82/var/lib/php/session) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:22:10 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 23
+[15-Jun-2025 15:27:02 UTC] PHP Warning:  session_start(): Session ID is too long or contains illegal characters. Only the A-Z, a-z, 0-9, &quot;-&quot;, and &quot;,&quot; characters are allowed in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:27:02 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /opt/alt/php82/var/lib/php/session) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:27:02 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 23
+[15-Jun-2025 15:28:00 UTC] PHP Warning:  session_start(): Session ID is too long or contains illegal characters. Only the A-Z, a-z, 0-9, &quot;-&quot;, and &quot;,&quot; characters are allowed in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:28:00 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: /opt/alt/php82/var/lib/php/session) in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 22
+[15-Jun-2025 15:28:00 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/tyrat3w3m94a/public_html/mynutrify.com/cms/includes/functions.php on line 23

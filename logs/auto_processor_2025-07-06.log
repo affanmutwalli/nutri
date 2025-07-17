@@ -1,0 +1,7 @@
+[2025-07-06 18:54:06] === Auto Order Processor Started ===
+[2025-07-06 18:54:06] Starting automatic order processing...
+[2025-07-06 18:54:06] Fatal error: Unknown column 'dc.CustomerMobile' in 'field list'
+[2025-07-06 18:55:15] === Auto Order Processor Started ===
+[2025-07-06 18:55:15] Starting automatic order processing...
+[2025-07-06 18:55:16] Processed 0 orders successfully.
+[2025-07-06 18:55:16] === Auto Order Processor Completed ===

@@ -1,0 +1,12 @@
+[2025-07-07 15:38:15] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 17:16:16] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 17:16:17] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 17:16:18] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 17:16:19] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 17:16:20] ERROR: SMS failed for 8208593432 - Invalid Authentication, Check Authorization Key
+[2025-07-07 19:47:42] API Response - HTTP: 200, Body: [{"errorCode":"401","id":null,"errorMsg":"Authentication failed login or password is wrong"}]
+[2025-07-07 19:47:42] ERROR: SMS failed for 8208593432 - Unknown error
+[2025-07-07 19:47:47] API Response - HTTP: 200, Body: [{"errorCode":"401","id":null,"errorMsg":"Authentication failed login or password is wrong"}]
+[2025-07-07 19:47:47] ERROR: SMS failed for 8208593432 - Unknown error
+[2025-07-07 20:06:24] API Response - HTTP: 200, Body: [{"errorCode":"401","id":null,"errorMsg":"Authentication failed login or password is wrong"}]
+[2025-07-07 20:06:24] ERROR: SMS failed for 8208593432 - Unknown error

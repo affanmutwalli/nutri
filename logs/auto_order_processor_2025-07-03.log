@@ -1,0 +1,16 @@
+[2025-07-03 14:54:09] Starting automated processing for order: MN000138
+[2025-07-03 14:54:09] Error processing order MN000138: Order not found: MN000138
+[2025-07-03 14:54:09] SMS to 7057058333: ORDER PROCESSING ERROR! Order ID: MN000138 | Error: Order not found: MN000138 | Time: 03 Jul 2025, 02:54 PM | Please check OMS panel.
+[2025-07-03 14:54:09] Error SMS notification sent for order: MN000138
+[2025-07-03 14:54:26] Starting automated processing for order: MN000130
+[2025-07-03 14:54:26] Error processing order MN000130: Order not found: MN000130
+[2025-07-03 14:54:26] SMS to 7057058333: ORDER PROCESSING ERROR! Order ID: MN000130 | Error: Order not found: MN000130 | Time: 03 Jul 2025, 02:54 PM | Please check OMS panel.
+[2025-07-03 14:54:26] Error SMS notification sent for order: MN000130
+[2025-07-03 14:54:34] Starting automated processing for order: MN000001
+[2025-07-03 14:54:34] Error processing order MN000001: Order not found: MN000001
+[2025-07-03 14:54:34] SMS to 7057058333: ORDER PROCESSING ERROR! Order ID: MN000001 | Error: Order not found: MN000001 | Time: 03 Jul 2025, 02:54 PM | Please check OMS panel.
+[2025-07-03 14:54:34] Error SMS notification sent for order: MN000001
+[2025-07-03 14:54:38] Starting automated processing for order: MN000100
+[2025-07-03 14:54:38] Error processing order MN000100: Order not found: MN000100
+[2025-07-03 14:54:38] SMS to 7057058333: ORDER PROCESSING ERROR! Order ID: MN000100 | Error: Order not found: MN000100 | Time: 03 Jul 2025, 02:54 PM | Please check OMS panel.
+[2025-07-03 14:54:38] Error SMS notification sent for order: MN000100

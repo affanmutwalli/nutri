@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Example</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex justify-center items-center h-screen">
+        <!-- Nutrify Coin Card -->
+        <div class="nutrify-coin-card relative group p-4 bg-white rounded-lg shadow-lg">
+            <i class="fa fa-gem charm-icon text-3xl text-gray-500"></i> <!-- Charm Icon -->
+            <div class="nutrify-coin mt-2">
+                <span class="text-lg text-gray-700">Earn 15 Nutrify coins on this purchase:</span>
+            </div>
+            <a href="javascript:void(0);" class="info-link mt-2">
+                <i class="fa fa-info-circle info-icon text-2xl text-blue-500"></i> <!-- Info Icon -->
+            </a>
+
+            <!-- Tooltip (Initially hidden) -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs p-2 rounded">
+                1 Coin = 1 Rupee. Earn Nutrify coins on each purchase.
+            </div>
+        </div>
+    </div>
+
+    <!-- FontAwesome CDN for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

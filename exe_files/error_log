@@ -1,0 +1,101 @@
+[14-Feb-2025 15:49:06 Asia/Kolkata] Call to a member function prepare() on null
+[14-Feb-2025 15:53:26 Asia/Kolkata] Call to a member function prepare() on null
+[14-Feb-2025 16:01:09 Asia/Kolkata] Call to a member function prepare() on null
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:48 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:48 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:53 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 11:11:24 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[27-Feb-2025 15:16:37 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 15:16:37 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21
+[03-Mar-2025 14:38:49 Asia/Kolkata] Unsupported operand types: string * string
+[03-Mar-2025 14:38:54 Asia/Kolkata] Unsupported operand types: string * string
+[05-Mar-2025 18:17:45 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 18:17:45 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 18:17:45 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:26 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:27 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:41 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:42 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:42 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:42 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:42 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 14:49:42 UTC] PHP Warning:  Undefined array key "ProductId" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/search_filter.php on line 43
+[05-Mar-2025 20:43:33 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 20:43:33 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 20:43:33 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[05-Mar-2025 20:49:51 Asia/Calcutta] PHP Warning:  Undefined array key "MobileNo" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/exe_save_direct_customer.php on line 52
+[05-Mar-2025 20:49:51 Asia/Calcutta] PHP Warning:  Undefined array key "MobileNo" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/exe_save_direct_customer.php on line 55
+[08-Mar-2025 12:06:15 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[10-Mar-2025 15:52:30 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 15:52:30 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 15:52:30 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 16:06:44 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 16:06:44 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 16:06:44 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 10:39:22 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[10-Mar-2025 16:10:51 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 16:10:51 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[10-Mar-2025 16:10:51 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[16-Mar-2025 08:02:58 UTC] PHP Parse error:  Unmatched '}' in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/rcus_place_order_online.php on line 196
+[16-Mar-2025 08:03:03 UTC] PHP Parse error:  Unmatched '}' in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/rcus_place_order_online.php on line 196
+[16-Mar-2025 08:03:18 UTC] PHP Parse error:  Unmatched '}' in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/rcus_place_order_online.php on line 196
+[04-Apr-2025 06:12:23 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[04-Apr-2025 16:52:18 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[04-Apr-2025 16:52:18 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[04-Apr-2025 16:52:18 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Apr-2025 12:43:35 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21

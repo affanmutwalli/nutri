@@ -1,0 +1,27 @@
+[14-Feb-2025 15:49:06 Asia/Kolkata] Call to a member function prepare() on null
+[14-Feb-2025 15:53:26 Asia/Kolkata] Call to a member function prepare() on null
+[14-Feb-2025 16:01:09 Asia/Kolkata] Call to a member function prepare() on null
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:42 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:48 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:48 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[19-Feb-2025 10:37:53 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 13:14:40 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[20-Feb-2025 11:11:24 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Undefined variable $single_data in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[26-Feb-2025 15:33:07 Asia/Calcutta] PHP Warning:  Trying to access array offset on value of type null in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/verify_otp.php on line 40
+[27-Feb-2025 06:31:21 UTC] PHP Warning:  Trying to access array offset on value of type int in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/remove-from-cart.php on line 21
+[27-Feb-2025 12:04:22 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 12:04:22 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21
+[27-Feb-2025 14:36:51 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 14:36:51 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21
+[27-Feb-2025 14:40:07 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 14:40:07 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21
+[27-Feb-2025 14:42:20 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 14:42:20 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21
+[27-Feb-2025 14:51:04 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_order_id" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 20
+[27-Feb-2025 14:51:04 Asia/Calcutta] PHP Warning:  Undefined array key "razorpay_signature" in /home/tyrat3w3m94a/public_html/mynutrify.com/exe_files/razorpay_callback.php on line 21

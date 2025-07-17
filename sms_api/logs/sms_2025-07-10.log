@@ -1,0 +1,4 @@
+[2025-07-10 15:48:05] API Response - HTTP: 200, Body: [{"errorCode":"401","id":null,"errorMsg":"Authentication failed login or password is wrong"}]
+[2025-07-10 15:48:05] ERROR: SMS failed for 8208593432 - Unknown error
+[2025-07-10 16:25:58] API Response - HTTP: 200, Body: [{"errorCode":"401","id":null,"errorMsg":"Authentication failed login or password is wrong"}]
+[2025-07-10 16:25:58] ERROR: SMS failed for 8208593432 - Unknown error

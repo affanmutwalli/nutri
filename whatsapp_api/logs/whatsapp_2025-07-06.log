@@ -1,0 +1,17 @@
+[2025-07-06 12:38:48] Order update failed for SIM000001: Order not found: SIM000001
+[2025-07-06 12:38:48] Order update failed for SIM000001: Order not found: SIM000001
+[2025-07-06 12:38:48] Order update failed for SIM000001: Order not found: SIM000001
+[2025-07-06 12:43:51] SUCCESS: order_shipped sent to 8329566751 - ID: f62ebb9f-ef30-40d1-9a6a-7b7d3e7cc1b3
+[2025-07-06 12:43:51] SUCCESS: out_for_delivery sent to 8329566751 - ID: d6ebfe93-dbfd-4217-88fb-f369f5d3f2ba
+[2025-07-06 12:43:52] SUCCESS: order_delivered sent to 8329566751 - ID: 8728f8d6-7d1b-452b-a70f-b11aae18d091
+[2025-07-06 12:54:11] Payment reminder failed for <br />
+<b>Warning</b>:  Undefined array key : Order or customer not found: <br />
+<b>Warning</b>:  Undefined array key 
+[2025-07-06 18:41:05] Order update failed for MN000017: Customer not found for order: MN000017
+[2025-07-06 18:41:05] Order update failed for MN000018: Customer not found for order: MN000018
+[2025-07-06 18:41:05] Order update failed for MN000020: Customer not found for order: MN000020
+[2025-07-06 18:41:05] Order update failed for MN000021: Customer not found for order: MN000021
+[2025-07-06 18:41:05] Order update failed for MN000022: Customer not found for order: MN000022
+[2025-07-06 18:41:05] Order update failed for MN000023: Customer not found for order: MN000023
+[2025-07-06 18:41:05] Order update failed for MN000024: Customer not found for order: MN000024
+[2025-07-06 18:41:05] Order update failed for MN000025: Customer not found for order: MN000025

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Template Creation Helper - My Nutrify</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: #25D366; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+        .template-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .template-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .template-header { background: #075E54; color: white; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
+        .template-body { background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #25D366; }
+        .variable { background: #FFE4B5; padding: 2px 6px; border-radius: 3px; font-weight: bold; color: #8B4513; }
+        .copy-btn { background: #25D366; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .copy-btn:hover { background: #128C7E; }
+        .category-badge { display: inline-block; background: #007bff; color: white; padding: 4px 8px; border-radius: 15px; font-size: 12px; margin-bottom: 10px; }
+        .marketing { background: #ff6b6b; }
+        .utility { background: #4ecdc4; }
+        .authentication { background: #ffa726; }
+        .instructions { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .preview-phone { background: #25D366; border-radius: 20px; padding: 20px; color: white; max-width: 300px; margin: 0 auto; }
+        .message-bubble { background: white; color: black; padding: 12px; border-radius: 15px; margin: 10px 0; }
+        .button-preview { background: #007bff; color: white; padding: 8px 15px; border-radius: 20px; text-align: center; margin: 5px 0; cursor: pointer; }
+        .tabs { display: flex; margin-bottom: 20px; }
+        .tab { padding: 10px 20px; background: #e9ecef; border: none; cursor: pointer; border-radius: 5px 5px 0 0; margin-right: 5px; }
+        .tab.active { background: #25D366; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .search-box { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 WhatsApp Template Creation Helper</h1>
+            <p>Copy-paste ready templates for My Nutrify Interakt Dashboard</p>
+        </div>
+
+        <div class="instructions">
+            <h3>🔧 How to Use:</h3>
+            <ol>
+                <li>Login to your <a href="https://app.interakt.ai/login" target="_blank">Interakt Dashboard</a></li>
+                <li>Go to <strong>Templates → WhatsApp Templates → Create Template</strong></li>
+                <li>Copy the template details from below and paste in Interakt</li>
+                <li>Submit for WhatsApp approval (24-48 hours)</li>
+                <li>Test using our <a href="test_new_whatsapp_features.php" target="_blank">Test Page</a></li>
+            </ol>
+        </div>
+
+        <input type="text" class="search-box" placeholder="🔍 Search templates..." onkeyup="searchTemplates(this.value)">
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('order')">📦 Order Status</button>
+            <button class="tab" onclick="showTab('birthday')">🎂 Birthday/Anniversary</button>
+            <button class="tab" onclick="showTab('payment')">💳 Payment</button>
+            <button class="tab" onclick="showTab('product')">🛍️ Products</button>
+            <button class="tab" onclick="showTab('feedback')">⭐ Feedback</button>
+        </div>
+
+        <!-- Order Status Templates -->
+        <div id="order" class="tab-content active">
+            <div class="template-grid">
+                <div class="template-card" data-search="order shipped tracking delivery">
+                    <div class="template-header">
+                        <h3>📦 Order Shipped</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> order_shipped<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 📦 Your Order is Shipped!<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Great news! Your order #<span class="variable">{{2}}</span> has been shipped and is on its way to you.<br><br>
+                        📋 Tracking Number: <span class="variable">{{3}}</span><br>
+                        🚚 You can track your package using the tracking number above.<br><br>
+                        Thank you for choosing My Nutrify! 🌿<br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('order_shipped')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="out for delivery today">
+                    <div class="template-header">
+                        <h3>🚚 Out for Delivery</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> out_for_delivery<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 🚚 Out for Delivery Today!<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Your order #<span class="variable">{{2}}</span> is out for delivery and will reach you today (<span class="variable">{{3}}</span>).<br><br>
+                        Please keep your phone handy as our delivery partner may call you.<br><br>
+                        Thank you for choosing My Nutrify! 🌿<br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('out_for_delivery')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="order delivered success">
+                    <div class="template-header">
+                        <h3>✅ Order Delivered</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> order_delivered<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> ✅ Order Delivered Successfully!<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Your order #<span class="variable">{{2}}</span> has been delivered successfully! <br><br>
+                        We hope you love your products from <span class="variable">{{3}}</span>. <br><br>
+                        Please share your feedback and help others discover the benefits of our natural products! 🌿<br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('order_delivered')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="order cancelled refund">
+                    <div class="template-header">
+                        <h3>❌ Order Cancelled</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> order_cancelled<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> ❌ Order Cancelled<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Your order #<span class="variable">{{2}}</span> has been cancelled as requested.<br><br>
+                        <span class="variable">{{3}}</span><br><br>
+                        If you have any questions, please contact our support team.<br><br>
+                        Thank you for choosing My Nutrify! 🌿<br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('order_cancelled')">📋 Copy Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Birthday Templates -->
+        <div id="birthday" class="tab-content">
+            <div class="template-grid">
+                <div class="template-card" data-search="birthday wishes discount gift">
+                    <div class="template-header">
+                        <h3>🎂 Birthday Wishes</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> birthday_wishes<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> IMAGE (Upload birthday image)<br><br>
+                        <strong>Body:</strong><br>
+                        🎉 Happy Birthday <span class="variable">{{1}}</span>! 🎂<br><br>
+                        On your special day, we're excited to offer you an exclusive birthday gift!<br><br>
+                        🎁 Use code <span class="variable">{{2}}</span> and get <span class="variable">{{3}}</span> OFF on your next order!<br><br>
+                        Celebrate your health journey with My Nutrify's premium Ayurvedic products.<br><br>
+                        Valid for 7 days only. Shop now and treat yourself! 🌿<br><br>
+                        <strong>Footer:</strong> <span class="variable">{{4}}</span> - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('birthday_wishes')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="anniversary celebration years">
+                    <div class="template-header">
+                        <h3>🎊 Anniversary Wishes</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> anniversary_wishes<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 🎊 Happy Anniversary!<br><br>
+                        <strong>Body:</strong><br>
+                        Dear <span class="variable">{{1}}</span>, <br><br>
+                        Congratulations on <span class="variable">{{2}}</span> wonderful years! 🎉<br><br>
+                        To celebrate this special milestone, enjoy <span class="variable">{{4}}</span> OFF with code <span class="variable">{{3}}</span> on your next order.<br><br>
+                        Thank you for being part of the My Nutrify family! 🌿<br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('anniversary_wishes')">📋 Copy Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Templates -->
+        <div id="payment" class="tab-content">
+            <div class="template-grid">
+                <div class="template-card" data-search="payment reminder pending due">
+                    <div class="template-header">
+                        <h3>⏰ Payment Reminder</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> payment_reminder<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> ⏰ Payment Reminder<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Your order #<span class="variable">{{2}}</span> for <span class="variable">{{3}}</span> is awaiting payment.<br><br>
+                        ⏰ Complete your payment within <span class="variable">{{4}}</span> to confirm your order.<br><br>
+                        Click the button below to pay now! 👇<br><br>
+                        <strong>Button:</strong> Pay Now (URL)<br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('payment_reminder')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="payment failed retry unsuccessful">
+                    <div class="template-header">
+                        <h3>💳 Failed Payment Retry</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> failed_payment_retry<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 💳 Payment Failed - Retry Now<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Your payment for order #<span class="variable">{{2}}</span> (<span class="variable">{{3}}</span>) was unsuccessful.<br><br>
+                        Don't worry! You can retry your payment using the link below.<br><br>
+                        <strong>Button:</strong> Retry Payment (URL)<br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('failed_payment_retry')">📋 Copy Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Templates -->
+        <div id="product" class="tab-content">
+            <div class="template-grid">
+                <div class="template-card" data-search="product recommendation suggest">
+                    <div class="template-header">
+                        <h3>🛍️ Product Recommendation</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> product_recommendation<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> IMAGE (Product image)<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Based on your previous purchases, we think you'll love <span class="variable">{{2}}</span>!<br><br>
+                        💰 Special Price: <span class="variable">{{3}}</span><br><br>
+                        This premium Ayurvedic product is perfect for your health journey! 🌿<br><br>
+                        <strong>Button:</strong> Shop Now (URL)<br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('product_recommendation')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="reorder reminder refill">
+                    <div class="template-header">
+                        <h3>🔄 Reorder Reminder</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> reorder_reminder<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 🔄 Time to Reorder?<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        It's been a while since your last order! <br><br>
+                        Your previous favorites: <span class="variable">{{2}}</span><br><br>
+                        Last ordered <span class="variable">{{3}}</span>. Ready for a refill? 🌿<br><br>
+                        <strong>Button:</strong> Reorder Now (URL)<br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('reorder_reminder')">📋 Copy Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Templates -->
+        <div id="feedback" class="tab-content">
+            <div class="template-grid">
+                <div class="template-card" data-search="feedback request review rating">
+                    <div class="template-header">
+                        <h3>⭐ Feedback Request</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> feedback_request<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> ⭐ How was your experience?<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        We hope you're loving your <span class="variable">{{2}}</span> from <span class="variable">{{3}}</span>! <br><br>
+                        Your feedback helps us serve you better and helps other customers make informed choices.<br><br>
+                        Could you spare 2 minutes to share your experience? 🌿<br><br>
+                        <strong>Button:</strong> Leave Review (URL)<br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('feedback_request')">📋 Copy Template</button>
+                </div>
+
+                <div class="template-card" data-search="review incentive reward discount">
+                    <div class="template-header">
+                        <h3>🎁 Review Incentive</h3>
+                        <span class="category-badge marketing">MARKETING</span>
+                    </div>
+                    <div class="template-body">
+                        <strong>Template Name:</strong> review_incentive<br>
+                        <strong>Language:</strong> English (en)<br>
+                        <strong>Header:</strong> 🎁 Review & Get Rewarded!<br><br>
+                        <strong>Body:</strong><br>
+                        Hi <span class="variable">{{1}}</span>, <br><br>
+                        Share your product experience and get rewarded! <br><br>
+                        🎁 Leave a review and get <span class="variable">{{3}}</span> OFF with code <span class="variable">{{2}}</span><br><br>
+                        Your honest feedback helps our community! 🌿<br><br>
+                        Valid for 30 days. Review now: <span class="variable">{{4}}</span><br><br>
+                        <strong>Footer:</strong> My Nutrify - Your Health Partner
+                    </div>
+                    <button class="copy-btn" onclick="copyTemplate('review_incentive')">📋 Copy Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function copyTemplate(templateName) {
+            const templates = {
+                'order_shipped': `Template Name: order_shipped
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 📦 Your Order is Shipped!
+
+Body Text:
+Hi {{1}}, 
+
+Great news! Your order #{{2}} has been shipped and is on its way to you.
+
+📋 Tracking Number: {{3}}
+🚚 You can track your package using the tracking number above.
+
+Thank you for choosing My Nutrify! 🌿
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'out_for_delivery': `Template Name: out_for_delivery
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 🚚 Out for Delivery Today!
+
+Body Text:
+Hi {{1}}, 
+
+Your order #{{2}} is out for delivery and will reach you today ({{3}}).
+
+Please keep your phone handy as our delivery partner may call you.
+
+Thank you for choosing My Nutrify! 🌿
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'order_delivered': `Template Name: order_delivered
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: ✅ Order Delivered Successfully!
+
+Body Text:
+Hi {{1}}, 
+
+Your order #{{2}} has been delivered successfully! 
+
+We hope you love your products from {{3}}. 
+
+Please share your feedback and help others discover the benefits of our natural products! 🌿
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'order_cancelled': `Template Name: order_cancelled
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: ❌ Order Cancelled
+
+Body Text:
+Hi {{1}}, 
+
+Your order #{{2}} has been cancelled as requested.
+
+{{3}}
+
+If you have any questions, please contact our support team.
+
+Thank you for choosing My Nutrify! 🌿
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'birthday_wishes': `Template Name: birthday_wishes
+Category: MARKETING
+Language: English (en)
+Header Type: IMAGE
+Header Image: Upload a birthday celebration image
+
+Body Text:
+🎉 Happy Birthday {{1}}! 🎂
+
+On your special day, we're excited to offer you an exclusive birthday gift!
+
+🎁 Use code {{2}} and get {{3}} OFF on your next order!
+
+Celebrate your health journey with My Nutrify's premium Ayurvedic products.
+
+Valid for 7 days only. Shop now and treat yourself! 🌿
+
+Footer: {{4}} - Your Health Partner`,
+
+                'anniversary_wishes': `Template Name: anniversary_wishes
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 🎊 Happy Anniversary!
+
+Body Text:
+Dear {{1}}, 
+
+Congratulations on {{2}} wonderful years! 🎉
+
+To celebrate this special milestone, enjoy {{4}} OFF with code {{3}} on your next order.
+
+Thank you for being part of the My Nutrify family! 🌿
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'payment_reminder': `Template Name: payment_reminder
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: ⏰ Payment Reminder
+
+Body Text:
+Hi {{1}}, 
+
+Your order #{{2}} for {{3}} is awaiting payment.
+
+⏰ Complete your payment within {{4}} to confirm your order.
+
+Click the button below to pay now! 👇
+
+Button Type: URL
+Button Text: Pay Now
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'failed_payment_retry': `Template Name: failed_payment_retry
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 💳 Payment Failed - Retry Now
+
+Body Text:
+Hi {{1}}, 
+
+Your payment for order #{{2}} ({{3}}) was unsuccessful.
+
+Don't worry! You can retry your payment using the link below.
+
+Button Type: URL
+Button Text: Retry Payment
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'product_recommendation': `Template Name: product_recommendation
+Category: MARKETING
+Language: English (en)
+Header Type: IMAGE
+Header Image: Product image URL
+
+Body Text:
+Hi {{1}}, 
+
+Based on your previous purchases, we think you'll love {{2}}!
+
+💰 Special Price: {{3}}
+
+This premium Ayurvedic product is perfect for your health journey! 🌿
+
+Button Type: URL
+Button Text: Shop Now
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'reorder_reminder': `Template Name: reorder_reminder
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 🔄 Time to Reorder?
+
+Body Text:
+Hi {{1}}, 
+
+It's been a while since your last order! 
+
+Your previous favorites: {{2}}
+
+Last ordered {{3}}. Ready for a refill? 🌿
+
+Button Type: URL
+Button Text: Reorder Now
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'feedback_request': `Template Name: feedback_request
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: ⭐ How was your experience?
+
+Body Text:
+Hi {{1}}, 
+
+We hope you're loving your {{2}} from {{3}}! 
+
+Your feedback helps us serve you better and helps other customers make informed choices.
+
+Could you spare 2 minutes to share your experience? 🌿
+
+Button Type: URL
+Button Text: Leave Review
+
+Footer: My Nutrify - Your Health Partner`,
+
+                'review_incentive': `Template Name: review_incentive
+Category: MARKETING
+Language: English (en)
+Header Type: TEXT
+Header Text: 🎁 Review & Get Rewarded!
+
+Body Text:
+Hi {{1}}, 
+
+Share your product experience and get rewarded! 
+
+🎁 Leave a review and get {{3}} OFF with code {{2}}
+
+Your honest feedback helps our community! 🌿
+
+Valid for 30 days. Review now: {{4}}
+
+Footer: My Nutrify - Your Health Partner`
+            };
+
+            if (templates[templateName]) {
+                navigator.clipboard.writeText(templates[templateName]).then(() => {
+                    alert('✅ Template copied to clipboard! Paste it in your Interakt dashboard.');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = templates[templateName];
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('✅ Template copied to clipboard! Paste it in your Interakt dashboard.');
+                });
+            }
+        }
+
+        function searchTemplates(query) {
+            const cards = document.querySelectorAll('.template-card');
+            const searchTerm = query.toLowerCase();
+            
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                const cardText = card.textContent.toLowerCase();
+                
+                if (searchData.includes(searchTerm) || cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

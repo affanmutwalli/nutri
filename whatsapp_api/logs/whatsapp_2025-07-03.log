@@ -1,0 +1,41 @@
+[2025-07-03 13:37:08] SUCCESS: order_shipped sent to 8329566751 - ID: 0e8ddcf7-cc75-4f55-ad29-a0e2ba6849b0
+[2025-07-03 13:41:55] SUCCESS: order_shipped sent to 8329566751 - ID: 8099db71-94bf-4d9c-81d3-278bb654deb2
+[2025-07-03 13:41:55] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 13:41:55] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 13:41:55] Birthday wishes not available (DateOfBirth column may not exist): No data supplied for parameters in prepared statement
+[2025-07-03 14:06:13] SUCCESS: order_shipped sent to 8329566751 - ID: 5016719b-d83a-49a5-a658-a15829a8fec7
+[2025-07-03 14:06:13] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:06:13] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:06:13] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:06:14] SUCCESS: order_shipped sent to 8329566751 - ID: d9fb38a7-acbb-42f0-a65b-430b4d2558f3
+[2025-07-03 14:06:14] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:06:14] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:06:14] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:12:55] SUCCESS: order_shipped sent to 8329566751 - ID: a91f00c3-e4ce-4743-9827-9c75131753c9
+[2025-07-03 14:12:55] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:12:55] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:12:55] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:18:19] SUCCESS: order_shipped sent to 8329566751 - ID: 25d1b662-f16f-4403-ab43-c44ac4eac835
+[2025-07-03 14:18:19] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:19] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:19] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:18:32] SUCCESS: order_shipped sent to 8329566751 - ID: 8321a44d-8d7b-4328-a28a-df697a7f4093
+[2025-07-03 14:18:32] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:32] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:33] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:18:56] SUCCESS: order_shipped sent to 8329566751 - ID: e99232d2-3c54-41f7-b7b4-475c0c8bbca6
+[2025-07-03 14:18:56] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:56] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:18:56] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 14:19:07] SUCCESS: order_shipped sent to 8329566751 - ID: d9dab85e-27ed-4250-bc07-1e01f32c9683
+[2025-07-03 14:19:07] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:19:07] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 14:19:07] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 15:50:40] SUCCESS: order_shipped sent to 8329566751 - ID: 2c5a4283-3a3d-49aa-b5a4-b75585db41ee
+[2025-07-03 15:50:40] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 15:50:40] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 15:50:40] Birthday wishes feature disabled - DateOfBirth column not available
+[2025-07-03 16:55:57] SUCCESS: order_shipped sent to 8329566751 - ID: 14ea4bba-3385-4722-a3cc-a17296bd4203
+[2025-07-03 16:55:57] Payment reminder failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 16:55:57] Feedback request failed for MN000138: Order or customer not found: MN000138
+[2025-07-03 16:55:57] Birthday wishes feature disabled - DateOfBirth column not available
