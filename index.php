@@ -2775,7 +2775,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         <div class="offer-product-card">
             <div class="offer-product-info">
                 <p class="offer-category">DIABETIC WELLNESS</p>
-                <h2 class="offer-product-title">Diabtic Care Juice</h2>
+                <h2 class="offer-product-title">Diabetic Care Juice</h2>
                 <p class="offer-description">More than 13 lakh happy customers have solved their diabetic issues with
                     blend of
                     11 powerful herbs.</p>
@@ -2785,7 +2785,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="offer-product-image">
                 <div class="offer-badge">New</div>
                 <div class="offer-price">₹549</div>
-                <img src="cms/images/products/diabetic_care_product.png" alt="Diabic Care Juice">
+                <img src="cms/images/products/Diabteic-Care.jpg" alt="Diabic Care Juice">
             </div>
         </div>
         <div class="offer-product-card">
@@ -2802,7 +2802,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="offer-product-image">
                 <div class="offer-badge">New</div>
                 <div class="offer-price">₹599</div>
-                <img src="cms/images/products/charastroll.png" alt="Diabic Care Juice">
+                <img src="cms/images/products/Img_4634.jpg" alt="Diabetic Care Juice">
             </div>
         </div>
     </section>
@@ -2820,31 +2820,31 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <button class="combo-carousel-button prev">❮</button>
                     <div class="combo-carousel-track">
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/1201.jpg" alt="Product 1">
+                        <a href="product_details.php?ProductId=22"> <img src="cms/images/products/6726.jpg" alt="Product 1"> </a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/1346.png" alt="Product 2">
+                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/2370.jpg" alt="Product 3">
+                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/3508.jpg" alt="Product 4">
+                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/3851.jpg" alt="Product 5">
+                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/7132.jpg" alt="Product 6">
+                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/7947.jpg" alt="Product 7">
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/9616.jpg" alt="Product 8">
+                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/9240.jpg" alt="Product 9">
+                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
                         </div>
                     </div>
                     <button class="combo-carousel-button next">❯</button>
@@ -2855,32 +2855,29 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <div class="combo-carousel-container">
                     <button class="combo-carousel-button prev">❮</button>
                     <div class="combo-carousel-track">
-                        <div class="combo-carousel-item">
-                            <img src="cms/images/products/1201.jpg" alt="Product 1">
+                     <div class="combo-carousel-item">
+                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/1346.png" alt="Product 2">
+                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/2370.jpg" alt="Product 3">
+                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/3508.jpg" alt="Product 4">
+                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/3851.jpg" alt="Product 5">
+                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/7132.jpg" alt="Product 6">
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/7947.jpg" alt="Product 7">
+                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <img src="cms/images/products/9616.jpg" alt="Product 8">
-                        </div>
-                        <div class="combo-carousel-item">
-                            <img src="cms/images/products/9240.jpg" alt="Product 9">
+                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
                         </div>
                     </div>
                     <button class="combo-carousel-button next">❯</button>

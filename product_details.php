@@ -729,66 +729,7 @@
       
       
 
-    .product-list-details {
-        max-height: 100px;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 15px 10px;
-        scroll-behavior: smooth;
-        background: #f9f9f9;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    .product-list-details::-webkit-scrollbar {
-        height: 6px;
-    }
-
-    .product-list-details::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border-radius: 4px;
-    }
-
-    .product-item-details {
-        font-size: 16px;
-        white-space: nowrap;
-        color: #305724;
-        padding: 10px 15px;
-        background: white;
-        border-radius: 8px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .product-item-details:hover {
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 3px 12px rgba(234, 101, 45, 0.2);
-    }
-
-    .product-item-details.selected {
-        /* color: #EA652D; */
-        font-weight: 600;
-        background: #fff3ea;
-        /* border: 1px solid #EA652D; */
-    }
-
-    .product-item-details::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -5px;
-        width: 0;
-        height: 2px;
-        background-color: #EA652D;
-        transition: width 0.3s ease-in-out;
-    }
-
-    .product-item-details.selected::after {
-        width: 100%;
-    }
+    /* Product navigation menu removed - all sections now display by default */
 
     .product-tab-section {
         padding: 30px 20px;
@@ -1008,9 +949,7 @@
             width: 95%;
             font-size: 1rem;
         }
-        .product-list-details {
-            padding-bottom:250px;
-    }
+        /* Product list details navigation removed */
 
    
     }
@@ -2146,19 +2085,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 <!--      </section>-->
       
       
-    <!-- Always show product sections regardless of IsCombo status -->
+    <!-- Display all product sections without categorization -->
       <section class="" style="margin-top: 50px;">
         <div class="container">
-            <div class="product-list-details" id="productMenu">
-                <div class="product-item-details selected" onclick="selectProduct(this, 'section1')">Product Details
-                </div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section2')">Key Ingredients</div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section3')">Top Benefits</div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section4')">Directions to Use</div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section5')">Why Choose Us</div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section6')">Customer Reviews</div>
-                <div class="product-item-details" onclick="selectProduct(this, 'section7')">FAQ's</div>
-            </div>
             <?php
             $filteredProductTitle = str_replace("My Nutrify Herbal & Ayurveda’s", "", $product_data[0]["Title"]);
             ?>
@@ -2525,51 +2454,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </section>
 
     <script>
-    // Function to handle product section navigation
-    function selectProduct(element, sectionId) {
-        // Remove 'selected' class from all menu items
-        document.querySelectorAll('.product-item-details').forEach(item => {
-            item.classList.remove('selected');
-        });
-
-        // Add 'selected' class to clicked item
-        element.classList.add('selected');
-
-        // Hide all sections
-        document.querySelectorAll('[id^="section"]').forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Show the selected section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.style.display = 'block';
-
-            // Smooth scroll to the section
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    }
-
-    // Initialize - show first section by default
-    document.addEventListener('DOMContentLoaded', function() {
-        // Hide all sections except the first one
-        document.querySelectorAll('[id^="section"]').forEach((section, index) => {
-            if (index === 0) {
-                section.style.display = 'block';
-            } else {
-                section.style.display = 'none';
-            }
-        });
-
-        // Debug: Log all sections found
-        console.log('Product sections found:', document.querySelectorAll('[id^="section"]').length);
-        document.querySelectorAll('[id^="section"]').forEach(section => {
-            console.log('Section ID:', section.id, 'Display:', section.style.display);
-        });
-    });
+    // All sections are now displayed by default - no JavaScript needed for section switching
     </script>
       <!-- product page tab end -->
       <!-- releted product start -->

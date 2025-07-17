@@ -1287,13 +1287,13 @@ button.navbar-toggler span.line::after{
 }
 .t-banner1 .home-offer-banner .o-t-banner .o-t-content h6{
     font-size: 22px;
-    color: #000;
+    color: #000000;
 }
 .t-banner1 .home-offer-banner .o-t-banner .o-t-content a{
     margin-top: 21px;
 }
 .t-banner1 .home-offer-banner .o-t-banner .banner-color h6{
-    color: #000;
+    color: #ffffff;
 }
 /* Category image css */
 .category-img1{
@@ -5926,7 +5926,7 @@ a.scroll:hover span{
     margin-bottom: 20px;
 }
 .pro-page .pro-image .larg-image a.long-img figure.zoom {
-     background-position: 50% 50%;
+     background-position: 10% 10%;
      position: relative;
      overflow: hidden;
      cursor: crosshair;
