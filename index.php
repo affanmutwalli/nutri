@@ -2601,23 +2601,23 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         <div class="section-title">
             <h2 style="padding-top: 75px;">From our customers</h2>
         </div>
-        <div id="testimonialCarousel" class="carousel slide testimonia-carousel" data-ride="carousel"
-            data-interval="4000">
+        <div id="testimonialCarousel" class="carousel slide testimonia-carousel" data-bs-ride="carousel"
+            data-bs-interval="4000">
 
             <!-- Indicators -->
             <ol class="carousel-indicators testimonia-carousel-indicators">
-                <li data-target="#testimonialCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="1"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="2"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="3"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="4"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="5"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="6"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="7"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="8"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="9"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="10"></li>
-                <li data-target="#testimonialCarousel" data-slide-to="11"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="4"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="5"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="6"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="7"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="8"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="9"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="10"></li>
+                <li data-bs-target="#testimonialCarousel" data-bs-slide-to="11"></li>
             </ol>
 
             <div class="carousel-inner">
@@ -2762,11 +2762,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
             <!-- Controls -->
             <a class="carousel-control-prev testimonia-carousel-control-prev" href="#testimonialCarousel" role="button"
-                data-slide="prev">
+                data-bs-slide="prev">
                 <i class="fa fa-angle-left"></i>
             </a>
             <a class="carousel-control-next testimonia-carousel-control-next" href="#testimonialCarousel" role="button"
-                data-slide="next">
+                data-bs-slide="next">
                 <i class="fa fa-angle-right"></i>
             </a>
         </div>
@@ -3670,12 +3670,35 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
   
   <script>
   $(document).ready(function() {
-        $('#testimonialCarousel').carousel({
-            interval: 3000,
-            pause: "hover"
-        });
+        console.log('Initializing testimonial carousel...');
+
+        // Check if Bootstrap is loaded
+        if (typeof bootstrap !== 'undefined') {
+            console.log('Bootstrap 5 detected');
+            // Bootstrap 5 syntax
+            var testimonialCarousel = new bootstrap.Carousel(document.getElementById('testimonialCarousel'), {
+                interval: 3000,
+                pause: 'hover',
+                ride: 'carousel'
+            });
+        } else if (typeof $.fn.carousel !== 'undefined') {
+            console.log('Bootstrap 4/jQuery detected');
+            // Bootstrap 4 syntax
+            $('#testimonialCarousel').carousel({
+                interval: 3000,
+                pause: "hover",
+                ride: "carousel"
+            });
+
+            // Ensure carousel starts automatically
+            setTimeout(function() {
+                $('#testimonialCarousel').carousel('cycle');
+            }, 1000);
+        } else {
+            console.error('Bootstrap carousel not found!');
+        }
     });
-  
+
     // Convert Shorts URL to Embed URL
     function convertShortsToEmbed(shortsUrl) {
         const videoId = shortsUrl.split("/shorts/")[1]?.split("?")[0];
