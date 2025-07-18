@@ -2761,6 +2761,8 @@ button.navbar-toggler span.line::after{
 }
 .home-product-info .home-product-block .product-details-area .larg-image a.long-img figure.zoom {
      background-position: 50% 50%;
+     background-size: 130%; /* Controls zoom level - further reduced to 130% for minimal zoom effect */
+     background-repeat: no-repeat;
      position: relative;
      overflow: hidden;
      cursor: crosshair;
