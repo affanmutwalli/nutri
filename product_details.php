@@ -731,6 +731,24 @@
 
     /* Product navigation menu removed - all sections now display by default */
 
+    /* Review Section Visibility Fix */
+    #section6 {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .review-header-wrapper {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .slider-container {
+        display: block !important;
+        margin-top: 20px;
+    }
+
     .product-tab-section {
         padding: 30px 20px;
         margin-bottom: 30px;
@@ -2360,7 +2378,12 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                             <!-- <i class="fa fa-star-half-o"></i> -->
                         </div>
-                        <span class="review-count">587 Reviews</span>
+                        <span class="review-count">
+                            <?php
+                            $reviewCount = !empty($review_data) ? count($review_data) : 0;
+                            echo $reviewCount . " Review" . ($reviewCount != 1 ? "s" : "");
+                            ?>
+                        </span>
 
                         <button class="review-summary-btn">✨ Show reviews summary</button>
 
@@ -2377,8 +2400,8 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
 
                     <div class="review-right-section">
-                        <button class="write-review-btn" href="#add-review">Write A Review</button>
-                        <div class="review-form collapse" id="add-review">
+                        <button class="write-review-btn" onclick="toggleReviewForm()">Write A Review</button>
+                        <div class="review-form collapse" id="add-review" style="display: none;">
                             <h4>Write a review</h4>
                             <form>
                                 <label>Name</label>
@@ -2884,6 +2907,16 @@ document.addEventListener('DOMContentLoaded', () => {
             $('.review-desck').html('Based on ' + selectedRating + ' review(s)');
         });
     });
+
+    // Function to toggle review form
+    function toggleReviewForm() {
+        const reviewForm = document.getElementById('add-review');
+        if (reviewForm.style.display === 'none' || reviewForm.style.display === '') {
+            reviewForm.style.display = 'block';
+        } else {
+            reviewForm.style.display = 'none';
+        }
+    }
 </script>
 <script>
     // function openModal() {

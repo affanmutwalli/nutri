@@ -28,8 +28,7 @@
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
@@ -170,10 +169,11 @@ if (isset($_GET["Product_ReviewId"])) {
                                                         class="far fa-calendar-alt"></i></span>
                                             </div>
                                             <input type="text" class="form-control" id="Date" name="Date"
-                                                placeholder="DD-MM-YYYY"
+                                                placeholder="DD-MM-YYYY (e.g., 25-12-2024)"
                                                 value="<?php echo !empty($Date) ? htmlspecialchars(date('d-m-Y', strtotime($Date))) : ''; ?>"
-                                                data-inputmask="'alias': 'datetime', 'inputFormat': 'dd-mm-yyyy'"
-                                                data-mask required>
+                                                pattern="\d{2}-\d{2}-\d{4}"
+                                                title="Please enter date in DD-MM-YYYY format"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@ if (isset($_GET["Product_ReviewId"])) {
                         </div>
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-primary" onclick="save_data()">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -237,13 +237,31 @@ if (isset($_GET["Product_ReviewId"])) {
                         $prodFieldNames = array("ProductName");
                         $prodParamArray = array($review["ProductId"]);
                         $prodData = $obj->MysqliSelect1("SELECT ProductName FROM product_master WHERE ProductId = ?", $prodFieldNames, "i", $prodParamArray);
-                        $productName = $prodData[0]["ProductName"] ?? 'Unknown Product';
+
+                        // Debug: Check if product data was found
+                        if (!empty($prodData) && isset($prodData[0]["ProductName"])) {
+                            $productName = $prodData[0]["ProductName"];
+                        } else {
+                            $productName = "Product Not Found (ID: " . $review["ProductId"] . ")";
+                        }
+                    } else {
+                        $productName = "No Product ID";
                     }
 
                     
+                    // Check if image exists
+                    $imagePath = "images/ingredient/" . $review["PhotoPath"];
+                    $imageDisplay = "";
+                    if (!empty($review["PhotoPath"]) && file_exists($imagePath)) {
+                        $imageDisplay = '<img src="' . htmlspecialchars($imagePath) . '" width="100" height="120" style="border-radius: 5px;">';
+                    } else {
+                        $imageDisplay = '<div style="width: 100px; height: 120px; background: #f0f0f0; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">No Image</div>';
+                    }
+
                     echo '<tr>
-                        <td>' . htmlspecialchars($productName) . '<br>
-                            <img src="images/ingredient/' . htmlspecialchars($review["PhotoPath"]) . '" width="100" height="120">
+                        <td>
+                            <strong style="font-size: 14px; color: #2c5aa0;">' . htmlspecialchars($productName) . '</strong><br><br>
+                            ' . $imageDisplay . '
                         </td>
                         <td>
                             <strong>Name:</strong> ' . htmlspecialchars($review["Name"]) . '<br>
@@ -256,12 +274,12 @@ if (isset($_GET["Product_ReviewId"])) {
                             </a>
                         </td>
                         <td>
-                            <a href="product_review_edit.php?ProductReviewId=' . htmlspecialchars($review["Product_ReviewId"]) . '">
+                            <a href="product_review.php?Product_ReviewId=' . htmlspecialchars($review["Product_ReviewId"]) . '">
                                 <i class="btn btn-sm btn-info fa fa-edit fa-sm"></i>
                             </a>
                         </td>
                         <td>
-                            <button onClick="fundeleteReview(' . htmlspecialchars($review["Product_ReviewId"]) . ');" type="button" class="btn btn-danger btn-sm">
+                            <button onClick="fundeleteReview(' . htmlspecialchars($review["Product_ReviewId"]) . ');" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default">
                                 <i class="fa fa-trash fa-sm"></i>
                             </button>
                         </td>
@@ -319,8 +337,8 @@ if (isset($_GET["Product_ReviewId"])) {
     <script src="plugins/daterangepicker/daterangepicker.js"></script>
     <!-- bs-custom-file-input -->
     <script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
     <!-- Summernote -->
     <script src="plugins/summernote/summernote-bs4.min.js"></script>
     <!-- overlayScrollbars -->
@@ -344,8 +362,7 @@ if (isset($_GET["Product_ReviewId"])) {
     <script src="dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard.js"></script>
+
     <script>
     $(function() {
         $("#example1").DataTable({
@@ -419,14 +436,15 @@ if (isset($_GET["Product_ReviewId"])) {
                 },
                 success: function (data) {
                     $("#loading").hide();
-                    if (data.response === "S") {
+                    if (data && data.response === "S") {
                         // Redirect on success
                         window.location.href = "product_review.php";
                     } else {
-                        $("#ErrorMessage").html(data.msg).addClass("alert alert-danger alert-dismissible").show();
+                        var errorMsg = data && data.msg ? data.msg : "Unknown error occurred";
+                        $("#ErrorMessage").html(errorMsg).addClass("alert alert-danger alert-dismissible").show();
                     }
                 },
-                error: function () {
+                error: function (xhr, status, error) {
                     $("#loading").hide();
                     $("#ErrorMessage").html("An unexpected error occurred. Please try again.")
                         .addClass("alert alert-danger alert-dismissible").show();
@@ -449,6 +467,11 @@ if (isset($_GET["Product_ReviewId"])) {
 
     function fundelete(id1) {
         document.getElementById("DProductId").value = id1;
+        //$("html, body").animate({ scrollTop: 0 }, 600);
+    }
+
+    function fundeleteReview(id1) {
+        document.getElementById("DReviewId").value = id1;
         //$("html, body").animate({ scrollTop: 0 }, 600);
     }
 
@@ -489,9 +512,9 @@ if (isset($_GET["Product_ReviewId"])) {
                 </div>
                 <div class="modal-body">
                     <p><b>Are you sure you want to delete ?</b></p>
-                    <form action="delete_products.php" method="post" name="frmDeleteFormData" id="frmDeleteFormData"
+                    <form action="delete_review.php" method="post" name="frmDeleteFormData" id="frmDeleteFormData"
                         enctype="multipart/form-data">
-                        <input type="hidden" id="DProductId" name="DProductId" />
+                        <input type="hidden" id="DReviewId" name="DReviewId" />
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-danger" value="Yes" onClick="javascript:delete_info();">
