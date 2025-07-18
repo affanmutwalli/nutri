@@ -659,6 +659,12 @@ input[name="quantity"] {
                                                     </a>
                                                 </li>
                                                 <li
+                                                    class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'customer-care.php') ? 'active' : ''; ?>">
+                                                    <a href="customer-care.php" class="link-title">
+                                                        <span class="sp-link-title">Customer Care</span>
+                                                    </a>
+                                                </li>
+                                                <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' && isset($_GET['open_chat'])) ? 'active' : ''; ?>">
                                                     <a href="index.php?open_chat=1" class="link-title">
                                                         <span class="sp-link-title">Consult by AI <img src="./cms/images/microchip.png" alt="AI Icon"
@@ -1001,6 +1007,11 @@ showSlides(); // Initial call to start slideshow
                                         <li class="menu-link">
                                             <a href="authenticate.php" class="link-title">
                                                 <span class="sp-link-title">Authenticity</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-link">
+                                            <a href="customer-care.php" class="link-title">
+                                                <span class="sp-link-title">Customer Care</span>
                                             </a>
                                         </li>
                                         <li class="menu-link">

@@ -102,6 +102,7 @@
                                         <li class="f-link-ul-li"><a href="about.php">About My Nutrify</a></li>
                                         <li class="f-link-ul-li"><a href="faq's.php">Faq's</a></li>
                                         <li class="f-link-ul-li"><a href="contact.php">Contact us</a></li>
+                                        <li class="f-link-ul-li"><a href="customer-care.php">Customer Care</a></li>
                                         <li class="f-link-ul-li"><a href="blogs.php">Blogs</a></li>
                                         <!--<li class="f-link-ul-li"><a href="sitemap.html">Sitemap</a></li>-->
                                     </ul>
