@@ -54,8 +54,206 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts for Krishna Ayurved Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+    /* Krishna Ayurved Inspired Section Title Styling */
+    .section-title h2 {
+        font-family: "Inter", "Harmonia Sans", sans-serif !important;
+        font-size: 22px !important;
+        font-weight: 600 !important;
+        color: #000 !important;
+        text-align: center !important;
+        line-height: 30px !important;
+        letter-spacing: 0.55px !important;
+        text-transform: none !important;
+        margin: 0 !important;
+        padding: 15px 30px !important;
+        position: relative !important;
+        display: inline-block !important;
+        background: rgb(253, 244, 244) !important;
+        border-radius: 40px !important;
+        overflow: hidden !important;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .section-title h2 .highlight {
+        color: #ec6504 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Krishna Ayurved Moving Highlight Animation */
+    .section-title h2::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 120px;
+        height: 50px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+        top: 0;
+        bottom: 0;
+        transform: matrix(1, 0, -0.57735, 1, 0, 0);
+        animation: switchHighlight 2s ease 2s infinite;
+        pointer-events: none;
+    }
+
+    /* Keyframe for the moving highlight effect */
+    @keyframes switchHighlight {
+        0% {
+            left: -120px;
+        }
+        50% {
+            left: 50%;
+            transform: matrix(1, 0, -0.57735, 1, 0, 0) translateX(-50%);
+        }
+        100% {
+            left: calc(100% + 120px);
+        }
+    }
+
+    /* Animation for section titles */
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .section-title h2.animate-in {
+        animation-play-state: running;
+    }
+
+    /* Hover effect for highlighted text */
+    .section-title h2 .highlight {
+        display: inline-block;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .section-title h2 .highlight:hover {
+        transform: scale(1.05);
+        color: #d35400;
+    }
+
+    /* Rewards Element Styling */
+    .rewards-element {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #ff6b35, #f7931e);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 50px;
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        cursor: pointer;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        animation: shake 2s infinite;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .rewards-element:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(255, 107, 53, 0.6);
+        text-decoration: none;
+        color: white;
+        animation-play-state: paused;
+    }
+
+    .rewards-element .icon {
+        font-size: 20px;
+        animation: pulse 1.5s infinite;
+    }
+
+    .rewards-element .text {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Shaking Animation */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+        20%, 40%, 60%, 80% { transform: translateX(3px); }
+    }
+
+    /* Pulse Animation for Icon */
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    /* Responsive adjustments for Rewards element */
+    @media (max-width: 768px) {
+        .rewards-element {
+            bottom: 15px;
+            left: 15px;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .rewards-element .icon {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .rewards-element {
+            bottom: 10px;
+            left: 10px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+
+        .rewards-element .icon {
+            font-size: 16px;
+        }
+    }
+
+    /* Section title container styling */
+    .section-title {
+        text-align: center !important;
+        margin: 40px 0 !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .section-title h2 {
+            font-size: 20px !important;
+            line-height: 28px !important;
+            letter-spacing: 0.4px !important;
+            padding: 12px 25px !important;
+        }
+
+        .section-title h2::after {
+            width: 100px;
+            height: 40px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-title h2 {
+            font-size: 18px !important;
+            line-height: 26px !important;
+            letter-spacing: 0.3px !important;
+            padding: 10px 20px !important;
+        }
+
+        .section-title h2::after {
+            width: 80px;
+            height: 35px;
+        }
+    }
+
     /* Container for the marquee */
     #chat-widget {
       position: fixed;
@@ -1998,7 +2196,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="row">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Shop by category</h2>
+                        <h2>Shop by <span class="highlight">Category</span></h2>
                     </div>
                     <div class="home-category owl-carousel owl-theme">
                         <?php 
@@ -2034,7 +2232,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="row">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Trending products</h2>
+                        <h2>Trending <span class="highlight">Products</span></h2>
                     </div>
                     <div class="trending-products owl-carousel owl-theme">
                         <?php 
@@ -2144,7 +2342,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="row">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Our products</h2>
+                        <h2>Our <span class="highlight">Products</span></h2>
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#home">SPECIAL OFFERS</a>
@@ -2490,7 +2688,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <section class="section-b-padding pro-releted">
 
         <div class="section-title">
-            <h2 style="margin-top: 75px;">Your Certified Trusted Product</h2>
+            <h2 style="margin-top: 75px;">Your Certified <span class="highlight">Trusted Product</span></h2>
         </div>
         <p class="cart-para">
             Established in 2013, we are a trusted manufacturer and
@@ -2544,7 +2742,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </section>
     <section class="section-b-padding pro-releted">
         <div class="section-title">
-            <h2>Committed to Your Wellness and Well-Being</h2>
+            <h2>Committed to Your <span class="highlight">Wellness and Well-Being</span></h2>
         </div>
         <p class="cart-para">At My Nutrify Herbal and Ayurveda, we stay true to tradition,
             creating products using the Classical Ayurvedic process.
@@ -2599,7 +2797,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </div>
     <section class="testimonia-head">
         <div class="section-title">
-            <h2 style="padding-top: 75px;">From our customers</h2>
+            <h2 style="padding-top: 75px;">From Our <span class="highlight">Customers</span></h2>
         </div>
         <div id="testimonialCarousel" class="carousel slide testimonia-carousel" data-bs-ride="carousel"
             data-bs-interval="4000">
@@ -2893,7 +3091,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!-- Testimonial Start -->
     <section class="watch-shop-section">
         <div class="section-title">
-            <h2>Watch and Shop</h2>
+            <h2>Watch and <span class="highlight">Shop</span></h2>
         </div>
 
         <div class="shop-video-carousel-container">
@@ -3089,7 +3287,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="row">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Recent Blogs</h2>
+                        <h2>Recent <span class="highlight">Blogs</span></h2>
                     </div>
                     <div class="home-blog owl-carousel owl-theme">
                     <?php
@@ -3850,6 +4048,46 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// Krishna Ayurved Style Section Title Animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Create intersection observer for section titles
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = '0.2s';
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all section titles
+    const sectionTitles = document.querySelectorAll('.section-title h2');
+    sectionTitles.forEach(function(title, index) {
+        // Add staggered animation delay
+        title.style.animationDelay = (index * 0.1) + 's';
+        observer.observe(title);
+    });
+
+    // Add hover effects for highlighted text
+    const highlightElements = document.querySelectorAll('.section-title h2 .highlight');
+    highlightElements.forEach(function(element) {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+            this.style.transition = 'transform 0.3s ease';
+        });
+
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJ487NCVTQ"></script>
@@ -3916,6 +4154,30 @@ dataLayer.push({event: "gtm.js", ...})
 
     <!-- YouTube IFrame Player API -->
 <script src="https://www.youtube.com/iframe_api"></script>
+
+<!-- Rewards Element -->
+<div class="rewards-element" onclick="openRewardsPage()">
+    <div class="icon">🎁</div>
+    <div class="text">Rewards</div>
+</div>
+
+<script>
+function openRewardsPage() {
+    // You can customize this function to:
+    // 1. Open a rewards page
+    // 2. Show a rewards modal
+    // 3. Redirect to a specific rewards section
+    // For now, it will show an alert - replace with your desired action
+
+    alert('🎁 Welcome to Rewards! \n\nEarn points with every purchase and unlock amazing benefits!\n\n• Get 10 points for every ₹100 spent\n• Redeem points for discounts\n• Exclusive member offers\n\nStart earning rewards today!');
+
+    // Example: Redirect to rewards page
+    // window.location.href = 'rewards.php';
+
+    // Example: Open rewards modal
+    // $('#rewardsModal').modal('show');
+}
+</script>
 
 </body>
 
