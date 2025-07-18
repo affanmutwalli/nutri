@@ -39,6 +39,7 @@ Footer
 Google Font
 =====================================*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 /*====================================
 Typography
 =====================================*/
@@ -849,6 +850,7 @@ button.navbar-toggler span.line::after{
     display: flex;
     align-items: center;
     font-weight: 500;
+    font-family: 'Outfit', sans-serif;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link:first-child a.link-title {
     padding-left: 0px;
@@ -861,28 +863,37 @@ button.navbar-toggler span.line::after{
     display: flex;
     align-items: center;
     position: relative;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
 }
+/* Offers menu item styling - using more compatible approach */
+.megamenu-content .mainwrap ul.main-menu li.menu-link.offers-menu a.link-title span.sp-link-title {
+    color: #ff6b35;
+}
+
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title span.sp-link-title span.hot{
     color: #fff;
-    font-size: 9px;
-    padding: 2px 4px;
+    font-size: 8px;
+    padding: 2px 5px;
     position: absolute;
-    right: 7px;
-    top: -12px;
-    background-color: #ee433f;
+    right: 5px;
+    top: -10px;
+    background-color: #ff4444;
     transform: translateX(100%);
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 2px;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title span.sp-link-title span.hot::before{
     content: "";
     position: absolute;
-    bottom: -4px;
+    bottom: -3px;
     left: 0;
-    border-left: 4px solid #ee433f;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
+    border-left: 3px solid #ff4444;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title.link-title-lg{
     display: none;
@@ -1287,7 +1298,7 @@ button.navbar-toggler span.line::after{
 }
 .t-banner1 .home-offer-banner .o-t-banner .o-t-content h6{
     font-size: 22px;
-    color: #000000;
+    color: white;
 }
 .t-banner1 .home-offer-banner .o-t-banner .o-t-content a{
     margin-top: 21px;

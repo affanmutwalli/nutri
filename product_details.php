@@ -1239,6 +1239,185 @@
     }
 }
 
+/* How to Use Slider Styles */
+.how-to-use-slider-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.how-to-use-slider.owl-carousel {
+    padding: 0 50px;
+}
+
+.how-to-use-slider .owl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.how-to-use-slider .owl-nav button {
+    background: #ff6b35 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: all;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.how-to-use-slider .owl-nav button:hover {
+    background: #e55a2b !important;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+.how-to-use-slider .owl-nav .owl-prev {
+    left: 10px;
+}
+
+.how-to-use-slider .owl-nav .owl-next {
+    right: 10px;
+}
+
+.how-to-use-slider .owl-dots {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.how-to-use-slider .owl-dots .owl-dot {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.how-to-use-slider .owl-dots .owl-dot span {
+    width: 12px;
+    height: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.how-to-use-slider .owl-dots .owl-dot.active span,
+.how-to-use-slider .owl-dots .owl-dot:hover span {
+    background: #ff6b35;
+    transform: scale(1.2);
+}
+
+/* Enhanced use-cart styling for slider */
+.how-to-use-slider .use-cart {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin: 10px;
+    border: 2px solid transparent;
+    position: relative;
+    counter-increment: step-counter;
+}
+
+/* Step number styling */
+.how-to-use-slider .use-cart::before {
+    content: counter(step-counter);
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: #ff6b35;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.how-to-use-slider {
+    counter-reset: step-counter;
+}
+
+.how-to-use-slider .use-cart:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    border-color: #ff6b35;
+}
+
+.how-to-use-slider .use-cart img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.how-to-use-slider .use-cart:hover img {
+    transform: scale(1.1);
+}
+
+.how-to-use-slider .use-cart p {
+    font-size: 16px;
+    color: #305724;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .how-to-use-slider.owl-carousel {
+        padding: 0 30px;
+    }
+
+    .how-to-use-slider .owl-nav button {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 14px !important;
+    }
+
+    .how-to-use-slider .use-cart {
+        padding: 20px 15px;
+    }
+
+    .how-to-use-slider .use-cart img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .how-to-use-slider .use-cart p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-to-use-slider.owl-carousel {
+        padding: 0 20px;
+    }
+
+    .how-to-use-slider .owl-nav .owl-prev {
+        left: 5px;
+    }
+
+    .how-to-use-slider .owl-nav .owl-next {
+        right: 5px;
+    }
+}
 
     .slider-container {
         width: 100%;
@@ -2200,15 +2379,17 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <section class=" pro-releted" id="section4">
                 
                 <h1 class="product-details-title">
-                  Direction To Use My Nutrify Herbal & Ayurveda’s             
+                  Direction To Use My Nutrify Herbal & Ayurveda’s
 <span>
-  <?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== '' 
-    ? nl2br(htmlspecialchars(trim($filteredProductTitle))) 
+  <?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== ''
+    ? nl2br(htmlspecialchars(trim($filteredProductTitle)))
     : 'Product'; ?>
 </span>
                 </h1>
-                
-                <div class="use-container">
+                <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 16px;">Follow these simple steps for best results</p>
+
+                <div class="how-to-use-slider-wrapper">
+                    <div class="how-to-use-slider owl-carousel owl-theme" id="howToUseSlider">
                     <div class="use-cart">
                         <div>
                             <img src="cms/images/products/shake.png" alt="">
@@ -3172,6 +3353,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     </script>
+
+    <!-- How to Use Slider Initialization -->
+    <script>
+    $(document).ready(function() {
+        // Initialize How to Use Slider
+        $('#howToUseSlider').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 4000,
+            autoplayHoverPause: true,
+            smartSpeed: 800,
+            responsive: {
+                0: {
+                    items: 1,
+                    margin: 10
+                },
+                480: {
+                    items: 2,
+                    margin: 15
+                },
+                768: {
+                    items: 3,
+                    margin: 20
+                },
+                1024: {
+                    items: 4,
+                    margin: 20
+                },
+                1200: {
+                    items: 5,
+                    margin: 20
+                }
+            }
+        });
+
+        // Add smooth scroll animation when slider changes
+        $('#howToUseSlider').on('changed.owl.carousel', function(event) {
+            // Optional: Add any additional animations or effects here
+        });
+    });
+    </script>
+
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
