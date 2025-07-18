@@ -5927,6 +5927,8 @@ a.scroll:hover span{
 }
 .pro-page .pro-image .larg-image a.long-img figure.zoom {
      background-position: 10% 10%;
+     background-size: 200%; /* Controls zoom level - 200% = 2x zoom, 150% = 1.5x zoom */
+     background-repeat: no-repeat;
      position: relative;
      overflow: hidden;
      cursor: crosshair;
