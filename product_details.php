@@ -2367,25 +2367,10 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <?php
                             $detailsDescription = !empty($product_details['Description']) ? $product_details['Description'] : '';
                             if (!empty($detailsDescription)) {
-                                $detailsShortDescription = mb_substr($detailsDescription, 0, 100, 'UTF-8');
-                                $detailsHasMoreContent = mb_strlen($detailsDescription, 'UTF-8') > 100;
                             ?>
-                                <p class="ingredients-details-description" id="details-description-short">
-                                    <?php echo nl2br(htmlspecialchars($detailsShortDescription)); ?>
-                                    <?php if ($detailsHasMoreContent): ?>
-                                        <span id="details-description-dots">...</span>
-                                    <?php endif; ?>
+                                <p class="ingredients-details-description">
+                                    <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
                                 </p>
-
-                                <?php if ($detailsHasMoreContent): ?>
-                                    <p class="ingredients-details-description" id="details-description-full" style="display: none;">
-                                        <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
-                                    </p>
-
-                                    <button class="read-more-btn" id="details-read-more-btn" onclick="toggleDescription('details')">
-                                        Read More
-                                    </button>
-                                <?php endif; ?>
                             <?php } else { ?>
                                 <p class="ingredients-details-description">No description available.</p>
                             <?php } ?>
