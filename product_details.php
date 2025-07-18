@@ -1922,6 +1922,76 @@
     .section-b-padding {
         padding: 40px 0;
     }
+
+    /* Read More Button Styling */
+    .product-description-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .read-more-btn {
+        background: linear-gradient(135deg, #ec6504, #ff8533);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(236, 101, 4, 0.3);
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .read-more-btn:hover {
+        background: linear-gradient(135deg, #d35400, #ec6504);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(236, 101, 4, 0.4);
+    }
+
+    .read-more-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(236, 101, 4, 0.3);
+    }
+
+    .read-more-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .read-more-btn:hover::before {
+        left: 100%;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .read-more-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .read-more-btn {
+            padding: 6px 14px;
+            font-size: 12px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
+        }
+    }
       </style>
       <!-- Meta Pixel Code -->
 <script>
@@ -2056,7 +2126,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     <span class="new-price">Price not available</span>
                                  <?php } ?>
                               </div>
-                              <p><?php echo htmlspecialchars($product_data[0]["ShortDescription"] ?? ""); ?></p>
+                              <div class="product-description-container">
+                                 <?php
+                                 $productShortDesc = $product_data[0]["ShortDescription"] ?? "";
+                                 $productShortDescTruncated = mb_substr($productShortDesc, 0, 100, 'UTF-8');
+                                 $productHasMoreContent = mb_strlen($productShortDesc, 'UTF-8') > 100;
+                                 ?>
+
+                                 <p id="product-short-description-short">
+                                     <?php echo htmlspecialchars($productShortDescTruncated); ?>
+                                     <?php if ($productHasMoreContent): ?>
+                                         <span id="product-short-description-dots">...</span>
+                                     <?php endif; ?>
+                                 </p>
+
+                                 <?php if ($productHasMoreContent): ?>
+                                     <p id="product-short-description-full" style="display: none;">
+                                         <?php echo htmlspecialchars($productShortDesc); ?>
+                                     </p>
+
+                                     <button class="read-more-btn" id="product-short-read-more-btn" onclick="toggleDescription('product-short')">
+                                         Read More
+                                     </button>
+                                 <?php endif; ?>
+                              </div>
                               <h6 class="pro-size" style="margin-top: 5px;">Size: </h6>
                               <div class="pro-items">
                                  <?php if (!empty($sizes)) { ?>
@@ -2293,9 +2386,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     My Nutrify Herbal & Ayurveda’s
                     <span><?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== '' ? nl2br(htmlspecialchars(trim($filteredProductTitle))) : 'Product'; ?></span>
                 </h1>
-                <p class="ingredients-details-description">
-                    <?php echo nl2br(htmlspecialchars($product_data[0]["Description"])); ?>
-                </p>
+                <div class="product-description-container">
+                    <?php
+                    $fullDescription = $product_data[0]["Description"];
+                    $shortDescription = mb_substr($fullDescription, 0, 100, 'UTF-8');
+                    $hasMoreContent = mb_strlen($fullDescription, 'UTF-8') > 100;
+                    ?>
+
+                    <p class="ingredients-details-description" id="main-description-short">
+                        <?php echo nl2br(htmlspecialchars($shortDescription)); ?>
+                        <?php if ($hasMoreContent): ?>
+                            <span id="main-description-dots">...</span>
+                        <?php endif; ?>
+                    </p>
+
+                    <?php if ($hasMoreContent): ?>
+                        <p class="ingredients-details-description" id="main-description-full" style="display: none;">
+                            <?php echo nl2br(htmlspecialchars($fullDescription)); ?>
+                        </p>
+
+                        <button class="read-more-btn" id="main-read-more-btn" onclick="toggleDescription('main')">
+                            Read More
+                        </button>
+                    <?php endif; ?>
+                </div>
             </div>
 
 
@@ -2316,14 +2430,34 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         </div>
                     </div>
 
-                    <div class="product-details-section" >
-                        <p class="ingredients-details-description">
+                    <div class="product-details-section">
+                        <div class="product-description-container">
                             <?php
-                echo !empty($product_details['Description'])
-                ? nl2br(htmlspecialchars($product_details['Description']))
-                : "No description available.";
-            ?>
-                        </p>
+                            $detailsDescription = !empty($product_details['Description']) ? $product_details['Description'] : '';
+                            if (!empty($detailsDescription)) {
+                                $detailsShortDescription = mb_substr($detailsDescription, 0, 100, 'UTF-8');
+                                $detailsHasMoreContent = mb_strlen($detailsDescription, 'UTF-8') > 100;
+                            ?>
+                                <p class="ingredients-details-description" id="details-description-short">
+                                    <?php echo nl2br(htmlspecialchars($detailsShortDescription)); ?>
+                                    <?php if ($detailsHasMoreContent): ?>
+                                        <span id="details-description-dots">...</span>
+                                    <?php endif; ?>
+                                </p>
+
+                                <?php if ($detailsHasMoreContent): ?>
+                                    <p class="ingredients-details-description" id="details-description-full" style="display: none;">
+                                        <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
+                                    </p>
+
+                                    <button class="read-more-btn" id="details-read-more-btn" onclick="toggleDescription('details')">
+                                        Read More
+                                    </button>
+                                <?php endif; ?>
+                            <?php } else { ?>
+                                <p class="ingredients-details-description">No description available.</p>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
                 <?php else: ?>
@@ -3352,6 +3486,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+
+    // Read More/Read Less functionality for product descriptions
+    function toggleDescription(type) {
+        const shortElement = document.getElementById(type + '-description-short');
+        const fullElement = document.getElementById(type + '-description-full');
+        const dotsElement = document.getElementById(type + '-description-dots');
+        const buttonElement = document.getElementById(type + '-read-more-btn');
+
+        if (fullElement && (fullElement.style.display === 'none' || fullElement.style.display === '')) {
+            // Show full description
+            shortElement.style.display = 'none';
+            fullElement.style.display = 'block';
+            buttonElement.textContent = 'Read Less';
+            buttonElement.style.background = 'linear-gradient(135deg, #305724, #4a7c59)';
+        } else if (fullElement) {
+            // Show short description
+            shortElement.style.display = 'block';
+            fullElement.style.display = 'none';
+            buttonElement.textContent = 'Read More';
+            buttonElement.style.background = 'linear-gradient(135deg, #ec6504, #ff8533)';
+        }
+    }
     </script>
 
     <!-- How to Use Slider Initialization -->
