@@ -275,7 +275,8 @@ $page = "blogs.php";
                                     <th style="width:50px;">Blog Image</th>
                                     <th>Blog Title</th>
                                     <th>Blog Date</th>
-                                    <th style="width:50px;">IsActice</th>
+                                    <th style="width:50px;">IsActive</th>
+                                    <th style="width:50px;">Visibility</th>
                                     <th style="width:50px;">Edit</th>
                                     <th style="width:50px;">Delete</th>
                                 </tr>
@@ -286,15 +287,24 @@ $page = "blogs.php";
 						for($i=0; $i<count($all_data); $i++)
 						{
 							$status = "Disabled";
+							$eyeIcon = "fa-eye-slash";
+							$eyeColor = "btn-secondary";
+							$eyeTitle = "Show Blog";
+
 							if($all_data[$i]["IsActive"] == "Y")
 							{
 								$status = "Enabled";
+								$eyeIcon = "fa-eye";
+								$eyeColor = "btn-success";
+								$eyeTitle = "Hide Blog";
 							}
-							echo '<tr>
+
+							echo '<tr id="blog-row-'.$all_data[$i]["BlogId"].'">
 									<td><img alt="'.$all_data[$i]["BlogTitle"].'" src="images/blogs/'.$all_data[$i]["PhotoPath"].'" width="100"></td>
 									<td>'.$all_data[$i]["BlogTitle"].'</td>
 									<td>'.date("d-m-Y",strtotime($all_data[$i]["BlogDate"])).'</td>
-									<td>'.$status.'</td>
+									<td><span id="status-'.$all_data[$i]["BlogId"].'">'.$status.'</span></td>
+									<td><button onClick="javascript:toggleVisibility('.$all_data[$i]["BlogId"].');" type="button" class="btn btn-sm '.$eyeColor.'" title="'.$eyeTitle.'" id="eye-btn-'.$all_data[$i]["BlogId"].'"><i class="fa '.$eyeIcon.'" id="eye-icon-'.$all_data[$i]["BlogId"].'"></i></button></td>
 									<td><a href="blogs.php?BlogId='.$all_data[$i]["BlogId"].'"><i class="btn btn-sm btn-info fa fa-edit fa-sm"></i></a></td>
 									<td><button onClick="javascript:fundelete('.$all_data[$i]["BlogId"].');" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default"><i class="fa fa-trash fa-sm"></i></button></td>
 								  </tr>';
@@ -530,6 +540,63 @@ $page = "blogs.php";
                 }
             }
         }).submit();
+    }
+
+    function toggleVisibility(blogId) {
+        $.ajax({
+            url: 'toggle_blog_visibility.php',
+            type: 'POST',
+            data: { BlogId: blogId },
+            dataType: 'json',
+            beforeSend: function() {
+                // Disable the button during request
+                $('#eye-btn-' + blogId).prop('disabled', true);
+            },
+            success: function(data) {
+                if (data.response == "S") {
+                    // Update the status text
+                    $('#status-' + blogId).text(data.statusText);
+
+                    // Update the eye button
+                    var eyeBtn = $('#eye-btn-' + blogId);
+                    var eyeIcon = $('#eye-icon-' + blogId);
+
+                    if (data.newStatus == "Y") {
+                        // Blog is now visible
+                        eyeBtn.removeClass('btn-secondary').addClass('btn-success');
+                        eyeBtn.attr('title', 'Hide Blog');
+                        eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                    } else {
+                        // Blog is now hidden
+                        eyeBtn.removeClass('btn-success').addClass('btn-secondary');
+                        eyeBtn.attr('title', 'Show Blog');
+                        eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                    }
+
+                    // Show success message
+                    $('#ErrorMessage').html(data.msg);
+                    $('#ErrorMessage').removeClass('alert-danger').addClass('alert alert-success alert-dismissible');
+                    document.getElementById("ErrorMessage").style.display = "block";
+                    $("#ErrorMessage").delay(2000).fadeOut(400);
+                } else {
+                    // Show error message
+                    $('#ErrorMessage').html(data.msg);
+                    $('#ErrorMessage').removeClass('alert-success').addClass('alert alert-danger alert-dismissible');
+                    document.getElementById("ErrorMessage").style.display = "block";
+                    $("#ErrorMessage").delay(3000).fadeOut(400);
+                }
+            },
+            error: function() {
+                $('#ErrorMessage').html('Error occurred while updating blog visibility');
+                $('#ErrorMessage').removeClass('alert-success').addClass('alert alert-danger alert-dismissible');
+                document.getElementById("ErrorMessage").style.display = "block";
+                $("#ErrorMessage").delay(3000).fadeOut(400);
+            },
+            complete: function() {
+                // Re-enable the button
+                $('#eye-btn-' + blogId).prop('disabled', false);
+            }
+        });
     }
     $(document).ready(function() {
         bsCustomFileInput.init();
