@@ -2087,10 +2087,698 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<!-- Promotional Popup Styles -->
+<style>
+.promo-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.promo-popup-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.promo-popup-container {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.7) translateY(50px);
+    transition: all 0.3s ease;
+    border: 3px solid #ec6504;
+}
+
+.promo-popup-overlay.show .promo-popup-container {
+    transform: scale(1) translateY(0);
+}
+
+.promo-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #ff4757;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-close-btn:hover {
+    background: #ff3742;
+    transform: scale(1.1);
+}
+
+.promo-content {
+    padding: 30px 25px 25px;
+}
+
+.promo-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.promo-badge {
+    background: linear-gradient(135deg, #ec6504, #ff8533);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.promo-title {
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    line-height: 1.3;
+}
+
+.promo-subtitle {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin: 0;
+}
+
+.promo-body {
+    margin-bottom: 25px;
+}
+
+.promo-offer-box {
+    background: linear-gradient(135deg, #305724, #4a7c59);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-offer-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.promo-discount, .promo-bonus {
+    text-align: center;
+    flex: 1;
+}
+
+.promo-percent, .promo-free {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.promo-text, .promo-condition {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.promo-plus {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 15px;
+    opacity: 0.8;
+}
+
+.promo-features {
+    margin-bottom: 20px;
+}
+
+.promo-feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.promo-icon {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* Mobile Number Input Styles */
+.promo-mobile-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #ec6504;
+    text-align: center;
+}
+
+.promo-mobile-text {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.promo-mobile-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.promo-country-code {
+    background: #305724;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px 0 0 8px;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid #305724;
+}
+
+.promo-mobile-input {
+    flex: 1;
+    max-width: 250px;
+    padding: 12px 15px;
+    border: 2px solid #305724;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.promo-mobile-input:focus {
+    border-color: #ec6504;
+    box-shadow: 0 0 0 3px rgba(236, 101, 4, 0.1);
+}
+
+.promo-mobile-input::placeholder {
+    color: #7f8c8d;
+}
+
+/* OTP Input Styles */
+.promo-otp-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #ec6504;
+    text-align: center;
+}
+
+.promo-otp-text {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.promo-otp-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.promo-otp-input {
+    width: 45px;
+    height: 45px;
+    border: 2px solid #305724;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.promo-otp-input:focus {
+    border-color: #ec6504;
+    box-shadow: 0 0 0 3px rgba(236, 101, 4, 0.1);
+    transform: scale(1.05);
+}
+
+.promo-otp-input:valid {
+    border-color: #27ae60;
+    background: #d5f4e6;
+}
+
+/* Verify Button Styles */
+.promo-verify-btn {
+    background: linear-gradient(135deg, #305724, #4a7c59);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(48, 87, 36, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-verify-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(48, 87, 36, 0.4);
+}
+
+.promo-verify-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.promo-loader {
+    display: inline-block;
+}
+
+/* Error Message Styles */
+.promo-error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+/* Resend Section Styles */
+.promo-resend-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.promo-resend-text {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.promo-resend-btn {
+    background: none;
+    border: none;
+    color: #ec6504;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.promo-resend-btn:disabled {
+    color: #bdc3c7;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+.promo-change-number-btn {
+    background: #f39c12;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.promo-change-number-btn:hover {
+    background: #e67e22;
+    transform: scale(1.05);
+}
+
+/* Step Animation */
+.promo-step {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s ease;
+}
+
+.promo-step.slide-out-left {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.promo-step.slide-in-right {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.promo-step.slide-in-right.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.promo-code-section {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px dashed #ec6504;
+}
+
+.promo-code-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.promo-code-label {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-right: 10px;
+}
+
+.promo-code {
+    background: #ec6504;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: monospace;
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.promo-copy-btn {
+    background: #305724;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.promo-copy-btn:hover {
+    background: #4a7c59;
+    transform: scale(1.05);
+}
+
+.promo-footer {
+    text-align: center;
+}
+
+.promo-shop-btn {
+    background: linear-gradient(135deg, #ec6504, #ff8533);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(236, 101, 4, 0.3);
+}
+
+.promo-shop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(236, 101, 4, 0.4);
+}
+
+.promo-timer {
+    font-size: 12px;
+    color: #e74c3c;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .promo-popup-container {
+        margin: 20px;
+        max-width: none;
+        width: calc(100% - 40px);
+    }
+
+    .promo-content {
+        padding: 25px 20px 20px;
+    }
+
+    .promo-title {
+        font-size: 20px;
+    }
+
+    .promo-offer-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .promo-plus {
+        margin: 10px 0;
+        transform: rotate(90deg);
+    }
+
+    .promo-code-box {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .promo-code {
+        margin: 0;
+    }
+
+    .promo-mobile-input-group {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .promo-country-code {
+        border-radius: 8px 8px 0 0;
+        border-bottom: none;
+    }
+
+    .promo-mobile-input {
+        border-radius: 0 0 8px 8px;
+        border-top: none;
+        border-left: 2px solid #305724;
+        max-width: none;
+    }
+
+    .promo-otp-input-group {
+        gap: 5px;
+    }
+
+    .promo-otp-input {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .promo-mobile-text, .promo-otp-text {
+        font-size: 14px;
+    }
+}
+</style>
+
 </head>
 
 <body class="home-1">
-    
+
+    <!-- Promotional Popup Modal -->
+    <div id="promoPopup" class="promo-popup-overlay">
+        <div class="promo-popup-container">
+            <button class="promo-close-btn" onclick="closePromoPopup()">&times;</button>
+
+            <!-- Step 1: Mobile Number Collection -->
+            <div id="promoStep1" class="promo-content promo-step">
+                <div class="promo-header">
+                    <div class="promo-badge">EXCLUSIVE OFFER</div>
+                    <h2 class="promo-title">🌿 Welcome to My Nutrify! 🌿</h2>
+                    <p class="promo-subtitle">Get 25% OFF + FREE Delivery on Your First Order!</p>
+                </div>
+
+                <div class="promo-body">
+                    <div class="promo-offer-box">
+                        <div class="promo-discount">
+                            <span class="promo-percent">25% OFF</span>
+                            <span class="promo-text">on your first order</span>
+                        </div>
+                        <div class="promo-plus">+</div>
+                        <div class="promo-bonus">
+                            <span class="promo-free">FREE DELIVERY</span>
+                            <span class="promo-condition">on orders above ₹399</span>
+                        </div>
+                    </div>
+
+                    <div class="promo-mobile-section">
+                        <p class="promo-mobile-text">📱 Enter your mobile number to unlock this exclusive offer:</p>
+                        <div class="promo-mobile-input-group">
+                            <div class="promo-country-code">+91</div>
+                            <input type="tel" id="promoMobileNumber" class="promo-mobile-input" placeholder="Enter 10-digit mobile number" maxlength="10" pattern="[0-9]{10}">
+                        </div>
+                        <div id="promoMobileError" class="promo-error-message"></div>
+                        <button class="promo-verify-btn" onclick="sendOTP()">
+                            <span id="verifyBtnText">📲 Send OTP</span>
+                            <span id="verifyBtnLoader" class="promo-loader" style="display: none;">⏳ Sending...</span>
+                        </button>
+                    </div>
+
+                    <div class="promo-features">
+                        <div class="promo-feature">
+                            <span class="promo-icon">🔒</span>
+                            <span>Your number is safe & secure</span>
+                        </div>
+                        <div class="promo-feature">
+                            <span class="promo-icon">🎁</span>
+                            <span>Instant discount code delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: OTP Verification -->
+            <div id="promoStep2" class="promo-content promo-step" style="display: none;">
+                <div class="promo-header">
+                    <div class="promo-badge">VERIFY OTP</div>
+                    <h2 class="promo-title">🔐 Almost There!</h2>
+                    <p class="promo-subtitle">We've sent a 6-digit OTP to <span id="displayMobileNumber"></span></p>
+                </div>
+
+                <div class="promo-body">
+                    <div class="promo-otp-section">
+                        <p class="promo-otp-text">Enter the OTP to unlock your discount:</p>
+                        <div class="promo-otp-input-group">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="promo-otp-input" maxlength="1" pattern="[0-9]">
+                        </div>
+                        <div id="promoOtpError" class="promo-error-message"></div>
+                        <button class="promo-verify-btn" onclick="verifyOTP()">
+                            <span id="otpVerifyBtnText">✅ Verify OTP</span>
+                            <span id="otpVerifyBtnLoader" class="promo-loader" style="display: none;">⏳ Verifying...</span>
+                        </button>
+
+                        <div class="promo-resend-section">
+                            <p class="promo-resend-text">Didn't receive OTP?
+                                <button class="promo-resend-btn" onclick="resendOTP()" id="resendOtpBtn" disabled>
+                                    Resend in <span id="resendTimer">30</span>s
+                                </button>
+                            </p>
+                            <button class="promo-change-number-btn" onclick="changeNumber()">📝 Change Number</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Success & Promo Code -->
+            <div id="promoStep3" class="promo-content promo-step" style="display: none;">
+                <div class="promo-header">
+                    <div class="promo-badge">🎉 SUCCESS!</div>
+                    <h2 class="promo-title">🌟 Congratulations! 🌟</h2>
+                    <p class="promo-subtitle">Your exclusive discount is ready to use!</p>
+                </div>
+
+                <div class="promo-body">
+                    <div class="promo-offer-box">
+                        <div class="promo-discount">
+                            <span class="promo-percent">25% OFF</span>
+                            <span class="promo-text">on your first order</span>
+                        </div>
+                        <div class="promo-plus">+</div>
+                        <div class="promo-bonus">
+                            <span class="promo-free">FREE DELIVERY</span>
+                            <span class="promo-condition">on orders above ₹399</span>
+                        </div>
+                    </div>
+
+                    <div class="promo-features">
+                        <div class="promo-feature">
+                            <span class="promo-icon">🌱</span>
+                            <span>100% Natural & Ayurvedic</span>
+                        </div>
+                        <div class="promo-feature">
+                            <span class="promo-icon">🏆</span>
+                            <span>Trusted by 50,000+ Customers</span>
+                        </div>
+                        <div class="promo-feature">
+                            <span class="promo-icon">⚡</span>
+                            <span>Fast & Secure Delivery</span>
+                        </div>
+                    </div>
+
+                    <div class="promo-code-section">
+                        <div class="promo-code-box">
+                            <span class="promo-code-label">Your Exclusive Code:</span>
+                            <span class="promo-code" id="promoCode">WELCOME25</span>
+                            <button class="promo-copy-btn" onclick="copyPromoCode()">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="promo-footer">
+                    <button class="promo-shop-btn" onclick="startShopping()">
+                        🛒 Start Shopping Now
+                    </button>
+                    <p class="promo-timer">⏰ Limited Time Offer - Expires in <span id="promoTimer">24:00:00</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php include("components/header.php"); ?>
     <div id="chat-icon">
         <img src="image/doc.png" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%;">
@@ -4177,6 +4865,537 @@ function openRewardsPage() {
     // Example: Open rewards modal
     // $('#rewardsModal').modal('show');
 }
+</script>
+
+<!-- Promotional Popup JavaScript -->
+<script>
+// Promotional Popup Functionality
+let promoTimer;
+let timeLeft = 24 * 60 * 60; // 24 hours in seconds
+let resendTimer;
+let resendTimeLeft = 30;
+let currentStep = 1;
+let userMobileNumber = '';
+let generatedOTP = '';
+
+// Check if popup should be shown (not shown in last 24 hours)
+function shouldShowPopup() {
+    const lastShown = localStorage.getItem('promoPopupLastShown');
+    const now = new Date().getTime();
+    const oneDayInMs = 24 * 60 * 60 * 1000;
+
+    if (!lastShown || (now - parseInt(lastShown)) > oneDayInMs) {
+        return true;
+    }
+    return false;
+}
+
+// Show promotional popup
+function showPromoPopup() {
+    if (shouldShowPopup()) {
+        const popup = document.getElementById('promoPopup');
+        popup.classList.add('show');
+
+        // Mark as shown
+        localStorage.setItem('promoPopupLastShown', new Date().getTime().toString());
+
+        // Initialize popup
+        showStep(1);
+
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Show specific step
+function showStep(step) {
+    // Hide all steps
+    document.getElementById('promoStep1').style.display = 'none';
+    document.getElementById('promoStep2').style.display = 'none';
+    document.getElementById('promoStep3').style.display = 'none';
+
+    // Show current step
+    document.getElementById('promoStep' + step).style.display = 'block';
+    currentStep = step;
+
+    // Start timer only on final step
+    if (step === 3) {
+        startPromoTimer();
+    }
+}
+
+// Mobile Number Validation and OTP Functions
+function validateMobileNumber(mobile) {
+    const mobileRegex = /^[6-9]\d{9}$/;
+    return mobileRegex.test(mobile);
+}
+
+function generateOTP() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function sendOTP() {
+    const mobileInput = document.getElementById('promoMobileNumber');
+    const errorDiv = document.getElementById('promoMobileError');
+    const verifyBtn = document.querySelector('#promoStep1 .promo-verify-btn');
+    const btnText = document.getElementById('verifyBtnText');
+    const btnLoader = document.getElementById('verifyBtnLoader');
+
+    const mobile = mobileInput.value.trim();
+
+    // Clear previous errors
+    errorDiv.textContent = '';
+
+    // Validate mobile number
+    if (!mobile) {
+        errorDiv.textContent = '❌ Please enter your mobile number';
+        mobileInput.focus();
+        return;
+    }
+
+    if (!validateMobileNumber(mobile)) {
+        errorDiv.textContent = '❌ Please enter a valid 10-digit mobile number';
+        mobileInput.focus();
+        return;
+    }
+
+    // Show loading state
+    verifyBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+
+    // Store mobile number
+    userMobileNumber = mobile;
+
+    // Make actual API call to send OTP via Interakt
+    fetch('exe_files/promo_popup_otp.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=send_otp&mobile=${encodeURIComponent(mobile)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hide loading state
+        verifyBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+
+        if (data.response === 'S') {
+            // OTP sent successfully
+
+            // For testing purposes, log the OTP (remove in production)
+            if (data.otp_for_testing) {
+                console.log('OTP for testing:', data.otp_for_testing);
+                generatedOTP = data.otp_for_testing; // Store for testing
+            }
+
+            // Show success message
+            errorDiv.style.color = '#27ae60';
+            errorDiv.textContent = '✅ OTP sent successfully to your WhatsApp!';
+
+            // Update display mobile number
+            document.getElementById('displayMobileNumber').textContent = '+91 ' + mobile;
+
+            // Move to OTP verification step
+            setTimeout(() => {
+                showStep(2);
+                startResendTimer();
+
+                // Focus first OTP input
+                document.querySelector('.promo-otp-input').focus();
+            }, 1000);
+        } else {
+            // Show error message
+            errorDiv.style.color = '#dc3545';
+            errorDiv.textContent = data.msg || 'Failed to send OTP. Please try again.';
+        }
+    })
+    .catch(error => {
+        console.error('Error sending OTP:', error);
+
+        // Hide loading state
+        verifyBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+
+        // Show error message
+        errorDiv.style.color = '#dc3545';
+        errorDiv.textContent = 'Network error. Please check your connection and try again.';
+    });
+}
+
+function verifyOTP() {
+    const otpInputs = document.querySelectorAll('.promo-otp-input');
+    const errorDiv = document.getElementById('promoOtpError');
+    const verifyBtn = document.querySelector('#promoStep2 .promo-verify-btn');
+    const btnText = document.getElementById('otpVerifyBtnText');
+    const btnLoader = document.getElementById('otpVerifyBtnLoader');
+
+    // Get entered OTP
+    let enteredOTP = '';
+    otpInputs.forEach(input => {
+        enteredOTP += input.value;
+    });
+
+    // Clear previous errors
+    errorDiv.textContent = '';
+
+    // Validate OTP
+    if (enteredOTP.length !== 6) {
+        errorDiv.textContent = '❌ Please enter complete 6-digit OTP';
+        return;
+    }
+
+    // Show loading state
+    verifyBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+
+    // Make actual API call to verify OTP
+    fetch('exe_files/promo_popup_otp.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=verify_otp&mobile=${encodeURIComponent(userMobileNumber)}&otp=${encodeURIComponent(enteredOTP)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hide loading state
+        verifyBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+
+        if (data.response === 'S') {
+            // Success - show promo code
+            errorDiv.style.color = '#27ae60';
+            errorDiv.textContent = '✅ OTP verified successfully!';
+
+            // Save verified mobile number (for future use)
+            localStorage.setItem('verifiedMobileNumber', userMobileNumber);
+
+            setTimeout(() => {
+                showStep(3);
+            }, 1000);
+
+        } else {
+            // Failed verification
+            errorDiv.style.color = '#dc3545';
+            errorDiv.textContent = data.msg || '❌ Invalid OTP. Please try again.';
+
+            // Clear OTP inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+            });
+            otpInputs[0].focus();
+        }
+    })
+    .catch(error => {
+        console.error('Error verifying OTP:', error);
+
+        // Hide loading state
+        verifyBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+
+        // Show error message
+        errorDiv.style.color = '#dc3545';
+        errorDiv.textContent = 'Network error. Please check your connection and try again.';
+
+        // Clear OTP inputs
+        otpInputs.forEach(input => {
+            input.value = '';
+        });
+        otpInputs[0].focus();
+    });
+}
+
+function resendOTP() {
+    const errorDiv = document.getElementById('promoOtpError');
+    const resendBtn = document.getElementById('resendOtpBtn');
+
+    // Show loading state
+    resendBtn.disabled = true;
+    resendBtn.innerHTML = '⏳ Sending...';
+
+    // Make actual API call to resend OTP
+    fetch('exe_files/promo_popup_otp.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=send_otp&mobile=${encodeURIComponent(userMobileNumber)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.response === 'S') {
+            // For testing purposes, log the OTP (remove in production)
+            if (data.otp_for_testing) {
+                console.log('New OTP for testing:', data.otp_for_testing);
+                generatedOTP = data.otp_for_testing; // Store for testing
+            }
+
+            // Show success message
+            errorDiv.style.color = '#27ae60';
+            errorDiv.textContent = '✅ New OTP sent successfully to your WhatsApp!';
+
+            // Restart resend timer
+            startResendTimer();
+
+            // Clear OTP inputs
+            const otpInputs = document.querySelectorAll('.promo-otp-input');
+            otpInputs.forEach(input => {
+                input.value = '';
+            });
+            otpInputs[0].focus();
+
+            setTimeout(() => {
+                errorDiv.textContent = '';
+            }, 3000);
+        } else {
+            // Show error message
+            errorDiv.style.color = '#dc3545';
+            errorDiv.textContent = data.msg || 'Failed to resend OTP. Please try again.';
+
+            // Reset button
+            resendBtn.disabled = false;
+            resendBtn.innerHTML = 'Resend OTP';
+        }
+    })
+    .catch(error => {
+        console.error('Error resending OTP:', error);
+
+        // Show error message
+        errorDiv.style.color = '#dc3545';
+        errorDiv.textContent = 'Network error. Please try again.';
+
+        // Reset button
+        resendBtn.disabled = false;
+        resendBtn.innerHTML = 'Resend OTP';
+    });
+}
+
+function changeNumber() {
+    // Clear mobile input
+    document.getElementById('promoMobileNumber').value = '';
+    document.getElementById('promoMobileError').textContent = '';
+
+    // Go back to step 1
+    showStep(1);
+
+    // Focus mobile input
+    document.getElementById('promoMobileNumber').focus();
+}
+
+function startResendTimer() {
+    resendTimeLeft = 30;
+    const resendBtn = document.getElementById('resendOtpBtn');
+    const resendTimerSpan = document.getElementById('resendTimer');
+
+    resendBtn.disabled = true;
+
+    resendTimer = setInterval(() => {
+        resendTimeLeft--;
+        resendTimerSpan.textContent = resendTimeLeft;
+
+        if (resendTimeLeft <= 0) {
+            clearInterval(resendTimer);
+            resendBtn.disabled = false;
+            resendBtn.innerHTML = 'Resend OTP';
+        }
+    }, 1000);
+}
+
+// Close promotional popup
+function closePromoPopup() {
+    const popup = document.getElementById('promoPopup');
+    popup.classList.remove('show');
+
+    // Clear timers
+    if (promoTimer) {
+        clearInterval(promoTimer);
+    }
+    if (resendTimer) {
+        clearInterval(resendTimer);
+    }
+
+    // Reset to step 1
+    showStep(1);
+
+    // Clear form data
+    document.getElementById('promoMobileNumber').value = '';
+    document.getElementById('promoMobileError').textContent = '';
+    document.getElementById('promoOtpError').textContent = '';
+
+    const otpInputs = document.querySelectorAll('.promo-otp-input');
+    otpInputs.forEach(input => {
+        input.value = '';
+    });
+
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Copy promo code to clipboard
+function copyPromoCode() {
+    const promoCode = document.getElementById('promoCode').textContent;
+
+    // Create temporary textarea to copy text
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = promoCode;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
+
+    // Show feedback
+    const copyBtn = document.querySelector('.promo-copy-btn');
+    const originalText = copyBtn.textContent;
+    copyBtn.textContent = 'Copied!';
+    copyBtn.style.background = '#27ae60';
+
+    setTimeout(() => {
+        copyBtn.textContent = originalText;
+        copyBtn.style.background = '#305724';
+    }, 2000);
+}
+
+// Start shopping - redirect to products page
+function startShopping() {
+    closePromoPopup();
+    window.location.href = 'products.php';
+}
+
+// Start countdown timer
+function startPromoTimer() {
+    const timerElement = document.getElementById('promoTimer');
+
+    promoTimer = setInterval(() => {
+        const hours = Math.floor(timeLeft / 3600);
+        const minutes = Math.floor((timeLeft % 3600) / 60);
+        const seconds = timeLeft % 60;
+
+        const formattedTime =
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+
+        timerElement.textContent = formattedTime;
+
+        timeLeft--;
+
+        if (timeLeft < 0) {
+            clearInterval(promoTimer);
+            timerElement.textContent = 'Offer Expired';
+        }
+    }, 1000);
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', function(event) {
+    const popup = document.getElementById('promoPopup');
+    const container = document.querySelector('.promo-popup-container');
+
+    if (popup && popup.classList.contains('show') &&
+        !container.contains(event.target)) {
+        closePromoPopup();
+    }
+});
+
+// Close popup with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closePromoPopup();
+    }
+});
+
+// OTP Input Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const otpInputs = document.querySelectorAll('.promo-otp-input');
+
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', function(e) {
+            // Only allow numbers
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            // Move to next input if current is filled
+            if (this.value.length === 1 && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+
+            // Auto-verify if all inputs are filled
+            if (index === otpInputs.length - 1 && this.value.length === 1) {
+                let allFilled = true;
+                otpInputs.forEach(inp => {
+                    if (inp.value.length === 0) allFilled = false;
+                });
+                if (allFilled) {
+                    setTimeout(verifyOTP, 500);
+                }
+            }
+        });
+
+        input.addEventListener('keydown', function(e) {
+            // Move to previous input on backspace if current is empty
+            if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                otpInputs[index - 1].focus();
+            }
+
+            // Move to next input on arrow right
+            if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+
+            // Move to previous input on arrow left
+            if (e.key === 'ArrowLeft' && index > 0) {
+                otpInputs[index - 1].focus();
+            }
+        });
+
+        input.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+
+            if (pastedData.length === 6) {
+                otpInputs.forEach((inp, idx) => {
+                    inp.value = pastedData[idx] || '';
+                });
+                setTimeout(verifyOTP, 500);
+            }
+        });
+    });
+
+    // Mobile number input validation
+    const mobileInput = document.getElementById('promoMobileNumber');
+    if (mobileInput) {
+        mobileInput.addEventListener('input', function() {
+            // Only allow numbers
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            // Clear error message when user starts typing
+            document.getElementById('promoMobileError').textContent = '';
+        });
+
+        mobileInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendOTP();
+            }
+        });
+    }
+});
+
+// Show popup after page loads - EARLIER timing
+window.addEventListener('load', function() {
+    // Show popup after just 1 second for earlier appearance
+    setTimeout(showPromoPopup, 1000);
+});
+
+// Alternative: Show popup immediately when DOM is ready for even earlier appearance
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(showPromoPopup, 500);
+});
 </script>
 
 </body>
