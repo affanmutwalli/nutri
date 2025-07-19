@@ -4386,6 +4386,10 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <section class="banner-section">
         <img src="cms/images/banners/banner.jpg" alt="5% OFF - Use Code SAVE5 on orders above ₹499">
     </section>
+    <section class="banner-section">
+      <a href="combos.php">  <img src="cms/images/banners/Combo banner.jpg" alt=""></a>
+      <a href="combos.php">  <img src="cms/images/banners/JUST FOR YOU.jpg" alt=""></a>
+    </section>
 
     <section class="offer-main">
         <div class="offer-product-card">
