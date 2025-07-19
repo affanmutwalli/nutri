@@ -246,6 +246,34 @@
             </a>
           </li>
 
+          <!-- Affiliate Applications Section -->
+          <li class="nav-item">
+            <a href="affiliate_applications.php" class="nav-link <?php if($page == "affiliate_applications.php") echo "active"; ?>">
+              <i class="nav-icon fas fa-handshake"></i>
+              <p>
+                Affiliate Applications
+                <?php
+                // Show pending applications count badge
+                try {
+                  $obj = new main();
+                  $mysqli = $obj->connection();
+                  if ($mysqli) {
+                    $result = $mysqli->query("SELECT COUNT(*) as count FROM affiliate_applications WHERE application_status = 'pending'");
+                    if ($result) {
+                      $pending_count = $result->fetch_assoc()['count'];
+                      if ($pending_count > 0) {
+                        echo '<span class="badge badge-danger right">' . $pending_count . '</span>';
+                      }
+                    }
+                  }
+                } catch (Exception $e) {
+                  // Ignore errors for badge display
+                }
+                ?>
+              </p>
+            </a>
+          </li>
+
           <?php
           // if($_SESSION["email"] == "admin")
           // {
