@@ -38,7 +38,68 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 ?>
 <style>
 /* Default: Hide the nav-toggler (applies to desktop by default) */
+.sidebar-element {
+    display: none; /* Hidden by default on desktop */
+}
 
+.nav-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: transparent;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Navigation Menu Positioning */
+.main-menu-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.mainwrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.main-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .main-menu {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-menu {
+        gap: 10px;
+    }
+}
 
 .pro-qty {
     display: flex;
