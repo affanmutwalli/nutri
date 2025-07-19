@@ -4352,7 +4352,122 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             well-being comes first!</p>
     </section>
     </section>
-    <div class="marquee-container">
+  
+    <section class="offer-main">
+         <img src= "cms/images/banners/WEB-BANNER-5%-SAVE (1).jpg">
+        <div class="offer-product-card">
+            <div class="offer-product-info">
+                <p class="offer-category">DIABETIC WELLNESS</p>
+                <h2 class="offer-product-title">Diabetic Care Juice</h2>
+                <p class="offer-description">More than 13 lakh happy customers have solved their diabetic issues with
+                    blend of
+                    11 powerful herbs.</p>
+                <a href="product_details.php?ProductId=10" class="offer-shop-btn">Shop now</a>
+            </div>
+
+            <div class="offer-product-image">
+                <div class="offer-badge">New</div>
+                <div class="offer-price">₹549</div>
+                <img src="cms/images/products/Diabteic-Care.jpg" alt="Diabic Care Juice">
+            </div>
+        </div>
+        <div class="offer-product-card">
+            <div class="offer-product-info">
+                <p class="offer-category">Cardiac wellness
+                </p>
+                <h2 class="offer-product-title">Cholesterol Care Juice
+                </h2>
+                <p class="offer-description">Powerful blend of 5 natural ingredients for healthy cholesterol levels.
+                    Healthy juice for Healthy heart.</p>
+                <a href="product_details.php?ProductId=9" class="offer-shop-btn">Shop now</a>
+            </div>
+
+            <div class="offer-product-image">
+                <div class="offer-badge">New</div>
+                <div class="offer-price">₹599</div>
+                <img src="cms/images/products/Img_4634.jpg" alt="Diabetic Care Juice">
+            </div>
+        </div>
+    </section>
+     <section class="combo-container">
+
+
+        <div class="combo-card">
+            <div class="combo-card-content">
+                <p class="combo-section-title">BUY TOGETHER</p>
+                <h2 class="combo-main-title">Combo</h2>
+                <p class="combo-view-all">VIEW ALL</p>
+            </div>
+            <div class="combo-card-images">
+                <div class="combo-carousel-container">
+                    <button class="combo-carousel-button prev">❮</button>
+                    <div class="combo-carousel-track">
+                        <div class="combo-carousel-item">
+                        <a href="product_details.php?ProductId=22"> <img src="cms/images/products/6726.jpg" alt="Product 1"> </a>
+                        </div>
+                        <div class="combo-carousel-item">
+                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
+                        </div>
+                    </div>
+                    <button class="combo-carousel-button next">❯</button>
+                </div>
+
+                <div class="plus-sign">+</div>
+
+                <div class="combo-carousel-container">
+                    <button class="combo-carousel-button prev">❮</button>
+                    <div class="combo-carousel-track">
+                     <div class="combo-carousel-item">
+                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
+                        </div>
+                        <div class="combo-carousel-item">
+                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
+                        </div>
+                    </div>
+                    <button class="combo-carousel-button next">❯</button>
+                </div>
+            </div>
+        </div>
+        <div class="marquee-container">
         <div class="marquee-content">
             <div class="marquee-item">
                 <p>ISO Certified</p>
@@ -4391,7 +4506,8 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
         </div>
     </div>
-    <section class="testimonia-head">
+   
+ <section class="testimonia-head">
         <div class="section-title">
             <h2 style="padding-top: 75px;">From Our <span class="highlight">Customers</span></h2>
         </div>
@@ -4565,120 +4681,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </a>
         </div>
     </section>
-    <section class="offer-main">
-        <div class="offer-product-card">
-            <div class="offer-product-info">
-                <p class="offer-category">DIABETIC WELLNESS</p>
-                <h2 class="offer-product-title">Diabetic Care Juice</h2>
-                <p class="offer-description">More than 13 lakh happy customers have solved their diabetic issues with
-                    blend of
-                    11 powerful herbs.</p>
-                <a href="product_details.php?ProductId=10" class="offer-shop-btn">Shop now</a>
-            </div>
-
-            <div class="offer-product-image">
-                <div class="offer-badge">New</div>
-                <div class="offer-price">₹549</div>
-                <img src="cms/images/products/Diabteic-Care.jpg" alt="Diabic Care Juice">
-            </div>
-        </div>
-        <div class="offer-product-card">
-            <div class="offer-product-info">
-                <p class="offer-category">Cardiac wellness
-                </p>
-                <h2 class="offer-product-title">Cholesterol Care Juice
-                </h2>
-                <p class="offer-description">Powerful blend of 5 natural ingredients for healthy cholesterol levels.
-                    Healthy juice for Healthy heart.</p>
-                <a href="product_details.php?ProductId=9" class="offer-shop-btn">Shop now</a>
-            </div>
-
-            <div class="offer-product-image">
-                <div class="offer-badge">New</div>
-                <div class="offer-price">₹599</div>
-                <img src="cms/images/products/Img_4634.jpg" alt="Diabetic Care Juice">
-            </div>
-        </div>
-    </section>
-     <section class="combo-container">
-
-
-        <div class="combo-card">
-            <div class="combo-card-content">
-                <p class="combo-section-title">BUY TOGETHER</p>
-                <h2 class="combo-main-title">Combo</h2>
-                <p class="combo-view-all">VIEW ALL</p>
-            </div>
-            <div class="combo-card-images">
-                <div class="combo-carousel-container">
-                    <button class="combo-carousel-button prev">❮</button>
-                    <div class="combo-carousel-track">
-                        <div class="combo-carousel-item">
-                        <a href="product_details.php?ProductId=22"> <img src="cms/images/products/6726.jpg" alt="Product 1"> </a>
-                        </div>
-                        <div class="combo-carousel-item">
-                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
-                        </div>
-                    </div>
-                    <button class="combo-carousel-button next">❯</button>
-                </div>
-
-                <div class="plus-sign">+</div>
-
-                <div class="combo-carousel-container">
-                    <button class="combo-carousel-button prev">❮</button>
-                    <div class="combo-carousel-track">
-                     <div class="combo-carousel-item">
-                           <a href="product_details.php?ProductId=15"> <img src="cms/images/products/7579.jpg" alt="Product 2"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=14"><img src="cms/images/products/9976.jpg" alt="Product 3"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=6"><img src="cms/images/products/6526.png" alt="Product 4"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=23"><img src="cms/images/products/2081.jpg" alt="Product 5"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
-                        </div>
-                        <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=11"><img src="cms/images/products/7133.jpg" alt="Product 9"></a>
-                        </div>
-                    </div>
-                    <button class="combo-carousel-button next">❯</button>
-                </div>
-            </div>
-        </div>
-
 
 
 
