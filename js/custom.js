@@ -36,9 +36,9 @@ $(".mm-fullscreen-bg").on('click', function(){
 });
 
 /*==============================================================
-  Newsletter Popup
+  Newsletter Popup - Disabled to prevent conflict with promo popup
 ==============================================================*/
-$('#myModal1').modal('show');
+// $('#myModal1').modal('show'); // Commented out to prevent conflict
 
 /*==============================================================
 // cart js
