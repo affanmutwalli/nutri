@@ -483,54 +483,81 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
-    document.querySelector('.apply-coupon-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-
+    // Simple and robust coupon application
+    function applyCouponSimple() {
         const couponCode = document.querySelector('#coupon-code').value.trim();
         const responseElement = document.querySelector('#coupon-response');
 
-        // Clear previous response
-        responseElement.style.display = 'none';
-        responseElement.textContent = '';
-
         if (!couponCode) {
             responseElement.textContent = 'Please enter a coupon code.';
+            responseElement.style.color = 'red';
             responseElement.style.display = 'block';
             return;
         }
 
-        // Make AJAX request to backend API
-        fetch('exe_files/fetch_coupon.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    code: couponCode
-                }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.response === 'S') {
-                    // Success: Show success message or apply discount
-                    responseElement.textContent =
-                        `Coupon applied successfully! Discount: ₹ ${data.discount}`;
-                    responseElement.style.color = 'green';
-                } else {
-                    // Failure: Show error message
-                    responseElement.textContent = data.msg || 'Invalid coupon code.';
+        // Show loading
+        responseElement.textContent = 'Applying coupon...';
+        responseElement.style.color = '#007bff';
+        responseElement.style.display = 'block';
+
+        // Get order amount
+        const finalTotalElement = document.getElementById('final-total');
+        const orderAmount = finalTotalElement ? parseFloat(finalTotalElement.innerText.trim()) || 0 : 0;
+
+        // Use XMLHttpRequest for better compatibility
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'exe_files/fetch_coupon.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+
+                    if (data.response === 'S') {
+                        // Success
+                        responseElement.textContent = data.msg;
+                        responseElement.style.color = 'green';
+
+                        // Apply discount
+                        applyDiscountToCart(data.discount, couponCode);
+
+                        // Disable input
+                        document.querySelector('#coupon-code').disabled = true;
+                        document.querySelector('.apply-coupon-btn').disabled = true;
+                        document.querySelector('.apply-coupon-btn').textContent = 'Applied';
+
+                    } else {
+                        // Error
+                        responseElement.textContent = data.msg;
+                        responseElement.style.color = 'red';
+                    }
+                } catch (e) {
+                    responseElement.textContent = 'Invalid response from server';
                     responseElement.style.color = 'red';
                 }
-                responseElement.style.display = 'block';
-            })
-            .catch((error) => {
-                // Error: Show general error message
-                responseElement.textContent = 'An error occurred. Please try again later.';
+            } else {
+                responseElement.textContent = 'Server error occurred';
                 responseElement.style.color = 'red';
-                responseElement.style.display = 'block';
-                console.error('Error:', error);
-            });
+            }
+        };
+
+        xhr.onerror = function() {
+            responseElement.textContent = 'Network error occurred';
+            responseElement.style.color = 'red';
+        };
+
+        xhr.send(JSON.stringify({
+            code: couponCode,
+            order_amount: orderAmount
+        }));
+    }
+
+    document.querySelector('.apply-coupon-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        applyCouponSimple();
     });
+
     </script>
     <script>
     let orderData = {};
@@ -953,6 +980,189 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                 });
             });
     }
+
+    // Global variables to track original totals
+    let originalSubtotal = null;
+    let originalFinalTotal = null;
+    let appliedDiscount = 0;
+    let appliedCouponCode = '';
+
+    // Function to apply discount to cart totals
+    function applyDiscountToCart(discount, couponCode) {
+        const finalTotalElement = document.getElementById('final-total');
+
+        if (!finalTotalElement) {
+            console.error('Final total element not found');
+            return;
+        }
+
+        // Store original totals if not already stored
+        if (originalFinalTotal === null) {
+            originalFinalTotal = parseFloat(finalTotalElement.innerText.trim()) || 0;
+        }
+
+        // Calculate new total after discount
+        const discountAmount = parseFloat(discount) || 0;
+        const newTotal = Math.max(0, originalFinalTotal - discountAmount);
+
+        // Update the final total display
+        finalTotalElement.innerText = newTotal.toFixed(0);
+
+        // Store applied discount info
+        appliedDiscount = discountAmount;
+        appliedCouponCode = couponCode;
+
+        // Add or update discount line in order summary
+        addDiscountLineToSummary(discountAmount, couponCode);
+
+        console.log(`Discount applied: ₹${discountAmount}, New total: ₹${newTotal}`);
+    }
+
+    // Function to remove discount from cart totals
+    function removeDiscountFromCart() {
+        const finalTotalElement = document.getElementById('final-total');
+
+        if (!finalTotalElement || originalFinalTotal === null) {
+            return;
+        }
+
+        // Restore original total
+        finalTotalElement.innerText = originalFinalTotal.toFixed(0);
+
+        // Remove discount line from summary
+        removeDiscountLineFromSummary();
+
+        // Reset discount tracking
+        appliedDiscount = 0;
+        appliedCouponCode = '';
+
+        console.log(`Discount removed, Total restored to: ₹${originalFinalTotal}`);
+    }
+
+    // Function to add discount line to order summary
+    function addDiscountLineToSummary(discount, couponCode) {
+        // Remove existing discount line if any
+        removeDiscountLineFromSummary();
+
+        // Find the order summary list
+        const orderSummaryList = document.querySelector('.order-summary .order-history');
+        if (!orderSummaryList) {
+            console.error('Order summary list not found');
+            return;
+        }
+
+        // Create discount line
+        const discountLine = document.createElement('li');
+        discountLine.className = 'order-details coupon-discount';
+        discountLine.innerHTML = `
+            <span>Coupon Discount (${couponCode})</span>
+            <span style="color: #28a745;">-₹${discount.toFixed(2)} INR</span>
+        `;
+
+        // Insert before the last item (which should be delivery charges)
+        const lastItem = orderSummaryList.lastElementChild;
+        if (lastItem) {
+            orderSummaryList.insertBefore(discountLine, lastItem);
+        } else {
+            orderSummaryList.appendChild(discountLine);
+        }
+    }
+
+    // Function to remove discount line from order summary
+    function removeDiscountLineFromSummary() {
+        const discountLine = document.querySelector('.coupon-discount');
+        if (discountLine) {
+            discountLine.remove();
+        }
+    }
+
+    // Fallback function using XMLHttpRequest
+    function tryXMLHttpRequest(couponCode, orderAmount, responseElement) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'exe_files/fetch_coupon.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log('XMLHttpRequest status:', xhr.status);
+                console.log('XMLHttpRequest response:', xhr.responseText);
+
+                if (xhr.status === 200) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        console.log('XMLHttpRequest parsed data:', data);
+
+                        if (data.response === 'S') {
+                            // Success: Show success message and apply discount
+                            responseElement.textContent = data.msg || `Coupon applied successfully! Discount: ₹ ${data.discount}`;
+                            responseElement.style.color = 'green';
+
+                            // Apply the discount to the cart totals
+                            applyDiscountToCart(data.discount, couponCode);
+
+                            // Disable the coupon input and button
+                            const couponInput = document.getElementById('coupon-code');
+                            const applyButton = document.querySelector('.apply-coupon-btn');
+                            if (couponInput) couponInput.disabled = true;
+                            if (applyButton) {
+                                applyButton.disabled = true;
+                                applyButton.textContent = 'Applied';
+                            }
+
+                        } else {
+                            // Failure: Show error message
+                            responseElement.textContent = data.msg || 'Invalid coupon code.';
+                            responseElement.style.color = 'red';
+
+                            // Re-enable the apply button
+                            const applyButton = document.querySelector('.apply-coupon-btn');
+                            if (applyButton) {
+                                applyButton.disabled = false;
+                            }
+                        }
+                        responseElement.style.display = 'block';
+
+                    } catch (e) {
+                        console.error('XMLHttpRequest JSON parse error:', e);
+                        showFinalError(responseElement, 'Invalid response from server');
+                    }
+                } else {
+                    console.error('XMLHttpRequest failed with status:', xhr.status);
+                    showFinalError(responseElement, 'Server error occurred');
+                }
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('XMLHttpRequest network error');
+            showFinalError(responseElement, 'Network error occurred');
+        };
+
+        const requestData = JSON.stringify({
+            code: couponCode,
+            order_amount: orderAmount
+        });
+
+        console.log('Sending XMLHttpRequest with data:', requestData);
+        xhr.send(requestData);
+    }
+
+    // Function to show final error when all methods fail
+    function showFinalError(responseElement, message) {
+        responseElement.textContent = message + '. Please try again later.';
+        responseElement.style.color = 'red';
+        responseElement.style.display = 'block';
+
+        // Re-enable the apply button
+        const applyButton = document.querySelector('.apply-coupon-btn');
+        if (applyButton) {
+            applyButton.disabled = false;
+        }
+
+        // Remove any previously applied discount
+        removeDiscountFromCart();
+    }
+
     </script>
     
  <script>

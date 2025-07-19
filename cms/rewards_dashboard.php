@@ -1,7 +1,7 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
-include("../database/dbconnection.php");
+include('database/dbconnection.php');
 $obj = new main();
 $mysqli = $obj->connection();
 sec_session_start();
@@ -12,8 +12,12 @@ if (login_check($mysqli) != true) {
     exit();
 }
 
+require_once '../includes/setup_rewards_database.php';
 require_once '../includes/RewardsSystem.php';
 require_once '../includes/CouponSystem.php';
+
+// Auto-setup database tables
+autoSetupRewardsSystem($mysqli);
 
 $selected = "rewards_dashboard.php";
 $page = "rewards_dashboard.php";

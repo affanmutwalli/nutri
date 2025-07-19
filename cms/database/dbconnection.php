@@ -8,7 +8,7 @@
 		public $downloads, $no_rows_downloads, $news_letter, $no_rows_news_letter, $no_rows, $data, $id;
 		
 		function connection()
-		{			
+		{
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			set_exception_handler(function($e) {
 			error_log($e->getMessage());
@@ -16,6 +16,7 @@
 			});
 			$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 			//$mysqli->set_charset("utf8mb4");
+			return $mysqli;
 		}
 
 		
