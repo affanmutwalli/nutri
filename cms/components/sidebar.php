@@ -218,6 +218,34 @@
             </ul>
           </li>
 
+          <!-- Contact Messages Section -->
+          <li class="nav-item">
+            <a href="contact_messages.php" class="nav-link <?php if($page == "contact_messages.php") echo "active"; ?>">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Contact Messages
+                <?php
+                // Show unread count badge
+                try {
+                  $obj = new main();
+                  $mysqli = $obj->connection();
+                  if ($mysqli) {
+                    $result = $mysqli->query("SELECT COUNT(*) as count FROM contact_messages WHERE status = 'new'");
+                    if ($result) {
+                      $unread_count = $result->fetch_assoc()['count'];
+                      if ($unread_count > 0) {
+                        echo '<span class="badge badge-warning right">' . $unread_count . '</span>';
+                      }
+                    }
+                  }
+                } catch (Exception $e) {
+                  // Ignore errors for badge display
+                }
+                ?>
+              </p>
+            </a>
+          </li>
+
           <?php
           // if($_SESSION["email"] == "admin")
           // {
