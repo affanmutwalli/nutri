@@ -5208,9 +5208,35 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     }
                 });
             });
+            */
 
-            // Add to cart for non-logged-in users (session-based cart)
-            $(document).on('click', '.add-to-cart-session', function () { // Use event delegation
+            // OVERRIDE: Redirect to product page when Add to Cart is clicked on index page
+            // Remove any existing event handlers first
+            $(document).off('click', '.add-to-cart-session');
+
+            // Add new event handler with higher priority
+            $(document).on('click.redirect', '.add-to-cart-session', function (e) {
+                e.preventDefault(); // Prevent default link behavior
+                e.stopPropagation(); // Stop event bubbling
+                e.stopImmediatePropagation(); // Stop other handlers
+
+                var productId = $(this).data('product-id'); // Get product ID
+                console.log('🔄 REDIRECTING to product page for Product ID:', productId);
+
+                // Redirect to product details page
+                if (productId) {
+                    window.location.href = 'product_details.php?ProductId=' + productId;
+                } else {
+                    console.error('❌ Product ID not found');
+                    alert('Product not found. Please try again.');
+                }
+
+                return false; // Ensure no other handlers run
+            });
+
+            // Keep the original AJAX cart functionality for other pages (commented out for index page)
+            /*
+            $(document).on('click', '.add-to-cart-session-ajax', function () { // Use different class for AJAX functionality
                 var productId = $(this).data('product-id'); // Get product ID
                 console.log('Product ID:', productId); // Debugging: Log the product ID
 
@@ -6757,6 +6783,37 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         document.body.appendChild(testBtn);
     }, 3000);
+});
+
+// FORCE OVERRIDE: Add to Cart redirect functionality
+// This runs after all other scripts to ensure it takes priority
+window.addEventListener('load', function() {
+    console.log('🚀 Overriding Add to Cart functionality...');
+
+    // Remove all existing click handlers from add-to-cart-session buttons
+    document.querySelectorAll('.add-to-cart-session').forEach(function(button) {
+        // Clone the button to remove all event listeners
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+
+        // Add our redirect functionality
+        newButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const productId = this.getAttribute('data-product-id');
+            console.log('🔄 FORCE REDIRECT to product page for Product ID:', productId);
+
+            if (productId) {
+                window.location.href = 'product_details.php?ProductId=' + productId;
+            } else {
+                console.error('❌ Product ID not found');
+                alert('Product not found. Please try again.');
+            }
+        });
+    });
+
+    console.log('✅ Add to Cart override complete!');
 });
 </script>
 
