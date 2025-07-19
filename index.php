@@ -1785,7 +1785,36 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     border: 2px solid white;
 }
 
+/* Banner Section Styles */
+.banner-section {
+    text-align: center;
+    margin: 40px 0;
+    padding: 20px;
+    
+    border-radius: 15px;
+}
 
+.banner-section img {
+    max-width: 95%;
+    height: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto;
+    border: 1px orange solid;
+    transition: transform 0.3s ease;
+}
+
+.banner-section img:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .banner-section {
+        margin: 20px 0;
+        padding: 15px;
+    }
+}
 
     </style>
 
@@ -4352,9 +4381,13 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             well-being comes first!</p>
     </section>
     </section>
-  
+
+    <!-- Banner Image Section -->
+    <section class="banner-section">
+        <img src="cms/images/banners/banner.jpg" alt="5% OFF - Use Code SAVE5 on orders above ₹499">
+    </section>
+
     <section class="offer-main">
-         <img src= "cms/images/banners/WEB-BANNER-5%-SAVE (1).jpg">
         <div class="offer-product-card">
             <div class="offer-product-info">
                 <p class="offer-category">DIABETIC WELLNESS</p>
