@@ -293,12 +293,23 @@ if ($InputDocId) {
         error_log("Webhook call failed: " . $e->getMessage());
     }
 
+    // Process rewards and coupons for the order
+    try {
+        include_once '../includes/order_rewards_integration.php';
+        processOrderPlacementRewards($newOrderId);
+    } catch (Exception $e) {
+        error_log("Error processing rewards for order $newOrderId: " . $e->getMessage());
+    }
+
     // Clear sessions after successful order placement
     if (isset($_SESSION['cart'])) {
         unset($_SESSION['cart']);
     }
     if (isset($_SESSION['buy_now'])) {
         unset($_SESSION['buy_now']);
+    }
+    if (isset($_SESSION['applied_coupon'])) {
+        unset($_SESSION['applied_coupon']);
     }
 
     // Also clear database cart if user is logged in

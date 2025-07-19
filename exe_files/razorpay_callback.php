@@ -99,6 +99,14 @@ if ($generated_signature === $razorpay_signature) {
         unset($_SESSION['buy_now']);
     }
 
+    // Process rewards and coupons for the paid order
+    try {
+        include_once '../includes/order_rewards_integration.php';
+        processPaymentConfirmationRewards($order_db_id);
+    } catch (Exception $e) {
+        error_log("Error processing rewards for paid order $order_db_id: " . $e->getMessage());
+    }
+
     // Clear database cart if user is logged in
     if (isset($orderData['CustomerId']) && !empty($orderData['CustomerId'])) {
         try {
@@ -109,6 +117,11 @@ if ($generated_signature === $razorpay_signature) {
             // Log error but don't fail the order
             error_log("Error clearing database cart after payment: " . $e->getMessage());
         }
+    }
+
+    // Clear coupon session
+    if (isset($_SESSION['applied_coupon'])) {
+        unset($_SESSION['applied_coupon']);
     }
 
     echo json_encode(["status" => "success", "message" => "Payment verified and order created successfully"]);

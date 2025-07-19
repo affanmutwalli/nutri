@@ -174,7 +174,51 @@
                         </li>
                     </ul>
                 </li>
-          <?php 
+
+          <!-- Customer Rewards & Coupons Section -->
+          <li class="nav-item has-treeview <?php if(in_array($selected, ["rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_analytics.php"])) echo "menu-open"; ?>">
+            <a href="#" class="nav-link <?php if(in_array($selected, ["rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_analytics.php"])) echo "active"; ?>">
+              <i class="nav-icon fas fa-gift"></i>
+              <p>
+                Customer Rewards
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="rewards_dashboard.php" class="nav-link <?php if($page == "rewards_dashboard.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Rewards Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="coupon_management.php" class="nav-link <?php if($page == "coupon_management.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Coupon Management</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="rewards_management.php" class="nav-link <?php if($page == "rewards_management.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Rewards Catalog</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="customer_points.php" class="nav-link <?php if($page == "customer_points.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Customer Points</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="rewards_analytics.php" class="nav-link <?php if($page == "rewards_analytics.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Analytics & Reports</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <?php
           // if($_SESSION["email"] == "admin")
           // {
             ?>
