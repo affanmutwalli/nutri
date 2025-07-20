@@ -3100,9 +3100,9 @@ s
 
 .simple-about-content {
     max-width: 1142px;
-    margin: 30px auto 0;
+    margin: 29px auto 18px;
     background: white;
-    padding: 30px;
+    padding: 28px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -3764,6 +3764,100 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 }
 </style>
 
+<!-- Wellness Categories Animation Styles -->
+<style>
+/* Wellness Category Circle Animations */
+.h-cate {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.h-cate:hover {
+    transform: translateY(-8px);
+}
+
+.h-cate a {
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Circle Image Container Animation */
+.h-cate a > div {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.h-cate:hover a > div {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Animation */
+.h-cate img {
+    transition: all 0.4s ease-in-out;
+    filter: brightness(1) saturate(1);
+}
+
+.h-cate:hover img {
+    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.05);
+}
+
+/* Text Label Animation */
+.h-cate span {
+    transition: all 0.3s ease-in-out;
+    display: block;
+    margin-top: 5px;
+}
+
+.h-cate:hover span {
+    color: #ff6b35 !important;
+    font-weight: 600 !important;
+    transform: translateY(-2px);
+}
+
+/* Pulse Animation for New/Featured Categories */
+@keyframes wellness-pulse {
+    0% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
+    50% { box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3); }
+    100% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
+}
+
+/* Floating Animation */
+@keyframes wellness-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Apply floating animation to alternate items */
+.h-cate:nth-child(even) {
+    animation: wellness-float 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.h-cate:nth-child(odd) {
+    animation: wellness-float 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+/* Hover state overrides floating */
+.h-cate:hover {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .h-cate:hover {
+        transform: translateY(-4px);
+    }
+
+    .h-cate:hover a > div {
+        transform: scale(1.05);
+    }
+}
+</style>
+
 </head>
 
 <body class="home-1">
@@ -4116,7 +4210,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <div class="tred-pro">
                                 <div class="tr-pro-img" style="position: relative; overflow: hidden;">
                                     <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
-                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 250px; object-fit: cover; transition: var(--transition);">
+                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 250px; object-fit: contain; transition: var(--transition);">
                                         <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                     </a>
                                 </div>
