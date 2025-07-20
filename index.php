@@ -1835,7 +1835,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 }
 
 .banner-section img {
-    max-width: 95%;
+    max-width: 100%;
     height: 250px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -1849,11 +1849,30 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     transform: scale(1.02);
 }
 
+/* Responsive Design for Banner Sections */
 @media (max-width: 768px) {
     .banner-section {
         margin: 20px 0;
         padding: 15px;
     }
+
+    /* Two banners stack on mobile */
+    .two-banners-section div[style*="display: flex"] {
+        flex-direction: column !important;
+        gap: 15px !important;
+        border: 1px orange solid;
+    }
+
+    /* Product cards stack on mobile */
+    .offer-main div[style*="display: flex"] {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+}
+
+/* Hover effects for banner images */
+.two-banners-section img:hover {
+    transform: scale(1.02) !important;
 }
 
     </style>
@@ -2406,6 +2425,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         padding: 20px;
         /* Padding around the section */
     }
+    .offer-main img {border: 1px orange solid;}
 
     /* Card container */
     .offer-product-card {
@@ -2415,7 +2435,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         background-color: #FCE2CF;
         border-radius: 15px;
         padding: 40px;
-        max-width: 700px;
+        max-width: 585px;
         /* Max width for larger screens */
         width: 100%;
         /* Allow cards to take full width */
@@ -2424,6 +2444,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         /* Added for badge positioning */
         transition: transform 0.3s;
         /* Smooth transition for hover effect */
+        border: 1px orange solid;
     }
 
     .offer-product-card:hover {
@@ -4422,16 +4443,35 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </section>
     </section>
 
-    <!-- Banner Image Section -->
-    <section class="banner-section">
-        <img src="cms/images/banners/banner.jpg" alt="5% OFF - Use Code SAVE5 on orders above ₹499">
-    </section>
-    <section class="banner-section">
-      <a href="combos.php">  <img src="cms/images/banners/Combo banner.jpg" alt=""></a>
-      <a href="combos.php">  <img src="cms/images/banners/JUST FOR YOU.jpg" alt=""></a>
+    <!-- Top Banner Section -->
+    <section class="banner-section" style="margin: 30px 0; padding: 0 20px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <img src="cms/images/banners/banner.jpg" alt="5% OFF - Use Code SAVE5 on orders above ₹499"
+                 style="width: 100%; height: auto; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #ff6b35;">
+        </div>
     </section>
 
-    <section class="offer-main">
+    <!-- Two Banner Cards Section -->
+    <section class="two-banners-section" style="margin: 30px 0; padding: 0 20px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 20px;">
+            <div style="flex: 1;">
+                <a href="combos.php">
+                    <img src="cms/images/banners/Combo banner.jpg" alt="Buy Together Combo - View All"
+                         style="width: 100%; height: auto; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: transform 0.3s ease; border: 2px solid #ff6b35;">
+                </a>
+            </div>
+            <div style="flex: 1;">
+                <a href="combos.php">
+                    <img src="cms/images/banners/JUST FOR YOU.jpg" alt="Just For You Offers - View All"
+                         style="width: 100%; height: auto; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: transform 0.3s ease; border: 2px solid #ff6b35;">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Cards Section -->
+    <section class="offer-main" style="margin: 40px 0; padding: 0 20px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
         <div class="offer-product-card">
             <div class="offer-product-info">
                 <p class="offer-category">DIABETIC WELLNESS</p>
