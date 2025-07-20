@@ -156,14 +156,32 @@ class OrderCompletionHooks {
                     return true;
                 }
             } else {
-                // Record usage for legacy coupon system
-                $query = "UPDATE coupons SET UsedCount = COALESCE(UsedCount, 0) + 1 WHERE Code = ?";
-                $stmt = $this->mysqli->prepare($query);
-                $stmt->bind_param("s", $couponCode);
-                $stmt->execute();
-                
-                error_log("Legacy coupon usage recorded for order $orderId: $couponCode");
-                return true;
+                // Check if it's a rewards coupon
+                $rewardsQuery = "SELECT * FROM coupons WHERE coupon_code = ? AND is_active = 1";
+                $rewardsStmt = $this->mysqli->prepare($rewardsQuery);
+                $rewardsStmt->bind_param("s", $couponCode);
+                $rewardsStmt->execute();
+                $rewardsResult = $rewardsStmt->get_result();
+
+                if ($rewardsCoupon = $rewardsResult->fetch_assoc()) {
+                    // Mark rewards coupon as used
+                    $updateQuery = "UPDATE coupons SET is_used = 1, used_at = NOW() WHERE coupon_code = ?";
+                    $updateStmt = $this->mysqli->prepare($updateQuery);
+                    $updateStmt->bind_param("s", $couponCode);
+                    $updateStmt->execute();
+
+                    error_log("Rewards coupon marked as used for order $orderId: $couponCode");
+                    return true;
+                } else {
+                    // Record usage for legacy coupon system
+                    $query = "UPDATE coupons SET UsedCount = COALESCE(UsedCount, 0) + 1 WHERE Code = ?";
+                    $stmt = $this->mysqli->prepare($query);
+                    $stmt->bind_param("s", $couponCode);
+                    $stmt->execute();
+
+                    error_log("Legacy coupon usage recorded for order $orderId: $couponCode");
+                    return true;
+                }
             }
             
             return false;

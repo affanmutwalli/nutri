@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Filter Logic</title>
+    <style>
+        .product-item {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            display: block;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .filter-controls {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .debug-info {
+            background: #e8f4fd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Test Filter Logic</h2>
+    
+    <div class="filter-controls">
+        <h3>Subcategory Filters:</h3>
+        <label><input type="checkbox" name="subcategory" value="1"> Subcategory 1</label><br>
+        <label><input type="checkbox" name="subcategory" value="2"> Subcategory 2</label><br>
+        <label><input type="checkbox" name="subcategory" value="3"> Subcategory 3</label><br>
+        <label><input type="checkbox" name="subcategory" value="4"> Subcategory 4</label><br>
+        <label><input type="checkbox" name="subcategory" value="5"> Subcategory 5</label><br>
+        <label><input type="checkbox" name="subcategory" value="6"> Subcategory 6</label><br>
+        <button onclick="applyTestFilters()">Apply Filters</button>
+        <button onclick="clearAllFilters()">Clear All</button>
+    </div>
+    
+    <div class="debug-info" id="debug-info">
+        Debug info will appear here...
+    </div>
+    
+    <div id="product-count">Product count: 0</div>
+    
+    <div id="products-container">
+        <!-- Simulate products with different subcategory IDs -->
+        <div class="product-item" data-subcategory-id="1" data-name="Product A1">Product A1 (SubCat: 1)</div>
+        <div class="product-item" data-subcategory-id="1" data-name="Product A2">Product A2 (SubCat: 1)</div>
+        <div class="product-item" data-subcategory-id="2" data-name="Product B1">Product B1 (SubCat: 2)</div>
+        <div class="product-item" data-subcategory-id="2" data-name="Product B2">Product B2 (SubCat: 2)</div>
+        <div class="product-item" data-subcategory-id="3" data-name="Product C1">Product C1 (SubCat: 3)</div>
+        <div class="product-item" data-subcategory-id="3" data-name="Product C2">Product C2 (SubCat: 3)</div>
+        <div class="product-item" data-subcategory-id="4" data-name="Product D1">Product D1 (SubCat: 4)</div>
+        <div class="product-item" data-subcategory-id="5" data-name="Product E1">Product E1 (SubCat: 5)</div>
+        <div class="product-item" data-subcategory-id="6" data-name="Product F1">Product F1 (SubCat: 6)</div>
+        <div class="product-item" data-subcategory-id="" data-name="Product No SubCat">Product No SubCat (SubCat: empty)</div>
+    </div>
+
+    <script>
+        function applyTestFilters() {
+            console.log('=== Applying Test Filters ===');
+            
+            const productItems = document.querySelectorAll('.product-item');
+            const debugInfo = document.getElementById('debug-info');
+            const productCount = document.getElementById('product-count');
+            
+            // Collect filter data (same logic as combos.php)
+            const filterData = {
+                subcategory: Array.from(document.querySelectorAll('input[name="subcategory"]:checked')).map(cb => cb.value)
+            };
+            
+            console.log('Filter data:', filterData);
+            
+            let visibleCount = 0;
+            let debugLog = [];
+            
+            debugLog.push('Filter Data: ' + JSON.stringify(filterData));
+            debugLog.push('Total products to check: ' + productItems.length);
+            debugLog.push('---');
+            
+            // Filter each product (same logic as combos.php)
+            productItems.forEach((item, index) => {
+                let shouldShow = true;
+                
+                debugLog.push(`Product ${index + 1}: ${item.dataset.name}`);
+                debugLog.push(`  SubCategoryId: "${item.dataset.subcategoryId}"`);
+                
+                // Subcategory filter (exact same logic as combos.php)
+                if (filterData.subcategory.length > 0) {
+                    const itemSubcategoryId = String(item.dataset.subcategoryId || '');
+                    const hasMatchingSubcategory = filterData.subcategory.some(subId => String(subId) === itemSubcategoryId);
+                    
+                    debugLog.push(`  Selected subcategories: [${filterData.subcategory.join(', ')}]`);
+                    debugLog.push(`  Item subcategory (as string): "${itemSubcategoryId}"`);
+                    debugLog.push(`  Has matching subcategory: ${hasMatchingSubcategory}`);
+                    
+                    if (!hasMatchingSubcategory) {
+                        shouldShow = false;
+                        debugLog.push(`  HIDDEN by subcategory filter`);
+                    } else {
+                        debugLog.push(`  SHOWN by subcategory filter`);
+                    }
+                } else {
+                    debugLog.push(`  No subcategory filters applied - SHOWN`);
+                }
+                
+                debugLog.push(`  Final decision: ${shouldShow ? 'SHOW' : 'HIDE'}`);
+                debugLog.push('---');
+                
+                // Show/hide the product
+                if (shouldShow) {
+                    item.style.display = 'block';
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.add('hidden');
+                }
+            });
+            
+            debugLog.push(`Final visible count: ${visibleCount}`);
+            
+            // Update UI
+            productCount.textContent = `Product count: ${visibleCount}`;
+            debugInfo.innerHTML = debugLog.join('<br>');
+            
+            console.log('Visible products:', visibleCount);
+        }
+        
+        function clearAllFilters() {
+            // Uncheck all checkboxes
+            document.querySelectorAll('input[name="subcategory"]').forEach(cb => cb.checked = false);
+            
+            // Show all products
+            document.querySelectorAll('.product-item').forEach(item => {
+                item.style.display = 'block';
+                item.classList.remove('hidden');
+            });
+            
+            document.getElementById('product-count').textContent = 'Product count: ' + document.querySelectorAll('.product-item').length;
+            document.getElementById('debug-info').innerHTML = 'All filters cleared - showing all products';
+        }
+        
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('input[name="subcategory"]').forEach(checkbox => {
+                checkbox.addEventListener('change', applyTestFilters);
+            });
+            
+            // Initial count
+            clearAllFilters();
+        });
+    </script>
+</body>
+</html>

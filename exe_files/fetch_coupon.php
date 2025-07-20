@@ -82,7 +82,55 @@ try {
  */
 function checkEnhancedCoupon($couponCode, $orderAmount, $mysqli) {
     try {
-        // Check if enhanced_coupons table exists
+        // First check rewards-generated coupons table
+        $rewardsQuery = "SELECT * FROM coupons
+                         WHERE coupon_code = ?
+                           AND is_active = 1
+                           AND is_used = 0
+                           AND (expires_at IS NULL OR expires_at >= NOW())";
+
+        $rewardsStmt = $mysqli->prepare($rewardsQuery);
+        if ($rewardsStmt) {
+            $rewardsStmt->bind_param("s", $couponCode);
+            $rewardsStmt->execute();
+            $rewardsResult = $rewardsStmt->get_result();
+
+            if ($rewardsCoupon = $rewardsResult->fetch_assoc()) {
+                // Handle rewards coupon
+                $discount = 0;
+                if ($rewardsCoupon['discount_type'] === 'fixed') {
+                    $discount = min($rewardsCoupon['discount_value'], $orderAmount);
+                } elseif ($rewardsCoupon['discount_type'] === 'free_shipping') {
+                    $discount = 0; // Free shipping handled separately
+                }
+
+                // Check minimum order amount
+                $minAmount = $rewardsCoupon['min_order_amount'] ?? 0;
+                if ($orderAmount < $minAmount) {
+                    return [
+                        'found' => true,
+                        'response' => [
+                            "msg" => "Minimum order amount ₹" . number_format($minAmount, 2) . " required",
+                            "response" => "E"
+                        ]
+                    ];
+                }
+
+                return [
+                    'found' => true,
+                    'response' => [
+                        "msg" => "Reward coupon applied successfully! You saved ₹" . number_format($discount, 2),
+                        "response" => "S",
+                        "discount" => $discount,
+                        "coupon_id" => $rewardsCoupon['id'],
+                        "coupon_code" => $rewardsCoupon['coupon_code'],
+                        "is_reward_coupon" => true
+                    ]
+                ];
+            }
+        }
+
+        // Then check if enhanced_coupons table exists
         $tableCheck = $mysqli->query("SHOW TABLES LIKE 'enhanced_coupons'");
         if (!$tableCheck || $tableCheck->num_rows === 0) {
             return ['found' => false];

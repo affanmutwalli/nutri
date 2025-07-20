@@ -132,80 +132,768 @@ $obj->connection();
         font-size: 16px;
         text-align: center;
     }
-    
+
+    /* Combos Page Styles - Krishna Ayurveda Match */
+    .combos-header {
+        background: #fff;
+        color: #333;
+        padding: 40px 0 20px 0;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .combos-header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0;
+        text-align: left;
+        color: #333;
+    }
+
+    .filter-sort-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sort-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .products-count {
+        font-weight: 600;
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .sort-dropdown {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sort-dropdown select {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: white;
+        font-size: 14px;
+        min-width: 180px;
+    }
+
+    .view-toggle {
+        display: flex;
+        gap: 5px;
+    }
+
+    .view-toggle button {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .view-toggle button.active {
+        background: #305724;
+        color: white;
+        border-color: #305724;
+    }
+
+    .view-toggle button:hover {
+        background: #305724;
+        color: white;
+    }
+
+    /* Filter Sidebar Styles */
+    .filter-sidebar {
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+    .filter-header {
+        padding: 20px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .filter-group {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 20px;
+    }
+
+    .filter-group:last-child {
+        border-bottom: none;
+    }
+
+    .filter-group h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-option {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .filter-option input[type="checkbox"] {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .checkmark {
+        position: absolute;
+        left: 0;
+        height: 16px;
+        width: 16px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+    }
+
+    .filter-option:hover input ~ .checkmark {
+        border-color: #305724;
+    }
+
+    .filter-option input:checked ~ .checkmark {
+        background-color: #305724;
+        border-color: #305724;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .filter-option input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .filter-option .checkmark:after {
+        left: 5px;
+        top: 2px;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    .count {
+        color: #999;
+        font-size: 12px;
+        margin-left: auto;
+    }
+
+    .price-filter {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .price-range {
+        position: relative;
+        height: 20px;
+    }
+
+    .price-slider {
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: #ddd;
+        outline: none;
+        border-radius: 2px;
+        -webkit-appearance: none;
+    }
+
+    .price-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #305724;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+
+    .price-slider::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #305724;
+        cursor: pointer;
+        border-radius: 50%;
+        border: none;
+    }
+
+    .price-inputs {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .filter-apply-btn {
+        width: calc(100% - 40px);
+        background: #305724;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 20px;
+        margin-top: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-apply-btn:hover {
+        background: #254019;
+    }
+
+    .view-controls {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        padding: 15px 0;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .view-btn {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        font-size: 12px;
+        color: #666;
+        border-right: 1px solid #ddd;
+        transition: all 0.3s ease;
+    }
+
+    .view-btn:last-child {
+        border-right: none;
+    }
+
+    .view-btn.active,
+    .view-btn:hover {
+        background: #305724;
+        color: white;
+    }
+
+    /* Loading and Error States */
+    .loading-item,
+    .error-item,
+    .no-products {
+        text-align: center;
+        padding: 40px 20px;
+        color: #666;
+        font-size: 16px;
+        width: 100%;
+        list-style: none;
+    }
+
+    .loading-item {
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .error-item {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        color: #856404;
+    }
+
+    .no-products {
+        background: #e9ecef;
+        border-radius: 8px;
+    }
+
+    /* Product Cards - Krishna Ayurveda Style */
+    .enhanced-grid-items {
+        background: white;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 30px;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .enhanced-grid-items:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        border-color: #ddd;
+    }
+
+    .sale-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #e74c3c;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        z-index: 2;
+        text-transform: uppercase;
+    }
+
+    .product-image-container {
+        position: relative;
+        overflow: hidden;
+        height: 250px;
+    }
+
+    .product-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .enhanced-grid-items:hover .product-image-container img {
+        transform: scale(1.05);
+    }
+
+    .quick-actions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .enhanced-grid-items:hover .quick-actions {
+        opacity: 1;
+    }
+
+    .quick-shop-btn {
+        background: #305724;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+
+    .quick-shop-btn:hover {
+        background: #254019;
+        transform: translateY(-2px);
+    }
+
+    .quick-action-btn {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #333;
+        margin: 0 5px;
+    }
+
+    .quick-action-btn:hover {
+        background: #305724;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .enhanced-caption {
+        padding: 20px;
+    }
+
+    .enhanced-caption h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        height: 44px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .enhanced-caption h3 a {
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .enhanced-caption h3 a:hover {
+        color: #305724;
+    }
+
+    .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .stars {
+        display: flex;
+        gap: 2px;
+    }
+
+    .stars i {
+        color: #ffc107;
+        font-size: 14px;
+    }
+
+    .stars i.empty {
+        color: #ddd;
+    }
+
+    .review-count {
+        font-size: 13px;
+        color: #666;
+        margin-left: 5px;
+    }
+
+    .enhanced-price {
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .enhanced-price .new-price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .enhanced-price .price-details {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .enhanced-price .old-price {
+        text-decoration: line-through;
+        margin-right: 5px;
+    }
+
+    .enhanced-price .savings-text {
+        color: #e74c3c;
+        font-weight: 600;
+    }
+
+    .savings-badge {
+        background: #28a745;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .enhanced-add-to-cart {
+        width: 100%;
+        background: #305724;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .enhanced-add-to-cart:hover {
+        background: #254019;
+        transform: translateY(-1px);
+    }
+
+    /* Pagination Styles */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .pagination a, .pagination span {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background: #305724;
+        color: white;
+        border-color: #305724;
+    }
+
+    .pagination .current {
+        background: #305724;
+        color: white;
+        border-color: #305724;
+    }
+
+    /* List View Styles */
+    .list-view .grid-product {
+        display: block !important;
+    }
+
+    .list-view .enhanced-grid-items {
+        display: flex !important;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .list-view .product-image-container {
+        width: 200px;
+        height: 150px;
+        flex-shrink: 0;
+        margin-right: 20px;
+    }
+
+    .list-view .enhanced-caption {
+        flex: 1;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 150px;
+    }
+
+    .list-view .enhanced-caption h3 {
+        height: auto;
+        margin-bottom: 8px;
+    }
+
+    .list-view .rating-section {
+        margin-bottom: 8px;
+    }
+
+    .list-view .enhanced-price {
+        margin-bottom: 10px;
+    }
+
+    .list-view .enhanced-add-to-cart {
+        width: auto;
+        padding: 8px 20px;
+        align-self: flex-start;
+    }
+
+    .list-view .quick-actions {
+        position: static;
+        opacity: 1;
+        transform: none;
+        margin-left: 15px;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .list-view .sale-badge {
+        position: static;
+        margin-bottom: 10px;
+        align-self: flex-start;
+    }
+
+    /* Grid View Responsive */
+    @media (max-width: 1200px) {
+        .grid-view .grid-product li.enhanced-grid-items {
+            width: calc(50% - 15px);
+            margin-left: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .grid-view .grid-product li.enhanced-grid-items {
+            width: calc(100% - 15px);
+            margin-left: 15px;
+        }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .combos-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .sort-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .sort-dropdown {
+            justify-content: space-between;
+        }
+
+        .view-toggle {
+            justify-content: center;
+        }
+
+        .enhanced-grid-items {
+            margin-bottom: 20px;
+        }
+
+        .product-image-container {
+            height: 200px;
+        }
+
+        .enhanced-caption {
+            padding: 15px;
+        }
+
+        /* List view mobile adjustments */
+        .list-view .enhanced-grid-items {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .list-view .product-image-container {
+            width: 100%;
+            height: 200px;
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+
+        .list-view .enhanced-caption {
+            height: auto;
+            padding: 0 15px;
+        }
+
+        .list-view .enhanced-add-to-cart {
+            width: 100%;
+            align-self: stretch;
+        }
+
+        .list-view .quick-actions {
+            flex-direction: row;
+            justify-content: center;
+            margin: 10px 0;
+        }
+    }
+
     /* Popup Overlay */
-.cart-popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-}
+    .cart-popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+    }
 
-/* Popup Content */
-.cart-popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    width: 300px;
-}
+    /* Popup Content */
+    .cart-popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        width: 300px;
+    }
 
-/* Close Button */
-.close-popup {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    font-size: 20px;
-    cursor: pointer;
-}
+    /* Close Button */
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
 
-/* Popup Heading */
-.cart-popup-body h3 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 15px;
-}
+    /* Popup Heading */
+    .cart-popup-body h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+    }
 
-/* Buttons */
-.cart-popup-actions a {
-    display: inline-block;
-    margin: 10px 5px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
+    /* Buttons */
+    .cart-popup-actions a {
+        display: inline-block;
+        margin: 10px 5px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
 
-.cart-popup-actions .btn-view-cart {
-    background: #305724;
-}
+    .cart-popup-actions .btn-view-cart {
+        background: #305724;
+    }
 
-.cart-popup-actions .btn-view-cart:hover {
-    background: #000000;
-}
+    .cart-popup-actions .btn-view-cart:hover {
+        background: #000000;
+    }
 
-.cart-popup-actions .btn-checkout {
-    background: #ec6504;
-}
+    .cart-popup-actions .btn-checkout {
+        background: #ec6504;
+    }
 
-.cart-popup-actions .btn-checkout:hover {
-    background: #ffffff;
-}
-
+    .cart-popup-actions .btn-checkout:hover {
+        background: #ffffff;
+    }
     </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -244,16 +932,132 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <?php include("components/header.php"); ?>
     <!-- header end -->
 
-    <!-- grid-list start -->
-    <!-- Filter Button (visible on mobile only) -->
+    <!-- Combos Header -->
+    <div class="combos-header">
+        <div class="container">
+            <h1>Combos</h1>
+        </div>
+    </div>
 
+    <!-- grid-list start -->
     <section class="section-tb-padding">
         <div class="container">
             <div class="row">
-                <!-- Filter Section for Mobile and Desktop -->
+                <!-- Filter Sidebar -->
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="filter-sidebar">
+                        <!-- Product Count and Sort -->
+                        <div class="filter-header">
+                            <div class="products-count">
+                                <span id="product-count">Loading...</span> products
+                            </div>
+                            <div class="sort-dropdown">
+                                <label for="sort-select">Sort</label>
+                                <select id="sort-select" onchange="sortProducts()">
+                                    <option value="featured">Featured</option>
+                                    <option value="best-selling">Best selling</option>
+                                    <option value="name-asc">Alphabetically, A-Z</option>
+                                    <option value="name-desc">Alphabetically, Z-A</option>
+                                    <option value="price-low">Price, low to high</option>
+                                    <option value="price-high">Price, high to low</option>
+                                    <option value="date-old">Date, old to new</option>
+                                    <option value="date-new">Date, new to old</option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <!-- Product Type Filter -->
+                        <div class="filter-group">
+                            <h4>Product type</h4>
+                            <div class="filter-options" id="product-type-filters">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="product_type" value="combos" checked>
+                                    <span class="checkmark"></span>
+                                    Combos <span class="count" id="combos-count">(0)</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="product_type" value="cosmetics">
+                                    <span class="checkmark"></span>
+                                    Cosmetics <span class="count" id="cosmetics-count">(0)</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="product_type" value="herbal-powders">
+                                    <span class="checkmark"></span>
+                                    Herbal Powders/Churna <span class="count" id="herbal-count">(0)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div class="filter-group">
+                            <h4>Category</h4>
+                            <div class="filter-options" id="category-filters">
+                                <!-- Categories will be loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Subcategory Filter -->
+                        <div class="filter-group">
+                            <h4>Subcategory</h4>
+                            <div class="filter-options" id="subcategory-filters">
+                                <!-- Subcategories will be loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Price Filter -->
+                        <div class="filter-group">
+                            <h4>Price</h4>
+                            <div class="price-filter">
+                                <div class="price-range">
+                                    <input type="range" id="price-min" min="0" max="2000" value="0" class="price-slider">
+                                    <input type="range" id="price-max" min="0" max="2000" value="2000" class="price-slider">
+                                </div>
+                                <div class="price-inputs">
+                                    <span>₹<span id="price-min-value">0</span> - ₹<span id="price-max-value">2000</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Availability Filter -->
+                        <div class="filter-group">
+                            <h4>Availability</h4>
+                            <div class="filter-options" id="availability-filters">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="availability" value="in-stock" checked>
+                                    <span class="checkmark"></span>
+                                    In stock <span class="count" id="in-stock-count">(0)</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="availability" value="out-of-stock">
+                                    <span class="checkmark"></span>
+                                    Out of stock <span class="count" id="out-stock-count">(0)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Filter Button -->
+                        <button class="filter-apply-btn" onclick="applyFilters()">Filter</button>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div class="col-lg-9 col-md-8 col-12">
+                    <!-- View Toggle -->
+                    <div class="view-controls">
+                        <div class="view-toggle">
+                            <button type="button" class="view-btn active" onclick="toggleView('grid')" id="grid-view">
+                                <i class="fa fa-th"></i> Large
+                            </button>
+                            <button type="button" class="view-btn" onclick="toggleView('grid-small')" id="grid-small-view">
+                                <i class="fa fa-th"></i> Small
+                            </button>
+                            <button type="button" class="view-btn" onclick="toggleView('list')" id="list-view">
+                                <i class="fa fa-list"></i> List
+                            </button>
+                        </div>
+                    </div>
                 <!-- Product Section -->
-                <div class="col-lg-12 col-md-8 col-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <!--<div class="grid-list-banner d-none d-md-block"-->
                     <!--    style="background-image: url(image/product_banner.webp);">-->
                     <!--    <div class="d-flex justify-content-end text-white text-right">-->
@@ -269,40 +1073,70 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <!--</div>-->
 
                     <!-- Product Listing -->
-                    <div class="grid-list-area">
+                    <div class="grid-list-area" id="products-container">
                         <div class="grid-pro">
                             <ul class="grid-product" id="product-list">
-                                <?php 
-                                    
-                                    // Default query to fetch all products
-                                    $FieldNames = array("ProductId", "ProductName", "PhotoPath");
+                                <?php
+                                    // Default query to fetch all products - SIMPLE VERSION FIRST
+                                    $FieldNames = array("ProductId", "ProductName", "PhotoPath", "ShortDescription");
                                     $ParamArray = array();
                                     $Fields = implode(",", $FieldNames);
-                                    $query = "SELECT " . $Fields . " FROM product_master where IsCombo = 'Y'";
+                                    $query = "SELECT " . $Fields . " FROM product_master where IsCombo = 'Y' ORDER BY ProductId DESC";
                                     $all_products = $obj->MysqliSelect1($query, $FieldNames, "", $ParamArray);
-                            
+
+                                    $product_count = 0;
+
                                 if (!empty($all_products)) {
                                     foreach ($all_products as $products) {
+                                        $product_count++;
+
+                                        // Get category and subcategory info for this product
+                                        $categorySubcategoryQuery = "SELECT pm.CategoryId, pm.SubCategoryId, cm.CategoryName, sc.SubCategoryName
+                                                                     FROM product_master pm
+                                                                     LEFT JOIN category_master cm ON pm.CategoryId = cm.CategoryId
+                                                                     LEFT JOIN sub_category sc ON pm.SubCategoryId = sc.SubCategoryId
+                                                                     WHERE pm.ProductId = ?";
+                                        $catSubResult = $obj->MysqliSelect1($categorySubcategoryQuery,
+                                            array("CategoryId", "SubCategoryId", "CategoryName", "SubCategoryName"),
+                                            "i", array($products["ProductId"]));
+
+                                        $categoryId = $catSubResult[0]["CategoryId"] ?? '';
+                                        $subcategoryId = $catSubResult[0]["SubCategoryId"] ?? '';
+                                        $categoryName = $catSubResult[0]["CategoryName"] ?? '';
+                                        $subcategoryName = $catSubResult[0]["SubCategoryName"] ?? '';
+
                                         // Fetch price details
                                         $FieldNamesPrice = array("OfferPrice", "MRP");
                                         $ParamArrayPrice = array($products["ProductId"]);
                                         $FieldsPrice = implode(",", $FieldNamesPrice);
                                         $product_prices = $obj->MysqliSelect1(
-                                            "SELECT " . $FieldsPrice . " FROM product_price WHERE ProductId = ?", 
-                                            $FieldNamesPrice, 
-                                            "i", 
+                                            "SELECT " . $FieldsPrice . " FROM product_price WHERE ProductId = ?",
+                                            $FieldNamesPrice,
+                                            "i",
                                             $ParamArrayPrice
                                         );
-                            
+
+                                        // Fetch review count for rating display
+                                        $FieldNamesReview = array("COUNT(*) as review_count");
+                                        $ParamArrayReview = array($products["ProductId"]);
+                                        $review_data = $obj->MysqliSelect1(
+                                            "SELECT COUNT(*) as review_count FROM product_review WHERE ProductId = ?",
+                                            $FieldNamesReview,
+                                            "i",
+                                            $ParamArrayReview
+                                        );
+                                        $review_count = (!empty($review_data) && isset($review_data[0]['review_count'])) ? $review_data[0]['review_count'] : 0;
+
                                         $lowest_price = PHP_INT_MAX; // Initialize to a very high value
                                         $mrp = PHP_INT_MAX;          // Initialize to a very high value
                                         $savings = 0;                // Default savings
-                                        
+                                        $savings_percentage = 0;     // Savings percentage
+
                                         if (!empty($product_prices)) {
                                             foreach ($product_prices as $product_price) {
                                                 $current_offer_price = floatval($product_price["OfferPrice"]);
                                                 $current_mrp = floatval($product_price["MRP"]);
-                                        
+
                                                 // Ensure both OfferPrice and MRP are greater than 0 and find the lowest values
                                                 if ($current_offer_price > 0 && $current_offer_price < $lowest_price) {
                                                     $lowest_price = $current_offer_price;
@@ -311,55 +1145,114 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                     $mrp = $current_mrp;
                                                 }
                                             }
-                                        
+
                                             // Calculate savings only if valid prices are found
                                             if ($mrp > $lowest_price && $mrp != PHP_INT_MAX && $lowest_price != PHP_INT_MAX) {
                                                 $savings = $mrp - $lowest_price;
+                                                $savings_percentage = round(($savings / $mrp) * 100);
                                             } else {
                                                 $lowest_price = "N/A";
                                                 $mrp = "N/A";
                                             }
                                         }
+
+                                        // Generate star rating (placeholder - you can implement actual rating logic)
+                                        $rating = 4.5; // Default rating
+                                        $full_stars = floor($rating);
+                                        $half_star = ($rating - $full_stars) >= 0.5;
+                                        $empty_stars = 5 - $full_stars - ($half_star ? 1 : 0);
                                         ?>
-                                        <li class="grid-items" style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top:15px;">
-                                            <!-- Product details -->
-                                            <div class="tred-pro">
-                                                <div class="tr-pro-img">
-                                                    <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
-                                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>">
-                                                    </a>
+                                        <li class="grid-items enhanced-grid-items"
+                                            data-name="<?php echo htmlspecialchars($products["ProductName"]); ?>"
+                                            data-price="<?php echo $lowest_price != 'N/A' ? $lowest_price : 0; ?>"
+                                            data-date="<?php echo $products["ProductId"]; ?>"
+                                            data-category-id="<?php echo htmlspecialchars($categoryId); ?>"
+                                            data-subcategory-id="<?php echo htmlspecialchars($subcategoryId); ?>"
+                                            data-category-name="<?php echo htmlspecialchars($categoryName); ?>"
+                                            data-subcategory-name="<?php echo htmlspecialchars($subcategoryName); ?>">
+
+                                            <?php if ($savings > 0): ?>
+                                                <div class="sale-badge">Sale</div>
+                                            <?php endif; ?>
+
+                                            <div class="product-image-container">
+                                                <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
+                                                    <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>">
+                                                </a>
+
+                                                <div class="quick-actions">
+                                                    <button class="quick-shop-btn" onclick="window.location.href='product_details.php?ProductId=<?php echo $products['ProductId']; ?>'">
+                                                        Quick shop
+                                                    </button>
                                                 </div>
-                                              
                                             </div>
-                                            <div class="caption">
+
+                                            <div class="enhanced-caption">
                                                 <h3>
-                                                    <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>"><?php echo htmlspecialchars($products["ProductName"]); ?></a>
+                                                    <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
+                                                        <?php echo htmlspecialchars($products["ProductName"]); ?>
+                                                    </a>
                                                 </h3>
-                                                <div class="pro-price">
-                                                    <span class="new-price">from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
-                                                    <?php if ($mrp != "N/A"): ?>
-                                                        <span class="old-price" style="text-decoration: line-through; color: #999; margin:5px;">₹<?php echo htmlspecialchars($mrp); ?></span>
+
+                                                <div class="rating-section">
+                                                    <div class="stars">
+                                                        <?php for ($i = 0; $i < $full_stars; $i++): ?>
+                                                            <i class="fa fa-star"></i>
+                                                        <?php endfor; ?>
+                                                        <?php if ($half_star): ?>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        <?php endif; ?>
+                                                        <?php for ($i = 0; $i < $empty_stars; $i++): ?>
+                                                            <i class="fa fa-star empty"></i>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                    <span class="review-count">(<?php echo $review_count; ?>)</span>
+                                                </div>
+
+                                                <div class="enhanced-price">
+                                                    <?php if ($lowest_price != "N/A"): ?>
+                                                        <span class="new-price">from ₹<?php echo number_format($lowest_price); ?></span>
+                                                        <?php if ($mrp != "N/A" && $savings > 0): ?>
+                                                            <div class="price-details">
+                                                                <span class="old-price">Regular price ₹<?php echo number_format($mrp); ?></span>
+                                                                <span class="savings-text">Save ₹<?php echo $savings; ?></span>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    <?php else: ?>
+                                                        <span class="new-price">Price on request</span>
                                                     <?php endif; ?>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="pro-btn text-center" style="margin: 5px;">
-                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo htmlspecialchars($products['ProductId']); ?>">
-                                                            <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
-                                                        </a>
-                                                    </div>
-                                                </div>
+
+                                                <button class="enhanced-add-to-cart add-to-cart-session" data-product-id="<?php echo htmlspecialchars($products['ProductId']); ?>">
+                                                    Add to cart
+                                                </button>
                                             </div>
                                         </li>
                                         <?php
                                     }
                                 } else {
-                                    echo '<li class="grid-items no-products"><p>No products found.</p></li>';
+                                    echo '<li class="grid-items no-products"><p>No combo products found.</p></li>';
                                 }
                                 ?>
+                                <script>
+                                    // Update product count after PHP renders
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const productCount = <?php echo $product_count; ?>;
+                                        document.getElementById('product-count').textContent = productCount;
+                                    });
+                                </script>
                             </ul>
+                        </div>
+                    </div>
 
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination">
+                            <a href="#" class="prev-page">← Previous</a>
+                            <span class="current">1</span>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#" class="next-page">Next →</a>
                         </div>
                     </div>
                     <!--<div class="list-all-page">-->
@@ -373,8 +1266,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <!--    </div>-->
                     <!--</div>-->
                 </div>
-            </div>
-        </div>
+                </div> <!-- Close products column -->
+            </div> <!-- Close row -->
+        </div> <!-- Close container -->
     </section>
 
     <!-- grid-list start -->
@@ -466,6 +1360,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     
     <script>
        $(document).ready(function () {
+            // Update product count
+            updateProductCount();
+
+            // Initialize view
+            initializeView();
             // Add product to cart for logged-in users
             $('.add-to-cart').on('click', function () {
                 var productId = $(this).data('product-id'); // Get product ID from data attribute
@@ -616,6 +1515,414 @@ function removeFromCart(productId) {
         function scrollRight() {
             scrollableCards.scrollBy({ left: 320, behavior: 'smooth' });
         }
+
+        // Enhanced Combos Page Functions
+        function updateProductCount() {
+            const productItems = document.querySelectorAll('.enhanced-grid-items:not(.no-products)');
+            const count = productItems.length;
+            document.getElementById('product-count').textContent = count;
+        }
+
+        function initializeView() {
+            // Set initial view state
+            const container = document.getElementById('products-container');
+            container.classList.add('grid-view');
+        }
+
+        function toggleView(viewType) {
+            const container = document.getElementById('products-container');
+            const gridBtn = document.getElementById('grid-view');
+            const listBtn = document.getElementById('list-view');
+
+            if (viewType === 'grid') {
+                container.classList.remove('list-view');
+                container.classList.add('grid-view');
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+            } else {
+                container.classList.remove('grid-view');
+                container.classList.add('list-view');
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+            }
+        }
+
+        function sortProducts() {
+            const sortValue = document.getElementById('sort-select').value;
+            const productList = document.getElementById('product-list');
+            const products = Array.from(productList.querySelectorAll('.enhanced-grid-items:not(.no-products)'));
+
+            products.sort((a, b) => {
+                switch (sortValue) {
+                    case 'name-asc':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    case 'name-desc':
+                        return b.dataset.name.localeCompare(a.dataset.name);
+                    case 'price-low':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-high':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    case 'newest':
+                        return parseInt(b.dataset.date) - parseInt(a.dataset.date);
+                    default: // featured
+                        return parseInt(b.dataset.date) - parseInt(a.dataset.date);
+                }
+            });
+
+            // Clear and re-append sorted products
+            products.forEach(product => {
+                productList.appendChild(product);
+            });
+        }
+
+        function quickView(productId) {
+            // Implement quick view functionality
+            // You can redirect to product details or open a modal
+            window.location.href = 'product_details.php?ProductId=' + productId;
+        }
+
+        // Client-side filter functionality (works with existing rendered products)
+        function applyFilters() {
+            console.log('Applying client-side filters...');
+
+            // Get all product items
+            const productItems = document.querySelectorAll('.enhanced-grid-items');
+            const productCount = document.getElementById('product-count');
+
+            // Collect filter data
+            const filterData = {
+                product_type: Array.from(document.querySelectorAll('input[name="product_type"]:checked')).map(cb => cb.value),
+                category: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value),
+                subcategory: Array.from(document.querySelectorAll('input[name="subcategory"]:checked')).map(cb => cb.value),
+                availability: Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value),
+                price_min: parseInt(document.getElementById('price-min').value) || 0,
+                price_max: parseInt(document.getElementById('price-max').value) || 2000,
+                sort: document.getElementById('sort-select').value
+            };
+
+            console.log('Filter data:', filterData);
+
+            let visibleCount = 0;
+
+            // Filter each product
+            productItems.forEach(item => {
+                let shouldShow = true;
+
+                // Debug: Log product data (only for first few products to avoid spam)
+                if (visibleCount < 3) {
+                    console.log('Product:', {
+                        name: item.dataset.name,
+                        categoryId: item.dataset.categoryId,
+                        subcategoryId: item.dataset.subcategoryId,
+                        price: item.dataset.price
+                    });
+                }
+
+                // Product type filter - since we're on combos page, if combos is checked, show all
+                if (filterData.product_type.length > 0) {
+                    if (!filterData.product_type.includes('combos')) {
+                        shouldShow = false; // Hide if combos is not selected
+                        if (visibleCount < 3) console.log('Hidden by product type filter');
+                    }
+                }
+
+                // Category filter
+                if (filterData.category.length > 0) {
+                    const itemCategoryId = String(item.dataset.categoryId || '');
+                    const hasMatchingCategory = filterData.category.some(catId => String(catId) === itemCategoryId);
+                    if (visibleCount < 3) {
+                        console.log('Category filter check:', {
+                            selectedCategories: filterData.category,
+                            itemCategoryId: itemCategoryId,
+                            match: hasMatchingCategory
+                        });
+                    }
+                    if (!hasMatchingCategory) {
+                        shouldShow = false;
+                        if (visibleCount < 3) console.log('Hidden by category filter');
+                    }
+                }
+
+                // Subcategory filter
+                if (filterData.subcategory.length > 0) {
+                    const itemSubcategoryId = String(item.dataset.subcategoryId || '');
+                    const hasMatchingSubcategory = filterData.subcategory.some(subId => String(subId) === itemSubcategoryId);
+                    if (visibleCount < 3) {
+                        console.log('Subcategory filter check:', {
+                            selectedSubcategories: filterData.subcategory,
+                            itemSubcategoryId: itemSubcategoryId,
+                            match: hasMatchingSubcategory
+                        });
+                    }
+                    if (!hasMatchingSubcategory) {
+                        shouldShow = false;
+                        if (visibleCount < 3) console.log('Hidden by subcategory filter');
+                    }
+                }
+
+                // Price filter
+                const itemPrice = parseFloat(item.dataset.price) || 0;
+                if (itemPrice > 0) {
+                    if (itemPrice < filterData.price_min || itemPrice > filterData.price_max) {
+                        shouldShow = false;
+                        if (visibleCount < 3) console.log('Hidden by price filter');
+                    }
+                }
+
+                // Availability filter
+                if (filterData.availability.length > 0) {
+                    if (!filterData.availability.includes('in-stock')) {
+                        shouldShow = false; // For now, all products are in stock
+                        if (visibleCount < 3) console.log('Hidden by availability filter');
+                    }
+                }
+
+                if (visibleCount < 3) {
+                    console.log('Final decision for', item.dataset.name, ':', shouldShow ? 'SHOW' : 'HIDE');
+                }
+
+                // Show/hide the product
+                if (shouldShow) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Update product count
+            productCount.textContent = visibleCount;
+
+            // Apply sorting if needed
+            if (filterData.sort && filterData.sort !== 'featured') {
+                applySorting(filterData.sort);
+            }
+
+            console.log('Filtered products:', visibleCount);
+        }
+
+        // Apply sorting to visible products
+        function applySorting(sortType) {
+            const productContainer = document.getElementById('product-list');
+            const productItems = Array.from(productContainer.querySelectorAll('.enhanced-grid-items'));
+
+            productItems.sort((a, b) => {
+                switch (sortType) {
+                    case 'name-asc':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    case 'name-desc':
+                        return b.dataset.name.localeCompare(a.dataset.name);
+                    case 'price-low':
+                        return (parseFloat(a.dataset.price) || 0) - (parseFloat(b.dataset.price) || 0);
+                    case 'price-high':
+                        return (parseFloat(b.dataset.price) || 0) - (parseFloat(a.dataset.price) || 0);
+                    case 'date-new':
+                        return (parseInt(b.dataset.date) || 0) - (parseInt(a.dataset.date) || 0);
+                    case 'date-old':
+                        return (parseInt(a.dataset.date) || 0) - (parseInt(b.dataset.date) || 0);
+                    default:
+                        return 0;
+                }
+            });
+
+            // Re-append sorted items
+            productItems.forEach(item => {
+                productContainer.appendChild(item);
+            });
+        }
+
+        // No longer needed - we're using client-side filtering with existing rendered products
+
+        // Price range slider functionality
+        function initializePriceSliders() {
+            const priceMin = document.getElementById('price-min');
+            const priceMax = document.getElementById('price-max');
+            const priceMinValue = document.getElementById('price-min-value');
+            const priceMaxValue = document.getElementById('price-max-value');
+
+            function updatePriceDisplay() {
+                priceMinValue.textContent = priceMin.value;
+                priceMaxValue.textContent = priceMax.value;
+            }
+
+            priceMin.addEventListener('input', updatePriceDisplay);
+            priceMax.addEventListener('input', updatePriceDisplay);
+
+            priceMin.addEventListener('change', applyFilters);
+            priceMax.addEventListener('change', applyFilters);
+        }
+
+        // Function to attach add to cart event listeners
+        function attachAddToCartListeners() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-session');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    addToCartSession(productId);
+                });
+            });
+        }
+
+        // Update sort products function to use client-side filtering
+        function sortProducts() {
+            console.log('Sort products called');
+            applyFilters(); // Use the same filter function which includes sorting
+        }
+
+        // Load filter counts from database
+        function loadFilterCounts() {
+            fetch('get_filter_counts.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const counts = data.filter_counts;
+
+                    // Update product type counts
+                    document.getElementById('combos-count').textContent = `(${counts.product_type.combos})`;
+                    document.getElementById('cosmetics-count').textContent = `(${counts.product_type.cosmetics})`;
+                    document.getElementById('herbal-count').textContent = `(${counts.product_type['herbal-powders']})`;
+
+                    // Load categories dynamically
+                    loadCategoryFilters(counts.categories);
+
+                    // Load subcategories dynamically
+                    loadSubcategoryFilters(counts.subcategories);
+
+                    // Update availability counts
+                    document.getElementById('in-stock-count').textContent = `(${counts.availability['in-stock']})`;
+                    document.getElementById('out-stock-count').textContent = `(${counts.availability['out-of-stock']})`;
+
+                    // Update price range
+                    const priceMin = document.getElementById('price-min');
+                    const priceMax = document.getElementById('price-max');
+                    const priceMinValue = document.getElementById('price-min-value');
+                    const priceMaxValue = document.getElementById('price-max-value');
+
+                    priceMin.min = counts.price_range.min;
+                    priceMin.max = counts.price_range.max;
+                    priceMin.value = counts.price_range.min;
+
+                    priceMax.min = counts.price_range.min;
+                    priceMax.max = counts.price_range.max;
+                    priceMax.value = counts.price_range.max;
+
+                    priceMinValue.textContent = counts.price_range.min;
+                    priceMaxValue.textContent = counts.price_range.max;
+
+                    // Hide filters with 0 count
+                    if (counts.product_type.cosmetics === 0) {
+                        document.querySelector('input[value="cosmetics"]').closest('.filter-option').style.display = 'none';
+                    }
+                    if (counts.product_type['herbal-powders'] === 0) {
+                        document.querySelector('input[value="herbal-powders"]').closest('.filter-option').style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading filter counts:', error);
+            });
+        }
+
+        // Load category filters dynamically
+        function loadCategoryFilters(categories) {
+            const categoryContainer = document.getElementById('category-filters');
+            let categoryHTML = '';
+
+            if (categories && categories.length > 0) {
+                categories.forEach(category => {
+                    if (category.count > 0) {
+                        categoryHTML += `
+                            <label class="filter-option">
+                                <input type="checkbox" name="category" value="${category.id}">
+                                <span class="checkmark"></span>
+                                ${category.name} <span class="count">(${category.count})</span>
+                            </label>
+                        `;
+                    }
+                });
+            }
+
+            if (categoryHTML === '') {
+                categoryHTML = '<p style="color: #666; font-size: 14px;">No categories available</p>';
+            }
+
+            categoryContainer.innerHTML = categoryHTML;
+
+            // Add event listeners to new checkboxes
+            const newCheckboxes = categoryContainer.querySelectorAll('input[type="checkbox"]');
+            newCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    console.log('Category filter changed:', this.value, this.checked);
+                    applyFilters();
+                });
+            });
+        }
+
+        // Load subcategory filters dynamically
+        function loadSubcategoryFilters(subcategories) {
+            console.log('Loading', subcategories?.length || 0, 'subcategories');
+            const subcategoryContainer = document.getElementById('subcategory-filters');
+            let subcategoryHTML = '';
+
+            if (subcategories && subcategories.length > 0) {
+                subcategories.forEach(subcategory => {
+                    if (subcategory.count > 0) {
+                        subcategoryHTML += `
+                            <label class="filter-option">
+                                <input type="checkbox" name="subcategory" value="${subcategory.id}">
+                                <span class="checkmark"></span>
+                                ${subcategory.name} <span class="count">(${subcategory.count})</span>
+                            </label>
+                        `;
+                    }
+                });
+            }
+
+            if (subcategoryHTML === '') {
+                subcategoryHTML = '<p style="color: #666; font-size: 14px;">No subcategories available</p>';
+            }
+
+            subcategoryContainer.innerHTML = subcategoryHTML;
+
+            // Add event listeners to new checkboxes
+            const newCheckboxes = subcategoryContainer.querySelectorAll('input[type="checkbox"]');
+            newCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    console.log('Subcategory filter changed:', this.value, this.checked);
+                    applyFilters();
+                });
+            });
+        }
+
+        // Initialize filters on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing combos page...');
+
+            // Load filter counts first
+            loadFilterCounts();
+
+            initializePriceSliders();
+
+            // Add event listeners to filter checkboxes
+            const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    console.log('Filter changed:', this.name, this.value, this.checked);
+                    applyFilters();
+                });
+            });
+
+            // Add event listener to sort dropdown
+            document.getElementById('sort-select').addEventListener('change', function() {
+                console.log('Sort changed:', this.value);
+                applyFilters();
+            });
+
+            // Attach initial add to cart listeners
+            attachAddToCartListeners();
+
+            console.log('Combos page initialized. Products loaded via PHP.');
+        });
 </script>
 
     <script>

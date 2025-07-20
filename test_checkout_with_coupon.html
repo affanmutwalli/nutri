@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Checkout with Coupon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .cart-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .coupon-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            background: #ff8c00;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: #e67e00;
+        }
+        
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .total-row.final {
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 2px solid #ff8c00;
+            color: #ff8c00;
+        }
+        
+        .discount-row {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Test Checkout with Coupon</h1>
+        <p>Test your reward coupon codes in a simulated checkout environment</p>
+        
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <div class="total-row">
+                <span>Product Total:</span>
+                <span id="productTotal">₹500.00</span>
+            </div>
+            <div class="total-row">
+                <span>Shipping:</span>
+                <span id="shippingCost">₹50.00</span>
+            </div>
+            <div class="total-row discount-row" id="discountRow" style="display: none;">
+                <span>Coupon Discount:</span>
+                <span id="discountAmount">-₹0.00</span>
+            </div>
+            <div class="total-row final">
+                <span>Final Total:</span>
+                <span id="finalTotal">₹550.00</span>
+            </div>
+        </div>
+        
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+            <h3>🎫 Apply Coupon Code</h3>
+            <p>Enter your reward coupon code to get discount</p>
+            
+            <div class="input-group">
+                <input type="text" id="couponCode" placeholder="Enter coupon code (e.g., DISC1000317530006354419)" maxlength="50">
+                <button class="btn" id="applyCouponBtn" onclick="applyCoupon()">Apply Coupon</button>
+            </div>
+            
+            <div id="couponResult" style="display: none;"></div>
+            
+            <div style="margin-top: 15px;">
+                <small><strong>Test Codes:</strong></small><br>
+                <small>• Use your reward coupon codes from the rewards modal</small><br>
+                <small>• Minimum order amounts may apply</small><br>
+                <small>• Each coupon can only be used once</small>
+            </div>
+        </div>
+        
+        <!-- Order Summary -->
+        <div style="background: #e2e3e5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>📋 Order Details</h3>
+            <p><strong>Customer:</strong> Test Customer (ID: 1)</p>
+            <p><strong>Items:</strong> 1x Test Product (₹500)</p>
+            <p><strong>Payment Method:</strong> COD</p>
+            <p><strong>Delivery:</strong> Standard (₹50)</p>
+        </div>
+        
+        <button class="btn" onclick="proceedToPayment()" style="width: 100%; font-size: 16px; padding: 15px;">
+            🚀 Proceed to Payment
+        </button>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="test_rewards_modal.php">← Back to Rewards</a> |
+            <a href="test_coupon_validation.php">Test Coupon Validation</a>
+        </div>
+    </div>
+
+    <script>
+    let appliedCoupon = null;
+    let originalTotal = 550; // Product (500) + Shipping (50)
+    
+    function applyCoupon() {
+        const couponCode = document.getElementById('couponCode').value.trim();
+        const resultDiv = document.getElementById('couponResult');
+        const applyBtn = document.getElementById('applyCouponBtn');
+        
+        if (!couponCode) {
+            showResult('Please enter a coupon code', 'error');
+            return;
+        }
+        
+        // Disable button and show loading
+        applyBtn.disabled = true;
+        applyBtn.textContent = 'Applying...';
+        resultDiv.style.display = 'block';
+        resultDiv.className = 'result';
+        resultDiv.innerHTML = '🔄 Validating coupon...';
+        
+        // Test the coupon
+        const testData = {
+            code: couponCode,
+            order_amount: originalTotal
+        };
+        
+        fetch('exe_files/fetch_coupon.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(testData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Coupon response:', data);
+            
+            if (data.response === 'S') {
+                // Success - apply discount
+                const discount = parseFloat(data.discount || 0);
+                appliedCoupon = {
+                    code: couponCode,
+                    discount: discount,
+                    message: data.msg
+                };
+                
+                updateCartTotals(discount);
+                showResult(data.msg, 'success');
+                
+                // Disable coupon input
+                document.getElementById('couponCode').disabled = true;
+                applyBtn.textContent = 'Applied ✓';
+                
+            } else {
+                // Error
+                showResult(data.msg, 'error');
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'Apply Coupon';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showResult('Failed to validate coupon. Please try again.', 'error');
+            applyBtn.disabled = false;
+            applyBtn.textContent = 'Apply Coupon';
+        });
+    }
+    
+    function showResult(message, type) {
+        const resultDiv = document.getElementById('couponResult');
+        resultDiv.style.display = 'block';
+        resultDiv.className = `result ${type}`;
+        resultDiv.innerHTML = message;
+    }
+    
+    function updateCartTotals(discount) {
+        const discountRow = document.getElementById('discountRow');
+        const discountAmount = document.getElementById('discountAmount');
+        const finalTotal = document.getElementById('finalTotal');
+        
+        if (discount > 0) {
+            discountRow.style.display = 'flex';
+            discountAmount.textContent = `-₹${discount.toFixed(2)}`;
+            
+            const newTotal = originalTotal - discount;
+            finalTotal.textContent = `₹${newTotal.toFixed(2)}`;
+        }
+    }
+    
+    function proceedToPayment() {
+        if (appliedCoupon) {
+            alert(`Order Summary:\n\nOriginal Total: ₹${originalTotal}\nCoupon Discount: -₹${appliedCoupon.discount}\nFinal Total: ₹${(originalTotal - appliedCoupon.discount).toFixed(2)}\n\nCoupon "${appliedCoupon.code}" will be marked as used after payment.`);
+        } else {
+            alert(`Order Summary:\n\nTotal: ₹${originalTotal}\n\nNo coupon applied.`);
+        }
+    }
+    
+    // Auto-fill coupon code from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const couponFromUrl = urlParams.get('coupon');
+    if (couponFromUrl) {
+        document.getElementById('couponCode').value = couponFromUrl;
+    }
+    </script>
+</body>
+</html>

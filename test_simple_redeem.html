@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple Redemption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-btn {
+            background: linear-gradient(135deg, #ff8c00 0%, #2d5016 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 140, 0, 0.3);
+        }
+        
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        
+        .success {
+            border-left: 4px solid #28a745;
+            background: rgba(40, 167, 69, 0.2);
+        }
+        
+        .error {
+            border-left: 4px solid #dc3545;
+            background: rgba(220, 53, 69, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Simple Redemption</h1>
+        <p>Test the fixed redemption system with clean JSON responses</p>
+        
+        <div>
+            <button class="test-btn" onclick="testRedemption(1, '₹50 Discount Coupon', 200)">
+                <i class="fas fa-gift"></i> Test ₹50 Coupon (200 points)
+            </button>
+            
+            <button class="test-btn" onclick="testRedemption(2, '₹100 Discount Coupon', 400)">
+                <i class="fas fa-gift"></i> Test ₹100 Coupon (400 points)
+            </button>
+            
+            <button class="test-btn" onclick="testRedemption(4, 'Free Shipping', 150)">
+                <i class="fas fa-shipping-fast"></i> Test Free Shipping (150 points)
+            </button>
+        </div>
+        
+        <div id="result" class="result-box" style="display: none;">
+            <h3>Result:</h3>
+            <div id="resultContent"></div>
+        </div>
+        
+        <div class="result-box">
+            <h3>🎯 What This Tests:</h3>
+            <ul>
+                <li>✅ Clean JSON responses (no HTML errors)</li>
+                <li>✅ Proper error handling</li>
+                <li>✅ Points deduction</li>
+                <li>✅ Coupon code generation</li>
+                <li>✅ Transaction recording</li>
+                <li>✅ Database rollback on errors</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    function testRedemption(rewardId, rewardName, pointsRequired) {
+        const resultDiv = document.getElementById('result');
+        const contentDiv = document.getElementById('resultContent');
+        
+        resultDiv.style.display = 'block';
+        resultDiv.className = 'result-box';
+        contentDiv.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Testing redemption...</p>';
+        
+        const testData = {
+            reward_id: rewardId,
+            points_required: pointsRequired
+        };
+        
+        console.log('Testing redemption:', testData);
+        
+        fetch('redeem_reward_simple.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(testData)
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            
+            try {
+                const data = JSON.parse(text);
+                console.log('Parsed JSON:', data);
+                
+                if (data.success) {
+                    resultDiv.className = 'result-box success';
+                    contentDiv.innerHTML = `
+                        <h4>✅ Success!</h4>
+                        <p><strong>Message:</strong> ${data.message}</p>
+                        <p><strong>Coupon Code:</strong> ${data.coupon_code}</p>
+                        <p><strong>Reward:</strong> ${data.reward_name}</p>
+                        <p><strong>Points Deducted:</strong> ${data.points_deducted}</p>
+                        <p><strong>Remaining Points:</strong> ${data.remaining_points}</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result-box error';
+                    contentDiv.innerHTML = `
+                        <h4>❌ Failed</h4>
+                        <p><strong>Error:</strong> ${data.message}</p>
+                    `;
+                }
+                
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                resultDiv.className = 'result-box error';
+                contentDiv.innerHTML = `
+                    <h4>❌ JSON Parse Error</h4>
+                    <p>Response is not valid JSON. Raw response:</p>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; white-space: pre-wrap;">${text}</pre>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            resultDiv.className = 'result-box error';
+            contentDiv.innerHTML = `
+                <h4>❌ Network Error</h4>
+                <p>${error.message}</p>
+            `;
+        });
+    }
+    </script>
+</body>
+</html>

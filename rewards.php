@@ -1276,7 +1276,7 @@ function loadRewardsCatalog(catalog, userPoints) {
 
 function redeemReward(rewardId, rewardName, pointsRequired) {
     if (confirm(`Redeem "${rewardName}" for ${pointsRequired} points?`)) {
-        fetch('redeem_reward.php', {
+        fetch('redeem_minimal.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

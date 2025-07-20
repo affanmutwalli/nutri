@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Minimal Redemption</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: #ff8c00;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #e67e00;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Minimal Redemption</h1>
+        <p>Testing the simplified redemption script</p>
+        
+        <div>
+            <button class="btn" onclick="testRedemption(1, 200)">Test ₹50 Coupon (200 pts)</button>
+            <button class="btn" onclick="testRedemption(2, 400)">Test ₹100 Coupon (400 pts)</button>
+            <button class="btn" onclick="testRedemption(4, 150)">Test Free Shipping (150 pts)</button>
+        </div>
+        
+        <div id="result" style="display: none;"></div>
+        
+        <div class="result">
+            <h3>Debug Info:</h3>
+            <p><strong>Session:</strong> Will be set automatically</p>
+            <p><strong>Method:</strong> POST with JSON</p>
+            <p><strong>Script:</strong> redeem_minimal.php</p>
+        </div>
+    </div>
+
+    <script>
+    // Set session for testing
+    fetch('test_json_response.php?test=session')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Session test:', data);
+        });
+
+    function testRedemption(rewardId, pointsRequired) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.className = 'result';
+        resultDiv.innerHTML = '<p>🔄 Testing redemption...</p>';
+        
+        const testData = {
+            reward_id: rewardId,
+            points_required: pointsRequired
+        };
+        
+        console.log('Sending:', testData);
+        
+        fetch('redeem_minimal.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(testData)
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', [...response.headers.entries()]);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            
+            resultDiv.innerHTML = `
+                <h3>Raw Response:</h3>
+                <pre>${text}</pre>
+            `;
+            
+            try {
+                const data = JSON.parse(text);
+                console.log('Parsed JSON:', data);
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Success!</h3>
+                        <p><strong>Message:</strong> ${data.message}</p>
+                        <p><strong>Coupon Code:</strong> ${data.coupon_code}</p>
+                        <p><strong>Reward:</strong> ${data.reward_name}</p>
+                        <p><strong>Points Deducted:</strong> ${data.points_deducted}</p>
+                        <p><strong>Remaining:</strong> ${data.remaining_points}</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `
+                        <h3>❌ Error</h3>
+                        <p><strong>Message:</strong> ${data.message}</p>
+                    `;
+                }
+                
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h3>❌ JSON Parse Error</h3>
+                    <p>Response is not valid JSON:</p>
+                    <pre>${text}</pre>
+                    <p><strong>Error:</strong> ${e.message}</p>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            resultDiv.className = 'result error';
+            resultDiv.innerHTML = `
+                <h3>❌ Network Error</h3>
+                <p>${error.message}</p>
+            `;
+        });
+    }
+    </script>
+</body>
+</html>
