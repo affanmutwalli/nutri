@@ -5485,6 +5485,169 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <script src="js/swiper.min.js"></script>
     <!-- custom -->
     <script src="js/custom.js"></script>
+
+    <!-- Wellness Categories Slider Initialization -->
+    <script>
+    $(document).ready(function() {
+        // Initialize Wellness Categories Slider
+        $('.home-category').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            navText: [
+                '<i class="fa fa-chevron-left" style="color: #ff6b35; font-size: 18px;"></i>',
+                '<i class="fa fa-chevron-right" style="color: #ff6b35; font-size: 18px;"></i>'
+            ],
+            responsive: {
+                0: {
+                    items: 2,
+                    margin: 10,
+                    nav: false
+                },
+                480: {
+                    items: 3,
+                    margin: 15,
+                    nav: false
+                },
+                768: {
+                    items: 4,
+                    margin: 20,
+                    nav: true
+                },
+                992: {
+                    items: 5,
+                    margin: 20,
+                    nav: true
+                },
+                1200: {
+                    items: 6,
+                    margin: 20,
+                    nav: true
+                }
+            }
+        });
+
+        // Add custom styling for wellness categories slider
+        $('.home-category .owl-nav').css({
+            'position': 'absolute',
+            'top': '50%',
+            'width': '100%',
+            'transform': 'translateY(-50%)',
+            'pointer-events': 'none'
+        });
+
+        $('.home-category .owl-nav button').css({
+            'position': 'absolute',
+            'background': 'rgba(255, 255, 255, 0.9)',
+            'border': '2px solid #ff6b35',
+            'border-radius': '50%',
+            'width': '45px',
+            'height': '45px',
+            'display': 'flex',
+            'align-items': 'center',
+            'justify-content': 'center',
+            'pointer-events': 'all',
+            'transition': 'all 0.3s ease',
+            'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)',
+            'z-index': '10'
+        });
+
+        $('.home-category .owl-nav .owl-prev').css({
+            'left': '-20px'
+        });
+
+        $('.home-category .owl-nav .owl-next').css({
+            'right': '-20px'
+        });
+
+        $('.home-category .owl-nav button').hover(
+            function() {
+                $(this).css({
+                    'background': '#ff6b35',
+                    'transform': 'scale(1.1)',
+                    'box-shadow': '0 6px 20px rgba(255, 107, 53, 0.3)'
+                });
+                $(this).find('i').css('color', 'white');
+            },
+            function() {
+                $(this).css({
+                    'background': 'rgba(255, 255, 255, 0.9)',
+                    'transform': 'scale(1)',
+                    'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)'
+                });
+                $(this).find('i').css('color', '#ff6b35');
+            }
+        );
+
+        // Custom dots styling
+        $('.home-category .owl-dots').css({
+            'text-align': 'center',
+            'margin-top': '30px'
+        });
+
+        $('.home-category .owl-dot').css({
+            'display': 'inline-block',
+            'margin': '0 5px',
+            'width': '12px',
+            'height': '12px',
+            'border-radius': '50%',
+            'background': '#ddd',
+            'transition': 'all 0.3s ease',
+            'cursor': 'pointer'
+        });
+
+        $('.home-category .owl-dot.active').css({
+            'background': '#ff6b35',
+            'transform': 'scale(1.2)'
+        });
+
+        // Add smooth scroll behavior when dots are clicked
+        $('.home-category .owl-dot').hover(
+            function() {
+                if (!$(this).hasClass('active')) {
+                    $(this).css({
+                        'background': '#ff6b35',
+                        'opacity': '0.7',
+                        'transform': 'scale(1.1)'
+                    });
+                }
+            },
+            function() {
+                if (!$(this).hasClass('active')) {
+                    $(this).css({
+                        'background': '#ddd',
+                        'opacity': '1',
+                        'transform': 'scale(1)'
+                    });
+                }
+            }
+        );
+
+        // Pause autoplay on hover over any wellness category item
+        $('.home-category .h-cate').hover(
+            function() {
+                $('.home-category').trigger('stop.owl.autoplay');
+            },
+            function() {
+                $('.home-category').trigger('play.owl.autoplay', [3000]);
+            }
+        );
+
+        // Add touch/swipe support enhancement
+        $('.home-category').on('touchstart', function(e) {
+            $(this).addClass('touching');
+        });
+
+        $('.home-category').on('touchend', function(e) {
+            $(this).removeClass('touching');
+        });
+    });
+    </script>
+
     <script>
        $(document).ready(function () {
             // Handle navigation to bestSellers section from Offers link
