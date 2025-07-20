@@ -261,6 +261,64 @@ if ($InputDocId) {
         error_log("Auto-processing failed: " . $e->getMessage());
     }
 
+    // ENHANCED CART CLEARING - Clear all cart data completely after successful order
+    try {
+        // Clear all session cart data
+        if (isset($_SESSION['cart'])) {
+            unset($_SESSION['cart']);
+        }
+        if (isset($_SESSION['buy_now'])) {
+            unset($_SESSION['buy_now']);
+        }
+        if (isset($_SESSION['applied_coupon'])) {
+            unset($_SESSION['applied_coupon']);
+        }
+
+        // Clear any other cart-related sessions
+        $cartSessions = ['cart_total', 'cart_count', 'cart_items', 'checkout_data'];
+        foreach ($cartSessions as $session) {
+            if (isset($_SESSION[$session])) {
+                unset($_SESSION[$session]);
+            }
+        }
+
+        // Clear database cart completely if user is logged in
+        if (isset($data['CustomerId']) && !empty($data['CustomerId'])) {
+            $customerId = $data['CustomerId'];
+
+            // Direct database clearing
+            $clearQuery = "DELETE FROM cart WHERE CustomerId = ?";
+            $stmt = $obj->connection()->prepare($clearQuery);
+            if ($stmt) {
+                $stmt->bind_param("i", $customerId);
+                $stmt->execute();
+                $stmt->close();
+            }
+
+            error_log("Cart cleared for customer ID: $customerId after order: $newOrderId");
+        }
+
+    } catch (Exception $e) {
+        // Log error but don't fail the order
+        error_log("Error clearing cart after order $newOrderId: " . $e->getMessage());
+    }
+
+    // Award rewards points for the order
+    $pointsAwarded = 0;
+    try {
+        include_once '../includes/RewardsSystem.php';
+        $rewards = new RewardsSystem();
+
+        // Award points for the order amount
+        $pointsAwarded = $rewards->awardOrderPoints($data['CustomerId'], $newOrderId, $data['final_total']);
+
+        error_log("Rewards: Awarded $pointsAwarded points to customer {$data['CustomerId']} for order $newOrderId");
+
+    } catch (Exception $e) {
+        // Log error but don't fail the order
+        error_log("Error awarding rewards points for order $newOrderId: " . $e->getMessage());
+    }
+
     // Return response with necessary data for further processing (including mobile number)
     echo json_encode([
         'name'           => $data['name'],
@@ -271,6 +329,7 @@ if ($InputDocId) {
         'transaction_id' => 'NA',
         'payment_status' => $paymentStatus,
         'amount'         => $data['final_total'],
+        'points_awarded' => $pointsAwarded
     ]);
 } else {
     echo json_encode(["response" => "E", "message" => "Error placing order in database"]);

@@ -1,17 +1,16 @@
 <?php
-session_start();
-require_once '../database/dbconnection.php';
-
-// Simple admin check
-if (!isset($_SESSION['admin_logged_in'])) {
-    if (!isset($_SESSION['CustomerId'])) {
-        header('Location: ../login.php');
-        exit;
-    }
-}
-
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
+include("database/dbconnection.php");
 $obj = new main();
 $mysqli = $obj->connection();
+sec_session_start();
+
+// Check if user is logged in
+if (login_check($mysqli) != true) {
+    header("Location: index.php");
+    exit();
+}
 
 $selected = "contact_messages.php";
 $page = "contact_messages.php";
@@ -118,8 +117,8 @@ if ($stats_result) {
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-    <?php include("includes/header.php"); ?>
-    <?php include("includes/sidebar.php"); ?>
+    <?php include("components/navbar.php"); ?>
+    <?php include("components/sidebar.php"); ?>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -306,7 +305,7 @@ if ($stats_result) {
         </section>
     </div>
 
-    <?php include("includes/footer.php"); ?>
+    <?php include("components/footer.php"); ?>
 </div>
 
 <!-- Message View Modal -->

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Points Popup</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .btn {
+            background: #ff8c00;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #2d5016;
+        }
+        h1 {
+            color: #2d5016;
+        }
+        .demo-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎁 Points Popup Demo</h1>
+    
+    <div class="demo-section">
+        <h3>Test the Points Earned Popup</h3>
+        <p>Click the buttons below to see how the popup will look when customers earn points:</p>
+        
+        <button class="btn" onclick="showPointsPopup(7)">Test 7 Points (₹249 order)</button>
+        <button class="btn" onclick="showPointsPopup(15)">Test 15 Points (₹500 order)</button>
+        <button class="btn" onclick="showPointsPopup(30)">Test 30 Points (₹1000 order)</button>
+        <button class="btn" onclick="showPointsPopup(0)">Test No Points</button>
+    </div>
+    
+    <div class="demo-section">
+        <h3>How It Works</h3>
+        <ul style="text-align: left;">
+            <li><strong>COD Orders:</strong> Points popup → Order success → Redirect to order page</li>
+            <li><strong>Online Orders:</strong> Payment → Points popup → Redirect to order page</li>
+            <li><strong>Points Rate:</strong> 3 points per ₹100 spent</li>
+            <li><strong>Auto-close:</strong> 4 seconds with progress bar</li>
+            <li><strong>Manual close:</strong> Click "Awesome!" button</li>
+        </ul>
+    </div>
+    
+    <div class="demo-section">
+        <h3>🎯 Implementation Status</h3>
+        <p style="color: green;">✅ <strong>LIVE:</strong> Points popup is now integrated into your checkout system!</p>
+        <ul style="text-align: left;">
+            <li>✅ COD orders show points popup</li>
+            <li>✅ Online payment orders show points popup</li>
+            <li>✅ Points automatically calculated and awarded</li>
+            <li>✅ Beautiful animated popup with My Nutrify colors</li>
+        </ul>
+    </div>
+
+    <script>
+        function showPointsPopup(points) {
+            if (points > 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '🎉 Yay! You Earned Points!',
+                    html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                              +${points} Points Added!
+                           </div>
+                           <div style="font-size: 14px; color: #666;">
+                              Keep shopping to earn more rewards!
+                           </div>`,
+                    confirmButtonText: 'Awesome!',
+                    confirmButtonColor: '#ff8c00',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    allowOutsideClick: false
+                }).then(() => {
+                    // This would normally redirect to order-placed.php
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Demo Complete!',
+                        text: 'In real checkout, this would redirect to your order page.',
+                        confirmButtonColor: '#2d5016'
+                    });
+                });
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'No Points Demo',
+                    text: 'When no points are earned, the popup is skipped and goes straight to order success.',
+                    confirmButtonColor: '#2d5016'
+                });
+            }
+        }
+        
+        // Auto-demo on page load
+        setTimeout(() => {
+            showPointsPopup(7);
+        }, 1000);
+    </script>
+</body>
+</html>

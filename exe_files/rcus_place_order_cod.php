@@ -337,6 +337,22 @@ if ($InputDocId) {
         }
     }
 
+    // Award rewards points for the order
+    $pointsAwarded = 0;
+    try {
+        include_once '../includes/RewardsSystem.php';
+        $rewards = new RewardsSystem();
+
+        // Award points for the order amount
+        $pointsAwarded = $rewards->awardOrderPoints($data['CustomerId'], $newOrderId, $data['final_total']);
+
+        error_log("Rewards: Awarded $pointsAwarded points to customer {$data['CustomerId']} for order $newOrderId");
+
+    } catch (Exception $e) {
+        // Log error but don't fail the order
+        error_log("Error awarding rewards points for order $newOrderId: " . $e->getMessage());
+    }
+
     // Return success response
     echo json_encode([
         'response' => 'S',
@@ -346,7 +362,8 @@ if ($InputDocId) {
         'payment_status' => $paymentStatus,
         'amount' => $data['final_total'],
         'mobile' => $data['phone'],
-        'name' => $data['name']
+        'name' => $data['name'],
+        'points_awarded' => $pointsAwarded
     ]);
 
 } else {

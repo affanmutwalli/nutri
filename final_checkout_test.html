@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Final Checkout Test - Points Popup Working!</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .btn {
+            background: #ff8c00;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #2d5016;
+            transform: translateY(-2px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .success-box {
+            background: rgba(40, 167, 69, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #28a745;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Checkout Fixed - Points Popup Working!</h1>
+        
+        <div class="success-box">
+            <h3>✅ What's Fixed:</h3>
+            <ul>
+                <li>✅ RewardsSystem database errors resolved</li>
+                <li>✅ Customer points records created</li>
+                <li>✅ Points calculation working (3 per ₹100)</li>
+                <li>✅ Points popup integration complete</li>
+                <li>✅ Both COD and Online orders award points</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h3>🚚 Test COD Order with Points Popup</h3>
+            <p>Place a COD order and see the beautiful points popup!</p>
+            <button class="btn" onclick="testCODWithPopup()">🛒 Order ₹599 Product (17 points)</button>
+            <div id="cod-result" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>💳 Test Online Order with Points Popup</h3>
+            <p>Place an online order and see the points popup before payment!</p>
+            <button class="btn" onclick="testOnlineWithPopup()">💰 Order ₹799 Product (23 points)</button>
+            <div id="online-result" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎁 Expected Popup Flow:</h3>
+            <ol>
+                <li><strong>Order Placed</strong> → Points calculated automatically</li>
+                <li><strong>"🎉 Yay! You Earned X Points!"</strong> → Beautiful popup appears</li>
+                <li><strong>Order Success</strong> → Confirmation message</li>
+                <li><strong>Redirect</strong> → To order details page</li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Points Calculation:</h3>
+            <ul>
+                <li><strong>Rate:</strong> 3 points per ₹100 spent</li>
+                <li><strong>₹599 order:</strong> 17 points (599 ÷ 100 × 3 = 17.97 → 17)</li>
+                <li><strong>₹799 order:</strong> 23 points (799 ÷ 100 × 3 = 23.97 → 23)</li>
+                <li><strong>Your ₹549 order:</strong> 16 points (can be awarded retroactively)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function testCODWithPopup() {
+            const resultDiv = document.getElementById('cod-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Placing COD order...</p>';
+            
+            const testData = {
+                name: 'Test Customer',
+                email: 'test@example.com',
+                phone: '9876543210',
+                address: '123 Test Street',
+                landmark: 'Near Mall',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                final_total: 599,
+                CustomerId: 1,
+                paymentMethod: 'COD',
+                products: [{
+                    id: '1',
+                    name: 'Premium Test Product',
+                    code: 'PTP001',
+                    size: 'Large',
+                    quantity: '1',
+                    offer_price: '599'
+                }]
+            };
+            
+            fetch('exe_files/rcus_place_order_cod.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('COD Response:', data);
+                resultDiv.innerHTML = `<p><strong>Order:</strong> ${data.order_id}</p><p><strong>Points:</strong> ${data.points_awarded}</p>`;
+                
+                if (data.response === 'S' && data.points_awarded > 0) {
+                    // Show the actual points popup
+                    Swal.fire({
+                        icon: 'success',
+                        title: '🎉 Yay! You Earned Points!',
+                        html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                                  +${data.points_awarded} Points Added!
+                               </div>
+                               <div style="font-size: 14px; color: #666;">
+                                  Keep shopping to earn more rewards!
+                               </div>`,
+                        confirmButtonText: 'Awesome!',
+                        confirmButtonColor: '#ff8c00',
+                        timer: 4000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        allowOutsideClick: false
+                    }).then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Placed Successfully!',
+                            text: `COD Order ${data.order_id} placed! You earned ${data.points_awarded} points!`,
+                            confirmButtonColor: '#ec6504',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                    });
+                } else {
+                    resultDiv.innerHTML += '<p style="color: #ff6b6b;">⚠️ Order placed but no points awarded</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p style="color: #ff6b6b;">❌ Error: ${error.message}</p>`;
+            });
+        }
+        
+        function testOnlineWithPopup() {
+            const resultDiv = document.getElementById('online-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Creating online order...</p>';
+            
+            const testData = {
+                name: 'Test Customer',
+                email: 'test@example.com',
+                phone: '9876543210',
+                address: '123 Test Street',
+                landmark: 'Near Mall',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                final_total: 799,
+                CustomerId: 1,
+                paymentMethod: 'Online',
+                products: [{
+                    id: '1',
+                    name: 'Premium Online Product',
+                    code: 'POP001',
+                    size: 'XL',
+                    quantity: '1',
+                    offer_price: '799'
+                }]
+            };
+            
+            fetch('exe_files/rcus_place_order_online_simple.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Online Response:', data);
+                resultDiv.innerHTML = `<p><strong>Order:</strong> ${data.order_id}</p><p><strong>Points:</strong> ${data.points_awarded}</p>`;
+                
+                if (data.response === 'S' && data.points_awarded > 0) {
+                    // Show the points popup
+                    Swal.fire({
+                        icon: 'success',
+                        title: '🎉 Yay! You Earned Points!',
+                        html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                                  +${data.points_awarded} Points Added!
+                               </div>
+                               <div style="font-size: 14px; color: #666;">
+                                  Keep shopping to earn more rewards!
+                               </div>`,
+                        confirmButtonText: 'Awesome!',
+                        confirmButtonColor: '#ff8c00',
+                        timer: 4000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        allowOutsideClick: false
+                    }).then(() => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Ready for Payment!',
+                            text: `Order ${data.order_id} created! You'll earn ${data.points_awarded} points after payment.`,
+                            confirmButtonColor: '#17a2b8'
+                        });
+                    });
+                } else {
+                    resultDiv.innerHTML += '<p style="color: #ff6b6b;">⚠️ Order created but no points info</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p style="color: #ff6b6b;">❌ Error: ${error.message}</p>`;
+            });
+        }
+        
+        // Auto-demo on page load
+        setTimeout(() => {
+            Swal.fire({
+                icon: 'success',
+                title: '🎉 Checkout System Fixed!',
+                html: `<div style="font-size: 16px; margin: 10px 0;">
+                          Your points popup system is now fully functional!
+                       </div>
+                       <div style="font-size: 14px; color: #666;">
+                          Test the buttons below to see it in action.
+                       </div>`,
+                confirmButtonText: 'Let\'s Test!',
+                confirmButtonColor: '#ff8c00',
+                timer: 5000,
+                timerProgressBar: true
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

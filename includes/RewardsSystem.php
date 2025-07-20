@@ -34,7 +34,7 @@ class RewardsSystem {
             // Check if points_config table exists
             $tableCheck = $this->mysqli->query("SHOW TABLES LIKE 'points_config'");
             if ($tableCheck && $tableCheck->num_rows > 0) {
-                $query = "SELECT config_key, config_value FROM points_config WHERE is_active = 1";
+                $query = "SELECT config_key, config_value FROM points_config";
                 $result = $this->mysqli->query($query);
 
                 if ($result && $result->num_rows > 0) {
@@ -135,42 +135,37 @@ class RewardsSystem {
             $this->createCustomerPointsRecord($customerId);
             
             // Add points transaction
-            $query = "INSERT INTO points_transactions 
-                      (customer_id, transaction_type, points_amount, description, reference_type, reference_id, order_id, expiry_date) 
-                      VALUES (?, 'earned', ?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL ? MONTH))";
+            $query = "INSERT INTO points_transactions
+                      (customer_id, transaction_type, points, description, order_id)
+                      VALUES (?, 'earned', ?, ?, ?)";
             $stmt = $this->mysqli->prepare($query);
-            $expiryMonths = $this->config['points_expiry_months'];
-            $stmt->bind_param("iissssi", $customerId, $points, $description, $referenceType, $referenceId, $orderId, $expiryMonths);
-            $stmt->execute();
+            if (!$stmt) {
+                throw new Exception("Failed to prepare transaction query: " . $this->mysqli->error);
+            }
+            $stmt->bind_param("iiss", $customerId, $points, $description, $orderId);
+            if (!$stmt->execute()) {
+                throw new Exception("Failed to insert points transaction: " . $stmt->error);
+            }
             
-            // Update customer points balance
-            $query = "UPDATE customer_points 
-                      SET total_points = total_points + ?, 
-                          lifetime_points = lifetime_points + ?,
-                          tier_level = CASE 
-                              WHEN lifetime_points + ? >= ? THEN 'Platinum'
-                              WHEN lifetime_points + ? >= ? THEN 'Gold'
-                              WHEN lifetime_points + ? >= ? THEN 'Silver'
-                              ELSE 'Bronze'
-                          END
+            // Update customer points balance (simplified)
+            $query = "UPDATE customer_points
+                      SET total_points = total_points + ?,
+                          lifetime_points = lifetime_points + ?
                       WHERE customer_id = ?";
             $stmt = $this->mysqli->prepare($query);
-            $platinumThreshold = $this->config['platinum_tier_threshold'] ?? 5000;
-            $goldThreshold = $this->config['gold_tier_threshold'] ?? 1500;
-            $silverThreshold = $this->config['silver_tier_threshold'] ?? 500;
-            
-            $stmt->bind_param("iiiiiiiiii", 
-                $points, $points, $points, $platinumThreshold, 
-                $points, $goldThreshold, $points, $silverThreshold, $customerId
-            );
-            $stmt->execute();
+            $stmt->bind_param("iii", $points, $points, $customerId);
+
+            if (!$stmt->execute()) {
+                throw new Exception("Failed to update customer points: " . $stmt->error);
+            }
             
             $this->mysqli->commit();
-            return true;
+            return $points;
             
         } catch (Exception $e) {
             $this->mysqli->rollback();
             error_log("Error awarding points: " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
             return false;
         }
     }
@@ -178,15 +173,16 @@ class RewardsSystem {
     /**
      * Award points for order purchase
      */
-    public function awardOrderPoints($customerId, $orderAmount, $orderId) {
-        $pointsPerRupee = $this->config['points_per_rupee'];
+    public function awardOrderPoints($customerId, $orderId, $orderAmount) {
+        $pointsPerRupee = floatval($this->config['points_per_rupee']);
+        $orderAmount = floatval($orderAmount);
         $points = floor(($orderAmount / 100) * $pointsPerRupee);
-        
+
         if ($points > 0) {
             $description = "Points earned for order #$orderId (₹$orderAmount)";
             return $this->awardPoints($customerId, $points, $description, 'order', $orderId, $orderId);
         }
-        return false;
+        return 0;
     }
     
     /**
@@ -255,13 +251,9 @@ class RewardsSystem {
             $customerPoints = $this->getCustomerPoints($customerId);
             $currentPoints = $customerPoints['total_points'];
 
-            $query = "SELECT id, reward_name, reward_description, points_required,
-                             reward_type, reward_value, minimum_order_amount, terms_conditions
+            $query = "SELECT id, reward_name, reward_type, reward_value, points_required
                       FROM rewards_catalog
-                      WHERE is_active = 1
-                        AND (valid_from IS NULL OR valid_from <= CURDATE())
-                        AND (valid_until IS NULL OR valid_until >= CURDATE())
-                        AND points_required <= ?
+                      WHERE points_required <= ?
                       ORDER BY points_required ASC";
             $stmt = $this->mysqli->prepare($query);
             $stmt->bind_param("i", $currentPoints);
@@ -369,11 +361,11 @@ class RewardsSystem {
 
             // Add redemption transaction
             $query = "INSERT INTO points_transactions
-                      (customer_id, transaction_type, points_amount, description, reference_type, reference_id)
-                      VALUES (?, 'redeemed', ?, ?, ?, ?)";
+                      (customer_id, transaction_type, points, description)
+                      VALUES (?, 'redeemed', ?, ?)";
             $stmt = $this->mysqli->prepare($query);
             $negativePoints = -$points; // Store as negative for redemption
-            $stmt->bind_param("iisss", $customerId, $negativePoints, $description, $referenceType, $referenceId);
+            $stmt->bind_param("iis", $customerId, $negativePoints, $description);
             $stmt->execute();
 
             // Update customer points balance

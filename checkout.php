@@ -819,17 +819,49 @@ function sendOrderData() {
                 name: data.name            // Customer name
             });
 
-            // SweetAlert Animated Success Message
-            Swal.fire({
-                icon: 'success',
-                title: 'Order Placed Successfully!',
-                text: 'Your order has been placed. You will receive a confirmation soon.',
-                confirmButtonColor: '#ec6504',
-                timer: 3000,  // Auto-close after 3 seconds
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = "order-placed.php?order_id=" + data.order_id;
-            });
+            // Show points earned popup first (if points were awarded)
+            if (data.points_awarded && data.points_awarded > 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '🎉 Yay! You Earned Points!',
+                    html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                              +${data.points_awarded} Points Added!
+                           </div>
+                           <div style="font-size: 14px; color: #666;">
+                              Keep shopping to earn more rewards!
+                           </div>`,
+                    confirmButtonText: 'Awesome!',
+                    confirmButtonColor: '#ff8c00',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showConfirmButton: true,
+                    allowOutsideClick: false
+                }).then(() => {
+                    // Then show order success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Placed Successfully!',
+                        text: 'Your order has been placed. You will receive a confirmation soon.',
+                        confirmButtonColor: '#ec6504',
+                        timer: 3000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = "order-placed.php?order_id=" + data.order_id;
+                    });
+                });
+            } else {
+                // No points awarded, show regular success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Placed Successfully!',
+                    text: 'Your order has been placed. You will receive a confirmation soon.',
+                    confirmButtonColor: '#ec6504',
+                    timer: 3000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = "order-placed.php?order_id=" + data.order_id;
+                });
+            }
 
         } else {
             console.error("Order placement failed:", data);
@@ -930,8 +962,29 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                                 .then(res => res.json())
                                 .then(result => {
                                     if (result?.status === "success") {
-                                        window.location.href = "order-placed.php?order_id=" + data
-                                            .order_id;
+                                        // Show points earned popup first (if points were awarded)
+                                        if (result.points_awarded && result.points_awarded > 0) {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: '🎉 Yay! You Earned Points!',
+                                                html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                                                          +${result.points_awarded} Points Added!
+                                                       </div>
+                                                       <div style="font-size: 14px; color: #666;">
+                                                          Keep shopping to earn more rewards!
+                                                       </div>`,
+                                                confirmButtonText: 'Awesome!',
+                                                confirmButtonColor: '#ff8c00',
+                                                timer: 4000,
+                                                timerProgressBar: true,
+                                                showConfirmButton: true,
+                                                allowOutsideClick: false
+                                            }).then(() => {
+                                                window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                            });
+                                        } else {
+                                            window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                        }
                                     } else {
                                         Swal.fire({
                                             icon: 'error',

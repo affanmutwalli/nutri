@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Checkout with Popup</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .btn {
+            background: #ff8c00;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #2d5016;
+        }
+        h1 {
+            color: #2d5016;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .result {
+            background: #e2e3e5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛒 Checkout with Points Popup Test</h1>
+    
+    <div class="test-section">
+        <h3>Test COD Order with Points Popup</h3>
+        <p>This simulates placing a COD order and showing the points popup.</p>
+        <button class="btn" onclick="testCODOrder()">🚚 Test COD Order (₹299)</button>
+        <div id="cod-result" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Online Order with Points Popup</h3>
+        <p>This simulates placing an online order and showing the points popup.</p>
+        <button class="btn" onclick="testOnlineOrder()">💳 Test Online Order (₹499)</button>
+        <div id="online-result" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>🎯 Expected Behavior</h3>
+        <ul>
+            <li><strong>COD Order (₹299):</strong> Should show "🎉 Yay! You Earned 8 Points!" popup</li>
+            <li><strong>Online Order (₹499):</strong> Should show "🎉 Yay! You Earned 14 Points!" popup</li>
+            <li><strong>Popup Flow:</strong> Points popup → Order success → Redirect</li>
+        </ul>
+    </div>
+
+    <script>
+        function testCODOrder() {
+            const resultDiv = document.getElementById('cod-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing COD order...</p>';
+            
+            const testData = {
+                name: 'Test Customer',
+                email: 'test@example.com',
+                phone: '9876543210',
+                address: '123 Test Street',
+                landmark: 'Near Mall',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                final_total: 299,
+                CustomerId: 1,
+                paymentMethod: 'COD',
+                products: [{
+                    id: '1',
+                    name: 'Test Product',
+                    code: 'TP001',
+                    size: 'Medium',
+                    quantity: '1',
+                    offer_price: '299'
+                }]
+            };
+            
+            fetch('exe_files/rcus_place_order_cod.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('COD Response:', data);
+                resultDiv.innerHTML = `<p><strong>Response:</strong> ${JSON.stringify(data, null, 2)}</p>`;
+                
+                if (data.response === 'S') {
+                    // Show points popup if points were awarded
+                    if (data.points_awarded && data.points_awarded > 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '🎉 Yay! You Earned Points!',
+                            html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                                      +${data.points_awarded} Points Added!
+                                   </div>
+                                   <div style="font-size: 14px; color: #666;">
+                                      Keep shopping to earn more rewards!
+                                   </div>`,
+                            confirmButtonText: 'Awesome!',
+                            confirmButtonColor: '#ff8c00',
+                            timer: 4000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            allowOutsideClick: false
+                        }).then(() => {
+                            // Then show order success message
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Order Placed Successfully!',
+                                text: 'Your COD order has been placed. You will receive a confirmation soon.',
+                                confirmButtonColor: '#ec6504',
+                                timer: 3000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                resultDiv.innerHTML += '<p style="color: green;">✅ <strong>COD Test Complete!</strong> Points popup and order success shown.</p>';
+                            });
+                        });
+                    } else {
+                        resultDiv.innerHTML += '<p style="color: orange;">⚠️ Order successful but no points awarded.</p>';
+                    }
+                } else {
+                    resultDiv.innerHTML += '<p style="color: red;">❌ Order failed.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('COD Error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            });
+        }
+        
+        function testOnlineOrder() {
+            const resultDiv = document.getElementById('online-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing online order...</p>';
+            
+            const testData = {
+                name: 'Test Customer',
+                email: 'test@example.com',
+                phone: '9876543210',
+                address: '123 Test Street',
+                landmark: 'Near Mall',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                final_total: 499,
+                CustomerId: 1,
+                paymentMethod: 'Online',
+                products: [{
+                    id: '1',
+                    name: 'Test Product',
+                    code: 'TP001',
+                    size: 'Medium',
+                    quantity: '1',
+                    offer_price: '499'
+                }]
+            };
+            
+            fetch('exe_files/rcus_place_order_online_simple.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Online Response:', data);
+                resultDiv.innerHTML = `<p><strong>Response:</strong> ${JSON.stringify(data, null, 2)}</p>`;
+                
+                if (data.response === 'S') {
+                    // Show points popup if points were awarded
+                    if (data.points_awarded && data.points_awarded > 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '🎉 Yay! You Earned Points!',
+                            html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                                      +${data.points_awarded} Points Added!
+                                   </div>
+                                   <div style="font-size: 14px; color: #666;">
+                                      Keep shopping to earn more rewards!
+                                   </div>`,
+                            confirmButtonText: 'Awesome!',
+                            confirmButtonColor: '#ff8c00',
+                            timer: 4000,
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            allowOutsideClick: false
+                        }).then(() => {
+                            resultDiv.innerHTML += '<p style="color: green;">✅ <strong>Online Test Complete!</strong> Points popup shown (would normally redirect to payment).</p>';
+                        });
+                    } else {
+                        resultDiv.innerHTML += '<p style="color: orange;">⚠️ Order successful but no points awarded.</p>';
+                    }
+                } else {
+                    resultDiv.innerHTML += '<p style="color: red;">❌ Order failed.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Online Error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>

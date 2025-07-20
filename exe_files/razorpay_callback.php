@@ -99,6 +99,22 @@ if ($generated_signature === $razorpay_signature) {
         unset($_SESSION['buy_now']);
     }
 
+    // Award rewards points for the paid order
+    $pointsAwarded = 0;
+    try {
+        include_once '../includes/RewardsSystem.php';
+        $rewards = new RewardsSystem();
+
+        // Award points for the order amount
+        $pointsAwarded = $rewards->awardOrderPoints($orderData['CustomerId'], $order_db_id, $orderData['final_total']);
+
+        error_log("Rewards: Awarded $pointsAwarded points to customer {$orderData['CustomerId']} for paid order $order_db_id");
+
+    } catch (Exception $e) {
+        // Log error but don't fail the order
+        error_log("Error awarding rewards points for paid order $order_db_id: " . $e->getMessage());
+    }
+
     // Process rewards and coupons for the paid order
     try {
         include_once '../includes/order_rewards_integration.php';
@@ -124,7 +140,11 @@ if ($generated_signature === $razorpay_signature) {
         unset($_SESSION['applied_coupon']);
     }
 
-    echo json_encode(["status" => "success", "message" => "Payment verified and order created successfully"]);
+    echo json_encode([
+        "status" => "success",
+        "message" => "Payment verified and order created successfully",
+        "points_awarded" => $pointsAwarded
+    ]);
 
 } else {
     // Signature mismatch, payment failed

@@ -113,7 +113,7 @@ try {
         $insertOrderQuery = "INSERT INTO order_master (
             OrderId, CustomerId, CustomerType, OrderDate, Amount, PaymentStatus,
             OrderStatus, ShipAddress, PaymentType, TransactionId, CreatedAt
-        ) VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, NOW())";
+        ) VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, 'NA', NOW())";
 
         $orderStmt = $mysqli->prepare($insertOrderQuery);
         if (!$orderStmt) {
@@ -126,7 +126,7 @@ try {
         $paymentType = $data['paymentMethod'];
         $paymentStatus = 'Pending'; // Will be paid on delivery
 
-        $orderStmt->bind_param("sisssssss",
+        $orderStmt->bind_param("sissssss",
             $simpleOrderId,
             $data['CustomerId'],
             $customerType,
@@ -134,8 +134,7 @@ try {
             $paymentStatus,
             $orderStatus,
             $shipAddress,
-            $paymentType,
-            'NA' // No transaction ID for COD
+            $paymentType
         );
 
         if (!$orderStmt->execute()) {
@@ -184,6 +183,22 @@ try {
         }
     }
 
+    // Award rewards points for the order
+    $pointsAwarded = 0;
+    try {
+        include_once '../includes/RewardsSystem.php';
+        $rewards = new RewardsSystem();
+
+        // Award points for the order amount
+        $pointsAwarded = $rewards->awardOrderPoints($data['CustomerId'], $simpleOrderId, $data['final_total']);
+
+        error_log("Rewards: Awarded $pointsAwarded points to customer {$data['CustomerId']} for order $simpleOrderId");
+
+    } catch (Exception $e) {
+        // Log error but don't fail the order
+        error_log("Error awarding rewards points for order $simpleOrderId: " . $e->getMessage());
+    }
+
     // Success response
     $response = [
         "response" => "S",
@@ -194,7 +209,8 @@ try {
         "amount" => $data['final_total'],
         "name" => $data['name'],
         "email" => $data['email'],
-        "phone" => $data['phone']
+        "phone" => $data['phone'],
+        "points_awarded" => $pointsAwarded
     ];
 
     echo json_encode($response);

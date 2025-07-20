@@ -522,6 +522,310 @@ $obj->connection();
 /*    font-size: 1rem;*/
 /*}*/
 
+/* Rewards Modal Styles */
+.rewards-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.rewards-modal-content {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.rewards-modal-header {
+    background: linear-gradient(135deg, #ff8c00 0%, #2d5016 100%);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+}
+
+.rewards-modal-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rewards-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rewards-close:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.rewards-modal-body {
+    padding: 30px;
+}
+
+.rewards-points-summary {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffb347 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.3);
+}
+
+.rewards-points-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.rewards-points-label {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.rewards-tier-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.rewards-tabs {
+    display: flex;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 20px;
+}
+
+.rewards-tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.rewards-tab.active {
+    color: #ff8c00;
+    border-bottom-color: #ff8c00;
+}
+
+.rewards-tab:hover {
+    color: #ff8c00;
+    background: rgba(255, 140, 0, 0.1);
+}
+
+.rewards-tab-content {
+    display: none;
+}
+
+.rewards-tab-content.active {
+    display: block;
+}
+
+.rewards-transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.rewards-transaction-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.rewards-transaction-info h4 {
+    margin: 0 0 5px 0;
+    color: #2d5016;
+    font-size: 1rem;
+}
+
+.rewards-transaction-info p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.rewards-transaction-points {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.rewards-transaction-points.earned {
+    color: #28a745;
+}
+
+.rewards-transaction-points.redeemed {
+    color: #dc3545;
+}
+
+.rewards-catalog-item {
+    border: 1px solid #e9ecef;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.rewards-catalog-item:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.rewards-catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rewards-catalog-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2d5016;
+    margin: 0;
+}
+
+.rewards-catalog-cost {
+    background: #ff8c00;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.rewards-catalog-description {
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.rewards-redeem-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rewards-redeem-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.rewards-redeem-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.rewards-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.rewards-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.rewards-secondary-btn {
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.rewards-secondary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(45, 80, 22, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .rewards-modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+
+    .rewards-points-number {
+        font-size: 2.5rem;
+    }
+
+    .rewards-tabs {
+        flex-direction: column;
+    }
+
+    .rewards-transaction-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .rewards-secondary-btn {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
     </style>
     
 </head>
@@ -537,11 +841,26 @@ $obj->connection();
  <img src=image/reward.jpg alt="Header" class='rewards-header-image' />
         </div>
         <div class='rewards-hero-content'>
-          <h1>Join And Earn Rewards</h1>
-          <p>Win My Nutrify Points for every spend and redeem them for exclusive rewards.</p>
-          <div class="rewards-button-group">
-            <a href="login.php" class="rewards-primary-btn">Login</a>
-          </div>
+          <?php if (isset($_SESSION['CustomerId']) && !empty($_SESSION['CustomerId'])): ?>
+            <!-- Logged in user content -->
+            <h1>Your Rewards Dashboard</h1>
+            <p>Track your points, view transactions, and redeem exciting rewards!</p>
+            <div class="rewards-button-group">
+              <button onclick="openRewardsModal()" class="rewards-primary-btn">
+                <i class="fas fa-coins"></i> View My Points
+              </button>
+              <button onclick="openRedeemModal()" class="rewards-secondary-btn">
+                <i class="fas fa-gift"></i> Redeem Rewards
+              </button>
+            </div>
+          <?php else: ?>
+            <!-- Guest user content -->
+            <h1>Join And Earn Rewards</h1>
+            <p>Win My Nutrify Points for every spend and redeem them for exclusive rewards.</p>
+            <div class="rewards-button-group">
+              <a href="login.php" class="rewards-primary-btn">Login</a>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -712,6 +1031,62 @@ $obj->connection();
         <!-- about counter end -->
     
     <!-- login end -->
+
+    <!-- Rewards Modal -->
+    <div id="rewardsModal" class="rewards-modal">
+        <div class="rewards-modal-content">
+            <div class="rewards-modal-header">
+                <h2 class="rewards-modal-title">
+                    <i class="fas fa-coins"></i>
+                    My Rewards Dashboard
+                </h2>
+                <span class="rewards-close" onclick="closeRewardsModal()">&times;</span>
+            </div>
+            <div class="rewards-modal-body">
+                <!-- Points Summary -->
+                <div class="rewards-points-summary">
+                    <div class="rewards-points-label">Your Current Points</div>
+                    <div class="rewards-points-number" id="userPointsDisplay">0</div>
+                    <div class="rewards-tier-badge" id="userTierDisplay">Bronze Member</div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="rewards-tabs">
+                    <button class="rewards-tab active" onclick="showTab('transactions')">
+                        <i class="fas fa-history"></i> Transactions
+                    </button>
+                    <button class="rewards-tab" onclick="showTab('redeem')">
+                        <i class="fas fa-gift"></i> Redeem
+                    </button>
+                </div>
+
+                <!-- Transactions Tab -->
+                <div id="transactions-tab" class="rewards-tab-content active">
+                    <div id="transactionsList">
+                        <div class="rewards-empty-state">
+                            <div class="rewards-empty-icon">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                            <p>Loading your transactions...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Redeem Tab -->
+                <div id="redeem-tab" class="rewards-tab-content">
+                    <div id="rewardsCatalog">
+                        <div class="rewards-empty-state">
+                            <div class="rewards-empty-icon">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                            <p>Loading available rewards...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- footer start -->
     <?php include("components/footer.php") ?>
     <!-- footer end -->
@@ -762,5 +1137,179 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+
+<script>
+// Rewards Modal JavaScript
+function openRewardsModal() {
+    document.getElementById('rewardsModal').style.display = 'block';
+    loadUserRewards();
+}
+
+function closeRewardsModal() {
+    document.getElementById('rewardsModal').style.display = 'none';
+}
+
+function openRedeemModal() {
+    document.getElementById('rewardsModal').style.display = 'block';
+    showTab('redeem');
+    loadUserRewards();
+}
+
+function showTab(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.rewards-tab-content');
+    tabContents.forEach(content => content.classList.remove('active'));
+
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('.rewards-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    // Show selected tab content
+    document.getElementById(tabName + '-tab').classList.add('active');
+
+    // Add active class to clicked tab
+    event.target.classList.add('active');
+}
+
+function loadUserRewards() {
+    // Load user points and transactions
+    fetch('get_user_rewards.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update points display
+                document.getElementById('userPointsDisplay').textContent = data.points.total_points;
+                document.getElementById('userTierDisplay').textContent = data.points.tier_level + ' Member';
+
+                // Load transactions
+                loadTransactions(data.transactions);
+
+                // Load rewards catalog
+                loadRewardsCatalog(data.catalog, data.points.total_points);
+            } else {
+                console.error('Failed to load rewards data');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading rewards:', error);
+        });
+}
+
+function loadTransactions(transactions) {
+    const transactionsList = document.getElementById('transactionsList');
+
+    if (transactions.length === 0) {
+        transactionsList.innerHTML = `
+            <div class="rewards-empty-state">
+                <div class="rewards-empty-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <p>No transactions yet. Start shopping to earn points!</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    transactions.forEach(transaction => {
+        const isEarned = transaction.transaction_type === 'earned';
+        const pointsClass = isEarned ? 'earned' : 'redeemed';
+        const pointsPrefix = isEarned ? '+' : '-';
+
+        html += `
+            <div class="rewards-transaction-item">
+                <div class="rewards-transaction-info">
+                    <h4>${transaction.description}</h4>
+                    <p>${new Date(transaction.created_at).toLocaleDateString()}</p>
+                </div>
+                <div class="rewards-transaction-points ${pointsClass}">
+                    ${pointsPrefix}${Math.abs(transaction.points)} points
+                </div>
+            </div>
+        `;
+    });
+
+    transactionsList.innerHTML = html;
+}
+
+function loadRewardsCatalog(catalog, userPoints) {
+    const rewardsCatalog = document.getElementById('rewardsCatalog');
+
+    if (catalog.length === 0) {
+        rewardsCatalog.innerHTML = `
+            <div class="rewards-empty-state">
+                <div class="rewards-empty-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <p>No rewards available at the moment.</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    catalog.forEach(reward => {
+        const canRedeem = userPoints >= reward.points_required;
+        const buttonText = canRedeem ? 'Redeem Now' : `Need ${reward.points_required - userPoints} more points`;
+
+        html += `
+            <div class="rewards-catalog-item">
+                <div class="rewards-catalog-header">
+                    <h3 class="rewards-catalog-title">${reward.reward_name}</h3>
+                    <div class="rewards-catalog-cost">${reward.points_required} points</div>
+                </div>
+                <p class="rewards-catalog-description">
+                    ${reward.reward_type === 'discount' ? '₹' + reward.reward_value + ' discount on your next order' :
+                      reward.reward_type === 'free_shipping' ? 'Free shipping on any order' :
+                      'Special reward'}
+                </p>
+                <button class="rewards-redeem-btn" ${!canRedeem ? 'disabled' : ''}
+                        onclick="redeemReward(${reward.id}, '${reward.reward_name}', ${reward.points_required})">
+                    ${buttonText}
+                </button>
+            </div>
+        `;
+    });
+
+    rewardsCatalog.innerHTML = html;
+}
+
+function redeemReward(rewardId, rewardName, pointsRequired) {
+    if (confirm(`Redeem "${rewardName}" for ${pointsRequired} points?`)) {
+        fetch('redeem_reward.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                reward_id: rewardId,
+                points_required: pointsRequired
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Reward redeemed successfully! Check your account for the coupon code.');
+                loadUserRewards(); // Refresh the data
+            } else {
+                alert('Failed to redeem reward: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error redeeming reward:', error);
+            alert('An error occurred while redeeming the reward.');
+        });
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('rewardsModal');
+    if (event.target === modal) {
+        closeRewardsModal();
+    }
+}
+</script>
+
 </body>
 </html>
