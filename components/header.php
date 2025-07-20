@@ -439,7 +439,7 @@ input[name="quantity"] {
 
 <!-- top notificationbar start -->
 <section class="top1">
-    <div class="container">
+    <div class="container-fluid full-width">
         <div class="row">
             <div class="col">
                 <div class="top-content">
@@ -476,7 +476,7 @@ input[name="quantity"] {
 <!-- header start -->
 <header class="header-area">
     <div class="header-main-area">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="header-main">
@@ -607,7 +607,7 @@ input[name="quantity"] {
             </div>
         </div>
         <div class="header-bottom-area">
-            <div class="container">
+            <div class="container-fluid full-width">
                 <div class="row">
                     <div class="col">
                         <div class="main-menu-area">
@@ -972,7 +972,7 @@ showSlides(); // Initial call to start slideshow
 </script>
 <!-- mobile menu start -->
 <div class="header-bottom-area mobile">
-    <div class="container">
+    <div class="container-fluid full-width">
         <div class="row">
             <div class="col">
                 <div class="main-menu-area">

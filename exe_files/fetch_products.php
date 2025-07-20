@@ -97,55 +97,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Display the product details in the desired format
-        echo '<li class="grid-items" style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top:15px;">';
-        echo '    <div class="tred-pro">';
-        echo '        <div class="tr-pro-img">';
-        echo '            <a href="product_details.php?ProductId=' . htmlspecialchars($product["ProductId"]) . '">';
-        echo '                <img class="img-fluid" src="cms/images/products/' . htmlspecialchars($product["PhotoPath"]) . '" alt="Product Image">';
-        echo '                <img class="img-fluid additional-image" src="cms/images/products/' . htmlspecialchars($product["PhotoPath"]) . '" alt="Additional Image">';
-        echo '            </a>';
-        echo '        </div>';
-        if ($savings > 0) {
-            echo '        <div class="Pro-lable">';
-            echo '            <span class="p-text">Off ₹' . htmlspecialchars($savings) . '</span>';
-            echo '        </div>';
-        }
-        echo '    </div>';
-        echo '    <div class="caption">';
-        echo '        <h3><a href="product_details.php?ProductId=' . htmlspecialchars($product["ProductId"]) . '">' . htmlspecialchars($product["ProductName"]) . '</a></h3>';
-        echo '        <div class="rating">';
-        echo '            <i class="fa fa-star c-star"></i>';
-        echo '            <i class="fa fa-star c-star"></i>';
-        echo '            <i class="fa fa-star c-star"></i>';
-        echo '            <i class="fa fa-star-o"></i>';
-        echo '            <i class="fa fa-star-o"></i>';
-        echo '        </div>';
-        echo '        <div class="pro-price">';
-        echo '            <span class="new-price">Starting from ₹' . htmlspecialchars($lowest_price) . '</span>';
-        if ($mrp != "N/A") {
-            echo '            <span class="old-price" style="text-decoration: line-through; color: #999;">₹' . htmlspecialchars($mrp) . '</span>';
-        }
-        echo '        </div>';
-        echo '
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="pro-btn text-center" style="margin: 5px;">
-                            <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="' . htmlspecialchars($product['ProductId']) . '">
-                                <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>';
+        // Display the product details in the new modern card format
+        echo '<div class="product-card" data-product-id="' . htmlspecialchars($product["ProductId"]) . '">';
 
+        // Product badge for savings
+        if ($savings > 0) {
+            echo '    <div class="product-badge">';
+            echo '        Save ₹' . number_format($savings);
+            echo '    </div>';
+        }
+
+        // Product image with eye button
+        echo '    <div class="product-image">';
+        echo '        <a href="product_details.php?ProductId=' . htmlspecialchars($product["ProductId"]) . '">';
+        echo '            <img class="main-image" src="cms/images/products/' . htmlspecialchars($product["PhotoPath"]) . '" alt="' . htmlspecialchars($product["ProductName"]) . '" loading="lazy">';
+        echo '        </a>';
+        echo '        <div class="product-actions">';
+        echo '            <button class="eye-btn" onclick="showPreview(' . htmlspecialchars($product['ProductId']) . ')">';
+        echo '                <i class="fa fa-eye"></i>';
+        echo '            </button>';
+        echo '        </div>';
         echo '    </div>';
-        echo '</li>';
+
+        // Product info
+        echo '    <div class="product-info">';
+        echo '        <h3 class="product-title">';
+        echo '            <a href="product_details.php?ProductId=' . htmlspecialchars($product["ProductId"]) . '" style="text-decoration: none; color: inherit;">';
+        echo '                ' . htmlspecialchars($product["ProductName"]);
+        echo '            </a>';
+        echo '        </h3>';
+
+        // Product price
+        echo '        <div class="product-price">';
+        echo '            <span class="price-current">₹' . htmlspecialchars($lowest_price) . '</span>';
+        if ($mrp != "N/A" && $mrp != $lowest_price) {
+            echo '            <span class="price-original">₹' . htmlspecialchars($mrp) . '</span>';
+            if ($savings > 0) {
+                $discountPercent = round((($mrp - $lowest_price) / $mrp) * 100);
+                echo '            <span class="price-discount">' . $discountPercent . '% OFF</span>';
+            }
+        }
+        echo '        </div>';
+
+        // Add to cart button
+        echo '        <button class="btn-add-cart add-to-cart-session" data-product-id="' . htmlspecialchars($product['ProductId']) . '">';
+        echo '            <i class="fa fa-shopping-cart me-2"></i>Add to Cart';
+        echo '        </button>';
+        echo '    </div>';
+        echo '</div>';
 
     }
 } else {
-    echo '<li class="grid-items no-products">';
-    echo '<p>No products found.</p>';
-    echo '</li>';
+    echo '<div class="col-12 text-center py-5">';
+    echo '<div style="color: #718096; font-size: 1.1rem;">';
+    echo '<i class="fa fa-search fa-3x mb-3" style="opacity: 0.3;"></i>';
+    echo '<h4>No products found</h4>';
+    echo '<p>Try adjusting your filters or search criteria</p>';
+    echo '</div>';
+    echo '</div>';
 }
 }
 ?>

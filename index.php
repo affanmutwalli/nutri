@@ -3765,7 +3765,19 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 </style>
 
 </head>
-
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/687cd82326d3e2191999a21f/1j0jqoipl';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 <body class="home-1">
 
     <!-- Promotional Popup Modal -->
@@ -3980,7 +3992,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!--home page slider start-->
     <!--Enhanced banner section - Krishna Style-->
     <section class="t-banner1 section-tb-padding" style="background: linear-gradient(135deg, #f8f9fa 0%, var(--white) 100%);">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="home-offer-banner">
@@ -4020,7 +4032,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!-- banner end -->
     <!-- Enhanced Category Section - Krishna Style -->
     <section class="category-img1 section-t-padding section-b-padding" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="section-title">
@@ -4055,7 +4067,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!-- Category image slide -->
     <!-- Enhanced Trending Products Section - Krishna Style -->
     <section class="h-t-products1 section-t-padding section-b-padding" style="background: var(--white);">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="section-title">
@@ -4165,7 +4177,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
      
     <!-- Enhanced Our Products Tab Section - Krishna Style -->
     <section class="our-products-tab section-tb-padding" id="bestsellers-section" style="background: linear-gradient(135deg, var(--light-green) 0%, #f8f9fa 100%);">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="section-title">
@@ -5158,7 +5170,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!-- Testimonial end -->
     <!-- Blog start -->
    <section class="section-tb-padding">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="section-title">
@@ -5260,7 +5272,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <!-- News Letter end -->
     <!-- brand logo start -->
     <section class="section-tb-padding home-brand1">
-        <div class="container">
+        <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">
                     <div class="brand-carousel owl-carousel owl theme">

@@ -32,7 +32,7 @@
 
 </style>
 <section class="footer-one section-tb-padding">
-            <div class="container">
+            <div class="container-fluid full-width">
                 <div class="row">
                     <div class="col">
                         <div class="footer-service section-b-padding">
@@ -185,7 +185,7 @@
         </section>
          <!-- footer copyright start -->
          <section class="footer-copyright">
-            <div class="container">
+            <div class="container-fluid full-width">
                 <div class="row">
                     <div class="col">
                         <ul class="f-bottom">
