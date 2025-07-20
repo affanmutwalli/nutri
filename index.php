@@ -3100,9 +3100,9 @@ s
 
 .simple-about-content {
     max-width: 1142px;
-    margin: 30px auto 0;
+    margin: 29px auto 18px;
     background: white;
-    padding: 30px;
+    padding: 28px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -3764,6 +3764,100 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 }
 </style>
 
+<!-- Wellness Categories Animation Styles -->
+<style>
+/* Wellness Category Circle Animations */
+.h-cate {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.h-cate:hover {
+    transform: translateY(-8px);
+}
+
+.h-cate a {
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Circle Image Container Animation */
+.h-cate a > div {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.h-cate:hover a > div {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Animation */
+.h-cate img {
+    transition: all 0.4s ease-in-out;
+    filter: brightness(1) saturate(1);
+}
+
+.h-cate:hover img {
+    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.05);
+}
+
+/* Text Label Animation */
+.h-cate span {
+    transition: all 0.3s ease-in-out;
+    display: block;
+    margin-top: 5px;
+}
+
+.h-cate:hover span {
+    color: #ff6b35 !important;
+    font-weight: 600 !important;
+    transform: translateY(-2px);
+}
+
+/* Pulse Animation for New/Featured Categories */
+@keyframes wellness-pulse {
+    0% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
+    50% { box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3); }
+    100% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
+}
+
+/* Floating Animation */
+@keyframes wellness-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Apply floating animation to alternate items */
+.h-cate:nth-child(even) {
+    animation: wellness-float 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.h-cate:nth-child(odd) {
+    animation: wellness-float 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+/* Hover state overrides floating */
+.h-cate:hover {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .h-cate:hover {
+        transform: translateY(-4px);
+    }
+
+    .h-cate:hover a > div {
+        transform: scale(1.05);
+    }
+}
+</style>
+
 </head>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
@@ -4128,7 +4222,7 @@ s0.parentNode.insertBefore(s1,s0);
                             <div class="tred-pro">
                                 <div class="tr-pro-img" style="position: relative; overflow: hidden;">
                                     <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
-                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 250px; object-fit: cover; transition: var(--transition);">
+                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 250px; object-fit: contain; transition: var(--transition);">
                                         <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                     </a>
                                 </div>
@@ -5403,6 +5497,169 @@ s0.parentNode.insertBefore(s1,s0);
     <script src="js/swiper.min.js"></script>
     <!-- custom -->
     <script src="js/custom.js"></script>
+
+    <!-- Wellness Categories Slider Initialization -->
+    <script>
+    $(document).ready(function() {
+        // Initialize Wellness Categories Slider
+        $('.home-category').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            navText: [
+                '<i class="fa fa-chevron-left" style="color: #ff6b35; font-size: 18px;"></i>',
+                '<i class="fa fa-chevron-right" style="color: #ff6b35; font-size: 18px;"></i>'
+            ],
+            responsive: {
+                0: {
+                    items: 2,
+                    margin: 10,
+                    nav: false
+                },
+                480: {
+                    items: 3,
+                    margin: 15,
+                    nav: false
+                },
+                768: {
+                    items: 4,
+                    margin: 20,
+                    nav: true
+                },
+                992: {
+                    items: 5,
+                    margin: 20,
+                    nav: true
+                },
+                1200: {
+                    items: 6,
+                    margin: 20,
+                    nav: true
+                }
+            }
+        });
+
+        // Add custom styling for wellness categories slider
+        $('.home-category .owl-nav').css({
+            'position': 'absolute',
+            'top': '50%',
+            'width': '100%',
+            'transform': 'translateY(-50%)',
+            'pointer-events': 'none'
+        });
+
+        $('.home-category .owl-nav button').css({
+            'position': 'absolute',
+            'background': 'rgba(255, 255, 255, 0.9)',
+            'border': '2px solid #ff6b35',
+            'border-radius': '50%',
+            'width': '45px',
+            'height': '45px',
+            'display': 'flex',
+            'align-items': 'center',
+            'justify-content': 'center',
+            'pointer-events': 'all',
+            'transition': 'all 0.3s ease',
+            'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)',
+            'z-index': '10'
+        });
+
+        $('.home-category .owl-nav .owl-prev').css({
+            'left': '-20px'
+        });
+
+        $('.home-category .owl-nav .owl-next').css({
+            'right': '-20px'
+        });
+
+        $('.home-category .owl-nav button').hover(
+            function() {
+                $(this).css({
+                    'background': '#ff6b35',
+                    'transform': 'scale(1.1)',
+                    'box-shadow': '0 6px 20px rgba(255, 107, 53, 0.3)'
+                });
+                $(this).find('i').css('color', 'white');
+            },
+            function() {
+                $(this).css({
+                    'background': 'rgba(255, 255, 255, 0.9)',
+                    'transform': 'scale(1)',
+                    'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)'
+                });
+                $(this).find('i').css('color', '#ff6b35');
+            }
+        );
+
+        // Custom dots styling
+        $('.home-category .owl-dots').css({
+            'text-align': 'center',
+            'margin-top': '30px'
+        });
+
+        $('.home-category .owl-dot').css({
+            'display': 'inline-block',
+            'margin': '0 5px',
+            'width': '12px',
+            'height': '12px',
+            'border-radius': '50%',
+            'background': '#ddd',
+            'transition': 'all 0.3s ease',
+            'cursor': 'pointer'
+        });
+
+        $('.home-category .owl-dot.active').css({
+            'background': '#ff6b35',
+            'transform': 'scale(1.2)'
+        });
+
+        // Add smooth scroll behavior when dots are clicked
+        $('.home-category .owl-dot').hover(
+            function() {
+                if (!$(this).hasClass('active')) {
+                    $(this).css({
+                        'background': '#ff6b35',
+                        'opacity': '0.7',
+                        'transform': 'scale(1.1)'
+                    });
+                }
+            },
+            function() {
+                if (!$(this).hasClass('active')) {
+                    $(this).css({
+                        'background': '#ddd',
+                        'opacity': '1',
+                        'transform': 'scale(1)'
+                    });
+                }
+            }
+        );
+
+        // Pause autoplay on hover over any wellness category item
+        $('.home-category .h-cate').hover(
+            function() {
+                $('.home-category').trigger('stop.owl.autoplay');
+            },
+            function() {
+                $('.home-category').trigger('play.owl.autoplay', [3000]);
+            }
+        );
+
+        // Add touch/swipe support enhancement
+        $('.home-category').on('touchstart', function(e) {
+            $(this).addClass('touching');
+        });
+
+        $('.home-category').on('touchend', function(e) {
+            $(this).removeClass('touching');
+        });
+    });
+    </script>
+
     <script>
        $(document).ready(function () {
             // Handle navigation to bestSellers section from Offers link
