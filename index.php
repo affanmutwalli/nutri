@@ -91,7 +91,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         line-height: 1.3 !important;
         letter-spacing: 0.5px !important;
         text-transform: none !important;
-        margin: 0 !important;
+        margin: 24px 0 !important;
         padding: 18px 35px !important;
         position: relative !important;
         display: inline-block !important;
@@ -895,46 +895,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         text-align: center;
         padding: 40px 20px;
         color: #666;
-    }
-
-    .history-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: 8px;
-        margin-bottom: 10px;
-    }
-
-    .history-details h4 {
-        margin: 0 0 4px 0;
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .history-details p {
-        margin: 0;
-        font-size: 12px;
-        color: #666;
-    }
-
-    .history-points {
-        font-size: 14px;
-        font-weight: bold;
-        padding: 4px 8px;
-        border-radius: 12px;
-    }
-
-    .history-points.positive {
-        color: #2d5016;
-        background: rgba(45, 80, 22, 0.1);
-    }
-
-    .history-points.negative {
-        color: #dc3545;
-        background: rgba(220, 53, 69, 0.1);
     }
 
     /* Modal Footer */
@@ -1935,17 +1895,17 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     /* Enhanced Section Spacing */
     .section-t-padding {
-        padding-top: 80px;
+        padding-top: 1px;
     }
 
     .section-b-padding {
-        padding-bottom: 80px;
+        padding-bottom: 1px;
     }
 
     .section-tb-padding {
-        padding: 80px 0;
+        padding: 1px 0;
     }
-
+s
     /* Full-Width Layout - Krishna Ayurveda Style */
     .container {
         max-width: 100% !important;
@@ -2444,7 +2404,8 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         /* Added for badge positioning */
         transition: transform 0.3s;
         /* Smooth transition for hover effect */
-        border: 1px orange solid;
+        border: 2px solid #ff6b35;
+        /* Orange border */;
     }
 
     .offer-product-card:hover {
@@ -3042,6 +3003,92 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     section.pro-releted p {
         font-size: 14px;
         line-height: 1.6;
+    }
+}
+
+/* ✅ SIMPLE ABOUT SECTION - MINIMAL & CLEAN */
+.simple-about-section {
+    background: #f9f9f9;
+}
+
+.simple-about-content {
+    max-width: 1142px;
+    margin: 30px auto 0;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+    margin-bottom: 25px;
+}
+
+.simple-para {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.year-highlight {
+    background: #EA652D;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.simple-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.feature-item {
+    background: #f0f8f0;
+    color: #305724;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #e0e0e0;
+}
+
+/* ✅ MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    .simple-about-content {
+        margin: 20px 15px 0;
+        padding: 25px 20px;
+    }
+
+    .simple-para {
+        font-size: 15px;
+    }
+
+    .simple-features {
+        gap: 10px;
+    }
+
+    .feature-item {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .simple-about-content {
+        padding: 20px 15px;
+    }
+
+    .simple-para {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .feature-item {
+        font-size: 12px;
+        padding: 5px 10px;
     }
 }
 
@@ -4371,22 +4418,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </section>
 
 
-    <section class="section-b-padding pro-releted">
-
+    <section class="section-b-padding pro-releted simple-about-section">
         <div class="section-title">
             <h2 style="margin-top: 75px;">Your Certified <span class="highlight">Trusted Product</span></h2>
         </div>
-        <p class="cart-para">
-            Established in 2013, we are a trusted manufacturer and
-            supplier of Ayurvedic and herbal products in Sangli,
-            Maharashtra. Our mission is to improve lives with
-            high-quality, natural healthcare solutions while ensuring
-            100% customer satisfaction. Our GMP-certified
-            manufacturing unit, approved by the Ayush Department,
-            Govt. of India, follows strict quality standards. With a
-            dedicated R&D lab and quality control team, we ensure
-            purity and effectiveness in every product.
-        </p>
+
+        <div class="simple-about-content">
+            <div class="about-text">
+                <p class="simple-para">
+                    At My Nutrify, we are committed to transforming health through the power of Ayurveda and natural science. Based in Sangli, Maharashtra, we have been a trusted manufacturer and supplier of high-quality Ayurvedic and herbal supplements.
+                </p>
+                <p class="simple-para">
+                    Our GMP-certified manufacturing facility is approved by the Ayush Department, Government of India, and operates under the highest quality and safety standards. Backed by a dedicated R&D lab and a stringent quality control team, we ensure that every product we create is pure, effective, and safe.
+                </p>
+                <p class="simple-para">
+                    From formulation to packaging, we focus on delivering natural healthcare solutions that support your wellness journey—because your health is our priority. With a growing customer base across India, we stand for trust, transparency, and total customer satisfaction.
+                </p>
+            </div>
+
+            <div class="simple-features">
+                <div class="feature-item">✅ GMP Certified</div>
+                <div class="feature-item">✅ Ayush Approved</div>
+                <div class="feature-item">✅ 100% Satisfaction</div>
+            </div>
+        </div>
         <div class="use-container">
             <div class="use-cart">
                 <div>
@@ -4426,21 +4481,31 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </div>
         </div>
     </section>
-    <section class="section-b-padding pro-releted">
+    <section class="section-b-padding pro-releted simple-about-section">
         <div class="section-title">
             <h2>Committed to Your <span class="highlight">Wellness and Well-Being</span></h2>
         </div>
-        <p class="cart-para">At My Nutrify Herbal and Ayurveda, we stay true to tradition,
-            creating products using the Classical Ayurvedic process.
-            Made with handpicked ingredients from select farms, every
-            product is chemical-free and carefully tested for quality.
-            With the expertise of our Ayurveda practitioners, experts,
-            and researchers, we ensure our products support your
-            health, vitality, and well-being.</p>
-        <p class="cart-para">Our guiding mantra, <span></span>reflects our belief that health is the greatest wealth.
-            Experience Ayurveda in its purest form because your
-            well-being comes first!</p>
-    </section>
+
+        <div class="simple-about-content">
+            <div class="about-text">
+                <p class="simple-para">
+                    At My Nutrify, we honor the timeless principles of Ayurveda by crafting each product through the traditional Ayurvedic process. Using hand-selected herbs from trusted farms, our products are 100% chemical-free, carefully prepared, and rigorously tested for purity and quality.
+                </p>
+                <p class="simple-para">
+                    We believe in delivering wellness the way nature intended—clean, effective, and rooted in ancient wisdom. Whether it's boosting immunity, enhancing energy, or promoting balance, every product is made to support your overall health and well-being.
+                </p>
+                <p class="simple-para">
+                    Our philosophy is simple: true wealth begins with good health. Experience the power of Ayurveda—pure, authentic, and made with care.
+                </p>
+            </div>
+
+            <div class="simple-features">
+                <div class="feature-item">✅ Traditional Process</div>
+                <div class="feature-item">✅ Hand-Selected Herbs</div>
+                <div class="feature-item">✅ 100% Chemical-Free</div>
+                <div class="feature-item">✅ Ancient Wisdom</div>
+            </div>
+        </div>
     </section>
 
     <!-- Top Banner Section -->
@@ -5196,36 +5261,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </section>
     <!-- brand logo end -->
 
-    <!-- We Are Also Available On Section - Krishna Style -->
-    <section style="background: var(--white); padding: 60px 0; border-top: 1px solid var(--border-light);">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="text-center">
-                        <h3 style="font-size: 28px; font-weight: 700; color: var(--text-dark); margin-bottom: 40px;">We Are Also Available On:</h3>
-                        <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 15px; padding: 15px 25px; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); border: 1px solid var(--border-light);">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Amazon_logo.svg/200px-Amazon_logo.svg.png" alt="Amazon" style="height: 30px; object-fit: contain;">
-                                <span style="font-weight: 600; color: var(--text-dark);">Amazon</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px; padding: 15px 25px; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); border: 1px solid var(--border-light);">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Jio_Mart_Logo.svg/200px-Jio_Mart_Logo.svg.png" alt="Jio Mart" style="height: 30px; object-fit: contain;">
-                                <span style="font-weight: 600; color: var(--text-dark);">Jio Mart</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px; padding: 15px 25px; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); border: 1px solid var(--border-light);">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Tata_1mg_logo.svg/200px-Tata_1mg_logo.svg.png" alt="Tata 1mg" style="height: 30px; object-fit: contain;">
-                                <span style="font-weight: 600; color: var(--text-dark);">Tata 1mg</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px; padding: 15px 25px; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); border: 1px solid var(--border-light);">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Snapdeal_logo.svg/200px-Snapdeal_logo.svg.png" alt="Snapdeal" style="height: 30px; object-fit: contain;">
-                                <span style="font-weight: 600; color: var(--text-dark);">Snapdeal</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- footer start -->
     <?php include("components/footer.php"); ?>
@@ -5954,29 +5990,20 @@ class DynamicRewardsElement {
     }
 
     checkLoginStatus() {
-        // Load comprehensive rewards data
-        this.loadRewardsData();
-    }
-
-    async loadRewardsData() {
-        try {
-            const response = await fetch("exe_files/get_rewards_data.php");
-            const data = await response.json();
-
-            this.rewardsData = data;
-            this.isLoggedIn = data.loggedIn;
-            this.customerData = data.customer || null;
-            this.userPoints = data.customer ? data.customer.points : 0;
-
-            console.log('Rewards data loaded:', data);
-            this.updateRewardsState();
-        } catch (error) {
-            console.error("Error loading rewards data:", error);
-            this.isLoggedIn = false;
-            this.customerData = null;
-            this.userPoints = 0;
-            this.updateRewardsState();
-        }
+        // Check if user is logged in using existing session check
+        fetch("check_session.php")
+            .then(response => response.json())
+            .then(data => {
+                this.isLoggedIn = data.loggedIn;
+                this.customerData = data.customer || null;
+                this.updateRewardsState();
+            })
+            .catch(error => {
+                console.log("Session check failed, assuming guest user");
+                this.isLoggedIn = false;
+                this.customerData = null;
+                this.updateRewardsState();
+            });
     }
 
     setupDynamicBehavior() {
@@ -5990,11 +6017,6 @@ class DynamicRewardsElement {
         setInterval(() => {
             this.updateRewardsState();
         }, 10000); // Update every 10 seconds
-
-        // Refresh rewards data periodically
-        setInterval(() => {
-            this.loadRewardsData();
-        }, 60000); // Refresh data every 60 seconds
     }
 
     monitorCartActivity() {
@@ -6069,21 +6091,18 @@ class DynamicRewardsElement {
     setLoggedInUserState() {
         this.element.className = 'rewards-element logged-in-user';
 
-        // Show different messages for logged-in users including actual points
-        const points = this.userPoints || 0;
+        // Show different messages for logged-in users
         const messages = [
             'Rewards',
-            `${points} Points`,
+            'Your Points',
             'Earn More',
             'Redeem Now'
         ];
 
         let messageIndex = 0;
-        this.textElement.textContent = messages[0]; // Show initial message
-
         setInterval(() => {
-            messageIndex = (messageIndex + 1) % messages.length;
             this.textElement.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
         }, 6000);
     }
 
@@ -6251,50 +6270,7 @@ function updateRewardsModalContent() {
             </div>
         `;
     } else {
-        // Logged-in user content with real data
-        const customerData = rewardsElement.customerData || {};
-        const rewardsData = rewardsElement.rewardsData || {};
-
-        // Generate earning methods HTML
-        const earningMethodsHTML = (rewardsData.earning_methods || []).map(method => `
-            <div class="earn-item">
-                <span class="earn-icon">${method.icon}</span>
-                <div class="earn-details">
-                    <h4>${method.title}</h4>
-                    <p>${method.description}</p>
-                </div>
-                <span class="earn-points">${method.points}</span>
-            </div>
-        `).join('');
-
-        // Generate redeem options HTML
-        const redeemOptionsHTML = (rewardsData.available_rewards || []).map(reward => `
-            <div class="redeem-item">
-                <h4>${reward.reward_name}</h4>
-                <p>${reward.reward_description}</p>
-                <p>Minimum order ₹${reward.minimum_order_amount}</p>
-                <button class="redeem-btn ${reward.can_redeem ? '' : 'disabled'}"
-                        ${reward.can_redeem ? `onclick="redeemReward(${reward.id})"` : 'disabled'}>
-                    ${reward.can_redeem ? 'Redeem Now' : `${reward.points_required} Points Required`}
-                </button>
-            </div>
-        `).join('');
-
-        // Generate history HTML
-        const historyHTML = (rewardsData.recent_transactions || []).length > 0 ?
-            rewardsData.recent_transactions.map(transaction => `
-                <div class="history-item">
-                    <div class="history-details">
-                        <h4>${transaction.description}</h4>
-                        <p>${transaction.date}</p>
-                    </div>
-                    <span class="history-points ${transaction.type === 'earned' ? 'positive' : 'negative'}">
-                        ${transaction.type === 'earned' ? '+' : ''}${transaction.points} pts
-                    </span>
-                </div>
-            `).join('') :
-            '<div class="history-empty"><p>No rewards history yet. Start earning points by making purchases!</p></div>';
-
+        // Logged-in user content
         modalContent.innerHTML = `
             <div class="rewards-header">
                 <h2>🎁 Your Nutrify Rewards</h2>
@@ -6305,11 +6281,11 @@ function updateRewardsModalContent() {
                     <div class="points-display">
                         <h3>Your Points Balance</h3>
                         <div class="points-value">
-                            <span class="points-number" id="user-points-display">${customerData.points || 0}</span>
+                            <span class="points-number" id="user-points-display">${this.customerData?.points || 0}</span>
                             <span class="points-label">Nutrify Points</span>
                         </div>
                         <div class="tier-info">
-                            <span class="tier-badge">${customerData.tier_level || 'Bronze'} Member</span>
+                            <span class="tier-badge">${this.customerData?.tier_level || 'Bronze'} Member</span>
                         </div>
                     </div>
                 </div>
@@ -6320,71 +6296,56 @@ function updateRewardsModalContent() {
                 </div>
                 <div class="tab-content" id="earn-content">
                     <div class="earn-methods">
-                        ${earningMethodsHTML}
+                        <div class="earn-item">
+                            <span class="earn-icon">🛒</span>
+                            <div class="earn-details">
+                                <h4>Make a Purchase</h4>
+                                <p>Earn 3 points for every ₹100 spent</p>
+                            </div>
+                            <span class="earn-points">+3 pts</span>
+                        </div>
+                        <div class="earn-item">
+                            <span class="earn-icon">⭐</span>
+                            <div class="earn-details">
+                                <h4>Write a Review</h4>
+                                <p>Share your experience with products</p>
+                            </div>
+                            <span class="earn-points">+25 pts</span>
+                        </div>
+                        <div class="earn-item">
+                            <span class="earn-icon">👥</span>
+                            <div class="earn-details">
+                                <h4>Refer a Friend</h4>
+                                <p>When they make their first purchase</p>
+                            </div>
+                            <span class="earn-points">+100 pts</span>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-content hidden" id="redeem-content">
                     <div class="redeem-options">
-                        ${redeemOptionsHTML}
+                        <div class="redeem-item">
+                            <h4>₹50 Off Coupon</h4>
+                            <p>Minimum order ₹500</p>
+                            <button class="redeem-btn" disabled>500 Points Required</button>
+                        </div>
+                        <div class="redeem-item">
+                            <h4>₹100 Off Coupon</h4>
+                            <p>Minimum order ₹1000</p>
+                            <button class="redeem-btn" disabled>1000 Points Required</button>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-content hidden" id="history-content">
-                    ${historyHTML}
+                    <div class="history-empty">
+                        <p>No rewards history yet. Start earning points by making purchases!</p>
+                    </div>
                 </div>
             </div>
             <div class="rewards-footer">
                 <p>Powered by <strong>My Nutrify</strong></p>
             </div>
         `;
-    }
-}
-
-async function redeemReward(rewardId) {
-    try {
-        // Show loading state
-        const button = event.target;
-        const originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = 'Redeeming...';
-
-        const response = await fetch('exe_files/redeem_reward.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                reward_id: rewardId
-            })
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            // Show success message
-            alert(`Success! ${result.message}\nCoupon Code: ${result.coupon_code}\nRemaining Points: ${result.remaining_points}`);
-
-            // Refresh rewards data
-            await window.dynamicRewards.loadRewardsData();
-
-            // Update modal content
-            updateRewardsModalContent();
-        } else {
-            // Show error message
-            alert(`Error: ${result.message}`);
-
-            // Restore button
-            button.disabled = false;
-            button.textContent = originalText;
-        }
-
-    } catch (error) {
-        console.error('Error redeeming reward:', error);
-        alert('An error occurred while redeeming the reward. Please try again.');
-
-        // Restore button
-        const button = event.target;
-        button.disabled = false;
-        button.textContent = 'Redeem Now';
     }
 }
 
@@ -6407,13 +6368,6 @@ function switchRewardsTab(tabName) {
 // Initialize the dynamic rewards system when page loads
 document.addEventListener('DOMContentLoaded', function() {
     window.dynamicRewards = new DynamicRewardsElement();
-
-    // Check if page loaded with rewards test hash
-    if (window.location.hash === '#rewards-test') {
-        setTimeout(() => {
-            openRewardsPage();
-        }, 1000);
-    }
 
     // Trigger special offer after 30 seconds for demo
     setTimeout(() => {

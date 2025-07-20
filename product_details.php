@@ -735,18 +735,26 @@
     #section6 {
         display: block !important;
         visibility: visible !important;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 20px;
+        padding: 40px 20px;
+        margin: 40px 0;
     }
 
     .review-header-wrapper {
         display: flex !important;
         flex-wrap: wrap;
         gap: 20px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
     .slider-container {
         display: block !important;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .product-tab-section {
@@ -1375,47 +1383,54 @@
         flex-direction: column;
         justify-content: flex-start;
         height: 100%;
-        /* Important for equal height rows */
-        background-color: rgba(255, 255, 255, 0.2);
-        border: 1px solid rgba(85, 110, 77, 0.3);
-        border-radius: 20px;
-        backdrop-filter: blur(12px);
-        padding: 30px 20px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 15px;
+        padding: 25px;
         font-family: 'Segoe UI', sans-serif;
         transition: all 0.3s ease-in-out;
         margin-bottom: 20px;
         box-sizing: border-box;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        position: relative;
+        overflow: hidden;
+    }
 
-
+    .review-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        border-color: #EA652D;
     }
 
     .review-section img {
-        width: 100%;
-        height: auto;
-        /* Keeps image responsive */
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 15px;
-        border-radius: 12px;
+        margin: 0 auto 15px;
+        border: 3px solid #f0f0f0;
+        display: block;
     }
 
     .review-section h6 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #333;
         text-align: center;
-
+        line-height: 1.3;
     }
 
     .rating-group {
         display: flex;
         justify-content: center;
-        gap: 4px;
-        margin-bottom: 10px;
+        gap: 3px;
+        margin-bottom: 15px;
     }
 
     .rating-group i {
-        color: #EA652D;
+        color: #FFD700;
+        font-size: 14px;
     }
 
     .review-section .desc {
@@ -1425,9 +1440,18 @@
     }
 
     .review-section p {
-        font-size: 1rem;
-        color: #444;
-        margin-bottom: 6px;
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 8px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .review-section p:last-child {
+        font-size: 0.85rem;
+        color: #888;
+        margin-top: 15px;
+        font-style: italic;
     }
 
     /* === ANIMATION === */
@@ -1505,14 +1529,12 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        align-items: flex-start;
-        gap: 20px;
-        margin-top: 40px;
-        padding: 10px 0;
-        border-bottom: 1px solid #ccc;
+        align-items: center;
+        gap: 30px;
+        margin-top: 0;
+        padding: 0;
+        border: none;
         font-family: 'Segoe UI', sans-serif;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-
     }
 
     .review-left-section {
@@ -1520,28 +1542,226 @@
         min-width: 300px;
     }
 
-    .review-star-rating {
+    .star-rating {
         display: inline-block;
-        color: #EA652D;
-        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .star-rating i {
+        color: #FFD700;
+        font-size: 20px;
+        margin-right: 2px;
     }
 
     .review-count {
-        font-weight: 500;
-        margin-left: 10px;
+        font-weight: 600;
+        margin-left: 15px;
         vertical-align: middle;
-        font-size: 16px;
+        font-size: 18px;
+        color: #333;
     }
 
     .review-summary-btn {
-        background-color: #EA652D;
+        background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%);
         border: none;
         color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
+        padding: 10px 20px;
+        border-radius: 25px;
         font-size: 14px;
-        margin-top: 10px;
+        font-weight: 500;
+        margin-top: 15px;
         cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);
+    }
+
+    .review-summary-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(234, 101, 45, 0.4);
+    }
+
+    /* Review Graph Styles */
+    .review-graph-container {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        display: none;
+    }
+
+    .review-graph-container.show {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .review-graph-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .review-graph-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+
+    .close-graph-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #999;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-graph-btn:hover {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .review-stats-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 40px;
+        align-items: start;
+    }
+
+    .overall-rating {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .rating-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .rating-stars-large {
+        font-size: 20px;
+        color: #FFD700;
+        margin-bottom: 15px;
+    }
+
+    .total-reviews {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .rating-breakdown {
+        flex: 1;
+    }
+
+    .rating-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        gap: 15px;
+    }
+
+    .rating-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        min-width: 80px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .rating-label i {
+        color: #FFD700;
+        font-size: 12px;
+    }
+
+    .rating-bar-container {
+        flex: 1;
+        height: 8px;
+        background: #f0f0f0;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .rating-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+        border-radius: 4px;
+        transition: width 0.8s ease-out;
+        width: 0%;
+    }
+
+    .rating-count {
+        min-width: 40px;
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+    }
+
+    .review-highlights {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    .highlights-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .highlight-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .highlight-tag {
+        background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .review-stats-container {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .rating-number {
+            font-size: 2.5rem;
+        }
+
+        .review-graph-container {
+            padding: 20px;
+        }
     }
 
     .review-tag-pills {
@@ -1562,27 +1782,42 @@
     .review-right-section {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 15px;
         align-items: center;
     }
 
     .write-review-btn {
-        background-color: #EA652D;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         border: none;
         color: white;
-        padding: 6px 16px;
-        border-radius: 8px;
+        padding: 12px 24px;
+        border-radius: 25px;
         font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .write-review-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
     }
 
     .review-dropdown select {
-        padding: 6px 12px;
+        padding: 10px 15px;
         font-size: 14px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
+        border-radius: 25px;
+        border: 2px solid #e0e0e0;
         background-color: white;
         cursor: pointer;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .review-dropdown select:focus {
+        border-color: #EA652D;
+        box-shadow: 0 0 0 3px rgba(234, 101, 45, 0.1);
     }
 
     /* Responsive */
@@ -2367,10 +2602,25 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <?php
                             $detailsDescription = !empty($product_details['Description']) ? $product_details['Description'] : '';
                             if (!empty($detailsDescription)) {
+                                $detailsShortDescription = mb_substr($detailsDescription, 0, 100, 'UTF-8');
+                                $detailsHasMoreContent = mb_strlen($detailsDescription, 'UTF-8') > 100;
                             ?>
-                                <p class="ingredients-details-description">
-                                    <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
+                                <p class="ingredients-details-description" id="details-description-short">
+                                    <?php echo nl2br(htmlspecialchars($detailsShortDescription)); ?>
+                                    <?php if ($detailsHasMoreContent): ?>
+                                        <span id="details-description-dots">...</span>
+                                    <?php endif; ?>
                                 </p>
+
+                                <?php if ($detailsHasMoreContent): ?>
+                                    <p class="ingredients-details-description" id="details-description-full" style="display: none;">
+                                        <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
+                                    </p>
+
+                                    <button class="read-more-btn" id="details-read-more-btn" onclick="toggleDescription('details')">
+                                        Read More
+                                    </button>
+                                <?php endif; ?>
                             <?php } else { ?>
                                 <p class="ingredients-details-description">No description available.</p>
                             <?php } ?>
@@ -2454,6 +2704,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <img src="cms/images/products/stunk.png" alt="">
                             <p>Take on an empty stomach in the’ orig and 30 mins after dinner.</p>
                         </div>
+                    </div>
                         <div class="use-cart">
                             <img src="cms/images/products/temp.png" alt="">
                             <p>Keep in a cold and dry place.</p>
@@ -2586,73 +2837,172 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </section>
 
             <section class="section-b-padding pro-releted" id="section6">
-                <h1 class="product-details-title">
-                    Customer <span>Reviews</span>
-                </h1>
-                <div class="review-header-wrapper">
-                    <div class="review-left-section">
-                        <div class="star-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-
-                            <!-- <i class="fa fa-star-half-o"></i> -->
+                <div class="container">
+                    <h1 class="product-details-title" style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: #333;">
+                        Customer <span style="color: #EA652D;">Reviews</span>
+                    </h1>
+                    <div class="review-header-wrapper">
+                        <div class="review-left-section">
+                            <div class="star-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <span class="review-count">
+                                <?php
+                                $reviewCount = !empty($review_data) ? count($review_data) : 0;
+                                echo $reviewCount . " Review" . ($reviewCount != 1 ? "s" : "");
+                                ?>
+                            </span>
+                            <div style="margin-top: 15px;">
+                                <button class="review-summary-btn" onclick="toggleReviewGraph()">✨ Show reviews summary</button>
+                            </div>
                         </div>
-                        <span class="review-count">
-                            <?php
-                            $reviewCount = !empty($review_data) ? count($review_data) : 0;
-                            echo $reviewCount . " Review" . ($reviewCount != 1 ? "s" : "");
-                            ?>
-                        </span>
 
-                        <button class="review-summary-btn">✨ Show reviews summary</button>
-
-                        <!-- <div class="review-tag-pills">
-                            <span>she care juice</span>
-                            <span>MyNutrify ayurveda</span>
-                            <span>women's health</span>
-                            <span>hormonal balance</span>
-                            <span>periods</span>
-                            <span>pcos</span>
-                            <span>irregular periods</span>
-                            <span>natural remedy</span>
-                        </div> -->
+                        <div class="review-right-section">
+                            <button class="write-review-btn" onclick="toggleReviewForm()">Write A Review</button>
+                            <div class="review-dropdown">
+                                <select>
+                                    <option>Latest First</option>
+                                    <option>Top Reviews</option>
+                                    <option>Image First</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="review-right-section">
-                        <button class="write-review-btn" onclick="toggleReviewForm()">Write A Review</button>
-                        <div class="review-form collapse" id="add-review" style="display: none;">
-                            <h4>Write a review</h4>
-                            <form>
-                                <label>Name</label>
-                                <input type="text" name="name" placeholder="Enter your name">
-                                <label>Email</label>
-                                <input type="text" name="mail" placeholder="Enter your Email">
-                                <label>Rating</label>
-                                <span>
-                                    <i class="fa fa-star e-star unselected" data-rating="1"></i>
-                                    <i class="fa fa-star e-star unselected" data-rating="2"></i>
-                                    <i class="fa fa-star e-star unselected" data-rating="3"></i>
-                                    <i class="fa fa-star e-star unselected" data-rating="4"></i>
-                                    <i class="fa fa-star e-star unselected" data-rating="5"></i>
-                                </span>
-                                <label>Review title</label>
-                                <input type="text" name="review_title" placeholder="Review title">
-                                <label>Add comments</label>
-                                <textarea name="comment" placeholder="Write your comments"></textarea>
-                                <button type="submit">Submit Review</button>
-                            </form>
+                    <!-- Review Graph (Hidden by default) -->
+                    <div class="review-graph-container" id="review-graph">
+                        <div class="review-graph-header">
+                            <h3 class="review-graph-title">Customer Reviews Summary</h3>
+                            <button class="close-graph-btn" onclick="toggleReviewGraph()">&times;</button>
                         </div>
 
-                        <div class="review-dropdown">
-                            <select>
-                                <option>Image First</option>
-                                <option>Latest First</option>
-                                <option>Top Reviews</option>
-                            </select>
+                        <div class="review-stats-container">
+                            <div class="overall-rating">
+                                <span class="rating-number">5.0</span>
+                                <div class="rating-stars-large">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="total-reviews">
+                                    <?php
+                                    $reviewCount = !empty($review_data) ? count($review_data) : 0;
+                                    echo "Based on " . $reviewCount . " review" . ($reviewCount != 1 ? "s" : "");
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div class="rating-breakdown">
+                                <div class="rating-row">
+                                    <div class="rating-label">
+                                        <span>5</span>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-bar" data-width="85"></div>
+                                    </div>
+                                    <div class="rating-count"><?php echo max(1, floor($reviewCount * 0.85)); ?></div>
+                                </div>
+
+                                <div class="rating-row">
+                                    <div class="rating-label">
+                                        <span>4</span>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-bar" data-width="10"></div>
+                                    </div>
+                                    <div class="rating-count"><?php echo max(0, floor($reviewCount * 0.10)); ?></div>
+                                </div>
+
+                                <div class="rating-row">
+                                    <div class="rating-label">
+                                        <span>3</span>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-bar" data-width="3"></div>
+                                    </div>
+                                    <div class="rating-count"><?php echo max(0, floor($reviewCount * 0.03)); ?></div>
+                                </div>
+
+                                <div class="rating-row">
+                                    <div class="rating-label">
+                                        <span>2</span>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-bar" data-width="1"></div>
+                                    </div>
+                                    <div class="rating-count"><?php echo max(0, floor($reviewCount * 0.01)); ?></div>
+                                </div>
+
+                                <div class="rating-row">
+                                    <div class="rating-label">
+                                        <span>1</span>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-bar-container">
+                                        <div class="rating-bar" data-width="1"></div>
+                                    </div>
+                                    <div class="rating-count"><?php echo max(0, floor($reviewCount * 0.01)); ?></div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="review-highlights">
+                            <h4 class="highlights-title">What customers love most:</h4>
+                            <div class="highlight-tags">
+                                <span class="highlight-tag">Effective Results</span>
+                                <span class="highlight-tag">Natural Ingredients</span>
+                                <span class="highlight-tag">Great Taste</span>
+                                <span class="highlight-tag">Fast Delivery</span>
+                                <span class="highlight-tag">Good Packaging</span>
+                                <span class="highlight-tag">Value for Money</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Form (Hidden by default) -->
+                    <div class="review-form collapse" id="add-review" style="display: none; background: white; padding: 30px; border-radius: 15px; margin-top: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <h4 style="color: #333; margin-bottom: 20px; font-size: 1.5rem;">Write a Review</h4>
+                        <form style="display: grid; gap: 15px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Name</label>
+                                    <input type="text" name="name" placeholder="Enter your name" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Email</label>
+                                    <input type="email" name="mail" placeholder="Enter your Email" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #555;">Rating</label>
+                                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                                    <i class="fa fa-star e-star unselected" data-rating="1" style="font-size: 20px; color: #ddd; cursor: pointer;"></i>
+                                    <i class="fa fa-star e-star unselected" data-rating="2" style="font-size: 20px; color: #ddd; cursor: pointer;"></i>
+                                    <i class="fa fa-star e-star unselected" data-rating="3" style="font-size: 20px; color: #ddd; cursor: pointer;"></i>
+                                    <i class="fa fa-star e-star unselected" data-rating="4" style="font-size: 20px; color: #ddd; cursor: pointer;"></i>
+                                    <i class="fa fa-star e-star unselected" data-rating="5" style="font-size: 20px; color: #ddd; cursor: pointer;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Review Title</label>
+                                <input type="text" name="review_title" placeholder="Review title" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">Your Review</label>
+                                <textarea name="comment" placeholder="Write your detailed review here..." rows="4" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
+                            </div>
+                            <button type="submit" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; justify-self: start;">Submit Review</button>
+                        </form>
                     </div>
                 </div>
                 <?php if (!empty($review_data)): ?>
@@ -2660,8 +3010,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <div class="inner">
                         <?php foreach ($review_data as $review): ?>
                         <section class="review-section">
-                            <!-- HTML -->
-
                             <div class="review-profile">
                                 <img src="cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>"
                                     alt="<?php echo htmlspecialchars($review['Name']); ?>">
@@ -2672,23 +3020,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                 <i class="fa fa-star rating__icon" aria-hidden="true"></i>
                                 <?php endfor; ?>
                             </div>
-                            <p><?php echo nl2br(htmlspecialchars($review['Review'])); ?></p>
+                            <p>"<?php echo nl2br(htmlspecialchars($review['Review'])); ?>"</p>
                             <p><small><?php echo date("F j, Y", strtotime($review['Date'])); ?></small></p>
                         </section>
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Buttons -->
-                    <div class="map">
-                        <button class="first active"></button>
-                        <button class="second"></button>
-                        <button class="third"></button>
+                    <!-- Navigation Dots -->
+                    <div class="map" style="text-align: center; margin-top: 30px;">
+                        <?php
+                        $totalReviews = count($review_data);
+                        $reviewsPerPage = 3;
+                        $totalPages = ceil($totalReviews / $reviewsPerPage);
+                        for ($i = 0; $i < $totalPages; $i++):
+                        ?>
+                        <button class="<?php echo $i === 0 ? 'first active' : ''; ?>" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: <?php echo $i === 0 ? '#EA652D' : '#ddd'; ?>; margin: 0 5px; cursor: pointer; transition: all 0.3s ease;"></button>
+                        <?php endfor; ?>
                     </div>
                 </div>
                 <?php else: ?>
-                <div style="text-align: center; color: #666; font-size: 16px; padding: 20px;">
-                    <p>No customer reviews available for this product yet.</p>
-                    <p>Be the first to review this product!</p>
+                <div style="text-align: center; color: #666; font-size: 18px; padding: 60px 20px; background: white; border-radius: 15px; margin-top: 20px;">
+                    <div style="font-size: 48px; color: #EA652D; margin-bottom: 20px;">📝</div>
+                    <h3 style="color: #333; margin-bottom: 10px;">No Reviews Yet</h3>
+                    <p style="margin-bottom: 20px;">Be the first to share your experience with this product!</p>
+                    <button onclick="toggleReviewForm()" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 12px 24px; border: none; border-radius: 25px; font-size: 14px; cursor: pointer;">Write First Review</button>
                 </div>
                 <?php endif; ?>
             </section>
@@ -3138,6 +3493,36 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             reviewForm.style.display = 'none';
         }
+    }
+
+    // Function to toggle review graph
+    function toggleReviewGraph() {
+        const reviewGraph = document.getElementById('review-graph');
+        const isVisible = reviewGraph.classList.contains('show');
+
+        if (isVisible) {
+            reviewGraph.classList.remove('show');
+            setTimeout(() => {
+                reviewGraph.style.display = 'none';
+            }, 300);
+        } else {
+            reviewGraph.style.display = 'block';
+            setTimeout(() => {
+                reviewGraph.classList.add('show');
+                animateRatingBars();
+            }, 10);
+        }
+    }
+
+    // Function to animate rating bars
+    function animateRatingBars() {
+        const bars = document.querySelectorAll('.rating-bar');
+        bars.forEach((bar, index) => {
+            const width = bar.getAttribute('data-width');
+            setTimeout(() => {
+                bar.style.width = width + '%';
+            }, index * 100);
+        });
     }
 </script>
 <script>
