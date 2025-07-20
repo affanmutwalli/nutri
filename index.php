@@ -293,31 +293,13 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     /* Enhanced Product Cards - Krishna Style */
     .tred-pro, .h-cate {
-        background: var(--white);
         border-radius: var(--border-radius);
-        box-shadow: var(--shadow-light);
         transition: var(--transition);
         overflow: hidden;
-        border: 1px solid var(--border-light);
+        
     }
 
-    .tred-pro:hover, .h-cate:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-medium);
-        border-color: var(--primary-orange);
-    }
 
-    .h-cate:hover .cat-title {
-        color: var(--primary-orange) !important;
-    }
-
-    .h-cate:hover .c-img div {
-        transform: scale(1.05) !important;
-    }
-
-    .h-cate:hover .c-img img {
-        transform: scale(1.1) !important;
-    }
 
     .tr-pro-img, .c-img {
         position: relative;
@@ -330,9 +312,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         height: auto;
     }
 
-    .tr-pro-img:hover img, .c-img:hover img {
-        transform: scale(1.05);
-    }
+
 
     .caption {
         padding: 20px;
@@ -2046,6 +2026,113 @@ s
         .home-offer-banner {
             flex-direction: column;
             gap: 20px;
+        }
+    }
+
+    /* ✅ ENHANCED BLOOD SUGAR BANNER FORMATTING */
+    .blood-sugar-content {
+        padding: 30px 30px 30px 45px !important;
+    }
+
+    .banner-main-title {
+        font-size: 30px !important;
+        font-weight: 700 !important;
+        color: white !important;
+        margin-bottom: 18px !important;
+        line-height: 1.3 !important;
+        text-align: left !important;
+    }
+
+    .banner-description {
+        font-size: 22px !important;
+        line-height: 1.6 !important;
+        color: white !important;
+        margin-bottom: 25px !important;
+        text-align: scrollright !important;
+    }
+
+    .banner-description strong {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+
+    .banner-benefits {
+        margin-bottom: 25px !important;
+    }
+
+    .benefit-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 3px !important;
+        margin-bottom: 12px !important;
+        padding: 6px 0 !important;
+    }
+
+    .benefit-item:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .benefit-icon {
+        font-size: 18px !important;
+        flex-shrink: 0 !important;
+        width: 24px !important;
+        text-align: center !important;
+    }
+
+    .benefit-text {
+        font-size: 24px !important;
+        font-weight: 500 !important;
+        color: white !important;
+        line-height: 1.4 !important;
+    }
+
+    .banner-cta {
+        margin-top: 10px !important;
+        padding: 12px 25px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        border-radius: 25px !important;
+    }
+
+    /* ✅ RESPONSIVE ADJUSTMENTS */
+    @media (max-width: 768px) {
+        .blood-sugar-content {
+            padding: 25px 25px 25px 35px !important;
+        }
+
+        .banner-main-title {
+            font-size: 24px !important;
+        }
+
+        .banner-description {
+            font-size: 15px !important;
+        }
+
+        .benefit-text {
+            font-size: 14px !important;
+        }
+
+        .benefit-icon {
+            font-size: 16px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .blood-sugar-content {
+            padding: 20px 20px 20px 30px !important;
+        }
+
+        .banner-main-title {
+            font-size: 22px !important;
+        }
+
+        .banner-description {
+            font-size: 14px !important;
+        }
+
+        .benefit-item {
+            gap: 10px !important;
+            margin-bottom: 10px !important;
         }
     }
     </style>
@@ -3901,20 +3988,28 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <a href="product_details.php?ProductId=10" class="image-b">
                                 <img class="img-fluid" src="cms/images/products/banner_1.webp" alt="banner image">
                             </a>
-                            <div class="o-t-content">
-                               <h6>Struggling with diabetes management?</h6>
-                                <h6>Start Diabetic Care Juice Today for a healthier you.</h6>
-                                <a href="product_details.php?ProductId=11" class="btn btn-style1">Explore More</a>
+                            <div class="o-t-content blood-sugar-content">
+                                <h1 class="banner-main-title">Take Control of Your Blood Sugar</h1>
+                                
+                                <p class="banner-description">
+                                   Support healthy glucose levels naturally with <strong>DiabeticCare Juice</strong> your herbal ally for balanced living.
+                                </p>
+                                
+                                <a href="product_details.php?ProductId=11" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
                         </div>
                         <div class="o-t-banner">
                             <a href="product_details.php?ProductId=12" class="image-b">
                                 <img class="img-fluid" src="cms/images/products/banner_2.webp" alt="banner image">
                             </a>
-                            <div class="o-t-content banner-color">
-                                <h6>Struggling with PCOD/PCOS?</h6>
-                                <h6>Start She Care Plus Today!</h6>
-                                <a href="product_details.php?ProductId=12" class="btn btn-style1">Explore More</a>
+                            <div class="o-t-content blood-sugar-content">
+                                <h1 class="banner-main-title">Balance Your Hormones, Naturally</h1>
+
+                                <p class="banner-description">
+                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice</strong>crafted for women's hormonal health.
+                                </p>
+
+                                <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
                         </div>
                     </div>
@@ -3940,9 +4035,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             $sub_category = $obj->MysqliSelect1("Select ".$Fields." from sub_category", $FieldNames, "", $ParamArray);
                             foreach ($sub_category as $category) {?>
                         <div class="items">
-                            <div class="h-cate" style="text-align: center; padding: 10px;">
+                            <div class="h-cate" style="text-align: center; padding: 5px;">
                                 <a href="products.php?SubCategoryId=<?php echo urlencode($category["SubCategoryId"]); ?>" style="text-decoration: none;">
-                                    <div style="width: 80px; height: 80px; margin: 0 auto 10px; border-radius: 50%; overflow: hidden;">
+                                    <div style="width: 120px; height: 120px; margin: 0 auto 8px; border-radius: 50%; overflow: hidden;">
                                         <img src="cms/images/products/<?php echo htmlspecialchars($category["PhotoPath"]); ?>"
                                              alt="<?php echo htmlspecialchars($category["SubCategoryName"]); ?>"
                                              style="width: 100%; height: 100%; object-fit: cover;">
