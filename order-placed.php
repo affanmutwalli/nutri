@@ -109,22 +109,33 @@ if (!$OrderData) {
                                             $FieldNames = array("ProductId", "ProductCode", "Quantity", "Size", "Price", "SubTotal");
                                             $ParamArray = [$_GET["order_id"]];
                                             $Fields = implode(",", $FieldNames);
+
+                                            // Use GROUP BY to prevent duplicate entries and SUM quantities if needed
                                             $OrderDetails = $obj->MysqliSelect1(
-                                                "SELECT $Fields FROM order_details WHERE OrderId = ?",
+                                                "SELECT ProductId, ProductCode, SUM(Quantity) as Quantity, Size, Price, SUM(SubTotal) as SubTotal FROM order_details WHERE OrderId = ? GROUP BY ProductId, ProductCode, Size, Price ORDER BY ProductId",
                                                 $FieldNames,
                                                 "s",
                                                 $ParamArray
                                             );
-                                            
+
                                             if ($OrderDetails) {
+                                                // Create an array to track processed products to avoid duplicates
+                                                $processedProducts = array();
+
                                                 // Loop through each order detail record
                                                 foreach ($OrderDetails as $OrderDetail) {
+                                                    // Skip if we've already processed this product
+                                                    $productKey = $OrderDetail["ProductId"] . "_" . $OrderDetail["Size"];
+                                                    if (in_array($productKey, $processedProducts)) {
+                                                        continue;
+                                                    }
+                                                    $processedProducts[] = $productKey;
                                                     // For each order detail, fetch the product details from product_master table
                                                     $prodFieldNames = array("ProductId", "ProductName", "PhotoPath", "SubCategoryId");
                                                     $prodParamArray = array($OrderDetail["ProductId"]);
                                                     $prodFields = implode(",", $prodFieldNames);
                                                     $product_data = $obj->MysqliSelect1(
-                                                        "SELECT $prodFields FROM product_master WHERE ProductId = ?",
+                                                        "SELECT DISTINCT $prodFields FROM product_master WHERE ProductId = ? LIMIT 1",
                                                         $prodFieldNames,
                                                         "i",
                                                         $prodParamArray

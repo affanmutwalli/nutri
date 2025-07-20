@@ -141,7 +141,20 @@ $InputDocId = $obj->fInsertNew(
 
 if ($InputDocId) {
     // Insert each product into order_details table
+    // Keep track of processed products to prevent duplicates
+    $processedProducts = array();
+
     foreach ($data['products'] as $product) {
+        // Create a unique key for this product (ProductId + Size)
+        $productKey = $product['id'] . '_' . ($product['size'] ?? '');
+
+        // Skip if we've already processed this exact product
+        if (in_array($productKey, $processedProducts)) {
+            error_log("Skipping duplicate product: ProductId=" . $product['id'] . ", Size=" . ($product['size'] ?? ''));
+            continue;
+        }
+        $processedProducts[] = $productKey;
+
         $sub_total = $product["offer_price"] * $product["quantity"];
         $ParamArray = array(
             $newOrderId,

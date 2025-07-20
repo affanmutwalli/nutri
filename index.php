@@ -897,6 +897,46 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         color: #666;
     }
 
+    .history-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .history-details h4 {
+        margin: 0 0 4px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .history-details p {
+        margin: 0;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .history-points {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 12px;
+    }
+
+    .history-points.positive {
+        color: #2d5016;
+        background: rgba(45, 80, 22, 0.1);
+    }
+
+    .history-points.negative {
+        color: #dc3545;
+        background: rgba(220, 53, 69, 0.1);
+    }
+
     /* Modal Footer */
     .rewards-footer {
         background: #f8f9fa;
@@ -5874,20 +5914,29 @@ class DynamicRewardsElement {
     }
 
     checkLoginStatus() {
-        // Check if user is logged in using existing session check
-        fetch("check_session.php")
-            .then(response => response.json())
-            .then(data => {
-                this.isLoggedIn = data.loggedIn;
-                this.customerData = data.customer || null;
-                this.updateRewardsState();
-            })
-            .catch(error => {
-                console.log("Session check failed, assuming guest user");
-                this.isLoggedIn = false;
-                this.customerData = null;
-                this.updateRewardsState();
-            });
+        // Load comprehensive rewards data
+        this.loadRewardsData();
+    }
+
+    async loadRewardsData() {
+        try {
+            const response = await fetch("exe_files/get_rewards_data.php");
+            const data = await response.json();
+
+            this.rewardsData = data;
+            this.isLoggedIn = data.loggedIn;
+            this.customerData = data.customer || null;
+            this.userPoints = data.customer ? data.customer.points : 0;
+
+            console.log('Rewards data loaded:', data);
+            this.updateRewardsState();
+        } catch (error) {
+            console.error("Error loading rewards data:", error);
+            this.isLoggedIn = false;
+            this.customerData = null;
+            this.userPoints = 0;
+            this.updateRewardsState();
+        }
     }
 
     setupDynamicBehavior() {
@@ -5901,6 +5950,11 @@ class DynamicRewardsElement {
         setInterval(() => {
             this.updateRewardsState();
         }, 10000); // Update every 10 seconds
+
+        // Refresh rewards data periodically
+        setInterval(() => {
+            this.loadRewardsData();
+        }, 60000); // Refresh data every 60 seconds
     }
 
     monitorCartActivity() {
@@ -5975,18 +6029,21 @@ class DynamicRewardsElement {
     setLoggedInUserState() {
         this.element.className = 'rewards-element logged-in-user';
 
-        // Show different messages for logged-in users
+        // Show different messages for logged-in users including actual points
+        const points = this.userPoints || 0;
         const messages = [
             'Rewards',
-            'Your Points',
+            `${points} Points`,
             'Earn More',
             'Redeem Now'
         ];
 
         let messageIndex = 0;
+        this.textElement.textContent = messages[0]; // Show initial message
+
         setInterval(() => {
-            this.textElement.textContent = messages[messageIndex];
             messageIndex = (messageIndex + 1) % messages.length;
+            this.textElement.textContent = messages[messageIndex];
         }, 6000);
     }
 
@@ -6154,7 +6211,50 @@ function updateRewardsModalContent() {
             </div>
         `;
     } else {
-        // Logged-in user content
+        // Logged-in user content with real data
+        const customerData = rewardsElement.customerData || {};
+        const rewardsData = rewardsElement.rewardsData || {};
+
+        // Generate earning methods HTML
+        const earningMethodsHTML = (rewardsData.earning_methods || []).map(method => `
+            <div class="earn-item">
+                <span class="earn-icon">${method.icon}</span>
+                <div class="earn-details">
+                    <h4>${method.title}</h4>
+                    <p>${method.description}</p>
+                </div>
+                <span class="earn-points">${method.points}</span>
+            </div>
+        `).join('');
+
+        // Generate redeem options HTML
+        const redeemOptionsHTML = (rewardsData.available_rewards || []).map(reward => `
+            <div class="redeem-item">
+                <h4>${reward.reward_name}</h4>
+                <p>${reward.reward_description}</p>
+                <p>Minimum order ₹${reward.minimum_order_amount}</p>
+                <button class="redeem-btn ${reward.can_redeem ? '' : 'disabled'}"
+                        ${reward.can_redeem ? `onclick="redeemReward(${reward.id})"` : 'disabled'}>
+                    ${reward.can_redeem ? 'Redeem Now' : `${reward.points_required} Points Required`}
+                </button>
+            </div>
+        `).join('');
+
+        // Generate history HTML
+        const historyHTML = (rewardsData.recent_transactions || []).length > 0 ?
+            rewardsData.recent_transactions.map(transaction => `
+                <div class="history-item">
+                    <div class="history-details">
+                        <h4>${transaction.description}</h4>
+                        <p>${transaction.date}</p>
+                    </div>
+                    <span class="history-points ${transaction.type === 'earned' ? 'positive' : 'negative'}">
+                        ${transaction.type === 'earned' ? '+' : ''}${transaction.points} pts
+                    </span>
+                </div>
+            `).join('') :
+            '<div class="history-empty"><p>No rewards history yet. Start earning points by making purchases!</p></div>';
+
         modalContent.innerHTML = `
             <div class="rewards-header">
                 <h2>🎁 Your Nutrify Rewards</h2>
@@ -6165,11 +6265,11 @@ function updateRewardsModalContent() {
                     <div class="points-display">
                         <h3>Your Points Balance</h3>
                         <div class="points-value">
-                            <span class="points-number" id="user-points-display">${this.customerData?.points || 0}</span>
+                            <span class="points-number" id="user-points-display">${customerData.points || 0}</span>
                             <span class="points-label">Nutrify Points</span>
                         </div>
                         <div class="tier-info">
-                            <span class="tier-badge">${this.customerData?.tier_level || 'Bronze'} Member</span>
+                            <span class="tier-badge">${customerData.tier_level || 'Bronze'} Member</span>
                         </div>
                     </div>
                 </div>
@@ -6180,56 +6280,71 @@ function updateRewardsModalContent() {
                 </div>
                 <div class="tab-content" id="earn-content">
                     <div class="earn-methods">
-                        <div class="earn-item">
-                            <span class="earn-icon">🛒</span>
-                            <div class="earn-details">
-                                <h4>Make a Purchase</h4>
-                                <p>Earn 3 points for every ₹100 spent</p>
-                            </div>
-                            <span class="earn-points">+3 pts</span>
-                        </div>
-                        <div class="earn-item">
-                            <span class="earn-icon">⭐</span>
-                            <div class="earn-details">
-                                <h4>Write a Review</h4>
-                                <p>Share your experience with products</p>
-                            </div>
-                            <span class="earn-points">+25 pts</span>
-                        </div>
-                        <div class="earn-item">
-                            <span class="earn-icon">👥</span>
-                            <div class="earn-details">
-                                <h4>Refer a Friend</h4>
-                                <p>When they make their first purchase</p>
-                            </div>
-                            <span class="earn-points">+100 pts</span>
-                        </div>
+                        ${earningMethodsHTML}
                     </div>
                 </div>
                 <div class="tab-content hidden" id="redeem-content">
                     <div class="redeem-options">
-                        <div class="redeem-item">
-                            <h4>₹50 Off Coupon</h4>
-                            <p>Minimum order ₹500</p>
-                            <button class="redeem-btn" disabled>500 Points Required</button>
-                        </div>
-                        <div class="redeem-item">
-                            <h4>₹100 Off Coupon</h4>
-                            <p>Minimum order ₹1000</p>
-                            <button class="redeem-btn" disabled>1000 Points Required</button>
-                        </div>
+                        ${redeemOptionsHTML}
                     </div>
                 </div>
                 <div class="tab-content hidden" id="history-content">
-                    <div class="history-empty">
-                        <p>No rewards history yet. Start earning points by making purchases!</p>
-                    </div>
+                    ${historyHTML}
                 </div>
             </div>
             <div class="rewards-footer">
                 <p>Powered by <strong>My Nutrify</strong></p>
             </div>
         `;
+    }
+}
+
+async function redeemReward(rewardId) {
+    try {
+        // Show loading state
+        const button = event.target;
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Redeeming...';
+
+        const response = await fetch('exe_files/redeem_reward.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                reward_id: rewardId
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Show success message
+            alert(`Success! ${result.message}\nCoupon Code: ${result.coupon_code}\nRemaining Points: ${result.remaining_points}`);
+
+            // Refresh rewards data
+            await window.dynamicRewards.loadRewardsData();
+
+            // Update modal content
+            updateRewardsModalContent();
+        } else {
+            // Show error message
+            alert(`Error: ${result.message}`);
+
+            // Restore button
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+
+    } catch (error) {
+        console.error('Error redeeming reward:', error);
+        alert('An error occurred while redeeming the reward. Please try again.');
+
+        // Restore button
+        const button = event.target;
+        button.disabled = false;
+        button.textContent = 'Redeem Now';
     }
 }
 
@@ -6252,6 +6367,13 @@ function switchRewardsTab(tabName) {
 // Initialize the dynamic rewards system when page loads
 document.addEventListener('DOMContentLoaded', function() {
     window.dynamicRewards = new DynamicRewardsElement();
+
+    // Check if page loaded with rewards test hash
+    if (window.location.hash === '#rewards-test') {
+        setTimeout(() => {
+            openRewardsPage();
+        }, 1000);
+    }
 
     // Trigger special offer after 30 seconds for demo
     setTimeout(() => {

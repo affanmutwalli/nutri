@@ -176,8 +176,8 @@
                 </li>
 
           <!-- Customer Rewards & Coupons Section -->
-          <li class="nav-item has-treeview <?php if(in_array($selected, ["rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_analytics.php"])) echo "menu-open"; ?>">
-            <a href="#" class="nav-link <?php if(in_array($selected, ["rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_analytics.php"])) echo "active"; ?>">
+          <li class="nav-item has-treeview <?php if(in_array($selected, ["enhanced_rewards_dashboard.php", "rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_settings.php", "rewards_reports.php", "rewards_analytics.php"])) echo "menu-open"; ?>">
+            <a href="#" class="nav-link <?php if(in_array($selected, ["enhanced_rewards_dashboard.php", "rewards_dashboard.php", "coupon_management.php", "rewards_management.php", "customer_points.php", "rewards_settings.php", "rewards_reports.php", "rewards_analytics.php"])) echo "active"; ?>">
               <i class="nav-icon fas fa-gift"></i>
               <p>
                 Customer Rewards
@@ -186,9 +186,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="enhanced_rewards_dashboard.php" class="nav-link <?php if($page == "enhanced_rewards_dashboard.php") echo "active"; ?>">
+                  <i class="fas fa-tachometer-alt nav-icon"></i>
+                  <p>Enhanced Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="rewards_dashboard.php" class="nav-link <?php if($page == "rewards_dashboard.php") echo "active"; ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Rewards Dashboard</p>
+                  <p>Basic Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -210,9 +216,21 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="rewards_settings.php" class="nav-link <?php if($page == "rewards_settings.php") echo "active"; ?>">
+                  <i class="fas fa-cog nav-icon"></i>
+                  <p>Rewards Settings</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="rewards_reports.php" class="nav-link <?php if($page == "rewards_reports.php") echo "active"; ?>">
+                  <i class="fas fa-chart-bar nav-icon"></i>
+                  <p>Reports & Analytics</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="rewards_analytics.php" class="nav-link <?php if($page == "rewards_analytics.php") echo "active"; ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Analytics & Reports</p>
+                  <p>Legacy Analytics</p>
                 </a>
               </li>
             </ul>

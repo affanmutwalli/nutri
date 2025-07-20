@@ -284,46 +284,74 @@ class RewardsSystem {
      * Generate unique referral code for customer
      */
     public function generateReferralCode($customerId) {
-        $code = 'NUT' . strtoupper(substr(md5($customerId . time()), 0, 6));
-        
-        // Check if code already exists
-        $query = "SELECT id FROM customer_referrals WHERE referral_code = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("s", $code);
-        $stmt->execute();
-        
-        if ($stmt->get_result()->num_rows > 0) {
-            // Generate new code if exists
-            return $this->generateReferralCode($customerId);
+        try {
+            // Check if table exists first
+            $tableCheck = "SHOW TABLES LIKE 'customer_referrals'";
+            $result = $this->mysqli->query($tableCheck);
+
+            if ($result->num_rows == 0) {
+                // Table doesn't exist, return a simple referral code
+                return 'NUT' . str_pad($customerId, 6, '0', STR_PAD_LEFT);
+            }
+
+            $code = 'NUT' . strtoupper(substr(md5($customerId . time()), 0, 6));
+
+            // Check if code already exists
+            $query = "SELECT id FROM customer_referrals WHERE referral_code = ?";
+            $stmt = $this->mysqli->prepare($query);
+            $stmt->bind_param("s", $code);
+            $stmt->execute();
+
+            if ($stmt->get_result()->num_rows > 0) {
+                // Generate new code if exists
+                return $this->generateReferralCode($customerId);
+            }
+
+            // Save referral code
+            $query = "INSERT INTO customer_referrals (referrer_customer_id, referral_code) VALUES (?, ?)";
+            $stmt = $this->mysqli->prepare($query);
+            $stmt->bind_param("is", $customerId, $code);
+            $stmt->execute();
+
+            return $code;
+        } catch (Exception $e) {
+            // Fallback to simple referral code if there's any error
+            return 'NUT' . str_pad($customerId, 6, '0', STR_PAD_LEFT);
         }
-        
-        // Save referral code
-        $query = "INSERT INTO customer_referrals (referrer_customer_id, referral_code) VALUES (?, ?)";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("is", $customerId, $code);
-        $stmt->execute();
-        
-        return $code;
     }
     
     /**
      * Get customer's referral code
      */
     public function getCustomerReferralCode($customerId) {
-        $query = "SELECT referral_code FROM customer_referrals
-                  WHERE referrer_customer_id = ?
-                  ORDER BY created_at DESC LIMIT 1";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("i", $customerId);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        try {
+            // Check if table exists first
+            $tableCheck = "SHOW TABLES LIKE 'customer_referrals'";
+            $result = $this->mysqli->query($tableCheck);
 
-        if ($row = $result->fetch_assoc()) {
-            return $row['referral_code'];
+            if ($result->num_rows == 0) {
+                // Table doesn't exist, return a simple referral code
+                return 'REF' . str_pad($customerId, 6, '0', STR_PAD_LEFT);
+            }
+
+            $query = "SELECT referral_code FROM customer_referrals
+                      WHERE referrer_customer_id = ?
+                      ORDER BY created_at DESC LIMIT 1";
+            $stmt = $this->mysqli->prepare($query);
+            $stmt->bind_param("i", $customerId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($row = $result->fetch_assoc()) {
+                return $row['referral_code'];
+            }
+
+            // Generate new code if none exists
+            return $this->generateReferralCode($customerId);
+        } catch (Exception $e) {
+            // Fallback to simple referral code if there's any error
+            return 'REF' . str_pad($customerId, 6, '0', STR_PAD_LEFT);
         }
-
-        // Generate new code if none exists
-        return $this->generateReferralCode($customerId);
     }
 
     /**

@@ -202,10 +202,23 @@ $InputDocId = $obj->fInsertNew(
 if ($InputDocId) {
 
     // Insert order details into `order_details` table
+    // Keep track of processed products to prevent duplicates
+    $processedProducts = array();
+
     foreach ($data['products'] as $product) {
+        // Create a unique key for this product (ProductId + Size)
+        $productKey = $product['id'] . '_' . ($product['size'] ?? '');
+
+        // Skip if we've already processed this exact product
+        if (in_array($productKey, $processedProducts)) {
+            error_log("Skipping duplicate product: ProductId=" . $product['id'] . ", Size=" . ($product['size'] ?? ''));
+            continue;
+        }
+        $processedProducts[] = $productKey;
+
         // Prepare the data for insertion into the order_details table
         $sub_total = $product["offer_price"] * $product["quantity"];
-        
+
         // Prepare the parameter array
         $ParamArray = array(
             $newOrderId, // OrderId (string)
@@ -219,15 +232,16 @@ if ($InputDocId) {
         
         // Call the fInsertNew method to insert the product data
         $productInsertId = $obj->fInsertNew(
-            "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) 
-             VALUES (?, ?, ?, ?, ?, ?, ?)", 
+            "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal)
+             VALUES (?, ?, ?, ?, ?, ?, ?)",
             "sissidd", // Updated data types corresponding to the $ParamArray
             $ParamArray
         );
-    }
+
         if (!$productInsertId) {
             throw new Exception("Failed to insert product with ID: " . $product['id']);
         }
+    }
 
     // Auto-process the order immediately if automation is enabled
     try {
