@@ -4291,7 +4291,7 @@ s0.parentNode.insertBefore(s1,s0);
                                 <h1 class="banner-main-title">Take Control of Your Blood Sugar</h1>
                                 
                                 <p class="banner-description">
-                                   Support healthy glucose levels naturally with <strong>DiabeticCare Juice</strong> your herbal ally for balanced living.
+                                   Support healthy glucose levels naturally with <strong>Diabeti Care Juice</strong> your herbal ally for balanced living.
                                 </p>
                                 
                                 <a href="product_details.php?ProductId=11" class="btn btn-style1 banner-cta">Explore More</a>
@@ -4305,7 +4305,7 @@ s0.parentNode.insertBefore(s1,s0);
                                 <h1 class="banner-main-title">Balance Your Hormones, Naturally</h1>
 
                                 <p class="banner-description">
-                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice</strong>crafted for women's hormonal health.
+                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice </strong> crafted for women's hormonal health.
                                 </p>
 
                                 <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
