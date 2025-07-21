@@ -2042,15 +2042,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             overflow: hidden;
                             cursor: zoom-in;
                             border-radius: 10px;
-                            aspect-ratio: 1;
-                            background-size: cover;
+                            height: 400px;
+                            background-size: contain;
                             background-position: center;
                             background-repeat: no-repeat;
                         ">
                             <img id="previewMainImage" src="${currentProductImages[0]}" class="img-fluid" alt="${product.ProductName}" style="
                                 width: 100%;
-                                height: 100%;
-                                object-fit: cover;
+                                height: auto;
+                                max-height: 400px;
+                                object-fit: contain;
                                 transition: transform 0.3s ease;
                             ">
                         </figure>
@@ -2066,15 +2067,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                 overflow: hidden;
                                 cursor: zoom-in;
                                 border-radius: 10px;
-                                aspect-ratio: 1;
-                                background-size: cover;
+                                height: 400px;
+                                background-size: contain;
                                 background-position: center;
                                 background-repeat: no-repeat;
                             ">
                                 <img src="${img}" class="img-fluid" alt="${product.ProductName}" style="
                                     width: 100%;
-                                    height: 100%;
-                                    object-fit: cover;
+                                    height: auto;
+                                    max-height: 400px;
+                                    object-fit: contain;
                                 ">
                             </figure>
                         </a>
@@ -2116,7 +2118,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <img src="${img}" class="img-fluid" alt="Product image ${index + 2}" style="
                                 width: 70px;
                                 height: 70px;
-                                object-fit: cover;
+                                object-fit: contain;
                                 border-radius: 5px;
                             ">
                         </a>
@@ -2206,7 +2208,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px;">
                     <!-- Product Images Section (Exact match to product_details.php) -->
-                    <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image">
+                    <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image" style="max-width: 450px;">
                         <div class="row">
                             <!-- Main Image -->
                             <div class="col-lg-6 col-xl-6 col-md-6 col-12 larg-image" style="width: 100%;">
@@ -2234,15 +2236,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                     position: relative;
                                                     overflow: hidden;
                                                     border-radius: 10px;
-                                                    aspect-ratio: 1;
-                                                    background-size: cover;
+                                                    height: 120px;
+                                                    background-size: contain;
                                                     background-position: center;
                                                     background-repeat: no-repeat;
                                                 ">
                                                     <img src="${img}" class="img-fluid" alt="Product image ${index + 1}" style="
                                                         width: 100%;
-                                                        height: 100%;
-                                                        object-fit: cover;
+                                                        height: auto;
+                                                        max-height: 120px;
+                                                        object-fit: contain;
                                                         border-radius: 10px;
                                                     ">
                                                 </figure>
@@ -2579,7 +2582,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         zoomedImg.src = imgSrc;
         zoomedImg.style.cssText = `
             max-width: 90%;
-            max-height: 90%;
+            max-height: 90vh;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
@@ -2782,7 +2785,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         zoomedImg.src = imageSrc;
         zoomedImg.style.cssText = `
             max-width: 100%;
-            max-height: 100%;
+            max-height: 90vh;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
