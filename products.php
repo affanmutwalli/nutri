@@ -692,6 +692,67 @@ $obj->connection();
         }
     }
 
+    /* Modal Carousel Styles */
+    .product-main-slider-modal {
+        position: relative;
+    }
+
+    .product-main-slider-modal .owl-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        pointer-events: none;
+    }
+
+    .product-main-slider-modal .owl-nav button {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #333 !important;
+        border: 1px solid #ddd !important;
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 16px !important;
+        transition: all 0.3s ease !important;
+        pointer-events: all;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .product-main-slider-modal .owl-nav button:hover {
+        background: #ff6a00 !important;
+        color: white !important;
+        border-color: #ff6a00 !important;
+        transform: scale(1.1) !important;
+    }
+
+    .product-main-slider-modal .owl-nav .owl-prev {
+        left: -20px;
+    }
+
+    .product-main-slider-modal .owl-nav .owl-next {
+        right: -20px;
+    }
+
+    .product-main-slider-modal .slider-item {
+        padding: 5px;
+    }
+
+    .product-main-slider-modal .slider-item .long-img {
+        display: block;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .product-main-slider-modal .slider-item .long-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     /* Enhanced mobile responsiveness */
     @media (max-width: 576px) {
         .products-hero h1 {
@@ -1419,6 +1480,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         document.getElementById('previewOriginalPrice').style.display = 'none';
                     }
 
+<<<<<<< HEAD
                     document.getElementById('previewDescription').textContent = data.product.ShortDescription || 'No description available.';
                     document.getElementById('previewAddToCart').setAttribute('data-product-id', productId);
                     document.getElementById('previewViewDetails').href = `product_details.php?ProductId=${productId}`;
@@ -1432,12 +1494,879 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 document.getElementById('previewTitle').textContent = 'Error loading product';
                 document.getElementById('previewDescription').textContent = 'Unable to load product details.';
             });
+=======
+    function renderModalWithPricing(product, productId, pricingData, detailsData) {
+        const modal = document.getElementById('previewModal');
+
+        // Generate main image tabs HTML (like product_details.php)
+        const mainImageTabsHtml = `
+            <div class="tab-content">
+                <div class="tab-pane show active" id="modal-image-main">
+                    <a href="javascript:void(0)" class="long-img" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px; display: block;">
+                        <figure class="zoom" onclick="zoomImage()" onmousemove="modalZoom(event)" style="
+                            background-image: url('${currentProductImages[0]}');
+                            margin: 0;
+                            position: relative;
+                            overflow: hidden;
+                            cursor: zoom-in;
+                            border-radius: 10px;
+                            height: 400px;
+                            background-size: contain;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                        ">
+                            <img id="previewMainImage" src="${currentProductImages[0]}" class="img-fluid" alt="${product.ProductName}" style="
+                                width: 100%;
+                                height: auto;
+                                max-height: 400px;
+                                object-fit: contain;
+                                transition: transform 0.3s ease;
+                            ">
+                        </figure>
+                    </a>
+                </div>
+                ${currentProductImages.slice(1).map((img, index) => `
+                    <div class="tab-pane" id="modal-image-${index + 1}">
+                        <a href="javascript:void(0)" class="long-img" style="border: 1px solid #ccc; border-radius: 5px; margin-top: 15px; display: block;">
+                            <figure class="zoom" onmousemove="modalZoom(event)" style="
+                                background-image: url('${img}');
+                                margin: 0;
+                                position: relative;
+                                overflow: hidden;
+                                cursor: zoom-in;
+                                border-radius: 10px;
+                                height: 400px;
+                                background-size: contain;
+                                background-position: center;
+                                background-repeat: no-repeat;
+                            ">
+                                <img src="${img}" class="img-fluid" alt="${product.ProductName}" style="
+                                    width: 100%;
+                                    height: auto;
+                                    max-height: 400px;
+                                    object-fit: contain;
+                                ">
+                            </figure>
+                        </a>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        // Generate thumbnails HTML (like product_details.php)
+        const thumbnailsHtml = currentProductImages.length > 1 ? `
+            <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme" style="list-style: none; margin: 0; padding: 10px 0;">
+                <li class="nav-item items">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#modal-image-main" onclick="changePreviewImage(0)" style="
+                        display: block;
+                        padding: 5px;
+                        border: 2px solid #ff6a00;
+                        border-radius: 8px;
+                        margin-right: 10px;
+                        transition: all 0.3s ease;
+                    " class="preview-thumbnail-0">
+                        <img src="${currentProductImages[0]}" class="img-fluid" alt="Main image" style="
+                            width: 70px;
+                            height: 70px;
+                            object-fit: cover;
+                            border-radius: 5px;
+                        ">
+                    </a>
+                </li>
+                ${currentProductImages.slice(1).map((img, index) => `
+                    <li class="nav-item items">
+                        <a class="nav-link" data-bs-toggle="tab" href="#modal-image-${index + 1}" onclick="changePreviewImage(${index + 1})" style="
+                            display: block;
+                            padding: 5px;
+                            border: 2px solid #e2e8f0;
+                            border-radius: 8px;
+                            margin-right: 10px;
+                            transition: all 0.3s ease;
+                        " class="preview-thumbnail-${index + 1}">
+                            <img src="${img}" class="img-fluid" alt="Product image ${index + 2}" style="
+                                width: 70px;
+                                height: 70px;
+                                object-fit: contain;
+                                border-radius: 5px;
+                            ">
+                        </a>
+                    </li>
+                `).join('')}
+            </ul>
+        ` : '';
+
+        // Generate size options HTML
+        let sizeOptionsHtml = '';
+        let defaultPrice = { offer_price: 0, mrp: 0, coins: 0 };
+
+        if (pricingData.success && pricingData.sizes && pricingData.sizes.length > 0) {
+            defaultPrice = pricingData.price_data[pricingData.sizes[0]];
+            sizeOptionsHtml = `
+                <h6 class="pro-size" style="margin-top: 20px; margin-bottom: 10px; font-weight: 600; color: #2d3748;">Size:</h6>
+                <div class="size-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                    ${pricingData.sizes.map((size, index) => {
+                        const priceInfo = pricingData.price_data[size];
+                        const discount = priceInfo.mrp - priceInfo.offer_price;
+                        return `
+                            <div class="size-box ${index === 0 ? 'selected' : ''}"
+                                 data-offer-price="${priceInfo.offer_price}"
+                                 data-mrp="${priceInfo.mrp}"
+                                 data-coins="${priceInfo.coins}"
+                                 data-size="${size}"
+                                 onclick="handleModalSizeSelection(this)"
+                                 style="
+                                     cursor: pointer;
+                                     padding: 12px;
+                                     border: 2px solid ${index === 0 ? '#ff6a00' : '#e2e8f0'};
+                                     border-radius: 8px;
+                                     text-align: center;
+                                     transition: all 0.3s ease;
+                                     background: ${index === 0 ? '#fff5f0' : 'white'};
+                                     min-width: 120px;
+                                 ">
+                                <div style="color: #305724; font-weight: bold; font-size: 12px;">Save ₹${discount.toFixed(2)}</div>
+                                <div style="font-weight: 600; margin: 5px 0;">${size}</div>
+                                <div class="size-price" style="font-size: 14px;">
+                                    <span style="color: #28a745; font-weight: bold;">₹${priceInfo.offer_price.toFixed(2)}</span>
+                                    <del style="color: #dc3545; margin-left: 5px;">₹${priceInfo.mrp.toFixed(2)}</del>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // Calculate discount for display
+        const discount = defaultPrice.mrp - defaultPrice.offer_price;
+
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 1000px;
+                width: 100%;
+                max-height: 95vh;
+                overflow-y: auto;
+                position: relative;
+                animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            ">
+                <button onclick="closePreview()" style="
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 255, 255, 0.9);
+                    border: none;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    z-index: 10;
+                    font-size: 18px;
+                    color: #666;
+                    backdrop-filter: blur(10px);
+                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#666';">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px;">
+                    <!-- Product Images Section (Exact match to product_details.php) -->
+                    <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image" style="max-width: 450px;">
+                        <div class="row">
+                            <!-- Main Image -->
+                            <div class="col-lg-6 col-xl-6 col-md-6 col-12 larg-image" style="width: 100%;">
+                                ${mainImageTabsHtml}
+                                ${thumbnailsHtml}
+                            </div>
+                        </div>
+
+                        <!-- Model Images Carousel Section (matching product_details.php) -->
+                        <div class="product-main-slider-container" style="margin-top: 20px; margin-bottom: 20px;">
+                            <h6 style="margin-bottom: 15px; font-weight: 600; color: #2d3748;">All Product Images (${currentProductImages.length}):</h6>
+                                <div class="owl-carousel product-main-slider-modal" style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #f8f9fa;">
+                                    ${currentProductImages.map((img, index) => `
+                                        <div class="slider-item">
+                                            <a href="javascript:void(0)" class="long-img" onclick="openImageModal('${img}')" style="
+                                                border: 1px solid rgba(0, 0, 0, 0.1);
+                                                border-radius: 10px;
+                                                display: block;
+                                                transition: all 0.3s ease;
+                                                cursor: pointer;
+                                            " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                                                <figure class="zoom" style="
+                                                    background-image: url('${img}');
+                                                    margin: 0;
+                                                    position: relative;
+                                                    overflow: hidden;
+                                                    border-radius: 10px;
+                                                    height: 120px;
+                                                    background-size: contain;
+                                                    background-position: center;
+                                                    background-repeat: no-repeat;
+                                                ">
+                                                    <img src="${img}" class="img-fluid" alt="Product image ${index + 1}" style="
+                                                        width: 100%;
+                                                        height: auto;
+                                                        max-height: 120px;
+                                                        object-fit: contain;
+                                                        border-radius: 10px;
+                                                    ">
+                                                </figure>
+                                            </a>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- Product Information Section -->
+                    <div class="pro-info">
+                        <h4 style="font-size: 1.6rem; font-weight: 700; color: #2d3748; margin-bottom: 15px;">
+                            <span>${product.ProductName}</span>
+                        </h4>
+
+                        <div class="rating" style="margin-bottom: 15px;">
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star-o" style="color: #ddd;"></i>
+                        </div>
+
+                        <div class="pro-availabale" style="margin-bottom: 15px;">
+                            <span class="available" style="color: #666;">Availability:</span>
+                            <span class="pro-instock" style="color: #28a745; font-weight: 600;">In stock</span>
+                        </div>
+
+                        <div class="mrp-label" style="margin-bottom: 10px;">
+                            <span style="color: #666; font-size: 14px;">MRP (including all taxes):</span>
+                        </div>
+
+                        <div class="pro-price" id="modal-pro-price" style="margin-bottom: 20px;">
+                            ${defaultPrice.offer_price > 0 ? `
+                                <span class="new-price" style="font-size: 1.8rem; font-weight: 700; color: #28a745;">₹${defaultPrice.offer_price.toFixed(2)} INR</span>
+                                ${defaultPrice.mrp > defaultPrice.offer_price ? `<span class="old-price" style="font-size: 1.3rem; color: #dc3545; margin-left: 10px;"><del>₹${defaultPrice.mrp.toFixed(2)} INR</del></span>` : ''}
+                                ${discount > 0 ? `
+                                    <div class="Discount-Pro-lable" style="display: inline-block; margin-left: 10px;">
+                                        <span class="Discount-p-discount" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">₹${discount.toFixed(2)} OFF</span>
+                                    </div>
+                                ` : ''}
+                            ` : '<span class="new-price" style="color: #666;">Price not available</span>'}
+                        </div>
+
+                        ${sizeOptionsHtml}
+
+                        ${defaultPrice.coins > 0 ? `
+                            <button style="background-color: #ec7524; margin-bottom: 20px; border: none; padding: 10px 15px; border-radius: 5px;" type="button" class="btn text-white">
+                                <i class="fa fa-coins"></i>
+                                <span id="modal-coins-message">Earn ${defaultPrice.coins} My Nutrify Coins On this Order.</span>
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+                        ` : ''}
+
+                        <div class="pro-qty" style="margin-bottom: 20px;">
+                            <span class="qty" style="font-weight: 600; margin-right: 15px;">Quantity:</span>
+                            <div class="plus-minus" style="display: inline-flex; align-items: center; border: 2px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                                <span style="display: flex; align-items: center;">
+                                    <a href="javascript:void(0)" class="minus-btn text-black" onclick="changeQuantity(-1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">-</a>
+                                    <input type="text" id="previewQuantity" value="1" style="border: none; width: 60px; height: 40px; text-align: center; font-weight: 600; background: white;">
+                                    <a href="javascript:void(0)" class="plus-btn text-black" onclick="changeQuantity(1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">+</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="pro-btn" style="display: flex; gap: 15px;">
+                            <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="${productId}" onclick="addToCartFromPreview(${productId})" style="
+                                flex: 2;
+                                background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
+                                color: white;
+                                border: none;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                font-size: 1rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                                text-decoration: none;
+                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 106, 0, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                            </a>
+
+                            <a href="product_details.php?ProductId=${productId}" class="btn btn-style1" style="
+                                flex: 1;
+                                background: transparent;
+                                color: #ff6a00;
+                                border: 2px solid #ff6a00;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                text-decoration: none;
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1rem;
+                            " onmouseover="this.style.background='#ff6a00'; this.style.color='white'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='transparent'; this.style.color='#ff6a00'; this.style.transform='translateY(0)';">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Initialize owl carousel for model images after modal content is rendered
+        setTimeout(() => {
+            initializeModalCarousel();
+        }, 100);
+    }
+
+    // Initialize owl carousel for modal
+    function initializeModalCarousel() {
+        // Check if carousel element exists and has items
+        const carouselElement = $('.product-main-slider-modal');
+        if (carouselElement.length === 0) return;
+
+        // Destroy existing carousel if it exists
+        if (carouselElement.hasClass('owl-loaded')) {
+            carouselElement.trigger('destroy.owl.carousel');
+            carouselElement.removeClass('owl-loaded owl-drag');
+        }
+
+        // Initialize new carousel
+        carouselElement.owlCarousel({
+            items: 3,
+            loop: false,
+            margin: 15,
+            nav: true,
+            navText: [
+                '<i class="fa fa-chevron-left"></i>',
+                '<i class="fa fa-chevron-right"></i>'
+            ],
+            dots: false,
+            autoplay: false,
+            mouseDrag: true,
+            touchDrag: true,
+            smartSpeed: 600,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                480: {
+                    items: 2,
+                    nav: true
+                },
+                768: {
+                    items: 3,
+                    nav: true
+                },
+                1024: {
+                    items: 3,
+                    nav: true
+                }
+            }
+        });
+>>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
 
     function closePreview() {
         const modal = document.getElementById('previewModal');
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+<<<<<<< HEAD
+=======
+        currentProductImages = [];
+        currentImageIndex = 0;
+        currentQuantity = 1;
+    }
+
+    // Enhanced size selection handler for modal
+    function handleModalSizeSelection(element) {
+        // Remove selected class from all size boxes
+        document.querySelectorAll('.size-box').forEach(box => {
+            box.classList.remove('selected');
+            box.style.borderColor = '#e2e8f0';
+            box.style.background = 'white';
+        });
+
+        // Add selected class to clicked size box
+        element.classList.add('selected');
+        element.style.borderColor = '#ff6a00';
+        element.style.background = '#fff5f0';
+
+        // Get pricing data from the selected size
+        const offerPrice = parseFloat(element.getAttribute('data-offer-price'));
+        const mrp = parseFloat(element.getAttribute('data-mrp'));
+        const coins = parseInt(element.getAttribute('data-coins'), 10);
+
+        // Update price display
+        updateModalPriceAndCoins(offerPrice, mrp, coins);
+    }
+
+    // Update price and coins display in modal
+    function updateModalPriceAndCoins(offerPrice, mrp, coins) {
+        const priceDiv = document.getElementById('modal-pro-price');
+        const coinsMessage = document.getElementById('modal-coins-message');
+
+        if (priceDiv && offerPrice > 0 && mrp > 0) {
+            const discount = mrp - offerPrice;
+            priceDiv.innerHTML = `
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 700; color: #28a745;">₹${offerPrice.toFixed(2)} INR</span>
+                ${mrp > offerPrice ? `<span class="old-price" style="font-size: 1.3rem; color: #dc3545; margin-left: 10px;"><del>₹${mrp.toFixed(2)} INR</del></span>` : ''}
+                ${discount > 0 ? `
+                    <div class="Discount-Pro-lable" style="display: inline-block; margin-left: 10px;">
+                        <span class="Discount-p-discount" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">₹${discount.toFixed(2)} OFF</span>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        // Update coins message
+        if (coinsMessage && coins > 0) {
+            coinsMessage.textContent = `Earn ${coins} My Nutrify Coins On this Order.`;
+        }
+    }
+
+    // Enhanced image navigation (matching product_details.php)
+    function changePreviewImage(index) {
+        currentImageIndex = index;
+
+        // Hide all tab panes
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+            pane.classList.remove('show', 'active');
+        });
+
+        // Show selected tab pane
+        const targetTab = index === 0 ?
+            document.getElementById('modal-image-main') :
+            document.getElementById(`modal-image-${index}`);
+
+        if (targetTab) {
+            targetTab.classList.add('show', 'active');
+        }
+
+        // Update thumbnail active states
+        document.querySelectorAll('.nav-link').forEach((link, i) => {
+            link.classList.remove('active');
+            link.style.borderColor = '#e2e8f0';
+        });
+
+        const activeLink = document.querySelector(`.preview-thumbnail-${index}`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            activeLink.style.borderColor = '#ff6a00';
+        }
+
+        // Update main image for zoom functionality
+        const mainImage = document.getElementById('previewMainImage');
+        if (mainImage && currentProductImages[index]) {
+            mainImage.src = currentProductImages[index];
+
+            // Update zoom background
+            const zoomFigure = mainImage.closest('.zoom');
+            if (zoomFigure) {
+                zoomFigure.style.backgroundImage = `url('${currentProductImages[index]}')`;
+            }
+        }
+    }
+
+    // Modal zoom functionality (matching product_details.php)
+    function modalZoom(event) {
+        const zoomer = event.currentTarget;
+        const offsetX = event.offsetX || event.touches?.[0]?.pageX - zoomer.offsetLeft || 0;
+        const offsetY = event.offsetY || event.touches?.[0]?.pageY - zoomer.offsetTop || 0;
+        const x = offsetX / zoomer.offsetWidth * 100;
+        const y = offsetY / zoomer.offsetHeight * 100;
+        zoomer.style.backgroundPosition = x + '% ' + y + '%';
+    }
+
+    function changeQuantity(delta) {
+        const quantityInput = document.getElementById('previewQuantity');
+        if (quantityInput) {
+            const newQuantity = Math.max(1, Math.min(10, currentQuantity + delta));
+            currentQuantity = newQuantity;
+            quantityInput.value = newQuantity;
+        }
+    }
+
+    function zoomImage() {
+        const mainImage = document.getElementById('previewMainImage');
+        if (!mainImage) return;
+
+        const imgSrc = mainImage.src;
+
+        // Create zoom overlay
+        const zoomOverlay = document.createElement('div');
+        zoomOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        `;
+
+        const zoomedImg = document.createElement('img');
+        zoomedImg.src = imgSrc;
+        zoomedImg.style.cssText = `
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        `;
+
+        zoomOverlay.appendChild(zoomedImg);
+        document.body.appendChild(zoomOverlay);
+
+        zoomOverlay.addEventListener('click', () => {
+            document.body.removeChild(zoomOverlay);
+        });
+    }
+
+    function addToCartFromPreview(productId) {
+        // Get selected size information
+        const selectedSizeBox = document.querySelector('.size-box.selected');
+        if (!selectedSizeBox) {
+            showNotification('Please select a size before adding to cart', 'error');
+            return;
+        }
+
+        const size = selectedSizeBox.getAttribute('data-size');
+        const offerPrice = selectedSizeBox.getAttribute('data-offer-price');
+        const mrp = selectedSizeBox.getAttribute('data-mrp');
+        const quantity = document.getElementById('previewQuantity').value;
+
+        // Add loading state to button
+        const addButton = document.querySelector('.add-to-cart-session');
+        if (!addButton) return;
+
+        const originalText = addButton.innerHTML;
+        addButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
+        addButton.disabled = true;
+
+        // Use the same AJAX structure as product_details.php
+        $.ajax({
+            url: 'exe_files/add_to_cart_session.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'add_to_cart',
+                productId: productId,
+                size: size,
+                quantity: quantity,
+                offer_price: offerPrice,
+                mrp: mrp
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Show success animation
+                    addButton.innerHTML = '<i class="fa fa-check"></i> Added to Cart!';
+                    addButton.style.background = '#22c55e';
+
+                    // Show cart popup like in product_details.php
+                    displayCartPopup();
+
+                    setTimeout(() => {
+                        closePreview();
+                    }, 2000);
+                } else {
+                    showNotification(response.message || 'Failed to add product to cart', 'error');
+                    addButton.innerHTML = originalText;
+                    addButton.disabled = false;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                showNotification('An error occurred while processing your request. Please try again.', 'error');
+                addButton.innerHTML = originalText;
+                addButton.disabled = false;
+            }
+        });
+    }
+
+    // Display cart popup (matching product_details.php functionality)
+    function displayCartPopup() {
+        // Create popup if it doesn't exist
+        let cartPopup = document.getElementById('cart-popup');
+        if (!cartPopup) {
+            cartPopup = document.createElement('div');
+            cartPopup.id = 'cart-popup';
+            cartPopup.className = 'cart-popup-overlay';
+            cartPopup.innerHTML = `
+                <div class="cart-popup-content" style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                    text-align: center;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <button class="close-popup" onclick="closeCartPopup()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 20px;
+                        cursor: pointer;
+                        color: #666;
+                    ">&times;</button>
+                    <h3 style="color: #333; margin-bottom: 15px;">Product added to your cart!</h3>
+                    <div class="cart-popup-actions">
+                        <a href="cart.php" class="btn-view-cart" style="
+                            display: inline-block;
+                            margin: 10px 5px;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            color: white;
+                            font-size: 14px;
+                            font-weight: bold;
+                            background: #305724;
+                            transition: background-color 0.3s ease;
+                        ">View Cart</a>
+                        <a href="checkout.php" class="btn-checkout" style="
+                            display: inline-block;
+                            margin: 10px 5px;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            color: white;
+                            font-size: 14px;
+                            font-weight: bold;
+                            background: #ec6504;
+                            transition: background-color 0.3s ease;
+                        ">Checkout</a>
+                    </div>
+                </div>
+            `;
+            cartPopup.style.cssText = `
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: 10000;
+            `;
+            document.body.appendChild(cartPopup);
+        }
+
+        // Show popup with fade effect
+        cartPopup.style.display = 'block';
+        cartPopup.style.opacity = '0';
+        setTimeout(() => {
+            cartPopup.style.transition = 'opacity 0.3s ease';
+            cartPopup.style.opacity = '1';
+        }, 10);
+
+        // Auto-hide popup after 3 seconds
+        setTimeout(() => {
+            closeCartPopup();
+        }, 3000);
+    }
+
+    function closeCartPopup() {
+        const cartPopup = document.getElementById('cart-popup');
+        if (cartPopup) {
+            cartPopup.style.opacity = '0';
+            setTimeout(() => {
+                cartPopup.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    // Function to open additional product images in modal view
+    function openImageModal(imageSrc) {
+        // Create image modal overlay
+        const imageModal = document.createElement('div');
+        imageModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            animation: fadeIn 0.3s ease;
+        `;
+
+        const imageContainer = document.createElement('div');
+        imageContainer.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        `;
+
+        const zoomedImg = document.createElement('img');
+        zoomedImg.src = imageSrc;
+        zoomedImg.style.cssText = `
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        `;
+
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '<i class="fas fa-times"></i>';
+        closeButton.style.cssText = `
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #666;
+            backdrop-filter: blur(10px);
+        `;
+
+        closeButton.onmouseover = function() {
+            this.style.background = '#ff6a00';
+            this.style.color = 'white';
+            this.style.transform = 'scale(1.1)';
+        };
+
+        closeButton.onmouseout = function() {
+            this.style.background = 'rgba(255, 255, 255, 0.9)';
+            this.style.color = '#666';
+            this.style.transform = 'scale(1)';
+        };
+
+        // Close modal function
+        const closeImageModal = () => {
+            imageModal.style.opacity = '0';
+            setTimeout(() => {
+                if (imageModal.parentNode) {
+                    document.body.removeChild(imageModal);
+                }
+            }, 300);
+        };
+
+        closeButton.addEventListener('click', closeImageModal);
+        imageModal.addEventListener('click', closeImageModal);
+
+        // Prevent closing when clicking on the image
+        imageContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        imageContainer.appendChild(zoomedImg);
+        imageContainer.appendChild(closeButton);
+        imageModal.appendChild(imageContainer);
+        document.body.appendChild(imageModal);
+
+        // Fade in effect
+        imageModal.style.opacity = '0';
+        setTimeout(() => {
+            imageModal.style.transition = 'opacity 0.3s ease';
+            imageModal.style.opacity = '1';
+        }, 10);
+    }
+
+    // Enhanced notification system
+    function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            font-weight: 500;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease;
+        `;
+
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 3000);
+>>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
 
     // Close modal when clicking outside
