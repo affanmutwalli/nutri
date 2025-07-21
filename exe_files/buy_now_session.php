@@ -2,8 +2,8 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if required POST data is set
-    if (!isset($_POST["product_id"], $_POST["quantity"], $_POST["size"], $_POST["offer_price"], $_POST["mrp"])) {
+    // Check if required POST data is set (size is now optional)
+    if (!isset($_POST["product_id"], $_POST["quantity"])) {
         http_response_code(400); // Bad Request
         echo json_encode([
             "status" => "error",
@@ -15,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize product details from POST request
     $product_id = filter_var($_POST["product_id"], FILTER_SANITIZE_NUMBER_INT);
     $quantity = filter_var($_POST["quantity"], FILTER_SANITIZE_NUMBER_INT);
-    $size = trim($_POST["size"]);
-    $offer_price = filter_var($_POST["offer_price"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    $mrp = filter_var($_POST["mrp"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $size = isset($_POST["size"]) ? trim($_POST["size"]) : '';
+    $offer_price = isset($_POST["offer_price"]) ? filter_var($_POST["offer_price"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : 0;
+    $mrp = isset($_POST["mrp"]) ? filter_var($_POST["mrp"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : 0;
 
     // Clean the size string (remove unwanted text like "Save ₹50")
     $size = preg_replace('/Save ₹\d+/', '', $size);  // Remove "Save ₹50"

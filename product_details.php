@@ -4477,15 +4477,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     let productId = this.getAttribute("data-product-id");
                     let sizeElement = document.querySelector(".size-box.selected");
         
-                    if (!sizeElement) {
-                        alert("Please select a size before proceeding.");
-                        return;
-                    }
+                    // Size selection is now optional
+                    // if (!sizeElement) {
+                    //     alert("Please select a size before proceeding.");
+                    //     return;
+                    // }
         
-                    let rawSize = sizeElement.textContent.trim(); // Original text including price & discount
-                    let size = rawSize.replace(/Save ₹\d+/g, '') // Remove "Save ₹xx"
-                                      .replace(/₹\d+\.\d{2}/g, '') // Remove prices (₹499.00, ₹549.00)
-                                      .trim(); // Trim extra spaces
+                    let rawSize = sizeElement ? sizeElement.textContent.trim() : ''; // Original text including price & discount
+                    let size = rawSize ? rawSize.replace(/Save ₹\d+/g, '') // Remove "Save ₹xx"
+                                               .replace(/₹\d+\.\d{2}/g, '') // Remove prices (₹499.00, ₹549.00)
+                                               .trim() : ''; // Trim extra spaces
         
                     let quantity = document.querySelector(".plus-minus input").value;
                     let offerPrice = sizeElement.getAttribute("data-offer-price");
@@ -4778,12 +4779,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const price = document.querySelector('.new-price')?.textContent.trim() || 'Price not available';
     const selectedSizeBox = document.querySelector('.size-box.selected');
 
-    if (!selectedSizeBox) {
-        alert('Please select a size before proceeding.');
-        return;
-    }
+    // Size selection is now optional
+    // if (!selectedSizeBox) {
+    //     alert('Please select a size before proceeding.');
+    //     return;
+    // }
 
-    const size = selectedSizeBox.querySelector('div:nth-child(2)').textContent.trim();
+    const size = selectedSizeBox ? selectedSizeBox.querySelector('div:nth-child(2)').textContent.trim() : '';
     const productDetails = { productId, quantity, price, size };
 
     // Show Customer Details Modal

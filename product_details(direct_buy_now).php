@@ -1225,12 +1225,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const price = document.querySelector('.new-price')?.textContent.trim() || 'Price not available';
     const selectedSizeBox = document.querySelector('.size-box.selected');
 
-    if (!selectedSizeBox) {
-        alert('Please select a size before proceeding.');
-        return;
-    }
+    // Size selection is now optional
+    // if (!selectedSizeBox) {
+    //     alert('Please select a size before proceeding.');
+    //     return;
+    // }
 
-    const size = selectedSizeBox.querySelector('div:nth-child(2)').textContent.trim();
+    const size = selectedSizeBox ? selectedSizeBox.querySelector('div:nth-child(2)').textContent.trim() : '';
     const productDetails = { productId, quantity, price, size };
 
     // Show Customer Details Modal
