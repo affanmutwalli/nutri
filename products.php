@@ -47,6 +47,146 @@ $obj->connection();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+    /* Enhanced Slider Navigation Styles */
+    .owl-carousel .owl-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev,
+    .owl-carousel .owl-nav button.owl-next {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 2px solid #ff6b35 !important;
+        border-radius: 50% !important;
+        width: 50px !important;
+        height: 50px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        opacity: 0.8 !important;
+        cursor: pointer !important;
+        pointer-events: all !important;
+        position: absolute !important;
+        font-size: 18px !important;
+        color: #ff6b35 !important;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev {
+        left: -25px !important;
+    }
+
+    .owl-carousel .owl-nav button.owl-next {
+        right: -25px !important;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev:hover,
+    .owl-carousel .owl-nav button.owl-next:hover {
+        background: #ff6b35 !important;
+        transform: scale(1.1) !important;
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4) !important;
+        opacity: 1 !important;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev:hover,
+    .owl-carousel .owl-nav button.owl-next:hover {
+        color: white !important;
+    }
+
+    /* Quick View Slider Specific Styling */
+    .quick-slider .owl-nav {
+        position: absolute !important;
+        top: 50% !important;
+        width: 100% !important;
+        transform: translateY(-50%) !important;
+        pointer-events: none !important;
+        z-index: 10 !important;
+        margin-top: 0 !important;
+    }
+
+    .quick-slider .owl-nav button.owl-prev {
+        position: absolute !important;
+        left: -15px !important;
+        pointer-events: all !important;
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    .quick-slider .owl-nav button.owl-next {
+        position: absolute !important;
+        right: -15px !important;
+        pointer-events: all !important;
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    /* Responsive adjustments for slider navigation */
+    @media (max-width: 768px) {
+        .owl-carousel .owl-nav button.owl-prev,
+        .owl-carousel .owl-nav button.owl-next {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 16px !important;
+        }
+
+        .owl-carousel .owl-nav button.owl-prev {
+            left: -20px !important;
+        }
+
+        .owl-carousel .owl-nav button.owl-next {
+            right: -20px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .owl-carousel .owl-nav button.owl-prev,
+        .owl-carousel .owl-nav button.owl-next {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 14px !important;
+        }
+
+        .owl-carousel .owl-nav button.owl-prev {
+            left: -15px !important;
+        }
+
+        .owl-carousel .owl-nav button.owl-next {
+            right: -15px !important;
+        }
+    }
+
+    /* Smooth transitions for all slider elements */
+    .owl-carousel .owl-item {
+        transition: all 0.3s ease;
+    }
+
+    .owl-carousel .owl-item:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Slider container positioning */
+    .owl-carousel {
+        position: relative;
+        padding: 0 30px;
+    }
+
+    /* Hide navigation on small containers */
+    .owl-carousel.owl-loaded .owl-nav {
+        display: block;
+    }
+
+    /* Ensure proper spacing for navigation buttons */
+    @media (min-width: 769px) {
+        .owl-carousel {
+            margin: 0 25px;
+        }
+    }
+
     /* Modern Shopify-style Products Page */
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -54,7 +194,7 @@ $obj->connection();
     }
 
     .products-hero {
-        background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
+     background-image: url("cms/images/banners/73065.webp");
         color: white;
         padding: 60px 0;
         margin-bottom: 40px;

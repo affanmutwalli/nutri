@@ -174,33 +174,47 @@ $('.trending-products').owlCarousel({
     rewind: true,
     margin: 30,
     nav: true,
-    navText: ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
+    navText: [
+        '<i class="fa fa-chevron-left" style="color: #ff6b35; font-size: 18px;"></i>',
+        '<i class="fa fa-chevron-right" style="color: #ff6b35; font-size: 18px;"></i>'
+    ],
     dots: false,
+    autoplay: false,
+    autoplayHoverPause: true,
+    mouseDrag: true,
+    touchDrag: true,
     responsive: {
       0: {
         items: 2,
-        margin: 15
+        margin: 15,
+        nav: false
       },
       479: {
         items: 2,
-        margin: 15
+        margin: 15,
+        nav: true
       },
       540: {
         items: 2,
-        margin: 15
+        margin: 15,
+        nav: true
       },
       640: {
         items: 3,
-        margin: 15
+        margin: 15,
+        nav: true
       },
       768: {
-        items: 3
+        items: 3,
+        nav: true
       },
       979: {
-        items: 4
+        items: 4,
+        nav: true
       },
       1199: {
-        items: 4
+        items: 4,
+        nav: true
       }
     }
 });
@@ -212,20 +226,33 @@ $('.trending-products').owlCarousel({
     loop: false,
     margin: 10,
     autoHeight : true,
-    nav: false,
+    nav: true,
+    navText: [
+        '<i class="fa fa-chevron-left" style="color: #ff6b35; font-size: 14px;"></i>',
+        '<i class="fa fa-chevron-right" style="color: #ff6b35; font-size: 14px;"></i>'
+    ],
     dots: false,
     autoplay: false,
+    mouseDrag: true,
+    touchDrag: true,
     sautoplayTimeout: 1000,
     autoplayHoverPause: true,
     responsive:{
       0:{
-        items:3
+        items:3,
+        nav: false
+      },
+      480:{
+        items:3,
+        nav: true
       },
       600:{
-        items:3
+        items:3,
+        nav: true
       },
       1000:{
-        items:4
+        items:4,
+        nav: true
       }
     }
   });
@@ -1796,20 +1823,128 @@ jQuery(function ($) {
         loop: true,
         margin: 15,
         nav: true,
-        navText: ['<i class="ti-arrow-left"></i>','<i class="ti-arrow-right"></i>'],
+        navText: [
+            '<i class="fa fa-chevron-left" style="color: #ff6b35; font-size: 16px;"></i>',
+            '<i class="fa fa-chevron-right" style="color: #ff6b35; font-size: 16px;"></i>'
+        ],
         dots: false,
+        autoplay: false,
+        autoplayHoverPause: true,
+        mouseDrag: true,
+        touchDrag: true,
         responsive:{
           0:{
-            items:3
+            items:3,
+            margin: 10,
+            nav: false
+          },
+          480:{
+            items:4,
+            margin: 12,
+            nav: true
           },
           600:{
-            items:4
+            items:4,
+            margin: 15,
+            nav: true
+          },
+          768:{
+            items:5,
+            margin: 15,
+            nav: true
           },
           1000:{
-            items:4
+            items:5,
+            margin: 15,
+            nav: true
           }
         }
    });
+
+    // Enhanced styling for all product sliders navigation
+    $(document).ready(function() {
+        // Universal slider navigation styling function
+        function styleSliderNavigation(sliderClass, buttonSize = '45px', leftOffset = '-20px', rightOffset = '-20px') {
+            $(sliderClass + ' .owl-nav').css({
+                'position': 'absolute',
+                'top': '50%',
+                'width': '100%',
+                'transform': 'translateY(-50%)',
+                'pointer-events': 'none',
+                'z-index': '10',
+                'margin-top': '0'
+            });
+
+            $(sliderClass + ' .owl-nav button').css({
+                'position': 'absolute',
+                'background': 'rgba(255, 255, 255, 0.95)',
+                'border': '2px solid #ff6b35',
+                'border-radius': '50%',
+                'width': buttonSize,
+                'height': buttonSize,
+                'display': 'flex',
+                'align-items': 'center',
+                'justify-content': 'center',
+                'pointer-events': 'all',
+                'transition': 'all 0.3s ease',
+                'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)',
+                'opacity': '0.8'
+            });
+
+            $(sliderClass + ' .owl-nav .owl-prev').css({
+                'left': leftOffset
+            });
+
+            $(sliderClass + ' .owl-nav .owl-next').css({
+                'right': rightOffset
+            });
+
+            // Hover effects
+            $(sliderClass + ' .owl-nav button').hover(
+                function() {
+                    $(this).css({
+                        'background': '#ff6b35',
+                        'transform': 'scale(1.1)',
+                        'box-shadow': '0 6px 20px rgba(255, 107, 53, 0.3)',
+                        'opacity': '1'
+                    });
+                    $(this).find('i').css('color', 'white');
+                },
+                function() {
+                    $(this).css({
+                        'background': 'rgba(255, 255, 255, 0.95)',
+                        'transform': 'scale(1)',
+                        'box-shadow': '0 4px 15px rgba(0, 0, 0, 0.1)',
+                        'opacity': '0.8'
+                    });
+                    $(this).find('i').css('color', '#ff6b35');
+                }
+            );
+
+            // Show/hide navigation on hover
+            $(sliderClass).hover(
+                function() {
+                    $(this).find('.owl-nav button').css({
+                        'opacity': '1',
+                        'visibility': 'visible'
+                    });
+                },
+                function() {
+                    $(this).find('.owl-nav button').css({
+                        'opacity': '0.8',
+                        'visibility': 'visible'
+                    });
+                }
+            );
+        }
+
+        // Apply styling to different sliders
+        styleSliderNavigation('.trending-products', '45px', '-20px', '-20px');
+        styleSliderNavigation('.pro-page-slider', '40px', '-15px', '-15px');
+        styleSliderNavigation('.quick-slider', '35px', '-15px', '-15px');
+        styleSliderNavigation('.home-category', '45px', '-20px', '-20px');
+        styleSliderNavigation('.featured-products-slider', '45px', '-20px', '-20px');
+    });
 
     $('.pro-pag-5-slider').owlCarousel({
         loop: false,
