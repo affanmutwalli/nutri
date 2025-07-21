@@ -1509,51 +1509,190 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         initializeHoverEffects();
     });
 
-    // Product Preview Modal Functions
+    // Global variables for modal functionality
+    let currentProductImages = [];
+    let currentImageIndex = 0;
+    let currentQuantity = 1;
+
+
+
+
+
+
     function showPreview(productId) {
         const modal = document.getElementById('previewModal');
-
-        // Show modal with loading state
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
 
-        // Reset content
-        document.getElementById('previewTitle').textContent = 'Loading...';
-        document.getElementById('previewDescription').textContent = 'Loading product details...';
+        // Show loading state
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 95vw;
+                width: 100%;
+                max-height: 95vh;
+                overflow-y: auto;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 400px;
+            ">
+                <div style="text-align: center; padding: 40px;">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        border: 4px solid #f3f3f3;
+                        border-top: 4px solid #ff6a00;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 20px;
+                    "></div>
+                    <p style="color: #666; font-size: 16px;">Loading complete product details...</p>
+                </div>
+            </div>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        `;
 
-        // Fetch product details
-        fetch(`exe_files/get_product_preview.php?productId=${productId}`)
+        // Fetch complete product details page content
+        fetch(`exe_files/get_complete_product_details.php?productId=${productId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById('previewImage').src = `cms/images/products/${data.product.PhotoPath}`;
-                    document.getElementById('previewTitle').textContent = data.product.ProductName;
-                    document.getElementById('previewPrice').textContent = `₹${data.product.OfferPrice}`;
-
-                    if (data.product.MRP && data.product.MRP != data.product.OfferPrice) {
-                        document.getElementById('previewOriginalPrice').textContent = `₹${data.product.MRP}`;
-                        document.getElementById('previewOriginalPrice').style.display = 'inline';
-                    } else {
-                        document.getElementById('previewOriginalPrice').style.display = 'none';
-                    }
-
-<<<<<<< HEAD
-                    document.getElementById('previewDescription').textContent = data.product.ShortDescription || 'No description available.';
-                    document.getElementById('previewAddToCart').setAttribute('data-product-id', productId);
-                    document.getElementById('previewViewDetails').href = `product_details.php?ProductId=${productId}`;
+                    renderCompleteProductModal(data, productId);
                 } else {
-                    document.getElementById('previewTitle').textContent = 'Error loading product';
-                    document.getElementById('previewDescription').textContent = 'Unable to load product details.';
+                    showErrorModal('Unable to load product details. Please try again.');
                 }
             })
             .catch(error => {
-                console.error('Error fetching product details:', error);
-                document.getElementById('previewTitle').textContent = 'Error loading product';
-                document.getElementById('previewDescription').textContent = 'Unable to load product details.';
+                console.error('Error fetching complete product details:', error);
+                showErrorModal('Error loading product details. Please try again.');
             });
-=======
+    }
+
+    function showErrorModal(message) {
+        const modal = document.getElementById('previewModal');
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 500px;
+                width: 100%;
+                padding: 40px;
+                text-align: center;
+                position: relative;
+            ">
+                <button onclick="closePreview()" style="
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: #666;
+                ">×</button>
+                <div style="color: #dc3545; font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                <h3 style="color: #333; margin-bottom: 15px;">Error</h3>
+                <p style="color: #666; margin-bottom: 30px;">${message}</p>
+                <button onclick="closePreview()" style="
+                    background: #ff6a00;
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 16px;
+                ">Close</button>
+            </div>
+        `;
+    }
+
+    function renderCompleteProductModal(data, productId) {
+        const modal = document.getElementById('previewModal');
+        const product = data.product;
+        const images = data.images || [];
+        const pricing = data.pricing || {};
+        const ingredients = data.ingredients || [];
+        const benefits = data.benefits || [];
+        const reviews = data.reviews || [];
+        const faqs = data.faqs || [];
+        const productDetails = data.product_details || {};
+
+        // Set global variables
+        currentProductImages = images;
+        currentImageIndex = 0;
+        currentQuantity = 1;
+
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 95vw;
+                width: 100%;
+                max-height: 95vh;
+                overflow-y: auto;
+                position: relative;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            ">
+                <!-- Close Button -->
+                <button onclick="closePreview()" style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 255, 255, 0.95);
+                    border: none;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    z-index: 1000;
+                    font-size: 20px;
+                    color: #666;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.95)'; this.style.color='#666';">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <!-- Modal Content -->
+                <div style="padding: 40px;">
+                    ${renderProductMainSection(product, images, pricing, productId)}
+                    ${renderProductDescriptionSection(product)}
+                    ${renderIngredientsSection(ingredients, productDetails)}
+                    ${renderBenefitsSection(benefits, product)}
+                    ${renderDirectionsSection()}
+                    ${renderCertificationsSection()}
+                    ${renderReviewsSection(reviews)}
+                    ${renderFAQSection(faqs)}
+                </div>
+            </div>
+        `;
+
+        // Initialize carousels and interactions after content is rendered
+        setTimeout(() => {
+            initializeModalCarousels();
+            initializeModalInteractions();
+        }, 100);
+    }
+
     function renderModalWithPricing(product, productId, pricingData, detailsData) {
         const modal = document.getElementById('previewModal');
+
+        // Set current product images from details data
+        currentProductImages = detailsData.images || [`cms/images/products/${product.PhotoPath}`];
+        currentImageIndex = 0;
+        currentQuantity = 1;
 
         // Generate main image tabs HTML (like product_details.php)
         const mainImageTabsHtml = `
@@ -1961,18 +2100,757 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 }
             }
         });
->>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
+
+    // Render main product section (images + info)
+    function renderProductMainSection(product, images, pricing, productId) {
+        const sizes = pricing.sizes || [];
+        const priceData = pricing.price_data || {};
+        const defaultPrice = pricing.default_price || { offer_price: 0, mrp: 0, coins: 0, discount: 0 };
+
+        // Generate main image carousel
+        const mainImageCarousel = images.length > 0 ? `
+            <div class="product-main-slider-container">
+                <div class="owl-carousel product-main-slider-modal">
+                    ${images.map((img, index) => `
+                        <div class="slider-item">
+                            <a href="javascript:void(0)" class="long-img" onclick="openImageModal('${img}')" style="
+                                border: 1px solid rgba(0, 0, 0, 0.1);
+                                border-radius: 10px;
+                                display: block;
+                                cursor: pointer;
+                            ">
+                                <figure class="zoom" onmousemove="modalZoom(event)" style="
+                                    background-image: url('${img}');
+                                    margin: 0;
+                                    position: relative;
+                                    overflow: hidden;
+                                    cursor: zoom-in;
+                                    border-radius: 10px;
+                                    height: 400px;
+                                    background-size: contain;
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                ">
+                                    <img src="${img}" class="img-fluid" alt="${product.ProductName}" style="
+                                        width: 100%;
+                                        height: auto;
+                                        max-height: 400px;
+                                        object-fit: contain;
+                                        border-radius: 10px;
+                                    ">
+                                </figure>
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${images.length > 1 ? `
+                    <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme" style="list-style: none; margin: 10px 0; padding: 0;">
+                        ${images.map((img, index) => `
+                            <li class="nav-item items">
+                                <a class="nav-link ${index === 0 ? 'active' : ''}" onclick="changePreviewImage(${index})" style="
+                                    display: block;
+                                    padding: 5px;
+                                    border: 2px solid ${index === 0 ? '#ff6a00' : '#e2e8f0'};
+                                    border-radius: 8px;
+                                    margin-right: 10px;
+                                    transition: all 0.3s ease;
+                                    cursor: pointer;
+                                ">
+                                    <img src="${img}" class="img-fluid" alt="Product image ${index + 1}" style="
+                                        width: 70px;
+                                        height: 70px;
+                                        object-fit: contain;
+                                        border-radius: 5px;
+                                    ">
+                                </a>
+                            </li>
+                        `).join('')}
+                    </ul>
+                ` : ''}
+            </div>
+        ` : `<div style="text-align: center; padding: 40px; color: #666;">No images available</div>`;
+
+        // Generate size options
+        const sizeOptionsHtml = sizes.length > 0 ? `
+            <h6 class="pro-size" style="margin-top: 20px; margin-bottom: 10px; font-weight: 600; color: #2d3748;">Size:</h6>
+            <div class="size-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                ${sizes.map((size, index) => {
+                    const priceInfo = priceData[size] || { offer_price: 0, mrp: 0, coins: 0 };
+                    const discount = priceInfo.mrp - priceInfo.offer_price;
+                    return `
+                        <div class="size-box ${index === 0 ? 'selected' : ''}"
+                             data-offer-price="${priceInfo.offer_price}"
+                             data-mrp="${priceInfo.mrp}"
+                             data-coins="${priceInfo.coins}"
+                             data-size="${size}"
+                             onclick="handleModalSizeSelection(this)"
+                             style="
+                                 cursor: pointer;
+                                 padding: 12px;
+                                 border: 2px solid ${index === 0 ? '#ff6a00' : '#e2e8f0'};
+                                 border-radius: 8px;
+                                 text-align: center;
+                                 transition: all 0.3s ease;
+                                 background: ${index === 0 ? '#fff5f0' : 'white'};
+                                 min-width: 120px;
+                             ">
+                            <div style="color: #305724; font-weight: bold; font-size: 12px;">Save ₹${discount.toFixed(2)}</div>
+                            <div style="font-weight: 600; margin: 5px 0;">${size}</div>
+                            <div class="size-price" style="font-size: 14px;">
+                                <span style="color: #28a745; font-weight: bold;">₹${priceInfo.offer_price.toFixed(2)}</span>
+                                <del style="color: #dc3545; margin-left: 5px;">₹${priceInfo.mrp.toFixed(2)}</del>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        ` : '';
+
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <!-- Product Images Section -->
+                    <div class="pro-image">
+                        ${mainImageCarousel}
+                    </div>
+
+                    <!-- Product Information Section -->
+                    <div class="pro-info">
+                        <h4 style="font-size: 1.8rem; font-weight: 700; color: #2d3748; margin-bottom: 15px;">
+                            ${product.ProductName}
+                        </h4>
+
+                        <div class="rating" style="margin-bottom: 15px;">
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star-o" style="color: #ddd;"></i>
+                        </div>
+
+                        <div class="pro-availabale" style="margin-bottom: 15px;">
+                            <span class="available" style="color: #666;">Availability:</span>
+                            <span class="pro-instock" style="color: #28a745; font-weight: 600;">In stock</span>
+                        </div>
+
+                        <div class="mrp-label" style="margin-bottom: 10px;">
+                            <span style="color: #666; font-size: 14px;">MRP (including all taxes):</span>
+                        </div>
+
+                        <div class="pro-price" id="modal-pro-price" style="margin-bottom: 20px;">
+                            ${defaultPrice.offer_price > 0 ? `
+                                <span class="new-price" style="font-size: 2rem; font-weight: 700; color: #28a745;">₹${defaultPrice.offer_price.toFixed(2)} INR</span>
+                                ${defaultPrice.mrp > defaultPrice.offer_price ? `<span class="old-price" style="font-size: 1.4rem; color: #dc3545; margin-left: 10px;"><del>₹${defaultPrice.mrp.toFixed(2)} INR</del></span>` : ''}
+                                ${defaultPrice.discount > 0 ? `
+                                    <div class="Discount-Pro-lable" style="display: inline-block; margin-left: 10px;">
+                                        <span class="Discount-p-discount" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">₹${defaultPrice.discount.toFixed(2)} OFF</span>
+                                    </div>
+                                ` : ''}
+                            ` : '<span class="new-price" style="color: #666;">Price not available</span>'}
+                        </div>
+
+                        <div class="product-description-container" style="margin-bottom: 20px;">
+                            <p style="color: #666; line-height: 1.6;">${product.ShortDescription || 'No description available'}</p>
+                        </div>
+
+                        ${sizeOptionsHtml}
+
+                        ${defaultPrice.coins > 0 ? `
+                            <button style="background-color: #ec7524; margin-bottom: 20px; border: none; padding: 10px 15px; border-radius: 5px;" type="button" class="btn text-white">
+                                <i class="fa fa-coins"></i>
+                                <span id="modal-coins-message">Earn ${defaultPrice.coins} My Nutrify Coins On this Order.</span>
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+                        ` : ''}
+
+                        <div class="pro-qty" style="margin-bottom: 20px;">
+                            <span class="qty" style="font-weight: 600; margin-right: 15px;">Quantity:</span>
+                            <div class="plus-minus" style="display: inline-flex; align-items: center; border: 2px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                                <span style="display: flex; align-items: center;">
+                                    <a href="javascript:void(0)" class="minus-btn text-black" onclick="changeQuantity(-1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">-</a>
+                                    <input type="text" id="previewQuantity" value="1" style="border: none; width: 60px; height: 40px; text-align: center; font-weight: 600; background: white;">
+                                    <a href="javascript:void(0)" class="plus-btn text-black" onclick="changeQuantity(1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">+</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="pro-btn" style="display: flex; gap: 15px;">
+                            <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="${productId}" onclick="addToCartFromPreview(${productId})" style="
+                                flex: 2;
+                                background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
+                                color: white;
+                                border: none;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                font-size: 1rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                                text-decoration: none;
+                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 106, 0, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                            </a>
+
+                            <a href="product_details.php?ProductId=${productId}" class="btn btn-style1" style="
+                                flex: 1;
+                                background: transparent;
+                                color: #ff6a00;
+                                border: 2px solid #ff6a00;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                text-decoration: none;
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1rem;
+                            " onmouseover="this.style.background='#ff6a00'; this.style.color='white'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='transparent'; this.style.color='#ff6a00'; this.style.transform='translateY(0)';">
+                                View Full Page
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    // Render product description section
+    function renderProductDescriptionSection(product) {
+        if (!product.Description) return '';
+
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    My Nutrify Herbal & Ayurveda's <span style="color: #ff6a00;">${product.ProductName}</span>
+                </h1>
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">${product.Description}</p>
+                </div>
+            </section>
+        `;
+    }
+
+    // Render ingredients section
+    function renderIngredientsSection(ingredients, productDetails) {
+        if (!ingredients || ingredients.length === 0) return '';
+
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Key <span style="color: #ff6a00;">INGREDIENTS</span>
+                </h1>
+
+                ${productDetails && productDetails.Description ? `
+                    <div style="max-width: 800px; margin: 0 auto 40px; text-align: center;">
+                        <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">${productDetails.Description}</p>
+                    </div>
+                ` : ''}
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                    ${ingredients.map(ingredient => `
+                        <div style="
+                            text-align: center;
+                            padding: 20px;
+                            border-radius: 15px;
+                            transition: transform 0.3s ease;
+                            cursor: pointer;
+                        " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div style="
+                                width: 120px;
+                                height: 120px;
+                                margin: 0 auto 15px;
+                                border-radius: 50%;
+                                overflow: hidden;
+                                border: 3px solid #ff6a00;
+                            ">
+                                <img src="${ingredient.PhotoPath ? `cms/images/ingredient/${ingredient.PhotoPath}` : 'images/default.jpg'}"
+                                     alt="${ingredient.IngredientName}"
+                                     style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 style="color: #305724; font-weight: 600; margin: 0;">${ingredient.IngredientName}</h4>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
+    // Render benefits section
+    function renderBenefitsSection(benefits, product) {
+        if (!benefits || benefits.length === 0) return '';
+
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Why Drink My Nutrify Herbal & Ayurveda's <span style="color: #ff6a00;">${product.ProductName}?</span>
+                </h1>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
+                    ${benefits.map(benefit => `
+                        <div style="
+                            background: white;
+                            padding: 30px;
+                            border-radius: 15px;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                            text-align: center;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div style="
+                                width: 80px;
+                                height: 80px;
+                                margin: 0 auto 20px;
+                                border-radius: 50%;
+                                overflow: hidden;
+                                border: 2px solid #ff6a00;
+                            ">
+                                <img src="${benefit.PhotoPath ? `cms/images/ingredient/${benefit.PhotoPath}` : 'images/default.jpg'}"
+                                     alt="${benefit.Title}"
+                                     style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 style="color: #305724; font-weight: 600; margin-bottom: 15px;">${benefit.Title}</h4>
+                            <p style="color: #666; line-height: 1.6;">${benefit.ShortDescription}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
+    // Render directions section
+    function renderDirectionsSection() {
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Direction To <span style="color: #ff6a00;">Use</span>
+                </h1>
+
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <div style="
+                        background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
+                        padding: 40px;
+                        border-radius: 20px;
+                        border: 2px solid #ff6a00;
+                    ">
+                        <div style="font-size: 3rem; color: #ff6a00; margin-bottom: 20px;">📋</div>
+                        <h3 style="color: #305724; margin-bottom: 20px;">How to Use</h3>
+                        <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">
+                            Take 1-2 teaspoons (5-10ml) twice daily with water, preferably before meals.
+                            For best results, use consistently for 2-3 months. Consult your healthcare provider before use.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    // Render certifications section
+    function renderCertificationsSection() {
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Your Certified <span style="color: #ff6a00;">Trusted Product</span>
+                </h1>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
+                    ${[
+                        { icon: '🏆', title: 'FSSAI License', desc: 'Food Safety Certified' },
+                        { icon: '🌿', title: 'AYUSH License', desc: 'Ayurvedic Manufacturing' },
+                        { icon: '✅', title: 'GMP Certification', desc: 'Good Manufacturing Practice' },
+                        { icon: '🚫', title: 'BPA-Free', desc: 'Safe Packaging' },
+                        { icon: '🕌', title: 'Halal Certified', desc: 'Religiously Compliant' },
+                        { icon: '🇮🇳', title: 'Make in India', desc: 'Proudly Indian' }
+                    ].map(cert => `
+                        <div style="
+                            text-align: center;
+                            padding: 20px;
+                            background: white;
+                            border-radius: 15px;
+                            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div style="font-size: 2.5rem; margin-bottom: 10px;">${cert.icon}</div>
+                            <h4 style="color: #305724; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">${cert.title}</h4>
+                            <p style="color: #666; font-size: 0.8rem; margin: 0;">${cert.desc}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
+    // Render reviews section
+    function renderReviewsSection(reviews) {
+        if (!reviews || reviews.length === 0) {
+            return `
+                <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                        Customer <span style="color: #ff6a00;">Reviews</span>
+                    </h1>
+                    <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+                        <div style="font-size: 4rem; color: #ff6a00; margin-bottom: 20px;">💬</div>
+                        <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5rem;">No Reviews Yet</h3>
+                        <p style="color: #666; font-size: 1.1rem;">Be the first to share your experience with this amazing product!</p>
+                    </div>
+                </section>
+            `;
+        }
+
+        return `
+            <section style="margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Customer <span style="color: #ff6a00;">Reviews</span>
+                </h1>
+
+                <div style="margin-bottom: 40px; text-align: center;">
+                    <div style="display: inline-flex; align-items: center; gap: 15px; background: white; padding: 20px 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ff6a00;">5.0</div>
+                        <div>
+                            <div style="margin-bottom: 5px;">
+                                ${[1,2,3,4,5].map(() => '<i class="fa fa-star" style="color: #ffd700; font-size: 1.2rem;"></i>').join('')}
+                            </div>
+                            <div style="color: #666; font-size: 0.9rem;">Based on ${reviews.length} review${reviews.length !== 1 ? 's' : ''}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
+                    ${reviews.map(review => `
+                        <div style="
+                            background: white;
+                            border-radius: 20px;
+                            padding: 30px;
+                            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+                            transition: all 0.3s ease;
+                            border: 1px solid #f0f0f0;
+                        " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                <div style="
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    overflow: hidden;
+                                    border: 2px solid #ff6a00;
+                                ">
+                                    <img src="${review.PhotoPath ? `cms/images/ingredient/${review.PhotoPath}` : 'images/default-avatar.jpg'}"
+                                         alt="${review.Name}"
+                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div>
+                                    <h4 style="color: #333; margin: 0; font-size: 1.1rem; font-weight: 600;">${review.Name}</h4>
+                                    <div style="margin: 5px 0;">
+                                        ${[1,2,3,4,5].map(() => '<i class="fa fa-star" style="color: #ffd700; font-size: 0.9rem;"></i>').join('')}
+                                    </div>
+                                    <div style="color: #999; font-size: 0.8rem;">${new Date(review.Date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                                </div>
+                            </div>
+                            <p style="color: #555; line-height: 1.6; margin: 0; font-style: italic;">"${review.Review}"</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
+    // Render FAQ section
+    function renderFAQSection(faqs) {
+        if (!faqs || faqs.length === 0) return '';
+
+        return `
+            <section style="margin-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;">
+                    Frequently Asked Questions <span style="color: #ff6a00;">(FAQ's)</span>
+                </h1>
+
+                <div style="max-width: 800px; margin: 0 auto;">
+                    ${faqs.map((faq, index) => `
+                        <div style="
+                            background: white;
+                            border-radius: 12px;
+                            margin-bottom: 15px;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            transition: transform 0.2s ease;
+                            overflow: hidden;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div style="
+                                padding: 20px;
+                                cursor: pointer;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                gap: 15px;
+                                border-bottom: 1px solid #f0f0f0;
+                            " onclick="toggleFAQ(${index})">
+                                <h5 style="
+                                    margin: 0;
+                                    font-size: 1.1rem;
+                                    font-weight: 600;
+                                    color: #305724;
+                                    flex: 1;
+                                ">${faq.Question}</h5>
+                                <span id="faq-icon-${index}" style="
+                                    font-size: 1.5rem;
+                                    color: #ff6a00;
+                                    transition: transform 0.3s ease;
+                                ">+</span>
+                            </div>
+                            <div id="faq-content-${index}" style="
+                                max-height: 0;
+                                overflow: hidden;
+                                transition: max-height 0.3s ease;
+                            ">
+                                <div style="padding: 20px; color: #4a5568; line-height: 1.6;">
+                                    ${faq.Answer}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
+    // Initialize modal carousels and interactions
+    function initializeModalCarousels() {
+        // Initialize main product slider
+        const mainSlider = $('.product-main-slider-modal');
+        if (mainSlider.length > 0) {
+            if (mainSlider.hasClass('owl-loaded')) {
+                mainSlider.trigger('destroy.owl.carousel');
+                mainSlider.removeClass('owl-loaded owl-drag');
+            }
+
+            mainSlider.owlCarousel({
+                items: 1,
+                loop: false,
+                margin: 0,
+                nav: true,
+                navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+                dots: false,
+                autoplay: false,
+                mouseDrag: true,
+                touchDrag: true,
+                smartSpeed: 600
+            });
+        }
+
+        // Initialize thumbnail slider
+        const thumbSlider = $('.pro-page-slider');
+        if (thumbSlider.length > 0) {
+            if (thumbSlider.hasClass('owl-loaded')) {
+                thumbSlider.trigger('destroy.owl.carousel');
+                thumbSlider.removeClass('owl-loaded owl-drag');
+            }
+
+            thumbSlider.owlCarousel({
+                items: 4,
+                loop: false,
+                margin: 10,
+                nav: false,
+                dots: false,
+                autoplay: false,
+                mouseDrag: true,
+                touchDrag: true,
+                responsive: {
+                    0: { items: 2 },
+                    480: { items: 3 },
+                    768: { items: 4 }
+                }
+            });
+        }
+    }
+
+    function initializeModalInteractions() {
+        // Any additional modal interactions can be initialized here
+    }
+
+    // Toggle FAQ function
+    function toggleFAQ(index) {
+        const content = document.getElementById(`faq-content-${index}`);
+        const icon = document.getElementById(`faq-icon-${index}`);
+
+        if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            content.style.maxHeight = '0px';
+            icon.textContent = '+';
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.textContent = '−';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+
+
+
+
+
+
+
+
 
     function closePreview() {
         const modal = document.getElementById('previewModal');
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-<<<<<<< HEAD
-=======
         currentProductImages = [];
         currentImageIndex = 0;
         currentQuantity = 1;
+    }
+
+
+
+    // Change preview image function
+    function changePreviewImage(index) {
+        currentImageIndex = index;
+        const mainImage = document.getElementById('previewMainImage');
+        if (mainImage && currentProductImages[index]) {
+            mainImage.src = currentProductImages[index];
+
+            // Update zoom background
+            const zoomFigure = mainImage.closest('.zoom');
+            if (zoomFigure) {
+                zoomFigure.style.backgroundImage = `url('${currentProductImages[index]}')`;
+            }
+        }
+
+        // Update thumbnail borders
+        document.querySelectorAll('[class*="preview-thumbnail-"]').forEach((thumb, i) => {
+            if (i === index) {
+                thumb.style.border = '2px solid #ff6a00';
+                thumb.classList.add('active');
+            } else {
+                thumb.style.border = '2px solid #e2e8f0';
+                thumb.classList.remove('active');
+            }
+        });
+    }
+
+    // Change quantity function
+    function changeQuantity(change) {
+        const quantityInput = document.getElementById('previewQuantity');
+        if (quantityInput) {
+            let newQuantity = parseInt(quantityInput.value) + change;
+            if (newQuantity < 1) newQuantity = 1;
+            quantityInput.value = newQuantity;
+            currentQuantity = newQuantity;
+        }
+    }
+
+    // Add to cart from preview
+    function addToCartFromPreview(productId) {
+        const quantityInput = document.getElementById('previewQuantity');
+        const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+
+        // Get selected size if any
+        const selectedSizeBox = document.querySelector('.size-box.selected');
+        const selectedSize = selectedSizeBox ? selectedSizeBox.dataset.size : '';
+
+        // Call existing add to cart function
+        addToCartSession(productId, quantity, selectedSize);
+
+        // Close modal after adding to cart
+        closePreview();
+    }
+
+    // Modal zoom functionality
+    function modalZoom(event) {
+        const figure = event.currentTarget;
+        const img = figure.querySelector('img');
+        if (!img) return;
+
+        const rect = figure.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+
+        figure.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+        figure.style.backgroundSize = '200%';
+    }
+
+    // Open image in full screen modal
+    function openImageModal(imageSrc) {
+        // Create full screen image modal
+        const imageModal = document.createElement('div');
+        imageModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            cursor: pointer;
+        `;
+
+        imageModal.innerHTML = `
+            <img src="${imageSrc}" style="
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+                border-radius: 10px;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            ">
+            <button onclick="this.parentElement.remove()" style="
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 20px;
+                color: #333;
+            ">×</button>
+        `;
+
+        imageModal.onclick = function(e) {
+            if (e.target === imageModal) {
+                imageModal.remove();
+            }
+        };
+
+        document.body.appendChild(imageModal);
     }
 
     // Enhanced size selection handler for modal
@@ -1980,13 +2858,13 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         // Remove selected class from all size boxes
         document.querySelectorAll('.size-box').forEach(box => {
             box.classList.remove('selected');
-            box.style.borderColor = '#e2e8f0';
+            box.style.border = '2px solid #e2e8f0';
             box.style.background = 'white';
         });
 
         // Add selected class to clicked size box
         element.classList.add('selected');
-        element.style.borderColor = '#ff6a00';
+        element.style.border = '2px solid #ff6a00';
         element.style.background = '#fff5f0';
 
         // Get pricing data from the selected size
@@ -2075,14 +2953,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         zoomer.style.backgroundPosition = x + '% ' + y + '%';
     }
 
-    function changeQuantity(delta) {
-        const quantityInput = document.getElementById('previewQuantity');
-        if (quantityInput) {
-            const newQuantity = Math.max(1, Math.min(10, currentQuantity + delta));
-            currentQuantity = newQuantity;
-            quantityInput.value = newQuantity;
-        }
-    }
+
 
     function zoomImage() {
         const mainImage = document.getElementById('previewMainImage');
@@ -2423,7 +3294,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 setTimeout(() => notification.remove(), 300);
             }
         }, 3000);
->>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
 
     // Close modal when clicking outside

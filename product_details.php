@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-   <?php 
+   <?php
    session_start();
       include('includes/urls.php');
       include('database/dbconnection.php');
+      include('includes/analytics_functions.php'); // Include analytics tracking
       $obj = new main();
       $obj->connection();
 
@@ -135,8 +136,14 @@
                   $coins = 0;
                }
 
-               
-          } 
+               // Track product view analytics
+               try {
+                   trackProductView($productId, $product_data[0]['ProductName']);
+               } catch (Exception $e) {
+                   error_log("Product view analytics error: " . $e->getMessage());
+               }
+
+          }
 
 
           $FieldNames = array("Product_DetailsId", "ProductId", "PhotoPath", "Description","ImagePath");
@@ -5045,7 +5052,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     </script>
 
+<?php
+// Add Analytics JavaScript Tracking
+echo generateAnalyticsJS();
+?>
 
+<script>
+// Enhanced Analytics for Product Details Page
+document.addEventListener('DOMContentLoaded', function() {
+    const productId = <?php echo json_encode($productId); ?>;
+    const productName = <?php echo json_encode($product_data[0]['ProductName'] ?? ''); ?>;
+
+    // Track product interactions
+    if (window.NutrifyAnalytics) {
+        // Track image zoom/clicks
+        document.querySelectorAll('.product-image, .zoom-image').forEach(function(element) {
+            element.addEventListener('click', function() {
+                window.NutrifyAnalytics.trackEvent('product_interaction', {
+                    interaction_type: 'image_zoom',
+                    product_id: productId,
+                    product_name: productName
+                });
+            });
+        });
+
+        // Track size selection
+        document.querySelectorAll('.size-option, .size-selector').forEach(function(element) {
+            element.addEventListener('click', function() {
+                const selectedSize = this.textContent || this.value || '';
+                window.NutrifyAnalytics.trackEvent('product_interaction', {
+                    interaction_type: 'size_selection',
+                    product_id: productId,
+                    product_name: productName,
+                    selected_size: selectedSize
+                });
+            });
+        });
+
+        // Track add to cart button clicks
+        document.querySelectorAll('.add-to-cart, [onclick*="addToCart"]').forEach(function(element) {
+            element.addEventListener('click', function() {
+                const price = document.querySelector('.offer-price')?.textContent?.replace(/[^\d.]/g, '') || 0;
+                window.NutrifyAnalytics.trackEvent('product_interaction', {
+                    interaction_type: 'add_to_cart',
+                    product_id: productId,
+                    product_name: productName,
+                    price: parseFloat(price)
+                });
+            });
+        });
+
+        // Track video play if video exists
+        document.querySelectorAll('video, .video-player').forEach(function(element) {
+            element.addEventListener('play', function() {
+                window.NutrifyAnalytics.trackEvent('product_interaction', {
+                    interaction_type: 'video_play',
+                    product_id: productId,
+                    product_name: productName
+                });
+            });
+        });
+    }
+});
+</script>
 
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

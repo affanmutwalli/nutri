@@ -7,6 +7,7 @@ header('Content-Type: application/json');
 // Include database connection (avoid conflicts)
 include_once '../database/dbconnection.php';
 include_once 'cart_persistence.php'; // Include cart persistence functions
+include_once '../includes/analytics_functions.php'; // Include analytics tracking
 
 $obj = new main();
 $mysqli = $obj->connection();
@@ -32,6 +33,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart' && isset($_POST
 
         // Use cart persistence manager to add item
         $cartManager->addToCart($productId, 1, $customerId);
+
+        // Track add to cart analytics
+        try {
+            // Get product price for analytics
+            $priceData = $obj->MysqliSelect1(
+                "SELECT MIN(OfferPrice) as price FROM product_price WHERE ProductId = ?",
+                array("price"),
+                "i",
+                array($productId)
+            );
+            $price = $priceData && isset($priceData[0]['price']) ? $priceData[0]['price'] : 0;
+
+            // Track the add to cart action
+            trackAddToCart($productId, $product_data[0]['ProductName'], $price, 1);
+        } catch (Exception $e) {
+            error_log("Add to cart analytics error: " . $e->getMessage());
+        }
 
         $message = 'Product added to your cart successfully.';
 

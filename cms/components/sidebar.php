@@ -236,6 +236,17 @@
             </ul>
           </li>
 
+          <!-- Website Analytics Section -->
+          <li class="nav-item">
+            <a href="analytics_dashboard.php" class="nav-link <?php if($selected == "analytics_dashboard.php") echo "active"; ?>">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Website Analytics
+                <span class="badge badge-info right">NEW</span>
+              </p>
+            </a>
+          </li>
+
           <!-- Contact Messages Section -->
           <li class="nav-item">
             <a href="contact_messages.php" class="nav-link <?php if($page == "contact_messages.php") echo "active"; ?>">
