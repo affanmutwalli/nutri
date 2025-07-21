@@ -1845,6 +1845,107 @@
         }
     }
 
+    /* View Full Review Button Styles - Enhanced for visibility */
+    .view-full-review {
+        background: linear-gradient(135deg, #EA652D, #ff7a45) !important;
+        border: none !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+        margin-top: 12px !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 8px rgba(234, 101, 45, 0.3) !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 10 !important;
+        width: auto !important;
+        height: auto !important;
+        font-family: inherit !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        outline: none !important;
+    }
+
+    .view-full-review:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(234, 101, 45, 0.4) !important;
+        background: linear-gradient(135deg, #d4541f, #EA652D) !important;
+    }
+
+    .view-full-review:focus {
+        outline: 2px solid #EA652D !important;
+        outline-offset: 2px !important;
+    }
+
+    /* Review Modal Styles - Increased Size */
+    .review-modal-content {
+        position: relative;
+        width: 95%;
+        max-width: 900px;
+        max-height: 95vh;
+        margin: 2.5vh auto;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        animation: modalFadeIn 0.3s ease-out;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .review-modal-header {
+        background: linear-gradient(135deg, #EA652D, #ff7a45);
+        padding: 25px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+
+    .review-modal-body {
+        padding: 35px;
+        overflow-y: auto;
+        flex: 1;
+        max-height: 70vh;
+    }
+
+    .review-modal-footer {
+        padding: 20px 35px;
+        background: #f9f9f9;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .review-text {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        color: #444;
+    }
+
+    .close-review-modal {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: white;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-review-modal:hover {
+        background: rgba(255,255,255,0.3);
+    }
+
 
     /* Review Header Styles */
     .review-header-wrapper {
@@ -2087,13 +2188,20 @@
         transition: all 0.3s ease;
     }
 
-    .zoom-controls button:hover {
+    .zoom-controls button:hover:not(:disabled) {
         background: #EA652D;
         border-color: #EA652D;
+        transform: scale(1.05);
     }
 
-    .zoom-controls button:hover i {
+    .zoom-controls button:hover:not(:disabled) i {
         color: white;
+    }
+
+    .zoom-controls button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
     }
 
     #resetZoom {
@@ -2134,6 +2242,14 @@
 
     .zoom-hint.fade-out {
         opacity: 0;
+    }
+
+    .grabbing {
+        cursor: grabbing !important;
+    }
+
+    #imageContainer.grabbing * {
+        cursor: grabbing !important;
     }
 
     @keyframes modalBackdropFadeIn {
@@ -2337,6 +2453,46 @@
 
         .review-graph-container {
             padding: 20px;
+        }
+
+        /* Review Modal Mobile Styles */
+        .review-modal-content {
+            width: 98%;
+            max-width: 600px;
+            margin: 1vh auto;
+            max-height: 98vh;
+        }
+
+        .review-modal-header {
+            padding: 20px 25px;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .reviewer-info {
+            flex-direction: column;
+            gap: 8px !important;
+            align-items: flex-start !important;
+        }
+
+        .review-modal-body {
+            padding: 25px;
+            max-height: 60vh;
+        }
+
+        .review-text {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .view-full-review {
+            padding: 6px 12px !important;
+            font-size: 11px !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin-top: 10px !important;
         }
     }
 
@@ -3614,7 +3770,31 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                 </div>
                             </div>
                             <div class="review-content">
-                                <p style="font-size: 1rem; color: #555; line-height: 1.6; margin: 0; font-style: italic;">"<?php echo nl2br(htmlspecialchars($review['Review'])); ?>"</p>
+                                <?php
+                                $reviewText = $review['Review'];
+                                $isLongReview = strlen($reviewText) > 200;
+                                $displayText = $isLongReview ? substr($reviewText, 0, 200) . '...' : $reviewText;
+                                ?>
+                                <p style="font-size: 1rem; color: #555; line-height: 1.6; margin: 0; font-style: italic;">"<?php echo nl2br(htmlspecialchars($displayText)); ?>"</p>
+
+                                <!-- View Full Review button - ALWAYS shown for ALL reviews -->
+                                <button class="view-full-review"
+                                        onclick="openReviewModal('<?php echo htmlspecialchars(addslashes($reviewText), ENT_QUOTES); ?>', '<?php echo htmlspecialchars(addslashes($review['Name']), ENT_QUOTES); ?>', '<?php echo date("F j, Y", strtotime($review['Date'])); ?>')"
+                                        style="background: linear-gradient(135deg, #EA652D, #ff7a45) !important;
+                                               border: none !important;
+                                               padding: 8px 16px !important;
+                                               border-radius: 20px !important;
+                                               margin-top: 12px !important;
+                                               cursor: pointer !important;
+                                               font-size: 12px !important;
+                                               color: white !important;
+                                               transition: all 0.3s ease !important;
+                                               box-shadow: 0 2px 8px rgba(234, 101, 45, 0.3) !important;
+                                               display: block !important;
+                                               visibility: visible !important;
+                                               opacity: 1 !important;">
+                                    <i class="fa fa-expand" style="margin-right: 6px;"></i> View Full Review
+                                </button>
                             </div>
                             <div class="review-card-footer" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
                                 <div class="helpful-section" style="display: flex; align-items: center; justify-content: space-between;">
@@ -3673,6 +3853,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <i class="fa fa-mouse-pointer" style="margin-right: 8px;"></i>
                             Scroll to zoom • Drag to pan • ESC to close
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Review Modal - Increased Size -->
+            <div id="reviewModal" class="review-modal" onclick="closeReviewModal()" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px);">
+                <div class="review-modal-content" onclick="event.stopPropagation()" style="position: relative; width: 95%; max-width: 900px; max-height: 95vh; margin: 2.5vh auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.4); animation: modalFadeIn 0.3s ease-out; display: flex; flex-direction: column;">
+                    <div class="review-modal-header" style="background: linear-gradient(135deg, #EA652D, #ff7a45); padding: 25px 35px; display: flex; justify-content: space-between; align-items: center; color: white;">
+                        <div>
+                            <h3 id="reviewModalTitle" style="margin: 0 0 8px 0; font-size: 1.6rem; font-weight: 600;">Customer Review</h3>
+                            <div class="reviewer-info" style="display: flex; align-items: center; gap: 20px;">
+                                <div class="reviewer-name" style="font-size: 1.1rem; opacity: 0.9;">by <span id="reviewerName">Customer</span></div>
+                                <div class="review-date" id="reviewDate" style="font-size: 1rem; opacity: 0.8;"></div>
+                            </div>
+                        </div>
+                        <button class="close-review-modal" onclick="closeReviewModal()" style="background: rgba(255,255,255,0.2); border: none; font-size: 22px; cursor: pointer; color: white; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s ease;">&times;</button>
+                    </div>
+                    <div class="review-modal-body" style="padding: 35px; overflow-y: auto; flex: 1; max-height: 70vh;">
+                        <div class="review-text" style="font-size: 1.3rem; line-height: 1.8; color: #444;">
+                            <p id="fullReviewText" style="white-space: pre-line; margin: 0; font-style: italic;"></p>
+                        </div>
+                    </div>
+                    <div class="review-modal-footer" style="padding: 20px 35px; background: #f9f9f9; border-top: 1px solid #eee; display: flex; justify-content: flex-end;">
+                        <button onclick="closeReviewModal()" style="background: #EA652D; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 16px; transition: all 0.3s ease; font-weight: 500;">Close Review</button>
                     </div>
                 </div>
             </div>
@@ -3835,18 +4039,24 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         }
     }
 
-    // Zoom Functions
+    // Enhanced Zoom Functions
     function zoomImage(delta) {
-        const newZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
+        const newZoom = Math.max(0.25, Math.min(5, currentZoom + delta));
         currentZoom = newZoom;
         updateImageTransform();
         updateZoomLevel();
 
-        // Reset position if zoomed out too much
+        // Reset position if zoomed out to 100% or less
         if (currentZoom <= 1) {
             translateX = 0;
             translateY = 0;
             updateImageTransform();
+        }
+
+        // Update cursor style based on zoom level
+        const imageContainer = document.getElementById('imageContainer');
+        if (imageContainer) {
+            imageContainer.style.cursor = currentZoom > 1 ? 'grab' : 'default';
         }
     }
 
@@ -3856,12 +4066,20 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         translateY = 0;
         updateImageTransform();
         updateZoomLevel();
+
+        // Reset cursor
+        const imageContainer = document.getElementById('imageContainer');
+        if (imageContainer) {
+            imageContainer.style.cursor = 'default';
+            imageContainer.classList.remove('grabbing');
+        }
     }
 
     function updateImageTransform() {
         const modalImage = document.getElementById('modalImage');
         if (modalImage) {
-            modalImage.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+            modalImage.style.transform = `scale(${currentZoom}) translate(${translateX / currentZoom}px, ${translateY / currentZoom}px)`;
+            modalImage.style.transformOrigin = 'center center';
         }
     }
 
@@ -3869,6 +4087,20 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         const zoomLevel = document.getElementById('zoomLevel');
         if (zoomLevel) {
             zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
+        }
+
+        // Update zoom button states
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+
+        if (zoomInBtn) {
+            zoomInBtn.disabled = currentZoom >= 5;
+            zoomInBtn.style.opacity = currentZoom >= 5 ? '0.5' : '1';
+        }
+
+        if (zoomOutBtn) {
+            zoomOutBtn.disabled = currentZoom <= 0.25;
+            zoomOutBtn.style.opacity = currentZoom <= 0.25 ? '0.5' : '1';
         }
     }
 
@@ -3965,7 +4197,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
     function endDrag() {
         isDragging = false;
-        document.getElementById('imageContainer').classList.remove('grabbing');
+        const imageContainer = document.getElementById('imageContainer');
+        if (imageContainer) {
+            imageContainer.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+            imageContainer.classList.remove('grabbing');
+        }
     }
     </script>
       <!-- product page tab end -->
@@ -4423,6 +4659,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 reviewGraph.classList.add('show');
                 animateRatingBars();
             }, 10);
+        }
+    }
+
+    // Review Modal Functions
+    function openReviewModal(reviewText, reviewerName, reviewDate) {
+        const modal = document.getElementById('reviewModal');
+        const modalTitle = document.getElementById('reviewModalTitle');
+        const reviewerNameEl = document.getElementById('reviewerName');
+        const reviewDateEl = document.getElementById('reviewDate');
+        const fullReviewTextEl = document.getElementById('fullReviewText');
+
+        // Set content
+        modalTitle.textContent = 'Full Review';
+        reviewerNameEl.textContent = reviewerName;
+        reviewDateEl.textContent = reviewDate || '';
+        fullReviewTextEl.textContent = reviewText;
+
+        // Show modal
+        modal.style.display = 'block';
+
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+
+        // Add keyboard support
+        document.addEventListener('keydown', handleReviewKeyPress);
+
+        // Fade in animation
+        setTimeout(() => {
+            modal.style.opacity = '1';
+        }, 10);
+    }
+
+    function closeReviewModal() {
+        const modal = document.getElementById('reviewModal');
+
+        modal.style.opacity = '0';
+
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            // Remove keyboard listener
+            document.removeEventListener('keydown', handleReviewKeyPress);
+        }, 300);
+    }
+
+    // Keyboard support for review modal
+    function handleReviewKeyPress(e) {
+        if (e.key === 'Escape') {
+            closeReviewModal();
         }
     }
 

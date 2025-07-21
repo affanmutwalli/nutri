@@ -3229,15 +3229,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(234, 101, 45, 0.1));
+    backdrop-filter: blur(15px);
     z-index: 999999;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: backdropFadeIn 0.5s ease-out;
 }
 
 .promo-popup-overlay.show {
@@ -3246,46 +3247,65 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 }
 
 .promo-popup-container {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
-    width: 90%;
-    max-height: 90vh;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border-radius: 25px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    max-width: 520px;
+    width: 92%;
+    max-height: 95vh;
     overflow-y: auto;
     position: relative;
-    transform: scale(0.7) translateY(50px);
-    transition: all 0.3s ease;
-    border: 3px solid #ec6504;
+    transform: scale(0.7) translateY(80px) rotateX(15deg);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid rgba(234, 101, 45, 0.2);
 }
 
 .promo-popup-overlay.show .promo-popup-container {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) rotateX(0deg);
+}
+
+@keyframes backdropFadeIn {
+    from {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+    }
+    to {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(234, 101, 45, 0.1));
+        backdrop-filter: blur(15px);
+    }
 }
 
 .promo-close-btn {
     position: absolute;
-    top: 15px;
+    top: 20px;
     right: 20px;
-    background: #ff4757;
-    color: white;
-    border: none;
-    width: 35px;
-    height: 35px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.9));
+    color: #666;
+    border: 1px solid rgba(234, 101, 45, 0.2);
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     cursor: pointer;
     z-index: 1000000;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .promo-close-btn:hover {
-    background: #ff3742;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff4757, #ff3742);
+    color: white;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+    border-color: transparent;
 }
 
 .promo-content {
@@ -3298,21 +3318,41 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 }
 
 .promo-badge {
-    background: linear-gradient(135deg, #ec6504, #ff8533);
+    background: linear-gradient(135deg, #ec6504, #ff8533, #ffa500);
     color: white;
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 12px;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 13px;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     display: inline-block;
-    margin-bottom: 15px;
-    animation: pulse 2s infinite;
+    margin-bottom: 18px;
+    animation: badgePulse 2s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(234, 101, 4, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes pulse {
+.promo-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: badgeShine 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
+}
+
+@keyframes badgeShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
 .promo-title {
@@ -3334,57 +3374,72 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 }
 
 .promo-offer-box {
-    background: linear-gradient(135deg, #305724, #4a7c59);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+    background: linear-gradient(135deg, #4CAF50, #45a049, #3d8b40);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: white;
     position: relative;
     overflow: hidden;
+    box-shadow:
+        0 12px 35px rgba(76, 175, 80, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .promo-offer-box::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: rotate(45deg);
-    animation: shine 3s infinite;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    animation: offerShine 4s ease-in-out infinite;
 }
 
-@keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+@keyframes offerShine {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(200%) skewX(-15deg); }
 }
 
 .promo-discount, .promo-bonus {
     text-align: center;
     flex: 1;
+    z-index: 1;
+    position: relative;
 }
 
 .promo-percent, .promo-free {
     display: block;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .promo-text, .promo-condition {
-    font-size: 12px;
-    opacity: 0.9;
+    font-size: 13px;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .promo-plus {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
-    margin: 0 15px;
-    opacity: 0.8;
+    margin: 0 20px;
+    color: #fff;
+    z-index: 1;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    animation: plusPulse 2s ease-in-out infinite;
+}
+
+@keyframes plusPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .promo-features {
@@ -3425,39 +3480,70 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
-    gap: 5px;
+    margin-bottom: 15px;
+    gap: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(234, 101, 45, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-mobile-input-group:focus-within {
+    box-shadow:
+        0 8px 25px rgba(234, 101, 45, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(234, 101, 45, 0.4);
+    transform: translateY(-2px);
 }
 
 .promo-country-code {
-    background: #305724;
+    background: linear-gradient(135deg, #305724, #4a7c59);
     color: white;
-    padding: 12px 15px;
-    border-radius: 8px 0 0 8px;
+    padding: 18px 22px;
     font-weight: bold;
     font-size: 16px;
-    border: 2px solid #305724;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.promo-country-code::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: rgba(255,255,255,0.3);
 }
 
 .promo-mobile-input {
     flex: 1;
-    max-width: 250px;
-    padding: 12px 15px;
-    border: 2px solid #305724;
-    border-left: none;
-    border-radius: 0 8px 8px 0;
+    max-width: 280px;
+    padding: 18px 22px;
+    border: none;
     font-size: 16px;
     outline: none;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
     transition: all 0.3s ease;
 }
 
 .promo-mobile-input:focus {
-    border-color: #ec6504;
-    box-shadow: 0 0 0 3px rgba(236, 101, 4, 0.1);
+    background: #ffffff;
 }
 
 .promo-mobile-input::placeholder {
-    color: #7f8c8d;
+    color: #999;
+    font-style: italic;
+    transition: all 0.3s ease;
+}
+
+.promo-mobile-input:focus::placeholder {
+    color: #ccc;
+    transform: translateX(5px);
 }
 
 /* OTP Input Styles */
@@ -3509,31 +3595,60 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
 /* Verify Button Styles */
 .promo-verify-btn {
-    background: linear-gradient(135deg, #305724, #4a7c59);
+    background: linear-gradient(135deg, #4CAF50, #45a049, #3d8b40);
     color: white;
     border: none;
-    padding: 15px 30px;
-    border-radius: 50px;
+    padding: 18px 35px;
+    border-radius: 15px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     width: 100%;
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(48, 87, 36, 0.3);
+    margin-bottom: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 6px 20px rgba(76, 175, 80, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.promo-verify-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.promo-verify-btn:hover::before {
+    left: 100%;
 }
 
 .promo-verify-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(48, 87, 36, 0.4);
+    transform: translateY(-3px);
+    box-shadow:
+        0 10px 30px rgba(76, 175, 80, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #45a049, #3d8b40, #2e7d32);
+}
+
+.promo-verify-btn:active {
+    transform: translateY(-1px);
+    box-shadow:
+        0 4px 15px rgba(76, 175, 80, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .promo-verify-btn:disabled {
-    opacity: 0.6;
+    opacity: 0.7;
     cursor: not-allowed;
     transform: none;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
 }
 
 .promo-loader {
@@ -3699,9 +3814,10 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .promo-popup-container {
-        margin: 20px;
+        margin: 15px;
         max-width: none;
-        width: calc(100% - 40px);
+        width: calc(100% - 30px);
+        border-radius: 20px;
     }
 
     .promo-content {
@@ -3709,17 +3825,35 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     }
 
     .promo-title {
-        font-size: 20px;
+        font-size: 22px;
+        line-height: 1.2;
+    }
+
+    .promo-subtitle {
+        font-size: 15px;
     }
 
     .promo-offer-box {
         flex-direction: column;
         text-align: center;
+        gap: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
     .promo-plus {
-        margin: 10px 0;
+        margin: 0;
         transform: rotate(90deg);
+        font-size: 24px;
+        animation: plusPulse 1.5s ease-in-out infinite;
+    }
+
+    .promo-percent, .promo-free {
+        font-size: 20px;
+    }
+
+    .promo-text, .promo-condition {
+        font-size: 12px;
     }
 
     .promo-code-box {
@@ -3729,37 +3863,96 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
     .promo-code {
         margin: 0;
+        font-size: 18px;
+        padding: 12px 20px;
     }
 
     .promo-mobile-input-group {
         flex-direction: column;
         gap: 0;
+        border-radius: 12px;
     }
 
     .promo-country-code {
-        border-radius: 8px 8px 0 0;
-        border-bottom: none;
+        border-radius: 12px 12px 0 0;
+        padding: 15px 20px;
+    }
+
+    .promo-country-code::after {
+        display: none;
     }
 
     .promo-mobile-input {
-        border-radius: 0 0 8px 8px;
-        border-top: none;
-        border-left: 2px solid #305724;
+        border-radius: 0 0 12px 12px;
         max-width: none;
+        padding: 15px 20px;
+    }
+
+    .promo-verify-btn {
+        padding: 16px 30px;
+        font-size: 15px;
     }
 
     .promo-otp-input-group {
-        gap: 5px;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .promo-otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+
+    .promo-features {
+        gap: 12px;
+    }
+
+    .promo-feature {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .promo-close-btn {
+        top: 15px;
+        right: 15px;
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+
+    .promo-mobile-text, .promo-otp-text {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .promo-popup-container {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .promo-content {
+        padding: 20px 15px 15px;
+    }
+
+    .promo-title {
+        font-size: 20px;
+    }
+
+    .promo-offer-box {
+        padding: 15px;
+    }
+
+    .promo-percent, .promo-free {
+        font-size: 18px;
     }
 
     .promo-otp-input {
         width: 35px;
         height: 35px;
         font-size: 16px;
-    }
-
-    .promo-mobile-text, .promo-otp-text {
-        font-size: 14px;
     }
 }
 </style>
