@@ -1487,73 +1487,126 @@
     }
 }
 
-    .slider-container {
+    /* Modern Review Grid Styles */
+    .reviews-grid-container {
         width: 100%;
-        max-width: 1200px;
         margin: 40px auto 0;
-        padding: 0 15px;
-        overflow: hidden;
+        padding: 0;
     }
 
-    .inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        transition: transform 0.6s ease-in-out;
-        align-items: stretch;
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        padding: 0 20px;
     }
 
-    .review-section {
-        flex: 0 0 32%;
-        max-width: 32%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        height: 100%;
+    .modern-review-card {
         background: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 15px;
-        padding: 25px;
-        font-family: 'Segoe UI', sans-serif;
-        transition: all 0.3s ease-in-out;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #f0f0f0;
         position: relative;
         overflow: hidden;
+        font-family: 'Segoe UI', sans-serif;
     }
 
-    .review-section:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    .modern-review-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
         border-color: #EA652D;
     }
 
-    .review-section img {
+    .modern-review-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%);
+    }
+
+    /* Review Card Header Styles */
+    .review-card-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .reviewer-avatar {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .reviewer-avatar:hover {
+        transform: scale(1.05);
+    }
+
+    .reviewer-avatar:hover .image-expand-overlay {
+        opacity: 1;
+    }
+
+    .reviewer-avatar img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
         object-fit: cover;
-        margin: 0 auto 15px;
-        border: 3px solid #f0f0f0;
-        display: block;
+        border: 3px solid #EA652D;
+        transition: all 0.3s ease;
     }
 
-    .review-section h6 {
+    .image-expand-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .image-expand-overlay i {
+        color: white;
+        font-size: 16px;
+    }
+
+    .verified-badge {
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        background: #28a745;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .reviewer-info h6 {
         font-size: 1.1rem;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin: 0 0 5px 0;
         color: #333;
-        text-align: center;
-        line-height: 1.3;
     }
 
     .rating-group {
         display: flex;
-        justify-content: center;
-        gap: 3px;
-        margin-bottom: 15px;
+        gap: 2px;
+        margin-bottom: 5px;
     }
 
     .rating-group i {
@@ -1561,25 +1614,52 @@
         font-size: 14px;
     }
 
-    .review-section .desc {
-        font-size: 0.9rem;
-        color: #666;
-        margin-bottom: 10px;
-    }
-
-    .review-section p {
-        font-size: 0.95rem;
-        color: #555;
-        margin-bottom: 8px;
-        line-height: 1.5;
-        text-align: center;
-    }
-
-    .review-section p:last-child {
+    .review-date {
         font-size: 0.85rem;
         color: #888;
-        margin-top: 15px;
+    }
+
+    /* Review Content Styles */
+    .review-content p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        margin: 0;
         font-style: italic;
+    }
+
+    /* Review Footer Styles */
+    .review-card-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .helpful-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .helpful-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .helpful-buttons button {
+        background: none;
+        border: 1px solid #e0e0e0;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .helpful-buttons button:hover {
+        background: #f8f9fa;
+        border-color: #EA652D;
+        color: #EA652D;
     }
 
     /* === ANIMATION === */
@@ -1595,64 +1675,178 @@
         }
     }
 
-    /* === TABLET RESPONSIVE (2 per row) === */
+    /* Button Styles */
+    .load-more-btn {
+        background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%);
+        color: white;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);
+    }
+
+    .load-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(234, 101, 45, 0.4);
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1200px) {
+        .reviews-grid {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 0 15px;
+        }
+    }
+
     @media (max-width: 992px) {
-        .review-section {
-            flex: 0 0 48%;
-            max-width: 48%;
-        }
-    }
-
-    /* === MOBILE CAROUSEL === */
-    @media (max-width: 600px) {
-        .slider-container {
-            overflow-x: hidden;
-            position: relative;
+        .reviews-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
-        .inner {
-            flex-wrap: nowrap;
-            gap: 0;
-            transform: translateX(0%);
-        }
-
-        .review-section {
-            flex: 0 0 100%;
-            max-width: 100%;
+        .modern-review-card {
             padding: 25px;
-            scroll-snap-align: start;
         }
 
-        .review-section h6 {
-            font-size: 1rem;
+        .review-header-wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
         }
 
-        .review-section p {
-            font-size: 0.9rem;
+        .overall-rating-display {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
-        .map {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
+        .rating-number-large {
+            font-size: 3rem !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .reviews-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .modern-review-card {
+            padding: 20px;
+        }
+
+        .review-card-header {
+            gap: 12px;
+        }
+
+        .reviewer-avatar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .verified-badge {
+            width: 18px;
+            height: 18px;
+            font-size: 9px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container-fluid {
+            padding: 0 10px !important;
+        }
+
+        .product-details-title {
+            font-size: 2.2rem !important;
+            margin-bottom: 40px !important;
+        }
+
+        .review-header-wrapper {
+            padding: 25px !important;
+        }
+
+        .overall-rating-display {
+            gap: 15px !important;
+        }
+
+        .rating-number-large {
+            font-size: 2.5rem !important;
+        }
+
+        .helpful-section {
+            flex-direction: column;
             gap: 10px;
+            align-items: flex-start;
         }
 
-        .map button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: none;
-            background: #ccc;
-            cursor: pointer;
+        /* Full Screen Modal responsive styles */
+        .modal-content {
+            width: 100%;
+            height: 100%;
         }
 
-        .map button.active {
-            background-color: #305724;
+        .modal-header {
+            padding: 12px 15px;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .modal-controls {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        #modalImage {
+            max-width: calc(100vw - 30px);
+            max-height: calc(100vh - 140px);
+            border-radius: 8px;
+        }
+
+        .zoom-controls {
+            padding: 6px 10px;
+            gap: 6px;
+        }
+
+        .zoom-controls button {
+            width: 32px;
+            height: 32px;
+        }
+
+        #resetZoom {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+
+        .zoom-hint {
+            font-size: 12px;
+            padding: 10px 16px;
+            bottom: 20px;
+        }
+
+        .close-modal {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 18px !important;
         }
     }
 
 
+    /* Review Header Styles */
     .review-header-wrapper {
         display: flex;
         flex-wrap: wrap;
@@ -1660,9 +1854,13 @@
         align-items: center;
         gap: 30px;
         margin-top: 0;
-        padding: 0;
+        padding: 40px;
         border: none;
         font-family: 'Segoe UI', sans-serif;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        margin-bottom: 50px;
     }
 
     .review-left-section {
@@ -1670,34 +1868,44 @@
         min-width: 300px;
     }
 
+    .overall-rating-display {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .rating-number-large {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #EA652D;
+    }
+
     .star-rating {
         display: inline-block;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .star-rating i {
         color: #FFD700;
-        font-size: 20px;
+        font-size: 24px;
         margin-right: 2px;
     }
 
     .review-count {
-        font-weight: 600;
-        margin-left: 15px;
-        vertical-align: middle;
-        font-size: 18px;
-        color: #333;
+        font-weight: 500;
+        font-size: 1.2rem;
+        color: #666;
     }
 
     .review-summary-btn {
         background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%);
         border: none;
         color: white;
-        padding: 10px 20px;
+        padding: 12px 24px;
         border-radius: 25px;
         font-size: 14px;
         font-weight: 500;
-        margin-top: 15px;
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);
@@ -1706,6 +1914,246 @@
     .review-summary-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(234, 101, 45, 0.4);
+    }
+
+    .write-review-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 15px;
+    }
+
+    .write-review-btn:hover {
+        background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .review-dropdown select {
+        padding: 10px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        font-size: 14px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .review-dropdown select:hover,
+    .review-dropdown select:focus {
+        border-color: #EA652D;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(234, 101, 45, 0.1);
+    }
+
+    .review-right-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: center;
+    }
+
+    /* Image Modal Styles */
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        backdrop-filter: blur(5px);
+        animation: modalBackdropFadeIn 0.3s ease-out;
+    }
+
+    .image-modal.show {
+        display: block;
+    }
+
+    .modal-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        animation: modalFadeIn 0.3s ease-out;
+    }
+
+    .modal-header {
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        flex-shrink: 0;
+    }
+
+    .modal-header h3 {
+        margin: 0;
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: #f8f9fa;
+        color: #EA652D;
+        transform: rotate(90deg);
+    }
+
+    .modal-body {
+        background: transparent;
+        padding: 20px;
+        overflow: hidden;
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #imageContainer {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        cursor: grab;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #imageContainer.grabbing {
+        cursor: grabbing;
+    }
+
+    #modalImage {
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 120px);
+        object-fit: contain;
+        transition: transform 0.1s ease;
+        user-select: none;
+        pointer-events: none;
+        transform-origin: center center;
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .zoom-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        background: rgba(255,255,255,0.9);
+        padding: 8px 12px;
+        border-radius: 25px;
+        backdrop-filter: blur(10px);
+    }
+
+    .zoom-controls button {
+        background: rgba(248,249,250,0.9);
+        border: 1px solid #e0e0e0;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .zoom-controls button:hover {
+        background: #EA652D;
+        border-color: #EA652D;
+    }
+
+    .zoom-controls button:hover i {
+        color: white;
+    }
+
+    #resetZoom {
+        background: rgba(248,249,250,0.9);
+        border: 1px solid #e0e0e0;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        color: #666;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    #resetZoom:hover {
+        background: #EA652D;
+        border-color: #EA652D;
+        color: white;
+    }
+
+    .zoom-hint {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        z-index: 10;
+    }
+
+    .zoom-hint.fade-out {
+        opacity: 0;
+    }
+
+    @keyframes modalBackdropFadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50%) scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
     }
 
     /* Review Graph Styles */
@@ -2968,35 +3416,40 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <?php endif; ?>
             </section>
 
-            <section class="section-b-padding pro-releted" id="section6">
-                <div class="container">
-                    <h1 class="product-details-title" style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: #333;">
+            <section class="section-b-padding pro-releted" id="section6" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 80px 0;">
+                <div class="container-fluid" style="max-width: 100%; padding: 0 20px;">
+                    <h1 class="product-details-title" style="text-align: center; margin-bottom: 60px; font-size: 3rem; color: #333; font-weight: 700;">
                         Customer <span style="color: #EA652D;">Reviews</span>
                     </h1>
-                    <div class="review-header-wrapper">
+                    <div class="review-header-wrapper" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); margin-bottom: 50px;">
                         <div class="review-left-section">
-                            <div class="star-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                            <div class="overall-rating-display" style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                                <div class="rating-number-large" style="font-size: 4rem; font-weight: 700; color: #EA652D;">5.0</div>
+                                <div>
+                                    <div class="star-rating" style="margin-bottom: 8px;">
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 24px;"></i>
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 24px;"></i>
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 24px;"></i>
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 24px;"></i>
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 24px;"></i>
+                                    </div>
+                                    <span class="review-count" style="font-size: 1.2rem; color: #666;">
+                                        <?php
+                                        $reviewCount = !empty($review_data) ? count($review_data) : 0;
+                                        echo "Based on " . $reviewCount . " review" . ($reviewCount != 1 ? "s" : "");
+                                        ?>
+                                    </span>
+                                </div>
                             </div>
-                            <span class="review-count">
-                                <?php
-                                $reviewCount = !empty($review_data) ? count($review_data) : 0;
-                                echo $reviewCount . " Review" . ($reviewCount != 1 ? "s" : "");
-                                ?>
-                            </span>
-                            <div style="margin-top: 15px;">
-                                <button class="review-summary-btn" onclick="toggleReviewGraph()">✨ Show reviews summary</button>
+                            <div style="margin-top: 20px;">
+                                <button class="review-summary-btn" onclick="toggleReviewGraph()" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); border: none; color: white; padding: 12px 24px; border-radius: 25px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">✨ Show reviews summary</button>
                             </div>
                         </div>
 
-                        <div class="review-right-section">
-                            <button class="write-review-btn" onclick="toggleReviewForm()">Write A Review</button>
+                        <div class="review-right-section" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+                            <button class="write-review-btn" onclick="toggleReviewForm()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 12px 24px; border: none; border-radius: 25px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">✍️ Write A Review</button>
                             <div class="review-dropdown">
-                                <select>
+                                <select style="padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 25px; font-size: 14px; background: white; cursor: pointer;">
                                     <option>Latest First</option>
                                     <option>Top Reviews</option>
                                     <option>Image First</option>
@@ -3138,47 +3591,93 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
                 </div>
                 <?php if (!empty($review_data)): ?>
-                <div class="slider-container">
-                    <div class="inner">
+                <div class="reviews-grid-container" style="width: 100%; margin: 0 auto;">
+                    <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; padding: 0 20px;">
                         <?php foreach ($review_data as $review): ?>
-                        <section class="review-section">
-                            <div class="review-profile">
-                                <img src="cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>"
-                                    alt="<?php echo htmlspecialchars($review['Name']); ?>">
+                        <div class="modern-review-card" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; position: relative; overflow: hidden;">
+                            <div class="review-card-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                <div class="reviewer-avatar" style="position: relative; cursor: pointer;" onclick="openImageModal('cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>', '<?php echo htmlspecialchars($review['Name']); ?>')">
+                                    <img src="cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>"
+                                        alt="<?php echo htmlspecialchars($review['Name']); ?>"
+                                        style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #EA652D; transition: all 0.3s ease;">
+                                    <div class="verified-badge" style="position: absolute; bottom: -2px; right: -2px; background: #28a745; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px;">✓</div>
+                                    <div class="image-expand-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease;">
+                                        <i class="fa fa-expand" style="color: white; font-size: 16px;"></i>
+                                    </div>
+                                </div>
+                                <div class="reviewer-info">
+                                    <h6 style="font-size: 1.1rem; font-weight: 600; margin: 0 0 5px 0; color: #333;"><?php echo htmlspecialchars($review['Name']); ?></h6>
+                                    <div class="rating-group" style="display: flex; gap: 2px; margin-bottom: 5px;">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <i class="fa fa-star" style="color: #FFD700; font-size: 14px;" aria-hidden="true"></i>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <span class="review-date" style="font-size: 0.85rem; color: #888;"><?php echo date("F j, Y", strtotime($review['Date'])); ?></span>
+                                </div>
                             </div>
-                            <h6><?php echo htmlspecialchars($review['Name']); ?></h6>
-                            <div class="rating-group">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <i class="fa fa-star rating__icon" aria-hidden="true"></i>
-                                <?php endfor; ?>
+                            <div class="review-content">
+                                <p style="font-size: 1rem; color: #555; line-height: 1.6; margin: 0; font-style: italic;">"<?php echo nl2br(htmlspecialchars($review['Review'])); ?>"</p>
                             </div>
-                            <p>"<?php echo nl2br(htmlspecialchars($review['Review'])); ?>"</p>
-                            <p><small><?php echo date("F j, Y", strtotime($review['Date'])); ?></small></p>
-                        </section>
+                            <div class="review-card-footer" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+                                <div class="helpful-section" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <span style="font-size: 0.9rem; color: #666;">Was this helpful?</span>
+                                    <div class="helpful-buttons" style="display: flex; gap: 10px;">
+                                        <button style="background: none; border: 1px solid #e0e0e0; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease;">👍 Yes</button>
+                                        <button style="background: none; border: 1px solid #e0e0e0; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease;">👎 No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Navigation Dots -->
-                    <div class="map" style="text-align: center; margin-top: 30px;">
-                        <?php
-                        $totalReviews = count($review_data);
-                        $reviewsPerPage = 3;
-                        $totalPages = ceil($totalReviews / $reviewsPerPage);
-                        for ($i = 0; $i < $totalPages; $i++):
-                        ?>
-                        <button class="<?php echo $i === 0 ? 'first active' : ''; ?>" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: <?php echo $i === 0 ? '#EA652D' : '#ddd'; ?>; margin: 0 5px; cursor: pointer; transition: all 0.3s ease;"></button>
-                        <?php endfor; ?>
+                    <!-- Load More Button -->
+                    <div class="load-more-section" style="text-align: center; margin-top: 50px;">
+                        <button class="load-more-btn" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);">
+                            Load More Reviews
+                        </button>
                     </div>
                 </div>
                 <?php else: ?>
-                <div style="text-align: center; color: #666; font-size: 18px; padding: 60px 20px; background: white; border-radius: 15px; margin-top: 20px;">
-                    <div style="font-size: 48px; color: #EA652D; margin-bottom: 20px;">📝</div>
-                    <h3 style="color: #333; margin-bottom: 10px;">No Reviews Yet</h3>
-                    <p style="margin-bottom: 20px;">Be the first to share your experience with this product!</p>
-                    <button onclick="toggleReviewForm()" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 12px 24px; border: none; border-radius: 25px; font-size: 14px; cursor: pointer;">Write First Review</button>
+                <div class="no-reviews-section" style="text-align: center; color: #666; font-size: 18px; padding: 80px 20px; background: white; border-radius: 20px; margin-top: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 64px; color: #EA652D; margin-bottom: 30px;">💬</div>
+                    <h3 style="color: #333; margin-bottom: 15px; font-size: 2rem; font-weight: 600;">No Reviews Yet</h3>
+                    <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666;">Be the first to share your experience with this amazing product!</p>
+                    <button onclick="toggleReviewForm()" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 15px 30px; border: none; border-radius: 30px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);">✍️ Write First Review</button>
                 </div>
                 <?php endif; ?>
             </section>
+
+            <!-- Full Screen Image Modal with Zoom -->
+            <div id="imageModal" class="image-modal" onclick="closeImageModal()" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px);">
+                <div class="modal-content" onclick="event.stopPropagation()" style="position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; animation: modalFadeIn 0.3s ease-out;">
+                    <div class="modal-header" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">
+                        <h3 id="modalTitle" style="margin: 0; color: #333; font-size: 1.3rem; font-weight: 600;">Reviewer Image</h3>
+                        <div class="modal-controls" style="display: flex; gap: 15px; align-items: center;">
+                            <div class="zoom-controls" style="display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.9); padding: 8px 12px; border-radius: 25px; backdrop-filter: blur(10px);">
+                                <button id="zoomOut" onclick="zoomImage(-0.2)" style="background: rgba(248,249,250,0.9); border: 1px solid #e0e0e0; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" title="Zoom Out">
+                                    <i class="fa fa-minus" style="font-size: 14px; color: #666;"></i>
+                                </button>
+                                <span id="zoomLevel" style="font-size: 13px; color: #666; min-width: 45px; text-align: center; font-weight: 500;">100%</span>
+                                <button id="zoomIn" onclick="zoomImage(0.2)" style="background: rgba(248,249,250,0.9); border: 1px solid #e0e0e0; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" title="Zoom In">
+                                    <i class="fa fa-plus" style="font-size: 14px; color: #666;"></i>
+                                </button>
+                                <button id="resetZoom" onclick="resetZoom()" style="background: rgba(248,249,250,0.9); border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; color: #666; transition: all 0.3s ease; font-weight: 500;" title="Reset Zoom">Reset</button>
+                            </div>
+                            <button class="close-modal" onclick="closeImageModal()" style="background: rgba(255,255,255,0.9); border: 1px solid #e0e0e0; font-size: 20px; cursor: pointer; color: #666; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s ease; backdrop-filter: blur(10px);" title="Close">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body" style="background: transparent; padding: 20px; overflow: hidden; position: relative; flex: 1; display: flex; align-items: center; justify-content: center;">
+                        <div id="imageContainer" style="width: 100%; height: 100%; overflow: hidden; cursor: grab; position: relative; display: flex; align-items: center; justify-content: center;">
+                            <img id="modalImage" src="" alt="" style="max-width: calc(100vw - 40px); max-height: calc(100vh - 120px); object-fit: contain; transition: transform 0.1s ease; user-select: none; pointer-events: none; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                        </div>
+                        <div class="zoom-hint" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 12px 20px; border-radius: 25px; font-size: 14px; opacity: 0.9; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                            <i class="fa fa-mouse-pointer" style="margin-right: 8px;"></i>
+                            Scroll to zoom • Drag to pan • ESC to close
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
@@ -3187,6 +3686,289 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
     <script>
     // All sections are now displayed by default - no JavaScript needed for section switching
+
+    // Modern Review Interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        // Helpful button interactions
+        const helpfulButtons = document.querySelectorAll('.helpful-buttons button');
+        helpfulButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const isYes = this.textContent.includes('👍');
+                this.style.background = isYes ? '#28a745' : '#dc3545';
+                this.style.color = 'white';
+                this.style.borderColor = isYes ? '#28a745' : '#dc3545';
+
+                // Disable both buttons in this group
+                const siblingButton = isYes ? this.nextElementSibling : this.previousElementSibling;
+                if (siblingButton) {
+                    siblingButton.disabled = true;
+                    siblingButton.style.opacity = '0.5';
+                }
+                this.disabled = true;
+            });
+        });
+
+        // Load more functionality
+        const loadMoreBtn = document.querySelector('.load-more-btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading...';
+
+                // Simulate loading
+                setTimeout(() => {
+                    this.innerHTML = 'Load More Reviews';
+                    // Here you would typically load more reviews via AJAX
+                }, 1500);
+            });
+        }
+
+        // Review card animations
+        const reviewCards = document.querySelectorAll('.modern-review-card');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        reviewCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Modal close on backdrop click
+        const modal = document.getElementById('imageModal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeImageModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    });
+
+    // Image Modal Functions with Zoom
+    let currentZoom = 1;
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
+
+    function openImageModal(imageSrc, reviewerName) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const imageContainer = document.getElementById('imageContainer');
+
+        modalImage.src = imageSrc;
+        modalImage.alt = reviewerName + "'s profile image";
+        modalTitle.textContent = reviewerName + "'s Profile Image";
+
+        // Reset zoom and position
+        currentZoom = 1;
+        translateX = 0;
+        translateY = 0;
+        updateImageTransform();
+        updateZoomLevel();
+
+        modal.style.display = 'block';
+        modal.classList.add('show');
+
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+
+        // Add fade-in animation
+        setTimeout(() => {
+            modal.style.opacity = '1';
+        }, 10);
+
+        // Initialize zoom and pan functionality
+        initializeZoomPan();
+
+        // Add keyboard support
+        document.addEventListener('keydown', handleKeyPress);
+
+        // Hide zoom hint after 4 seconds
+        setTimeout(() => {
+            const hint = document.querySelector('.zoom-hint');
+            if (hint) hint.classList.add('fade-out');
+        }, 4000);
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+
+        modal.style.opacity = '0';
+
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+
+            // Reset zoom and position
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+
+            // Remove keyboard listener
+            document.removeEventListener('keydown', handleKeyPress);
+        }, 300);
+    }
+
+    // Keyboard support
+    function handleKeyPress(e) {
+        if (e.key === 'Escape') {
+            closeImageModal();
+        }
+    }
+
+    // Zoom Functions
+    function zoomImage(delta) {
+        const newZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
+        currentZoom = newZoom;
+        updateImageTransform();
+        updateZoomLevel();
+
+        // Reset position if zoomed out too much
+        if (currentZoom <= 1) {
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+        }
+    }
+
+    function resetZoom() {
+        currentZoom = 1;
+        translateX = 0;
+        translateY = 0;
+        updateImageTransform();
+        updateZoomLevel();
+    }
+
+    function updateImageTransform() {
+        const modalImage = document.getElementById('modalImage');
+        if (modalImage) {
+            modalImage.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+        }
+    }
+
+    function updateZoomLevel() {
+        const zoomLevel = document.getElementById('zoomLevel');
+        if (zoomLevel) {
+            zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
+        }
+    }
+
+    // Initialize zoom and pan functionality
+    function initializeZoomPan() {
+        const imageContainer = document.getElementById('imageContainer');
+        const modalImage = document.getElementById('modalImage');
+
+        if (!imageContainer || !modalImage) return;
+
+        // Mouse wheel zoom
+        imageContainer.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            zoomImage(delta);
+        });
+
+        // Touch zoom (pinch)
+        let initialDistance = 0;
+        let initialZoom = 1;
+
+        imageContainer.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                initialDistance = getDistance(e.touches[0], e.touches[1]);
+                initialZoom = currentZoom;
+            } else if (e.touches.length === 1) {
+                startDrag(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        imageContainer.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (e.touches.length === 2) {
+                const currentDistance = getDistance(e.touches[0], e.touches[1]);
+                const scale = currentDistance / initialDistance;
+                currentZoom = Math.max(0.5, Math.min(3, initialZoom * scale));
+                updateImageTransform();
+                updateZoomLevel();
+            } else if (e.touches.length === 1 && isDragging) {
+                drag(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        imageContainer.addEventListener('touchend', function(e) {
+            if (e.touches.length === 0) {
+                endDrag();
+            }
+        });
+
+        // Mouse drag
+        imageContainer.addEventListener('mousedown', function(e) {
+            if (currentZoom > 1) {
+                startDrag(e.clientX, e.clientY);
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                drag(e.clientX, e.clientY);
+            }
+        });
+
+        document.addEventListener('mouseup', endDrag);
+    }
+
+    function getDistance(touch1, touch2) {
+        const dx = touch1.clientX - touch2.clientX;
+        const dy = touch1.clientY - touch2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function startDrag(x, y) {
+        if (currentZoom > 1) {
+            isDragging = true;
+            startX = x - translateX;
+            startY = y - translateY;
+            document.getElementById('imageContainer').classList.add('grabbing');
+        }
+    }
+
+    function drag(x, y) {
+        if (isDragging) {
+            translateX = x - startX;
+            translateY = y - startY;
+
+            // Limit drag to prevent image from going too far
+            const maxTranslate = 100 * currentZoom;
+            translateX = Math.max(-maxTranslate, Math.min(maxTranslate, translateX));
+            translateY = Math.max(-maxTranslate, Math.min(maxTranslate, translateY));
+
+            updateImageTransform();
+        }
+    }
+
+    function endDrag() {
+        isDragging = false;
+        document.getElementById('imageContainer').classList.remove('grabbing');
+    }
     </script>
       <!-- product page tab end -->
       <!-- releted product start -->
