@@ -382,37 +382,73 @@ $obj->connection();
         background: #e65c00;
     }
 
-    /* Product Preview Modal */
+    /* Enhanced Search Functionality */
+    .search-wrap {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .search-wrap input {
+        transition: all 0.3s ease;
+        border: 2px solid #e2e8f0;
+        border-radius: 25px;
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 100%;
+        background: #f8f9fa;
+    }
+
+    .search-wrap input:focus {
+        outline: none;
+        border-color: #ff6a00;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+        transform: scale(1.02);
+    }
+
+    .search-wrap:hover input {
+        border-color: #ff6a00;
+        background: white;
+    }
+
+    /* Enhanced Product Preview Modal */
     .preview-modal {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(15px);
         z-index: 9999;
         display: none;
         align-items: center;
         justify-content: center;
         padding: 20px;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .preview-content {
         background: white;
-        border-radius: 16px;
-        max-width: 800px;
+        border-radius: 20px;
+        max-width: 900px;
         width: 100%;
-        max-height: 90vh;
+        max-height: 95vh;
         overflow-y: auto;
         position: relative;
-        animation: modalSlideIn 0.3s ease;
+        animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
     }
 
     @keyframes modalSlideIn {
         from {
             opacity: 0;
-            transform: scale(0.9) translateY(20px);
+            transform: scale(0.8) translateY(30px);
         }
         to {
             opacity: 1;
@@ -422,12 +458,12 @@ $obj->connection();
 
     .preview-close {
         position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(0, 0, 0, 0.1);
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.9);
         border: none;
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -435,64 +471,248 @@ $obj->connection();
         cursor: pointer;
         transition: all 0.3s ease;
         z-index: 10;
+        font-size: 18px;
+        color: #666;
+        backdrop-filter: blur(10px);
     }
 
     .preview-close:hover {
         background: #ff6a00;
         color: white;
+        transform: scale(1.1);
     }
 
     .preview-body {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        padding: 30px;
+        gap: 40px;
+        padding: 40px;
     }
 
-    .preview-image {
+    /* Enhanced Image Gallery */
+    .preview-image-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .preview-main-image {
         aspect-ratio: 1;
-        border-radius: 12px;
+        border-radius: 15px;
         overflow: hidden;
         background: #f8f9fa;
+        position: relative;
+        cursor: zoom-in;
     }
 
-    .preview-image img {
+    .preview-main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .preview-main-image:hover img {
+        transform: scale(1.05);
+    }
+
+    .preview-thumbnails {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 5px 0;
+    }
+
+    .preview-thumbnail {
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .preview-thumbnail.active {
+        border-color: #ff6a00;
+        transform: scale(1.05);
+    }
+
+    .preview-thumbnail:hover {
+        border-color: #ff6a00;
+        opacity: 0.8;
+    }
+
+    .preview-thumbnail img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
+    /* Enhanced Product Details */
     .preview-details h2 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: #2d3748;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         line-height: 1.3;
+    }
+
+    .preview-subtitle {
+        color: #718096;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+
+    .preview-rating {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .preview-stars {
+        display: flex;
+        gap: 2px;
+    }
+
+    .preview-stars i {
+        color: #ffd700;
+        font-size: 14px;
+    }
+
+    .preview-rating-text {
+        color: #718096;
+        font-size: 0.9rem;
     }
 
     .preview-price {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 12px;
+        margin-bottom: 25px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
     }
 
     .preview-price .current {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #ff6a00;
     }
 
     .preview-price .original {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: #a0aec0;
         text-decoration: line-through;
+    }
+
+    .preview-price .discount {
+        background: #c6f6d5;
+        color: #22543d;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    /* Size/Variant Selection */
+    .preview-variants {
+        margin-bottom: 25px;
+    }
+
+    .preview-variants h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 10px;
+    }
+
+    .variant-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .variant-option {
+        padding: 8px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .variant-option:hover,
+    .variant-option.active {
+        border-color: #ff6a00;
+        background: #fff5f0;
+        color: #ff6a00;
+    }
+
+    /* Quantity Selector */
+    .preview-quantity {
+        margin-bottom: 25px;
+    }
+
+    .preview-quantity h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 10px;
+    }
+
+    .quantity-selector {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .quantity-btn {
+        background: #f8f9fa;
+        border: none;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        color: #4a5568;
+    }
+
+    .quantity-btn:hover {
+        background: #ff6a00;
+        color: white;
+    }
+
+    .quantity-input {
+        border: none;
+        width: 60px;
+        height: 40px;
+        text-align: center;
+        font-weight: 600;
+        background: white;
     }
 
     .preview-description {
         color: #4a5568;
         line-height: 1.6;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
     }
 
     .preview-actions {
@@ -501,20 +721,25 @@ $obj->connection();
     }
 
     .btn-preview-cart {
-        flex: 1;
+        flex: 2;
         background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
         color: white;
         border: none;
-        padding: 15px;
-        border-radius: 8px;
+        padding: 16px 24px;
+        border-radius: 10px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
 
     .btn-preview-cart:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
+        box-shadow: 0 8px 25px rgba(255, 106, 0, 0.4);
     }
 
     .btn-view-details {
@@ -522,8 +747,8 @@ $obj->connection();
         background: transparent;
         color: #ff6a00;
         border: 2px solid #ff6a00;
-        padding: 15px;
-        border-radius: 8px;
+        padding: 16px 24px;
+        border-radius: 10px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -532,23 +757,299 @@ $obj->connection();
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1rem;
     }
 
     .btn-view-details:hover {
         background: #ff6a00;
         color: white;
         text-decoration: none;
+        transform: translateY(-2px);
     }
 
     @media (max-width: 768px) {
         .preview-body {
             grid-template-columns: 1fr;
-            gap: 20px;
-            padding: 20px;
+            gap: 25px;
+            padding: 25px;
         }
 
         .preview-actions {
             flex-direction: column;
+        }
+
+        .preview-thumbnails {
+            justify-content: center;
+        }
+    }
+
+    /* Enhanced Search Animations */
+    @keyframes searchPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .search-wrap input:focus {
+        animation: searchPulse 0.3s ease;
+    }
+
+    /* Notification Animations */
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    /* Enhanced Product Card Hover Effects */
+    .product-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card .eye-btn {
+        transition: all 0.3s ease;
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    .product-card:hover .eye-btn {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /* Loading Spinner */
+    .spinner-border {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        vertical-align: text-bottom;
+        border: 0.25em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner-border 0.75s linear infinite;
+    }
+
+    @keyframes spinner-border {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Cart Popup Styles */
+    .cart-popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 10000;
+    }
+
+    .cart-popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+    }
+
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .cart-popup-content h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .cart-popup-actions a {
+        display: inline-block;
+        margin: 10px 5px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .cart-popup-actions .btn-view-cart {
+        background: #305724;
+    }
+
+    .cart-popup-actions .btn-view-cart:hover {
+        background: #000000;
+    }
+
+    .cart-popup-actions .btn-checkout {
+        background: #ec6504;
+    }
+
+    .cart-popup-actions .btn-checkout:hover {
+        background: #d55a04;
+    }
+
+    /* Modal Image Gallery Styles (matching product_details.php) */
+    .zoom {
+        background-repeat: no-repeat;
+        background-size: 200%;
+        background-position: center;
+        transition: background-size 0.3s ease;
+    }
+
+    .zoom:hover {
+        background-size: 250%;
+    }
+
+    .pro-page-slider .nav-link {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 5px;
+        transition: all 0.3s ease;
+        margin-right: 10px;
+    }
+
+    .pro-page-slider .nav-link:hover,
+    .pro-page-slider .nav-link.active {
+        border-color: #ff6a00;
+        transform: scale(1.05);
+    }
+
+    .pro-page-slider .nav-link img {
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .long-img {
+        display: block;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .long-img:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    /* Tab content styling */
+    .tab-content {
+        position: relative;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.show.active {
+        display: block;
+    }
+
+    /* Additional Product Images Section (matching product_details.php) */
+    .desc-product-images-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .desc-product-image {
+        flex: 1 1 200px;
+        max-width: 600px;
+        min-width: 350px;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .desc-product-image:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .desc-product-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .desc-product-image:hover img {
+        transform: scale(1.02);
+    }
+
+    /* Mobile responsive for additional images */
+    @media (max-width: 768px) {
+        .desc-product-images-wrapper {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .desc-product-image {
+            min-width: 280px;
+            max-width: 100%;
         }
     }
 
@@ -979,36 +1480,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         </div>
     </section>
 
-    <!-- Product Preview Modal -->
-    <div class="preview-modal" id="previewModal">
-        <div class="preview-content">
-            <button class="preview-close" onclick="closePreview()">
-                <i class="fa fa-times"></i>
-            </button>
-            <div class="preview-body">
-                <div class="preview-image">
-                    <img id="previewImage" src="" alt="">
-                </div>
-                <div class="preview-details">
-                    <h2 id="previewTitle">Product Name</h2>
-                    <div class="preview-price">
-                        <span class="current" id="previewPrice">₹0</span>
-                        <span class="original" id="previewOriginalPrice" style="display: none;">₹0</span>
-                    </div>
-                    <div class="preview-description" id="previewDescription">
-                        Loading product details...
-                    </div>
-                    <div class="preview-actions">
-                        <button class="btn-preview-cart add-to-cart-session" id="previewAddToCart" data-product-id="">
-                            <i class="fa fa-shopping-cart me-2"></i>Add to Cart
-                        </button>
-                        <a href="#" class="btn-view-details" id="previewViewDetails">
-                            View Full Details
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Enhanced Product Preview Modal -->
+    <div id="previewModal" style="display: none;">
+        <!-- Content will be dynamically generated -->
     </div>
 
     <!-- grid-list start -->
@@ -1251,58 +1725,946 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         initializeHoverEffects();
     });
 
-    // Product Preview Modal Functions
+    // Enhanced Product Preview Modal Functions
+    let currentProductImages = [];
+    let currentImageIndex = 0;
+    let currentQuantity = 1;
+
     function showPreview(productId) {
         const modal = document.getElementById('previewModal');
 
-        // Show modal with loading state
-        modal.style.display = 'flex';
+        // Set modal styles and show it
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        `;
+
+        // Show loading state
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 900px;
+                width: 100%;
+                max-height: 95vh;
+                overflow-y: auto;
+                position: relative;
+                animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+                padding: 60px;
+                text-align: center;
+            ">
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem; display: inline-block; vertical-align: text-bottom; border: 0.25em solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spinner-border 0.75s linear infinite;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 16px;">Loading product details...</p>
+            </div>
+        `;
+
         document.body.style.overflow = 'hidden';
 
-        // Reset content
-        document.getElementById('previewTitle').textContent = 'Loading...';
-        document.getElementById('previewDescription').textContent = 'Loading product details...';
+        // Fetch product data and images
+        Promise.all([
+            fetch(`exe_files/get_product_preview.php?productId=${productId}`).then(r => r.json()),
+            fetch(`exe_files/get_product_images.php?productId=${productId}`).then(r => r.json())
+        ])
+        .then(([productData, imagesData]) => {
+            if (productData.success) {
+                currentProductImages = imagesData.success ? imagesData.images.map(img => `cms/images/products/${img}`) : [`cms/images/products/${productData.product.PhotoPath}`];
+                currentImageIndex = 0;
+                currentQuantity = 1;
+                renderEnhancedPreview(productData.product, productId);
+            } else {
+                throw new Error('Failed to load product data');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading product preview:', error);
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    padding: 60px;
+                    text-align: center;
+                    max-width: 500px;
+                    width: 100%;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e53e3e; margin-bottom: 15px;"></i>
+                    <p style="color: #666;">Failed to load product details</p>
+                    <button onclick="closePreview()" style="margin-top: 15px; padding: 10px 20px; background: #ff6a00; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                </div>
+            `;
+        });
+    }
 
-        // Fetch product details
-        fetch(`exe_files/get_product_preview.php?productId=${productId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('previewImage').src = `cms/images/products/${data.product.PhotoPath}`;
-                    document.getElementById('previewTitle').textContent = data.product.ProductName;
-                    document.getElementById('previewPrice').textContent = `₹${data.product.OfferPrice}`;
+    function renderEnhancedPreview(product, productId) {
+        const modal = document.getElementById('previewModal');
 
-                    if (data.product.MRP && data.product.MRP != data.product.OfferPrice) {
-                        document.getElementById('previewOriginalPrice').textContent = `₹${data.product.MRP}`;
-                        document.getElementById('previewOriginalPrice').style.display = 'inline';
-                    } else {
-                        document.getElementById('previewOriginalPrice').style.display = 'none';
-                    }
+        // Fetch both pricing data and product details data
+        Promise.all([
+            fetch(`exe_files/get_product_pricing.php?productId=${productId}`).then(r => r.json()),
+            fetch(`exe_files/get_product_details.php?productId=${productId}`).then(r => r.json())
+        ])
+        .then(([pricingData, detailsData]) => {
+            renderModalWithPricing(product, productId, pricingData, detailsData);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            // Fallback to basic product data
+            renderModalWithPricing(product, productId, { success: false }, { success: false });
+        });
+    }
 
-                    document.getElementById('previewDescription').textContent = data.product.ShortDescription || 'No description available.';
-                    document.getElementById('previewAddToCart').setAttribute('data-product-id', productId);
-                    document.getElementById('previewViewDetails').href = `product_details.php?ProductId=${productId}`;
-                } else {
-                    document.getElementById('previewTitle').textContent = 'Error loading product';
-                    document.getElementById('previewDescription').textContent = 'Unable to load product details.';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching product details:', error);
-                document.getElementById('previewTitle').textContent = 'Error loading product';
-                document.getElementById('previewDescription').textContent = 'Unable to load product details.';
-            });
+    function renderModalWithPricing(product, productId, pricingData, detailsData) {
+        const modal = document.getElementById('previewModal');
+
+        // Generate main image tabs HTML (like product_details.php)
+        const mainImageTabsHtml = `
+            <div class="tab-content">
+                <div class="tab-pane show active" id="modal-image-main">
+                    <a href="javascript:void(0)" class="long-img" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px; display: block;">
+                        <figure class="zoom" onclick="zoomImage()" onmousemove="modalZoom(event)" style="
+                            background-image: url('${currentProductImages[0]}');
+                            margin: 0;
+                            position: relative;
+                            overflow: hidden;
+                            cursor: zoom-in;
+                            border-radius: 10px;
+                            aspect-ratio: 1;
+                            background-size: cover;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                        ">
+                            <img id="previewMainImage" src="${currentProductImages[0]}" class="img-fluid" alt="${product.ProductName}" style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                transition: transform 0.3s ease;
+                            ">
+                        </figure>
+                    </a>
+                </div>
+                ${currentProductImages.slice(1).map((img, index) => `
+                    <div class="tab-pane" id="modal-image-${index + 1}">
+                        <a href="javascript:void(0)" class="long-img" style="border: 1px solid #ccc; border-radius: 5px; margin-top: 15px; display: block;">
+                            <figure class="zoom" onmousemove="modalZoom(event)" style="
+                                background-image: url('${img}');
+                                margin: 0;
+                                position: relative;
+                                overflow: hidden;
+                                cursor: zoom-in;
+                                border-radius: 10px;
+                                aspect-ratio: 1;
+                                background-size: cover;
+                                background-position: center;
+                                background-repeat: no-repeat;
+                            ">
+                                <img src="${img}" class="img-fluid" alt="${product.ProductName}" style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                ">
+                            </figure>
+                        </a>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        // Generate thumbnails HTML (like product_details.php)
+        const thumbnailsHtml = currentProductImages.length > 1 ? `
+            <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme" style="list-style: none; margin: 0; padding: 10px 0;">
+                <li class="nav-item items">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#modal-image-main" onclick="changePreviewImage(0)" style="
+                        display: block;
+                        padding: 5px;
+                        border: 2px solid #ff6a00;
+                        border-radius: 8px;
+                        margin-right: 10px;
+                        transition: all 0.3s ease;
+                    " class="preview-thumbnail-0">
+                        <img src="${currentProductImages[0]}" class="img-fluid" alt="Main image" style="
+                            width: 70px;
+                            height: 70px;
+                            object-fit: cover;
+                            border-radius: 5px;
+                        ">
+                    </a>
+                </li>
+                ${currentProductImages.slice(1).map((img, index) => `
+                    <li class="nav-item items">
+                        <a class="nav-link" data-bs-toggle="tab" href="#modal-image-${index + 1}" onclick="changePreviewImage(${index + 1})" style="
+                            display: block;
+                            padding: 5px;
+                            border: 2px solid #e2e8f0;
+                            border-radius: 8px;
+                            margin-right: 10px;
+                            transition: all 0.3s ease;
+                        " class="preview-thumbnail-${index + 1}">
+                            <img src="${img}" class="img-fluid" alt="Product image ${index + 2}" style="
+                                width: 70px;
+                                height: 70px;
+                                object-fit: cover;
+                                border-radius: 5px;
+                            ">
+                        </a>
+                    </li>
+                `).join('')}
+            </ul>
+        ` : '';
+
+        // Generate size options HTML
+        let sizeOptionsHtml = '';
+        let defaultPrice = { offer_price: 0, mrp: 0, coins: 0 };
+
+        if (pricingData.success && pricingData.sizes && pricingData.sizes.length > 0) {
+            defaultPrice = pricingData.price_data[pricingData.sizes[0]];
+            sizeOptionsHtml = `
+                <h6 class="pro-size" style="margin-top: 20px; margin-bottom: 10px; font-weight: 600; color: #2d3748;">Size:</h6>
+                <div class="size-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                    ${pricingData.sizes.map((size, index) => {
+                        const priceInfo = pricingData.price_data[size];
+                        const discount = priceInfo.mrp - priceInfo.offer_price;
+                        return `
+                            <div class="size-box ${index === 0 ? 'selected' : ''}"
+                                 data-offer-price="${priceInfo.offer_price}"
+                                 data-mrp="${priceInfo.mrp}"
+                                 data-coins="${priceInfo.coins}"
+                                 data-size="${size}"
+                                 onclick="handleModalSizeSelection(this)"
+                                 style="
+                                     cursor: pointer;
+                                     padding: 12px;
+                                     border: 2px solid ${index === 0 ? '#ff6a00' : '#e2e8f0'};
+                                     border-radius: 8px;
+                                     text-align: center;
+                                     transition: all 0.3s ease;
+                                     background: ${index === 0 ? '#fff5f0' : 'white'};
+                                     min-width: 120px;
+                                 ">
+                                <div style="color: #305724; font-weight: bold; font-size: 12px;">Save ₹${discount.toFixed(2)}</div>
+                                <div style="font-weight: 600; margin: 5px 0;">${size}</div>
+                                <div class="size-price" style="font-size: 14px;">
+                                    <span style="color: #28a745; font-weight: bold;">₹${priceInfo.offer_price.toFixed(2)}</span>
+                                    <del style="color: #dc3545; margin-left: 5px;">₹${priceInfo.mrp.toFixed(2)}</del>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // Calculate discount for display
+        const discount = defaultPrice.mrp - defaultPrice.offer_price;
+
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 20px;
+                max-width: 1000px;
+                width: 100%;
+                max-height: 95vh;
+                overflow-y: auto;
+                position: relative;
+                animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            ">
+                <button onclick="closePreview()" style="
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 255, 255, 0.9);
+                    border: none;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    z-index: 10;
+                    font-size: 18px;
+                    color: #666;
+                    backdrop-filter: blur(10px);
+                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#666';">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px;">
+                    <!-- Product Images Section (Exact match to product_details.php) -->
+                    <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image">
+                        <div class="row">
+                            <!-- Main Image -->
+                            <div class="col-lg-6 col-xl-6 col-md-6 col-12 larg-image" style="width: 100%;">
+                                ${mainImageTabsHtml}
+                                ${thumbnailsHtml}
+                            </div>
+                        </div>
+
+                        <!-- Additional Product Images Section (matching product_details.php) -->
+                        ${detailsData.success && detailsData.hasImages ? `
+                            <div class="desc-product-images-wrapper" style="
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 15px;
+                                justify-content: flex-start;
+                                align-items: flex-start;
+                                margin-top: 20px;
+                                margin-bottom: 20px;
+                            ">
+                                ${detailsData.productImage1 && detailsData.productImage1 !== 'images/default.jpg' ? `
+                                    <div class="desc-product-image" style="
+                                        flex: 1 1 200px;
+                                        max-width: 600px;
+                                        min-width: 350px;
+                                        border: 1px solid #e0e0e0;
+                                        padding: 10px;
+                                        border-radius: 12px;
+                                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                                        text-align: center;
+                                        background-color: #f9f9f9;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                    " onclick="openImageModal('${detailsData.productImage1}')" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)';">
+                                        <img src="${detailsData.productImage1}" alt="Additional product image 1" style="
+                                            max-width: 100%;
+                                            height: auto;
+                                            object-fit: contain;
+                                            border-radius: 8px;
+                                        ">
+                                    </div>
+                                ` : ''}
+                                ${detailsData.productImage2 && detailsData.productImage2 !== 'images/default.jpg' ? `
+                                    <div class="desc-product-image" style="
+                                        flex: 1 1 200px;
+                                        max-width: 600px;
+                                        min-width: 350px;
+                                        border: 1px solid #e0e0e0;
+                                        padding: 10px;
+                                        border-radius: 12px;
+                                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                                        text-align: center;
+                                        background-color: #f9f9f9;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                    " onclick="openImageModal('${detailsData.productImage2}')" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)';">
+                                        <img src="${detailsData.productImage2}" alt="Additional product image 2" style="
+                                            max-width: 100%;
+                                            height: auto;
+                                            object-fit: contain;
+                                            border-radius: 8px;
+                                        ">
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <!-- Product Information Section -->
+                    <div class="pro-info">
+                        <h4 style="font-size: 1.6rem; font-weight: 700; color: #2d3748; margin-bottom: 15px;">
+                            <span>${product.ProductName}</span>
+                        </h4>
+
+                        <div class="rating" style="margin-bottom: 15px;">
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star d-star" style="color: #ffd700;"></i>
+                            <i class="fa fa-star-o" style="color: #ddd;"></i>
+                        </div>
+
+                        <div class="pro-availabale" style="margin-bottom: 15px;">
+                            <span class="available" style="color: #666;">Availability:</span>
+                            <span class="pro-instock" style="color: #28a745; font-weight: 600;">In stock</span>
+                        </div>
+
+                        <div class="mrp-label" style="margin-bottom: 10px;">
+                            <span style="color: #666; font-size: 14px;">MRP (including all taxes):</span>
+                        </div>
+
+                        <div class="pro-price" id="modal-pro-price" style="margin-bottom: 20px;">
+                            ${defaultPrice.offer_price > 0 ? `
+                                <span class="new-price" style="font-size: 1.8rem; font-weight: 700; color: #28a745;">₹${defaultPrice.offer_price.toFixed(2)} INR</span>
+                                ${defaultPrice.mrp > defaultPrice.offer_price ? `<span class="old-price" style="font-size: 1.3rem; color: #dc3545; margin-left: 10px;"><del>₹${defaultPrice.mrp.toFixed(2)} INR</del></span>` : ''}
+                                ${discount > 0 ? `
+                                    <div class="Discount-Pro-lable" style="display: inline-block; margin-left: 10px;">
+                                        <span class="Discount-p-discount" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">₹${discount.toFixed(2)} OFF</span>
+                                    </div>
+                                ` : ''}
+                            ` : '<span class="new-price" style="color: #666;">Price not available</span>'}
+                        </div>
+
+                        ${sizeOptionsHtml}
+
+                        ${defaultPrice.coins > 0 ? `
+                            <button style="background-color: #ec7524; margin-bottom: 20px; border: none; padding: 10px 15px; border-radius: 5px;" type="button" class="btn text-white">
+                                <i class="fa fa-coins"></i>
+                                <span id="modal-coins-message">Earn ${defaultPrice.coins} My Nutrify Coins On this Order.</span>
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+                        ` : ''}
+
+                        <div class="pro-qty" style="margin-bottom: 20px;">
+                            <span class="qty" style="font-weight: 600; margin-right: 15px;">Quantity:</span>
+                            <div class="plus-minus" style="display: inline-flex; align-items: center; border: 2px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                                <span style="display: flex; align-items: center;">
+                                    <a href="javascript:void(0)" class="minus-btn text-black" onclick="changeQuantity(-1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">-</a>
+                                    <input type="text" id="previewQuantity" value="1" style="border: none; width: 60px; height: 40px; text-align: center; font-weight: 600; background: white;">
+                                    <a href="javascript:void(0)" class="plus-btn text-black" onclick="changeQuantity(1)" style="
+                                        background: #f8f9fa;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-weight: 600;
+                                        color: #4a5568;
+                                        text-decoration: none;
+                                    " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='#f8f9fa'; this.style.color='#4a5568';">+</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="pro-btn" style="display: flex; gap: 15px;">
+                            <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="${productId}" onclick="addToCartFromPreview(${productId})" style="
+                                flex: 2;
+                                background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
+                                color: white;
+                                border: none;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                font-size: 1rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                                text-decoration: none;
+                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 106, 0, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                            </a>
+
+                            <a href="product_details.php?ProductId=${productId}" class="btn btn-style1" style="
+                                flex: 1;
+                                background: transparent;
+                                color: #ff6a00;
+                                border: 2px solid #ff6a00;
+                                padding: 16px 24px;
+                                border-radius: 10px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                text-decoration: none;
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1rem;
+                            " onmouseover="this.style.background='#ff6a00'; this.style.color='white'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='transparent'; this.style.color='#ff6a00'; this.style.transform='translateY(0)';">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function closePreview() {
         const modal = document.getElementById('previewModal');
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        currentProductImages = [];
+        currentImageIndex = 0;
+        currentQuantity = 1;
+    }
+
+    // Enhanced size selection handler for modal
+    function handleModalSizeSelection(element) {
+        // Remove selected class from all size boxes
+        document.querySelectorAll('.size-box').forEach(box => {
+            box.classList.remove('selected');
+            box.style.borderColor = '#e2e8f0';
+            box.style.background = 'white';
+        });
+
+        // Add selected class to clicked size box
+        element.classList.add('selected');
+        element.style.borderColor = '#ff6a00';
+        element.style.background = '#fff5f0';
+
+        // Get pricing data from the selected size
+        const offerPrice = parseFloat(element.getAttribute('data-offer-price'));
+        const mrp = parseFloat(element.getAttribute('data-mrp'));
+        const coins = parseInt(element.getAttribute('data-coins'), 10);
+
+        // Update price display
+        updateModalPriceAndCoins(offerPrice, mrp, coins);
+    }
+
+    // Update price and coins display in modal
+    function updateModalPriceAndCoins(offerPrice, mrp, coins) {
+        const priceDiv = document.getElementById('modal-pro-price');
+        const coinsMessage = document.getElementById('modal-coins-message');
+
+        if (priceDiv && offerPrice > 0 && mrp > 0) {
+            const discount = mrp - offerPrice;
+            priceDiv.innerHTML = `
+                <span class="new-price" style="font-size: 1.8rem; font-weight: 700; color: #28a745;">₹${offerPrice.toFixed(2)} INR</span>
+                ${mrp > offerPrice ? `<span class="old-price" style="font-size: 1.3rem; color: #dc3545; margin-left: 10px;"><del>₹${mrp.toFixed(2)} INR</del></span>` : ''}
+                ${discount > 0 ? `
+                    <div class="Discount-Pro-lable" style="display: inline-block; margin-left: 10px;">
+                        <span class="Discount-p-discount" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">₹${discount.toFixed(2)} OFF</span>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        // Update coins message
+        if (coinsMessage && coins > 0) {
+            coinsMessage.textContent = `Earn ${coins} My Nutrify Coins On this Order.`;
+        }
+    }
+
+    // Enhanced image navigation (matching product_details.php)
+    function changePreviewImage(index) {
+        currentImageIndex = index;
+
+        // Hide all tab panes
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+            pane.classList.remove('show', 'active');
+        });
+
+        // Show selected tab pane
+        const targetTab = index === 0 ?
+            document.getElementById('modal-image-main') :
+            document.getElementById(`modal-image-${index}`);
+
+        if (targetTab) {
+            targetTab.classList.add('show', 'active');
+        }
+
+        // Update thumbnail active states
+        document.querySelectorAll('.nav-link').forEach((link, i) => {
+            link.classList.remove('active');
+            link.style.borderColor = '#e2e8f0';
+        });
+
+        const activeLink = document.querySelector(`.preview-thumbnail-${index}`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            activeLink.style.borderColor = '#ff6a00';
+        }
+
+        // Update main image for zoom functionality
+        const mainImage = document.getElementById('previewMainImage');
+        if (mainImage && currentProductImages[index]) {
+            mainImage.src = currentProductImages[index];
+
+            // Update zoom background
+            const zoomFigure = mainImage.closest('.zoom');
+            if (zoomFigure) {
+                zoomFigure.style.backgroundImage = `url('${currentProductImages[index]}')`;
+            }
+        }
+    }
+
+    // Modal zoom functionality (matching product_details.php)
+    function modalZoom(event) {
+        const zoomer = event.currentTarget;
+        const offsetX = event.offsetX || event.touches?.[0]?.pageX - zoomer.offsetLeft || 0;
+        const offsetY = event.offsetY || event.touches?.[0]?.pageY - zoomer.offsetTop || 0;
+        const x = offsetX / zoomer.offsetWidth * 100;
+        const y = offsetY / zoomer.offsetHeight * 100;
+        zoomer.style.backgroundPosition = x + '% ' + y + '%';
+    }
+
+    function changeQuantity(delta) {
+        const quantityInput = document.getElementById('previewQuantity');
+        if (quantityInput) {
+            const newQuantity = Math.max(1, Math.min(10, currentQuantity + delta));
+            currentQuantity = newQuantity;
+            quantityInput.value = newQuantity;
+        }
+    }
+
+    function zoomImage() {
+        const mainImage = document.getElementById('previewMainImage');
+        if (!mainImage) return;
+
+        const imgSrc = mainImage.src;
+
+        // Create zoom overlay
+        const zoomOverlay = document.createElement('div');
+        zoomOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        `;
+
+        const zoomedImg = document.createElement('img');
+        zoomedImg.src = imgSrc;
+        zoomedImg.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        `;
+
+        zoomOverlay.appendChild(zoomedImg);
+        document.body.appendChild(zoomOverlay);
+
+        zoomOverlay.addEventListener('click', () => {
+            document.body.removeChild(zoomOverlay);
+        });
+    }
+
+    function addToCartFromPreview(productId) {
+        // Get selected size information
+        const selectedSizeBox = document.querySelector('.size-box.selected');
+        if (!selectedSizeBox) {
+            showNotification('Please select a size before adding to cart', 'error');
+            return;
+        }
+
+        const size = selectedSizeBox.getAttribute('data-size');
+        const offerPrice = selectedSizeBox.getAttribute('data-offer-price');
+        const mrp = selectedSizeBox.getAttribute('data-mrp');
+        const quantity = document.getElementById('previewQuantity').value;
+
+        // Add loading state to button
+        const addButton = document.querySelector('.add-to-cart-session');
+        if (!addButton) return;
+
+        const originalText = addButton.innerHTML;
+        addButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
+        addButton.disabled = true;
+
+        // Use the same AJAX structure as product_details.php
+        $.ajax({
+            url: 'exe_files/add_to_cart_session.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'add_to_cart',
+                productId: productId,
+                size: size,
+                quantity: quantity,
+                offer_price: offerPrice,
+                mrp: mrp
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Show success animation
+                    addButton.innerHTML = '<i class="fa fa-check"></i> Added to Cart!';
+                    addButton.style.background = '#22c55e';
+
+                    // Show cart popup like in product_details.php
+                    displayCartPopup();
+
+                    setTimeout(() => {
+                        closePreview();
+                    }, 2000);
+                } else {
+                    showNotification(response.message || 'Failed to add product to cart', 'error');
+                    addButton.innerHTML = originalText;
+                    addButton.disabled = false;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                showNotification('An error occurred while processing your request. Please try again.', 'error');
+                addButton.innerHTML = originalText;
+                addButton.disabled = false;
+            }
+        });
+    }
+
+    // Display cart popup (matching product_details.php functionality)
+    function displayCartPopup() {
+        // Create popup if it doesn't exist
+        let cartPopup = document.getElementById('cart-popup');
+        if (!cartPopup) {
+            cartPopup = document.createElement('div');
+            cartPopup.id = 'cart-popup';
+            cartPopup.className = 'cart-popup-overlay';
+            cartPopup.innerHTML = `
+                <div class="cart-popup-content" style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                    text-align: center;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <button class="close-popup" onclick="closeCartPopup()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 20px;
+                        cursor: pointer;
+                        color: #666;
+                    ">&times;</button>
+                    <h3 style="color: #333; margin-bottom: 15px;">Product added to your cart!</h3>
+                    <div class="cart-popup-actions">
+                        <a href="cart.php" class="btn-view-cart" style="
+                            display: inline-block;
+                            margin: 10px 5px;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            color: white;
+                            font-size: 14px;
+                            font-weight: bold;
+                            background: #305724;
+                            transition: background-color 0.3s ease;
+                        ">View Cart</a>
+                        <a href="checkout.php" class="btn-checkout" style="
+                            display: inline-block;
+                            margin: 10px 5px;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            color: white;
+                            font-size: 14px;
+                            font-weight: bold;
+                            background: #ec6504;
+                            transition: background-color 0.3s ease;
+                        ">Checkout</a>
+                    </div>
+                </div>
+            `;
+            cartPopup.style.cssText = `
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: 10000;
+            `;
+            document.body.appendChild(cartPopup);
+        }
+
+        // Show popup with fade effect
+        cartPopup.style.display = 'block';
+        cartPopup.style.opacity = '0';
+        setTimeout(() => {
+            cartPopup.style.transition = 'opacity 0.3s ease';
+            cartPopup.style.opacity = '1';
+        }, 10);
+
+        // Auto-hide popup after 3 seconds
+        setTimeout(() => {
+            closeCartPopup();
+        }, 3000);
+    }
+
+    function closeCartPopup() {
+        const cartPopup = document.getElementById('cart-popup');
+        if (cartPopup) {
+            cartPopup.style.opacity = '0';
+            setTimeout(() => {
+                cartPopup.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    // Function to open additional product images in modal view
+    function openImageModal(imageSrc) {
+        // Create image modal overlay
+        const imageModal = document.createElement('div');
+        imageModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            animation: fadeIn 0.3s ease;
+        `;
+
+        const imageContainer = document.createElement('div');
+        imageContainer.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        `;
+
+        const zoomedImg = document.createElement('img');
+        zoomedImg.src = imageSrc;
+        zoomedImg.style.cssText = `
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        `;
+
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '<i class="fas fa-times"></i>';
+        closeButton.style.cssText = `
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #666;
+            backdrop-filter: blur(10px);
+        `;
+
+        closeButton.onmouseover = function() {
+            this.style.background = '#ff6a00';
+            this.style.color = 'white';
+            this.style.transform = 'scale(1.1)';
+        };
+
+        closeButton.onmouseout = function() {
+            this.style.background = 'rgba(255, 255, 255, 0.9)';
+            this.style.color = '#666';
+            this.style.transform = 'scale(1)';
+        };
+
+        // Close modal function
+        const closeImageModal = () => {
+            imageModal.style.opacity = '0';
+            setTimeout(() => {
+                if (imageModal.parentNode) {
+                    document.body.removeChild(imageModal);
+                }
+            }, 300);
+        };
+
+        closeButton.addEventListener('click', closeImageModal);
+        imageModal.addEventListener('click', closeImageModal);
+
+        // Prevent closing when clicking on the image
+        imageContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        imageContainer.appendChild(zoomedImg);
+        imageContainer.appendChild(closeButton);
+        imageModal.appendChild(imageContainer);
+        document.body.appendChild(imageModal);
+
+        // Fade in effect
+        imageModal.style.opacity = '0';
+        setTimeout(() => {
+            imageModal.style.transition = 'opacity 0.3s ease';
+            imageModal.style.opacity = '1';
+        }, 10);
+    }
+
+    // Enhanced notification system
+    function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            font-weight: 500;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease;
+        `;
+
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 3000);
     }
 
     // Close modal when clicking outside
-    document.getElementById('previewModal').addEventListener('click', function(e) {
-        if (e.target === this) {
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('previewModal');
+        if (e.target === modal) {
             closePreview();
         }
     });
