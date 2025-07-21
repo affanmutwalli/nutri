@@ -2809,10 +2809,10 @@ s
     display: flex;
     max-width: 1200px;
     width: 100%;
-    border: 2px solid #EA652D;
+    border: 3px solid #EA652D;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     background: #fff;
 }
 
@@ -2826,13 +2826,30 @@ s
 
 /* Left Column */
 .comparison-column.left {
-    background: linear-gradient(to bottom right, #E6F7D8, #D3F4B3);
+    background: linear-gradient(135deg, #E6F7D8 0%, #D3F4B3 100%);
+    position: relative;
+}
+
+/* Diagonal separator */
+.comparison-column.left::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(135deg, #E6F7D8 0%, #D3F4B3 100%);
+    transform: skewX(-15deg);
+    transform-origin: top;
+    z-index: 1;
 }
 
 /* Right Column */
 .comparison-column.right {
-    background: linear-gradient(to bottom right, #FCE2CF, rgb(255, 215, 198));
-    border-left: 2px solid #EA652D;
+    background: linear-gradient(135deg, #FCE2CF 0%, #FFD7C6 100%);
+    border-left: none;
+    margin-left: 30px;
+    position: relative;
 }
 
 /* Brand Header */
@@ -2884,14 +2901,15 @@ s
     top: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
-    border: 2px solid #EA652D;
+    border: 3px solid #EA652D;
     border-radius: 50px;
-    padding: 8px 20px;
+    padding: 10px 25px;
     font-weight: 700;
     color: #EA652D;
-    z-index: 2;
-    box-shadow: 0 4px 15px rgba(234, 101, 45, 0.2);
-    font-size: 18px;
+    z-index: 10;
+    box-shadow: 0 6px 20px rgba(234, 101, 45, 0.3);
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 @media (max-width: 768px) {
     .comparison-section {
@@ -2920,9 +2938,14 @@ s
         scroll-snap-align: center;
     }
 
+    .comparison-column.left::after {
+        display: none;
+    }
+
     .comparison-column.right {
         border-left: 2px solid #EA652D;
         border-top: none;
+        margin-left: 0;
     }
 
     .vs-badge {
@@ -2932,8 +2955,10 @@ s
         top: 50%;
         transform: translate(-50%, -50%);
         background: #fff;
-        border: 2px solid #EA652D;
+        border: 3px solid #EA652D;
         z-index: 3;
+        padding: 8px 20px;
+        font-size: 16px;
     }
 
     /* Scroll Snap */

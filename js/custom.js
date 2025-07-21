@@ -63,18 +63,24 @@ $(".mm-fullscreen-bg").on('click', function(){
 });
 
 /*==============================================================
-// header sticky
+// header sticky - Permanently Fixed
 ==============================================================*/
-  $(window).scroll(function() {
+$(document).ready(function() {
+    // Always apply sticky class for permanently fixed header
+    $('.header-main-area').addClass('is-sticky');
+});
+
+$(window).scroll(function() {
     var sticky = $('.header-main-area'),
     scroll = $(window).scrollTop();
-    if (scroll >= 150) {
-      sticky.addClass('is-sticky');
+
+    // Enhanced shadow effect when scrolling
+    if (scroll >= 50) {
+        sticky.addClass('scrolled');
+    } else {
+        sticky.removeClass('scrolled');
     }
-    else {
-      sticky.removeClass('is-sticky');
-    }
-  });
+});
 
 /*==============================================================
 // home slider
@@ -119,7 +125,7 @@ $('.home-slider2').owlCarousel({
 ==============================================================*/
 $('.home-category').owlCarousel({
     loop: true,
-    margin: 30,
+    margin: 5,
     nav: true,
     navText : ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
     dots: false,
@@ -129,38 +135,43 @@ $('.home-category').owlCarousel({
     responsive:{
         0: {
           items: 1,
-          margin: 15
+          margin: 2
         },
         320: {
           items: 2,
-          margin: 15
+          margin: 2
         },
         479: {
           items: 2,
-          margin: 15
+          margin: 3
         },
         540: {
           items: 3,
-          margin: 15
+          margin: 3
         },
         750: {
           items: 3,
-          margin: 15
+          margin: 4
         },
         768: {
-          items: 3
+          items: 3,
+          margin: 4
         },
         979: {
-          items: 5
+          items: 5,
+          margin: 5
         },
         1199: {
-          items: 5
+          items: 5,
+          margin: 5
         },
         1399: {
-          items: 6
+          items: 6,
+          margin: 5
         },
         1599: {
-          items: 6
+          items: 6,
+          margin: 5
         }
     }
 });
