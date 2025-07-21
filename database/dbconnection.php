@@ -1,8 +1,9 @@
 <?php
-	include_once 'dbdetails.php'; 
+	include_once 'dbdetails.php';
 	date_default_timezone_set('Asia/Calcutta');
 	$messege ="";
 
+	if (!class_exists('main')) {
 	class main
 	{
 		public $downloads, $no_rows_downloads, $news_letter, $no_rows_news_letter, $no_rows, $data, $id;
@@ -998,7 +999,8 @@
     return $data;
 }
 
-	
-	
-	
+} // End of class_exists check for main class
+
+
+
 ?>

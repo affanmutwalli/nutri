@@ -4,6 +4,11 @@
 session_start();
 include('includes/urls.php');
 include('database/dbconnection.php');
+
+// Initialize Analytics Tracking
+include('includes/analytics_functions.php');
+$analytics = initializeAnalytics();
+
 $obj = new main();
 $obj->connection();
 $FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position");
@@ -7524,7 +7529,62 @@ window.addEventListener('load', function() {
     });
 
     console.log('✅ Add to Cart override complete!');
+});                                 
+
+<?php
+// Add Analytics JavaScript Tracking
+echo generateAnalyticsJS();
+?>
+
+<script>
+// Enhanced Analytics for Index Page
+document.addEventListener('DOMContentLoaded', function() {
+    // Track product clicks on homepage
+    document.querySelectorAll('[data-product-id]').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            const productName = this.getAttribute('data-product-name') || this.querySelector('.product-name')?.textContent || '';
+
+            if (productId && window.NutrifyAnalytics) {
+                window.NutrifyAnalytics.trackEvent('product_click_homepage', {
+                    product_id: productId,
+                    product_name: productName,
+                    click_source: 'homepage'
+                });
+            }
+        });
+    });
+
+    // Track banner clicks
+    document.querySelectorAll('.banner-link, .banner-image').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const bannerText = this.getAttribute('alt') || this.textContent || 'Banner';
+
+            if (window.NutrifyAnalytics) {
+                window.NutrifyAnalytics.trackEvent('banner_click', {
+                    banner_text: bannerText,
+                    click_source: 'homepage'
+                });
+            }
+        });
+    });
+
+    // Track category navigation
+    document.querySelectorAll('.category-link').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const categoryName = this.textContent || this.getAttribute('data-category-name') || '';
+
+            if (window.NutrifyAnalytics) {
+                window.NutrifyAnalytics.trackEvent('category_click', {
+                    category_name: categoryName,
+                    click_source: 'homepage'
+                });
+            }
+        });
+    });
 });
+</script>
+
 </script>
 
 </body>
