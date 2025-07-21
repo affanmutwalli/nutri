@@ -1943,6 +1943,7 @@ s
         width: 100% !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
+        margin-bottom: 40px
     }
 
     /* Full-Width Sections */
