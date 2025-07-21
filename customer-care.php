@@ -30,8 +30,9 @@ $obj = new main();
     <style>
         /* Hero Section with Animated Background */
         .customer-care-hero {
-            background: linear-gradient(135deg, #305724 0%, #4a7c59 50%, #ec6504 100%);
-            background-size: 400% 400%;
+           background: url("cms/images/banners/CS.webp");
+
+            background-size: 100% 100%;
             animation: gradientShift 8s ease infinite;
             position: relative;
             overflow: hidden;
@@ -320,11 +321,7 @@ $obj = new main();
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Customer Care Excellence</h1>
-                        <p class="hero-subtitle">24/7 Support • Instant Solutions • Your Satisfaction Guaranteed</p>
-                        <button class="glow-btn" onclick="scrollToSupport()">Get Instant Help</button>
-                    </div>
+                   
                 </div>
             </div>
         </div>

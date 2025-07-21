@@ -941,6 +941,120 @@
         transition: transform 0.3s ease-in-out;
     }
 
+    /* Product Main Slider Styles */
+    .product-main-slider-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .product-main-slider {
+        position: relative;
+    }
+
+    .product-main-slider .owl-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .product-main-slider .owl-nav button.owl-prev,
+    .product-main-slider .owl-nav button.owl-next {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 2px solid #ff6b35 !important;
+        border-radius: 50% !important;
+        width: 50px !important;
+        height: 50px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+        pointer-events: all !important;
+        position: absolute !important;
+        font-size: 18px !important;
+        color: #ff6b35 !important;
+    }
+
+    .product-main-slider .owl-nav button.owl-prev {
+        left: -25px !important;
+    }
+
+    .product-main-slider .owl-nav button.owl-next {
+        right: -25px !important;
+    }
+
+    .product-main-slider .owl-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 5;
+    }
+
+    .product-main-slider .owl-dots .owl-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.7);
+        border: 2px solid #ff6b35;
+        cursor: pointer;
+    }
+
+    .product-main-slider .owl-dots .owl-dot.active {
+        background: #ff6b35;
+    }
+
+    /* Responsive adjustments for product main slider */
+    @media (max-width: 768px) {
+        .product-main-slider .owl-nav button.owl-prev,
+        .product-main-slider .owl-nav button.owl-next {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 16px !important;
+        }
+
+        .product-main-slider .owl-nav button.owl-prev {
+            left: -20px !important;
+        }
+
+        .product-main-slider .owl-nav button.owl-next {
+            right: -20px !important;
+        }
+
+        .product-main-slider .owl-dots {
+            bottom: 10px;
+        }
+
+        .product-main-slider .owl-dots .owl-dot {
+            width: 10px;
+            height: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .product-main-slider .owl-nav button.owl-prev,
+        .product-main-slider .owl-nav button.owl-next {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 14px !important;
+        }
+
+        .product-main-slider .owl-nav button.owl-prev {
+            left: -15px !important;
+        }
+
+        .product-main-slider .owl-nav button.owl-next {
+            right: -15px !important;
+        }
+    }
+
     /* Ingredients Section */
     .ingredients-section {
         flex: 1;
@@ -1323,17 +1437,19 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
     .how-to-use-container {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
         gap: 20px;
     }
 
     .use-cart {
         padding: 25px 15px;
+        min-height: 140px;
     }
 
     .use-cart img {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
 
     .use-cart p {
@@ -1351,11 +1467,23 @@
 @media (max-width: 480px) {
     .how-to-use-container {
         grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
         gap: 15px;
+        padding: 20px 10px;
     }
 
-    .how-to-use-wrapper {
-        padding: 15px;
+    .use-cart {
+        padding: 20px 15px;
+        min-height: 120px;
+    }
+
+    .use-cart img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .use-cart p {
+        font-size: 13px;
     }
 }
 
@@ -2201,36 +2329,41 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                   <!-- Product Images Section -->
                   <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image">
                      <div class="row">
-                        <!-- Main Image -->
+                        <!-- Main Image with Slider -->
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 larg-image">
-                              <div class="tab-content">
-                                 <div class="tab-pane show active" id="image-11">
-                                    <a href="javascript:void(0)" class="long-img" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                          <?php
-                                             $mainPhotoPath = isset($product_data[0]["PhotoPath"]) && !empty($product_data[0]["PhotoPath"])
-                                                            ? htmlspecialchars($product_data[0]["PhotoPath"])
-                                                            : 'default.jpg';
+                              <div class="product-main-slider-container">
+                                 <div class="owl-carousel product-main-slider">
+                                    <!-- Main Product Image -->
+                                    <div class="slider-item">
+                                       <a href="javascript:void(0)" class="long-img" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                                             <?php
+                                                $mainPhotoPath = isset($product_data[0]["PhotoPath"]) && !empty($product_data[0]["PhotoPath"])
+                                                               ? htmlspecialchars($product_data[0]["PhotoPath"])
+                                                               : 'default.jpg';
+                                             ?>
+                                             <figure class="zoom" onmousemove="zoom(event)" style="background-image: url('cms/images/products/<?php echo $mainPhotoPath; ?>');">
+                                                <img src="cms/images/products/<?php echo $mainPhotoPath; ?>" class="img-fluid" alt="image">
+                                             </figure>
+                                       </a>
+                                    </div>
+
+                                    <!-- Additional Model Images -->
+                                    <?php if (!empty($model_image) && is_array($model_image)) {
+                                       foreach ($model_image as $index => $model_images) {
+                                          // Add null check for PhotoPath
+                                          $photoPath = isset($model_images["PhotoPath"]) && !empty($model_images["PhotoPath"])
+                                                      ? htmlspecialchars($model_images["PhotoPath"])
+                                                      : 'default.jpg';
                                           ?>
-                                          <figure class="zoom" onmousemove="zoom(event)" style="background-image: url('cms/images/products/<?php echo $mainPhotoPath; ?>');">
-                                             <img src="cms/images/products/<?php echo $mainPhotoPath; ?>" class="img-fluid" alt="image">
-                                          </figure>
-                                    </a>
+                                             <div class="slider-item">
+                                                <a href="javascript:void(0)" class="long-img" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                                                   <figure class="zoom" onmousemove="zoom(event)" style="background-image: url('cms/images/products/<?php echo $photoPath; ?>')">
+                                                         <img src="cms/images/products/<?php echo $photoPath; ?>" class="img-fluid" alt="image">
+                                                   </figure>
+                                                </a>
+                                             </div>
+                                    <?php } } ?>
                                  </div>
-                                 <?php if (!empty($model_image) && is_array($model_image)) {
-                                    foreach ($model_image as $index => $model_images) {
-                                       // Add null check for PhotoPath
-                                       $photoPath = isset($model_images["PhotoPath"]) && !empty($model_images["PhotoPath"])
-                                                   ? htmlspecialchars($model_images["PhotoPath"])
-                                                   : 'default.jpg';
-                                       ?>
-                                          <div class="tab-pane" id="image-<?php echo $index + 1; ?>">
-                                             <a href="javascript:void(0)" class="long-img" style="border: 1px solid #ccc; border-radius: 5px; margin-top: 15px;">
-                                                <figure class="zoom" onmousemove="zoom(event)" style="background-image: url('cms/images/products/<?php echo $photoPath; ?>')">
-                                                      <img src="cms/images/products/<?php echo $photoPath; ?>" class="img-fluid" alt="image">
-                                                </figure>
-                                             </a>
-                                          </div>
-                                 <?php } } ?>
                               </div>
                               <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme">
                                  <li class="nav-item items">
@@ -2704,7 +2837,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <img src="cms/images/products/stunk.png" alt="">
                             <p>Take on an empty stomach in the’ orig and 30 mins after dinner.</p>
                         </div>
-                    </div>
                         <div class="use-cart">
                             <img src="cms/images/products/temp.png" alt="">
                             <p>Keep in a cold and dry place.</p>
@@ -3800,6 +3932,51 @@ document.addEventListener('DOMContentLoaded', () => {
             buttonElement.style.background = 'linear-gradient(135deg, #ec6504, #ff8533)';
         }
     }
+
+    // Initialize Product Main Slider
+    $(document).ready(function() {
+        // Check if there are multiple images to create slider
+        const sliderItems = $('.product-main-slider .slider-item');
+
+        if (sliderItems.length > 1) {
+            // Initialize Owl Carousel for main product images
+            $('.product-main-slider').owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 0,
+                nav: true,
+                navText: [
+                    '<i class="fa fa-chevron-left"></i>',
+                    '<i class="fa fa-chevron-right"></i>'
+                ],
+                dots: true,
+                autoplay: false,
+                mouseDrag: true,
+                touchDrag: true,
+                animateOut: 'fadeOut',
+                animateIn: 'fadeIn',
+                smartSpeed: 600,
+                responsive: {
+                    0: {
+                        nav: true,
+                        dots: true
+                    },
+                    768: {
+                        nav: true,
+                        dots: true
+                    },
+                    1024: {
+                        nav: true,
+                        dots: true
+                    }
+                }
+            });
+        } else {
+            // If only one image, hide navigation
+            $('.product-main-slider .owl-nav').hide();
+            $('.product-main-slider .owl-dots').hide();
+        }
+    });
     </script>
 
 
