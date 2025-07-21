@@ -2788,7 +2788,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </section>
             <section class="section-b-padding pro-releted" id="section3" style="margin-top: 20px;">
                  <h1 class="product-details-title">
-                  Why Drink My Nutrify Herbal & Ayurveda’s
+                  Why Drink My Nutrify Herbal & Ayurveda’s?
                     <span><?php echo nl2br(htmlspecialchars(trim($filteredProductTitle))); ?></span>
                 </h1>
                 <?php if (!empty($benefit_data)): ?>
@@ -2813,11 +2813,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <section class=" pro-releted" id="section4">
                 
                 <h1 class="product-details-title">
-                  Direction To Use My Nutrify Herbal & Ayurveda’s
+                  Direction To Use
 <span>
-  <?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== ''
-    ? nl2br(htmlspecialchars(trim($filteredProductTitle)))
-    : 'Product'; ?>
+  
 </span>
                 </h1>
                 <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 16px;">Follow these simple steps for best results</p>
