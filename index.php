@@ -100,18 +100,48 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         padding: 18px 35px !important;
         position: relative !important;
         display: inline-block !important;
-        background: rgb(253, 244, 244) !important;
+        background: linear-gradient(135deg, #fff 0%, #fff8f0 100%) !important;
+        border: 4px solid #ff660096 !important;
         border-radius: 40px !important;
         overflow: hidden !important;
         opacity: 0;
         transform: translateY(30px);
         animation: fadeInUp 0.8s ease-out forwards;
+        box-shadow: 0 6px 20px rgba(255, 102, 0, 0.25) !important;
+        transition: all 0.4s ease !important;
+    }
+
+    .section-title h2:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(255, 102, 0, 0.35) !important;
+        border-color: #e55a00 !important;
+    }
+
+    .section-title h2::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -4px !important;
+        left: -4px !important;
+        right: -4px !important;
+        bottom: -4px !important;
+        background: linear-gradient(45deg, #ff6600, #ff8533, #ff6600, #ff4d00) !important;
+        border-radius: 44px !important;
+        z-index: -1 !important;
+        opacity: 0 !important;
+        transition: opacity 0.4s ease !important;
+        background-size: 300% 300% !important;
+        animation: gradientShift 3s ease infinite !important;
+    }
+
+    .section-title h2:hover::before {
+        opacity: 0.15 !important;
     }
 
     .section-title h2 .highlight {
         color: var(--primary-orange) !important;
         font-weight: 700 !important;
         position: relative;
+        text-shadow: 0 2px 4px rgba(255, 102, 0, 0.3) !important;
     }
 
     /* Restore Krishna Ayurved Moving Highlight Animation */
@@ -408,6 +438,13 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
         .section-title h2 {
             font-size: 28px !important;
+            padding: 15px 25px !important;
+            border-width: 3px !important;
+            border-radius: 35px !important;
+        }
+
+        .section-title h2::before {
+            border-radius: 38px !important;
         }
 
         .caption {
@@ -437,6 +474,13 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
         .section-title h2 {
             font-size: 24px !important;
+            padding: 12px 20px !important;
+            border-width: 2px !important;
+            border-radius: 30px !important;
+        }
+
+        .section-title h2::before {
+            border-radius: 33px !important;
         }
 
         .caption h3 {
@@ -3964,6 +4008,92 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
 <!-- Wellness Categories Animation Styles -->
 <style>
+/* Shop by Category Header with Orange Border */
+.shop-by-category-header {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.shop-by-category-header h2 {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    padding: 20px 40px;
+    border: 4px solid #ff660096;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
+    box-shadow: 0 6px 20px rgba(255, 102, 0, 0.25);
+    position: relative;
+    margin: 0;
+    transition: all 0.4s ease;
+    text-align: center;
+}
+
+.shop-by-category-header h2:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 102, 0, 0.35);
+    border-color: #e55a00;
+}
+
+.shop-by-category-header h2::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(45deg, #ff6600, #ff8533, #ff6600, #ff4d00);
+    border-radius: 24px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background-size: 300% 300%;
+    animation: gradientShift 3s ease infinite;
+}
+
+.shop-by-category-header h2:hover::before {
+    opacity: 0.15;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.shop-by-category-header h2 .highlight {
+    color: #ff6600;
+    text-shadow: 0 2px 4px rgba(255, 102, 0, 0.3);
+}
+
+/* Responsive Design for Shop by Category */
+@media (max-width: 768px) {
+    .shop-by-category-header h2 {
+        font-size: 1.8rem;
+        padding: 15px 25px;
+        border-width: 3px;
+        border-radius: 15px;
+    }
+
+    .shop-by-category-header h2::before {
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-by-category-header h2 {
+        font-size: 1.5rem;
+        padding: 12px 20px;
+        border-width: 2px;
+        border-radius: 12px;
+    }
+
+    .shop-by-category-header h2::before {
+        border-radius: 15px;
+    }
+}
+
 /* Wellness Category Circle Animations */
 .h-cate {
     transition: all 0.3s ease-in-out;
@@ -4296,7 +4426,7 @@ s0.parentNode.insertBefore(s1,s0);
                                 <h1 class="banner-main-title">Take Control of Your Blood Sugar</h1>
                                 
                                 <p class="banner-description">
-                                   Support healthy glucose levels naturally with <strong>DiabeticCare Juice</strong> your herbal ally for balanced living.
+                                   Support healthy glucose levels naturally with <strong>Diabeti Care Juice</strong> your herbal ally for balanced living.
                                 </p>
                                 
                                 <a href="product_details.php?ProductId=11" class="btn btn-style1 banner-cta">Explore More</a>
@@ -4310,7 +4440,7 @@ s0.parentNode.insertBefore(s1,s0);
                                 <h1 class="banner-main-title">Balance Your Hormones, Naturally</h1>
 
                                 <p class="banner-description">
-                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice</strong>crafted for women's hormonal health.
+                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice </strong> crafted for women's hormonal health.
                                 </p>
 
                                 <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
@@ -4328,7 +4458,9 @@ s0.parentNode.insertBefore(s1,s0);
             <div class="row">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Shop by <span class="highlight">Category</span></h2>
+                        <div class="shop-by-category-header">
+                            <h2>Shop by <span class="highlight">Category</span></h2>
+                        </div>
                         <p style="color: var(--text-light); font-size: 18px; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">Discover our comprehensive range of natural and ayurvedic products, carefully categorized for your wellness journey.</p>
                     </div>
                     <div class="home-category owl-carousel owl-theme" style="margin-top: 50px;">
