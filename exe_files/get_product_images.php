@@ -34,27 +34,27 @@ try {
         $images[] = $product_data[0]['PhotoPath'];
     }
     
-    // Check if product_images table exists and get additional images
+    // Check if model_images table exists and get additional images
     try {
-        $FieldNamesImages = array("ImagePath");
+        $FieldNamesImages = array("PhotoPath");
         $ParamArrayImages = array($productId);
         $FieldsImages = implode(",", $FieldNamesImages);
         $additional_images = $obj->MysqliSelect1(
-            "SELECT " . $FieldsImages . " FROM product_images WHERE ProductId = ? ORDER BY ImageId", 
-            $FieldNamesImages, 
-            "i", 
+            "SELECT " . $FieldsImages . " FROM model_images WHERE ProductId = ? ORDER BY ImageId",
+            $FieldNamesImages,
+            "i",
             $ParamArrayImages
         );
-        
+
         if (!empty($additional_images)) {
             foreach ($additional_images as $img) {
-                if (!empty($img['ImagePath']) && !in_array($img['ImagePath'], $images)) {
-                    $images[] = $img['ImagePath'];
+                if (!empty($img['PhotoPath']) && !in_array($img['PhotoPath'], $images)) {
+                    $images[] = $img['PhotoPath'];
                 }
             }
         }
     } catch (Exception $e) {
-        // product_images table might not exist, that's okay
+        // model_images table might not exist, that's okay
         // We'll just use the main image
     }
     

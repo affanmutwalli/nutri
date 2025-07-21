@@ -1193,6 +1193,67 @@ $obj->connection();
         }
     }
 
+    /* Modal Carousel Styles */
+    .product-main-slider-modal {
+        position: relative;
+    }
+
+    .product-main-slider-modal .owl-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        pointer-events: none;
+    }
+
+    .product-main-slider-modal .owl-nav button {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #333 !important;
+        border: 1px solid #ddd !important;
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 16px !important;
+        transition: all 0.3s ease !important;
+        pointer-events: all;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .product-main-slider-modal .owl-nav button:hover {
+        background: #ff6a00 !important;
+        color: white !important;
+        border-color: #ff6a00 !important;
+        transform: scale(1.1) !important;
+    }
+
+    .product-main-slider-modal .owl-nav .owl-prev {
+        left: -20px;
+    }
+
+    .product-main-slider-modal .owl-nav .owl-next {
+        right: -20px;
+    }
+
+    .product-main-slider-modal .slider-item {
+        padding: 5px;
+    }
+
+    .product-main-slider-modal .slider-item .long-img {
+        display: block;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .product-main-slider-modal .slider-item .long-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     /* Enhanced mobile responsiveness */
     @media (max-width: 576px) {
         .products-hero h1 {
@@ -2154,63 +2215,42 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             </div>
                         </div>
 
-                        <!-- Additional Product Images Section (matching product_details.php) -->
-                        ${detailsData.success && detailsData.hasImages ? `
-                            <div class="desc-product-images-wrapper" style="
-                                display: flex;
-                                flex-wrap: wrap;
-                                gap: 15px;
-                                justify-content: flex-start;
-                                align-items: flex-start;
-                                margin-top: 20px;
-                                margin-bottom: 20px;
-                            ">
-                                ${detailsData.productImage1 && detailsData.productImage1 !== 'images/default.jpg' ? `
-                                    <div class="desc-product-image" style="
-                                        flex: 1 1 200px;
-                                        max-width: 600px;
-                                        min-width: 350px;
-                                        border: 1px solid #e0e0e0;
-                                        padding: 10px;
-                                        border-radius: 12px;
-                                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                                        text-align: center;
-                                        background-color: #f9f9f9;
-                                        cursor: pointer;
-                                        transition: all 0.3s ease;
-                                    " onclick="openImageModal('${detailsData.productImage1}')" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)';">
-                                        <img src="${detailsData.productImage1}" alt="Additional product image 1" style="
-                                            max-width: 100%;
-                                            height: auto;
-                                            object-fit: contain;
-                                            border-radius: 8px;
-                                        ">
-                                    </div>
-                                ` : ''}
-                                ${detailsData.productImage2 && detailsData.productImage2 !== 'images/default.jpg' ? `
-                                    <div class="desc-product-image" style="
-                                        flex: 1 1 200px;
-                                        max-width: 600px;
-                                        min-width: 350px;
-                                        border: 1px solid #e0e0e0;
-                                        padding: 10px;
-                                        border-radius: 12px;
-                                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                                        text-align: center;
-                                        background-color: #f9f9f9;
-                                        cursor: pointer;
-                                        transition: all 0.3s ease;
-                                    " onclick="openImageModal('${detailsData.productImage2}')" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)';">
-                                        <img src="${detailsData.productImage2}" alt="Additional product image 2" style="
-                                            max-width: 100%;
-                                            height: auto;
-                                            object-fit: contain;
-                                            border-radius: 8px;
-                                        ">
-                                    </div>
-                                ` : ''}
+                        <!-- Model Images Carousel Section (matching product_details.php) -->
+                        <div class="product-main-slider-container" style="margin-top: 20px; margin-bottom: 20px;">
+                            <h6 style="margin-bottom: 15px; font-weight: 600; color: #2d3748;">All Product Images (${currentProductImages.length}):</h6>
+                                <div class="owl-carousel product-main-slider-modal" style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #f8f9fa;">
+                                    ${currentProductImages.map((img, index) => `
+                                        <div class="slider-item">
+                                            <a href="javascript:void(0)" class="long-img" onclick="openImageModal('${img}')" style="
+                                                border: 1px solid rgba(0, 0, 0, 0.1);
+                                                border-radius: 10px;
+                                                display: block;
+                                                transition: all 0.3s ease;
+                                                cursor: pointer;
+                                            " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                                                <figure class="zoom" style="
+                                                    background-image: url('${img}');
+                                                    margin: 0;
+                                                    position: relative;
+                                                    overflow: hidden;
+                                                    border-radius: 10px;
+                                                    aspect-ratio: 1;
+                                                    background-size: cover;
+                                                    background-position: center;
+                                                    background-repeat: no-repeat;
+                                                ">
+                                                    <img src="${img}" class="img-fluid" alt="Product image ${index + 1}" style="
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: cover;
+                                                        border-radius: 10px;
+                                                    ">
+                                                </figure>
+                                            </a>
+                                        </div>
+                                    `).join('')}
+                                </div>
                             </div>
-                        ` : ''}
                     </div>
 
                     <!-- Product Information Section -->
@@ -2340,6 +2380,59 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 </div>
             </div>
         `;
+
+        // Initialize owl carousel for model images after modal content is rendered
+        setTimeout(() => {
+            initializeModalCarousel();
+        }, 100);
+    }
+
+    // Initialize owl carousel for modal
+    function initializeModalCarousel() {
+        // Check if carousel element exists and has items
+        const carouselElement = $('.product-main-slider-modal');
+        if (carouselElement.length === 0) return;
+
+        // Destroy existing carousel if it exists
+        if (carouselElement.hasClass('owl-loaded')) {
+            carouselElement.trigger('destroy.owl.carousel');
+            carouselElement.removeClass('owl-loaded owl-drag');
+        }
+
+        // Initialize new carousel
+        carouselElement.owlCarousel({
+            items: 3,
+            loop: false,
+            margin: 15,
+            nav: true,
+            navText: [
+                '<i class="fa fa-chevron-left"></i>',
+                '<i class="fa fa-chevron-right"></i>'
+            ],
+            dots: false,
+            autoplay: false,
+            mouseDrag: true,
+            touchDrag: true,
+            smartSpeed: 600,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                480: {
+                    items: 2,
+                    nav: true
+                },
+                768: {
+                    items: 3,
+                    nav: true
+                },
+                1024: {
+                    items: 3,
+                    nav: true
+                }
+            }
+        });
     }
 
     function closePreview() {
