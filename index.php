@@ -1656,20 +1656,20 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 }
 
 
-/* Enhanced Banner Styles - Krishna Inspired Full Width */
+/* ✅ Clean Hero Banner - Text Only Overlay */
 .img-back {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  height: 70vh; /* Reduced height for better proportion */
+  justify-content: flex-start;
+  height: 70vh;
   background-size: cover;
   background-position: center;
   position: relative;
   overflow: hidden;
-  padding: 3rem;
-  width: 100vw !important; /* Full viewport width */
-  margin-left: calc(-50vw + 50%) !important; /* Center full-width element */
-  border-radius: 0; /* Remove border radius for full width */
+  padding: 3rem 5rem;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  border-radius: 0;
 }
 
 .img-back::before {
@@ -1679,86 +1679,148 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+  background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
   z-index: 1;
 }
 
 .home-s-content {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 700px;
   color: var(--white);
-  transform: translateY(0);
+  text-align: left;
+  /* Remove all box styling */
+  background: none;
+  backdrop-filter: none;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
   opacity: 1;
-  animation: slideInRight 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeInLeft 1s ease-out forwards;
 }
 
 .home-s-content span {
   display: block;
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  margin-bottom: 1.5rem;
   opacity: 0;
-  animation: fadeInUp 0.8s 0.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  animation: fadeInUp 0.8s 0.2s ease-out forwards;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   color: var(--white);
   text-transform: uppercase;
 }
 
 .home-s-content h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 2rem;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 2.5rem;
   opacity: 0;
-  animation: fadeInUp 0.8s 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+  animation: fadeInUp 0.8s 0.4s ease-out forwards;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
   color: var(--white);
+  letter-spacing: -1px;
 }
 
-/* Responsive Design */
+/* ✅ Responsive Design - Clean Text Only */
 @media (max-width: 1200px) {
+  .img-back {
+    padding: 3rem 4rem;
+  }
+
   .home-s-content h1 {
-    font-size: 2.0rem;
+    font-size: 3rem;
+  }
+
+  .home-s-content span {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 992px) {
+  .img-back {
+    padding: 2.5rem 3rem;
+  }
+
   .home-s-content {
-    text-align: left;
+    max-width: 600px;
+  }
+
+  .home-s-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .home-s-content span {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
   }
 }
 
 @media (max-width: 768px) {
- 
-  .home-s-content span {
-    font-size: 0.7rem;
-    /* letter-spacing: 2px; */
+  .img-back {
+    padding: 2rem;
+    height: 60vh;
   }
-  
+
+  .home-s-content span {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
   .home-s-content h1 {
-    font-size: 1rem;    
-    margin-bottom: 0.6rem;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
   }
 }
 
 @media (max-width: 480px) {
-  .home-s-content {
-    max-width: 70%;
-    padding-left:50px
+  .img-back {
+    padding: 1.5rem;
+    height: 50vh;
   }
-  
-  .home-s-content h1 {
+
+  .home-s-content {
+    max-width: 90%;
+  }
+
+  .home-s-content span {
     font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .home-s-content h1 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
 }
 
+/* ✅ Animation Keyframes for Clean Text */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Tablet View */
 @media (max-width: 1024px) {
@@ -2796,173 +2858,63 @@ s
             height: 40px;
         }
     }
-/* ✅ Enhanced Comparison Section - Premium Design */
+ /* ✅ Desktop View */
 .comparison-section {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f8fffe 0%, #f0f9ff 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.comparison-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23305724" opacity="0.02"/><circle cx="75" cy="75" r="1" fill="%23EA652D" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    pointer-events: none;
-}
-
-.comparison-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.comparison-title {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.comparison-title h2 {
-    font-size: 42px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #305724 0%, #EA652D 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 15px;
-    letter-spacing: -1px;
-}
-
-.comparison-title p {
-    font-size: 18px;
-    color: #666;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
+    padding: 30px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
 }
 
 .comparison-box {
     position: relative;
     display: flex;
     max-width: 1200px;
-    margin: 0 auto;
-    border-radius: 24px;
+    width: 100%;
+    border: 2px solid #EA652D;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.1),
-        0 8px 25px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-}
-
-/* VS Badge - Enhanced */
-.vs-badge {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #EA652D 0%, #ff8533 100%);
-    color: white;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 900;
-    z-index: 10;
-    box-shadow:
-        0 8px 25px rgba(234, 101, 45, 0.4),
-        0 0 0 8px rgba(255, 255, 255, 1),
-        0 0 0 12px rgba(234, 101, 45, 0.1);
-    letter-spacing: 2px;
-    animation: pulse-vs 3s ease-in-out infinite;
-}
-
-@keyframes pulse-vs {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.05); }
 }
 
 /* Columns */
 .comparison-column {
     flex: 1;
-    padding: 50px 40px;
+    padding: 40px;
+    min-width: 300px;
     position: relative;
-    min-height: 600px;
 }
 
-/* Left Column - My Nutrify */
+/* Left Column */
 .comparison-column.left {
-    background: linear-gradient(135deg, #E6F7D8 0%, #D3F4B3 50%, #C8F2A6 100%);
-    position: relative;
+    background: linear-gradient(to bottom right, #E6F7D8, #D3F4B3);
 }
 
-.comparison-column.left::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, transparent 0%, #EA652D 50%, transparent 100%);
-}
-
-/* Right Column - Others */
+/* Right Column */
 .comparison-column.right {
-    background: linear-gradient(135deg, #FCE2CF 0%, #FFD7C6 50%, #FFCBB8 100%);
+    background: linear-gradient(to bottom right, #FCE2CF, rgb(255, 215, 198));
+    border-left: 2px solid #EA652D;
 }
 
 /* Brand Header */
 .brand-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(48, 87, 36, 0.1);
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
 .brand-logo {
-    height: 60px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.brand-name {
-    font-size: 28px;
-    font-weight: 700;
-    color: #305724;
-    margin: 0;
+    height: 50px;
 }
 
 .others-heading {
-    font-size: 32px;
-    font-weight: 700;
-    color: #8B4513;
-    margin-bottom: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #5A2E0C;
+    margin-bottom: 50px;
     text-align: center;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(139, 69, 19, 0.1);
-    position: relative;
-}
-
-.others-heading::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 2px;
-    background: #8B4513;
 }
 
 /* List Styling */
@@ -2970,226 +2922,133 @@ s
     list-style: none;
     padding: 0;
     margin: 0;
-    space-y: 8px;
 }
 
 .comparison-list li {
     display: flex;
     align-items: center;
-    font-size: 18px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
+    font-size: 20px;
+    padding: 12px 0;
     color: #333;
-    gap: 16px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    font-weight: 500;
-    line-height: 1.4;
+    gap: 12px;
 }
 
-.comparison-list li:hover {
-    transform: translateX(5px);
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Icon Styling */
 .comparison-list li img {
-    height: 36px;
-    width: 36px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    transition: transform 0.3s ease;
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
 }
 
-.comparison-list li:hover img {
-    transform: scale(1.1);
+/* ✅ VS Badge */
+.vs-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 2px solid #EA652D;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 700;
+    color: #EA652D;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(234, 101, 45, 0.2);
+    font-size: 18px;
 }
-
-/* Special styling for My Nutrify items */
-.comparison-column.left .comparison-list li {
-    border-left: 4px solid #305724;
-}
-
-.comparison-column.left .comparison-list li:hover {
-    border-left-color: #EA652D;
-    background: rgba(48, 87, 36, 0.05);
-}
-
-/* Special styling for Others items */
-.comparison-column.right .comparison-list li {
-    border-left: 4px solid #8B4513;
-    opacity: 0.9;
-}
-
-.comparison-column.right .comparison-list li:hover {
-    border-left-color: #EA652D;
-    background: rgba(139, 69, 19, 0.05);
-}
-/* Enhanced Mobile Responsive Design */
-@media (max-width: 1024px) {
-    .comparison-title h2 {
-        font-size: 36px;
-    }
-
-    .comparison-column {
-        padding: 40px 30px;
-    }
-}
-
 @media (max-width: 768px) {
     .comparison-section {
-        padding: 60px 15px;
-    }
-
-    .comparison-title h2 {
-        font-size: 28px;
-        margin-bottom: 10px;
-    }
-
-    .comparison-title p {
-        font-size: 16px;
-    }
-
-    .comparison-title {
-        margin-bottom: 40px;
+        padding: 20px 0;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .comparison-box {
-        flex-direction: column;
-        border-radius: 20px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        min-width: 768px; /* Minimum width for both columns */
+        border: none;
+        box-shadow: none;
+        gap: 20px;
+        padding: 0 20px;
     }
 
     .comparison-column {
-        padding: 30px 25px;
-        min-height: auto;
-    }
-
-    .comparison-column.left::before {
-        display: none;
+        flex: 0 0 calc(100vw - 40px);
+        min-width: calc(100vw - 40px);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        scroll-snap-align: center;
     }
 
     .comparison-column.right {
-        border-top: 2px solid #EA652D;
+        border-left: 2px solid #EA652D;
+        border-top: none;
     }
 
     .vs-badge {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin: -40px auto;
-        z-index: 10;
-        width: 70px;
-        height: 70px;
-        font-size: 20px;
+        display: block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border: 2px solid #EA652D;
+        z-index: 3;
     }
 
-    .brand-header {
-        margin-bottom: 30px;
-        padding-bottom: 15px;
+    /* Scroll Snap */
+    .comparison-section {
+        scroll-snap-type: x mandatory;
     }
 
-    .brand-logo {
-        height: 50px;
+    /* Scrollbar Styling */
+    .comparison-section::-webkit-scrollbar {
+        height: 6px;
     }
 
-    .brand-name {
-        font-size: 24px;
+    .comparison-section::-webkit-scrollbar-thumb {
+        background: #EA652D;
+        border-radius: 4px;
     }
 
-    .others-heading {
-        font-size: 26px;
-        margin-bottom: 30px;
-        padding-bottom: 15px;
-    }
-
+    /* Mobile Optimizations */
     .comparison-list li {
         font-size: 16px;
-        padding: 14px 18px;
-        margin-bottom: 10px;
+        padding: 8px 0;
     }
 
     .comparison-list li img {
-        height: 32px;
-        width: 32px;
+        height: 25px;
+        width: 25px;
+    }
+
+    .others-heading {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .brand-logo {
+        height: 40px;
     }
 }
 
 @media (max-width: 480px) {
-    .comparison-section {
-        padding: 40px 10px;
-    }
-
-    .comparison-title h2 {
-        font-size: 24px;
-    }
-
-    .comparison-title p {
-        font-size: 14px;
-    }
-
     .comparison-column {
-        padding: 25px 20px;
-    }
-
-    .vs-badge {
-        width: 60px;
-        height: 60px;
-        font-size: 18px;
-        margin: -30px auto;
-    }
-
-    .brand-name {
-        font-size: 20px;
-    }
-
-    .others-heading {
-        font-size: 22px;
+        flex: 0 0 calc(100vw - 30px);
+        min-width: calc(100vw - 30px);
+        padding: 20px;
     }
 
     .comparison-list li {
         font-size: 14px;
-        padding: 12px 15px;
-        gap: 12px;
     }
 
-    .comparison-list li img {
-        height: 28px;
-        width: 28px;
+    .vs-badge {
+        display:none;
     }
 }
-
-/* Animation for section entrance */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.comparison-section {
-    animation: fadeInUp 0.8s ease-out;
-}
-
-/* Stagger animation for list items */
-.comparison-list li {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.comparison-list li:nth-child(1) { animation-delay: 0.1s; }
-.comparison-list li:nth-child(2) { animation-delay: 0.2s; }
-.comparison-list li:nth-child(3) { animation-delay: 0.3s; }
-.comparison-list li:nth-child(4) { animation-delay: 0.4s; }
-.comparison-list li:nth-child(5) { animation-delay: 0.5s; }
-.comparison-list li:nth-child(6) { animation-delay: 0.6s; }
  
 
   /* ✅ Desktop Grid Layout */
@@ -5119,77 +4978,35 @@ s0.parentNode.insertBefore(s1,s0);
         </div>
     </section>
     <section class="comparison-section">
-        <div class="comparison-container">
-            <div class="comparison-title">
-                <h2>Why Choose <span style="color: #305724;">My Nutrify</span>?</h2>
-                <p>Experience the difference with our premium herbal and ayurvedic products that prioritize your health and well-being.</p>
+        <div class="comparison-box">
+            <div class="vs-badge">VS</div>
+
+            <div class="comparison-column left">
+                <div class="brand-header">
+                    <img src="image/main_logo.png" alt="Brand Logo" class="brand-logo">
+                </div>
+                <ul class="comparison-list">
+                    <li><img src="cms/images/products/my_1.png">
+                        Pure & Natural Ingredients</li>
+                    <li><img src="cms/images/products/my_2.png"> No Artificial Additives</li>
+                    <li><img src="cms/images/products/my_3.png"> Lab-Tested & Certified</li>
+                    <li><img src="cms/images/products/my_4.png"> Eco-Friendly & BPA-Free Packaging</li>
+                    <li><img src="cms/images/products/my_5.png"> Manufactured in GMP & ISO Certified Facilities</li>
+                    <li><img src="cms/images/products/my_6.png"> Trusted & Transparent Brand</li>
+
+                </ul>
             </div>
+            <div class="comparison-column right">
+                <h2 class="others-heading">Others</h2>
+                <ul class="comparison-list">
+                    <li><img src="cms/images/products/other_1.svg"> Contains Synthetic Ingredients</li>
+                    <li><img src="cms/images/products/other_2.svg"> Low-Quality & Diluted Formulations</li>
+                    <li><img src="cms/images/products/other_3.png"> Not Lab-Tested</li>
+                    <li><img src="cms/images/products/other_4.png"> Substandard Packaging </li>
+                    <li><img src="cms/images/products/other_5.png">Unverified Manufacturing Practices </li>
+                    <li><img src="cms/images/products/other_6.png"> Lack of Brand Transparency</li>
 
-            <div class="comparison-box">
-                <div class="vs-badge">VS</div>
-
-                <div class="comparison-column left">
-                    <div class="brand-header">
-                        <img src="image/main_logo.png" alt="My Nutrify Logo" class="brand-logo">
-                        <h3 class="brand-name">MY NUTRIFY</h3>
-                    </div>
-                    <ul class="comparison-list">
-                        <li>
-                            <img src="cms/images/products/my_1.png" alt="Pure & Natural">
-                            Pure & Natural Ingredients
-                        </li>
-                        <li>
-                            <img src="cms/images/products/my_2.png" alt="No Artificial Additives">
-                            No Artificial Additives
-                        </li>
-                        <li>
-                            <img src="cms/images/products/my_3.png" alt="Lab-Tested">
-                            Lab-Tested & Certified
-                        </li>
-                        <li>
-                            <img src="cms/images/products/my_4.png" alt="Eco-Friendly">
-                            Eco-Friendly & BPA-Free Packaging
-                        </li>
-                        <li>
-                            <img src="cms/images/products/my_5.png" alt="GMP Certified">
-                            Manufactured in GMP & ISO Certified Facilities
-                        </li>
-                        <li>
-                            <img src="cms/images/products/my_6.png" alt="Trusted Brand">
-                            Trusted & Transparent Brand
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="comparison-column right">
-                    <h2 class="others-heading">Others</h2>
-                    <ul class="comparison-list">
-                        <li>
-                            <img src="cms/images/products/other_1.svg" alt="Synthetic Ingredients">
-                            Contains Synthetic Ingredients
-                        </li>
-                        <li>
-                            <img src="cms/images/products/other_2.svg" alt="Low Quality">
-                            Low-Quality & Diluted Formulations
-                        </li>
-                        <li>
-                            <img src="cms/images/products/other_3.png" alt="Not Lab-Tested">
-                            Not Lab-Tested
-                        </li>
-                        <li>
-                            <img src="cms/images/products/other_4.png" alt="Substandard Packaging">
-                            Substandard Packaging
-                        </li>
-                        <li>
-                            <img src="cms/images/products/other_5.png" alt="Unverified Practices">
-                            Unverified Manufacturing Practices
-                        </li>
-                        <li>
-                            <img src="cms/images/products/other_6.png" alt="Lack of Transparency">
-                            Lack of Brand Transparency
-                        </li>
-                    </ul>
-                </div>
+                </ul>
             </div>
         </div>
     </section>

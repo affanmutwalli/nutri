@@ -1169,20 +1169,18 @@ button.navbar-toggler span.line::after{
 .slider .home-slider .img-back .home-s-content {
     position: relative;
     z-index: 2;
-    width: 45%;
     max-width: 600px;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.95);
+    color: var(--white);
+    transform: translateY(0);
+    opacity: 1;
+    animation: slideInRight 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 10px 20px rgba(45, 80, 22, 0.1);
+    padding: 40px;
+    border-radius: var(--border-radius);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-right: 8%;
-    transform: translateX(100px);
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+
 }
 
 .slider .home-slider .img-back .h-s-content.slide-c-l,
@@ -1274,10 +1272,10 @@ button.navbar-toggler span.line::after{
 
 .slider .home-slider .img-back .h-s-content h1,
 .slider .home-slider .img-back .home-s-content h1{
-    font-size: 48px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 1.2;
-    color: #1a1a1a;
+    color: #fffafa;
     margin: 25px 0 20px 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
