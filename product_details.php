@@ -2918,7 +2918,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       <?php include("components/header.php"); ?>
           <div id="cart-popup" class="cart-popup-overlay">
     <div class="cart-popup-content">
-        <button class="close-popup" onclick="$('#cart-popup').fadeOut();">
+        <button class="close-popup" onclick="document.getElementById('cart-popup').style.display='none';">
             &times;
         </button>
         <h3>Product added to your cart!</h3>
@@ -2973,7 +2973,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                               </div>
                               <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme">
                                  <li class="nav-item items">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#image-11">
+                                    <a class="nav-link active" href="javascript:void(0)">
                                           <img src="cms/images/products/<?php echo $mainPhotoPath; ?>" class="img-fluid" alt="image">
                                     </a>
                                  </li>
@@ -2985,7 +2985,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                    : 'default.jpg';
                                        ?>
                                           <li class="nav-item items">
-                                             <a class="nav-link" data-bs-toggle="tab" href="#image-<?php echo $index + 1; ?>">
+                                             <a class="nav-link" href="javascript:void(0)">
                                                 <img src="cms/images/products/<?php echo $photoPath; ?>" class="img-fluid" alt="image">
                                              </a>
                                           </li>
@@ -5001,14 +5001,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize Product Main Slider
-    $(document).ready(function() {
+    // Initialize Product Main Slider with Vanilla JavaScript
+    function initializeProductSlider() {
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeProductSlider);
+            return;
+        }
+
+        // Wait for jQuery and Owl Carousel to be available
+        if (typeof jQuery === 'undefined' || typeof jQuery.fn.owlCarousel === 'undefined') {
+            setTimeout(initializeProductSlider, 100);
+            return;
+        }
+
+        const $ = jQuery;
+
         // Check if there are multiple images to create slider
         const sliderItems = $('.product-main-slider .slider-item');
 
         if (sliderItems.length > 1) {
             // Initialize Owl Carousel for main product images
-            $('.product-main-slider').owlCarousel({
+            const mainSlider = $('.product-main-slider').owlCarousel({
                 items: 1,
                 loop: true,
                 margin: 0,
@@ -5039,12 +5053,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+
+            // Connect thumbnail navigation to main slider using vanilla JavaScript
+            const thumbnails = document.querySelectorAll('.pro-page-slider .nav-link');
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+
+                    // Navigate to corresponding slide in main slider
+                    mainSlider.trigger('to.owl.carousel', [index, 600]);
+                });
+            });
+
+            // Update thumbnail active state when main slider changes
+            mainSlider.on('changed.owl.carousel', function(event) {
+                const currentIndex = event.item.index;
+
+                // Remove active class from all thumbnails
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                // Add active class to corresponding thumbnail
+                if (thumbnails[currentIndex]) {
+                    thumbnails[currentIndex].classList.add('active');
+                }
+            });
+
         } else {
             // If only one image, hide navigation
-            $('.product-main-slider .owl-nav').hide();
-            $('.product-main-slider .owl-dots').hide();
+            const mainSlider = document.querySelector('.product-main-slider');
+            if (mainSlider) {
+                const nav = mainSlider.querySelector('.owl-nav');
+                const dots = mainSlider.querySelector('.owl-dots');
+                if (nav) nav.style.display = 'none';
+                if (dots) dots.style.display = 'none';
+            }
         }
-    });
+    }
+
+    // Start the initialization
+    initializeProductSlider();
     </script>
 
 

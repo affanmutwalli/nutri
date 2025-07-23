@@ -1173,7 +1173,6 @@ button.navbar-toggler span.line::after{
     color: var(--white);
     transform: translateY(0);
     opacity: 1;
-    animation: slideInRight 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     padding: 40px;
@@ -1217,11 +1216,7 @@ button.navbar-toggler span.line::after{
 .slider .home-slider .owl-item.active .img-back .home-s-content span,
 .slider .home-slider .owl-item.active .img-back .home-s-content h1,
 .slider .home-slider .owl-item.active .img-back .home-s-content a{
-    -webkit-animation-name: slideInFromRight;
-    animation-name: slideInFromRight;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    opacity: 0;
+    opacity: 1;
 }
 
 .slider .home-slider .owl-item.active .img-back .h-s-content span,

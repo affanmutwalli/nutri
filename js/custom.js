@@ -87,13 +87,10 @@ if (typeof $.fn.owlCarousel !== 'undefined') {
     margin: 0,
     nav: true,
     navText : ['<i class="fa fa-angle-double-left"></i>','<i class="fa fa-angle-double-right"></i>'],
-    autoplay: true,
+    autoplay: false,
     autoplayTimeout: 3000,
     autoplayHoverPause: true,
-    fade: true,
-    transitionStyle: "fade",
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn'
+    smartSpeed: 0
 });
 } else {
     console.warn('Owl Carousel library not loaded');
