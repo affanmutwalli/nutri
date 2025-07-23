@@ -467,7 +467,7 @@ $obj->connection();
 
     .btn-add-cart {
         width: 100%;
-        background: linear-gradient(135deg, #ff6a00 0%, #e65c00 100%);
+        background: linear-gradient(#305724, #305724, #305724);
         color: white;
         border: none;
         padding: 12px;
@@ -781,50 +781,7 @@ $obj->connection();
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    /* Trending Products Header Styling */
-    .trending-products-header {
-        margin: 30px 0 25px 0;
-        text-align: center;
-    }
 
-    .trending-title {
-        display: inline-block;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #2d3748;
-        padding: 15px 30px;
-        border: 3px solid #ff6600;
-        border-radius: 15px;
-        background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
-        box-shadow: 0 4px 15px rgba(255, 102, 0, 0.2);
-        position: relative;
-        margin: 0;
-        transition: all 0.3s ease;
-    }
-
-    .trending-title:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
-        border-color: #e55a00;
-    }
-
-    .trending-title::before {
-        content: '';
-        position: absolute;
-        top: -3px;
-        left: -3px;
-        right: -3px;
-        bottom: -3px;
-        background: linear-gradient(45deg, #ff6600, #ff8533, #ff6600);
-        border-radius: 18px;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .trending-title:hover::before {
-        opacity: 0.1;
-    }
 
     /* Enhanced mobile responsiveness */
     @media (max-width: 576px) {
@@ -1076,11 +1033,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     <option value="name-za">Name: Z to A</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <!-- Trending Products Section -->
-                        <div class="trending-products-header">
-                            <h2 class="trending-title">Trending Products</h2>
                         </div>
 
                         <!-- Products Grid -->
