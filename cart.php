@@ -1,11 +1,37 @@
  <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
 session_start();
 include('includes/urls.php');
 include('database/dbconnection.php');
 $obj = new main();
 $obj->connection();
+
+// Auto-cleanup invalid cart items to prevent sync issues
+if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+    $cleanCart = array();
+    foreach ($_SESSION['cart'] as $productId => $quantity) {
+        // Check if product exists
+        $FieldNames = array("ProductId");
+        $ParamArray = array($productId);
+        $Fields = implode(",", $FieldNames);
+
+        $product_data = $obj->MysqliSelect1(
+            "SELECT $Fields FROM product_master WHERE ProductId = ?",
+            $FieldNames,
+            "i",
+            $ParamArray
+        );
+
+        // Only keep valid products that exist in database
+        if ($product_data && isset($product_data[0])) {
+            $cleanCart[$productId] = $quantity;
+        }
+    }
+
+    // Update cart session with only valid items
+    $_SESSION['cart'] = $cleanCart;
+}
 ?>
 
 <head>
