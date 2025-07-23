@@ -762,7 +762,50 @@ $obj->connection();
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
+    /* Trending Products Header Styling */
+    .trending-products-header {
+        margin: 30px 0 25px 0;
+        text-align: center;
+    }
 
+    .trending-title {
+        display: inline-block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d3748;
+        padding: 15px 30px;
+        border: 3px solid #ff6600;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
+        box-shadow: 0 4px 15px rgba(255, 102, 0, 0.2);
+        position: relative;
+        margin: 0;
+        transition: all 0.3s ease;
+    }
+
+    .trending-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
+        border-color: #e55a00;
+    }
+
+    .trending-title::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(45deg, #ff6600, #ff8533, #ff6600);
+        border-radius: 18px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .trending-title:hover::before {
+        opacity: 0.1;
+    }
 
     /* Enhanced mobile responsiveness */
     @media (max-width: 576px) {
@@ -1014,6 +1057,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     <option value="name-za">Name: Z to A</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <!-- Trending Products Section -->
+                        <div class="trending-products-header">
+                            <h2 class="trending-title">Trending Products</h2>
                         </div>
 
                         <!-- Products Grid -->
@@ -1461,511 +1509,51 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         initializeHoverEffects();
     });
 
-    // Global variables for modal functionality
-    let currentProductImages = [];
-    let currentImageIndex = 0;
-    let currentQuantity = 1;
-
-
-
-
-
-
+    // Product Preview Modal Functions
     function showPreview(productId) {
         const modal = document.getElementById('previewModal');
+
+        // Show modal with loading state
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
 
-        // Show loading state
-        modal.innerHTML = `
-            <div style="
-                background: white;
-                border-radius: 20px;
-                max-width: 95vw;
-                width: 100%;
-                max-height: 95vh;
-                overflow-y: auto;
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 400px;
-            ">
-                <div style="text-align: center; padding: 40px;">
-                    <div style="
-                        width: 50px;
-                        height: 50px;
-                        border: 4px solid #f3f3f3;
-                        border-top: 4px solid #ff6a00;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        margin: 0 auto 20px;
-                    "></div>
-                    <p style="color: #666; font-size: 16px;">Loading complete product details...</p>
-                </div>
-            </div>
-            <style>
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            </style>
-        `;
+        // Reset content
+        document.getElementById('previewTitle').textContent = 'Loading...';
+        document.getElementById('previewDescription').textContent = 'Loading product details...';
 
-        // Fetch complete product details page content
-        fetch(`exe_files/get_complete_product_details.php?productId=${productId}`)
+        // Fetch product details
+        fetch(`exe_files/get_product_preview.php?productId=${productId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    renderCompleteProductModal(data, productId);
+                    document.getElementById('previewImage').src = `cms/images/products/${data.product.PhotoPath}`;
+                    document.getElementById('previewTitle').textContent = data.product.ProductName;
+                    document.getElementById('previewPrice').textContent = `₹${data.product.OfferPrice}`;
+
+                    if (data.product.MRP && data.product.MRP != data.product.OfferPrice) {
+                        document.getElementById('previewOriginalPrice').textContent = `₹${data.product.MRP}`;
+                        document.getElementById('previewOriginalPrice').style.display = 'inline';
+                    } else {
+                        document.getElementById('previewOriginalPrice').style.display = 'none';
+                    }
+
+<<<<<<< HEAD
+                    document.getElementById('previewDescription').textContent = data.product.ShortDescription || 'No description available.';
+                    document.getElementById('previewAddToCart').setAttribute('data-product-id', productId);
+                    document.getElementById('previewViewDetails').href = `product_details.php?ProductId=${productId}`;
                 } else {
-                    showErrorModal('Unable to load product details. Please try again.');
+                    document.getElementById('previewTitle').textContent = 'Error loading product';
+                    document.getElementById('previewDescription').textContent = 'Unable to load product details.';
                 }
             })
             .catch(error => {
-                console.error('Error fetching complete product details:', error);
-                showErrorModal('Error loading product details. Please try again.');
+                console.error('Error fetching product details:', error);
+                document.getElementById('previewTitle').textContent = 'Error loading product';
+                document.getElementById('previewDescription').textContent = 'Unable to load product details.';
             });
-    }
-
-    function showErrorModal(message) {
-        const modal = document.getElementById('previewModal');
-        modal.innerHTML = `
-            <div style="
-                background: white;
-                border-radius: 20px;
-                max-width: 500px;
-                width: 100%;
-                padding: 40px;
-                text-align: center;
-                position: relative;
-            ">
-                <button onclick="closePreview()" style="
-                    position: absolute;
-                    top: 15px;
-                    right: 15px;
-                    background: none;
-                    border: none;
-                    font-size: 24px;
-                    cursor: pointer;
-                    color: #666;
-                ">×</button>
-                <div style="color: #dc3545; font-size: 48px; margin-bottom: 20px;">⚠️</div>
-                <h3 style="color: #333; margin-bottom: 15px;">Error</h3>
-                <p style="color: #666; margin-bottom: 30px;">${message}</p>
-                <button onclick="closePreview()" style="
-                    background: #ff6a00;
-                    color: white;
-                    border: none;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 16px;
-                ">Close</button>
-            </div>
-        `;
-    }
-
-    function renderCompleteProductModal(data, productId) {
-        const modal = document.getElementById('previewModal');
-        const product = data.product;
-        const images = data.images || [];
-        const pricing = data.pricing || {};
-        const defaultPrice = pricing.default_price || { offer_price: 0, mrp: 0, coins: 0, discount: 0 };
-
-        // Set global variables
-        currentProductImages = images;
-        currentImageIndex = 0;
-        currentQuantity = 1;
-
-        // Get main product image
-        const mainImage = images.length > 0 ? images[0] : `cms/images/products/${product.PhotoPath}`;
-
-        modal.innerHTML = `
-            <div style="
-                background: white;
-                border-radius: 15px;
-                max-width: 800px;
-                width: 90%;
-                max-height: 90vh;
-                position: relative;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            ">
-                <!-- Close Button -->
-                <button onclick="closePreview()" style="
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: rgba(255, 255, 255, 0.9);
-                    border: none;
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    z-index: 10;
-                    font-size: 14px;
-                    color: #666;
-                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#666';">
-                    ×
-                </button>
-
-                <!-- Modal Content -->
-                <div style="
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 0;
-                    height: 100%;
-                    min-height: 400px;
-                    max-height: calc(90vh - 40px);
-                    overflow: hidden;
-                ">
-                    <!-- Product Image Section -->
-                    <div style="
-                        background: #f8f9fa;
-                        padding: 30px;
-                        min-height: 300px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                    ">
-                        <!-- Main Image Display -->
-                        <div style="position: relative; margin-bottom: 15px;">
-                            <img id="modalMainImage" src="${mainImage}" alt="${product.ProductName}" style="
-                                max-width: 100%;
-                                max-height: 250px;
-                                object-fit: contain;
-                                border-radius: 8px;
-                                border: 1px solid rgba(0, 0, 0, 0.1);
-                            ">
-
-                            ${images.length > 1 ? `
-                                <!-- Navigation Arrows -->
-                                <button onclick="changeModalImageNav(-1)" style="
-                                    position: absolute;
-                                    left: -15px;
-                                    top: 50%;
-                                    transform: translateY(-50%);
-                                    background: rgba(255, 255, 255, 0.9);
-                                    border: none;
-                                    border-radius: 50%;
-                                    width: 30px;
-                                    height: 30px;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    cursor: pointer;
-                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                                    z-index: 10;
-                                    font-size: 14px;
-                                    color: #666;
-                                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#666';">
-                                    ‹
-                                </button>
-
-                                <button onclick="changeModalImageNav(1)" style="
-                                    position: absolute;
-                                    right: -15px;
-                                    top: 50%;
-                                    transform: translateY(-50%);
-                                    background: rgba(255, 255, 255, 0.9);
-                                    border: none;
-                                    border-radius: 50%;
-                                    width: 30px;
-                                    height: 30px;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    cursor: pointer;
-                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                                    z-index: 10;
-                                    font-size: 14px;
-                                    color: #666;
-                                " onmouseover="this.style.background='#ff6a00'; this.style.color='white';" onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.color='#666';">
-                                    ›
-                                </button>
-                            ` : ''}
-                        </div>
-
-                        <!-- Thumbnail Navigation -->
-                        ${images.length > 1 ? `
-                            <div style="
-                                display: flex;
-                                justify-content: center;
-                                gap: 8px;
-                                flex-wrap: wrap;
-                                max-width: 300px;
-                            ">
-                                ${images.map((img, index) => `
-                                    <div onclick="changeModalImage(${index})" style="
-                                        cursor: pointer;
-                                        border: 2px solid ${index === 0 ? '#ff6a00' : '#e2e8f0'};
-                                        border-radius: 6px;
-                                        padding: 2px;
-                                        transition: all 0.3s ease;
-                                        background: white;
-                                    " class="modal-thumb" data-index="${index}">
-                                        <img src="${img}" alt="Thumbnail ${index + 1}" style="
-                                            width: 45px;
-                                            height: 45px;
-                                            object-fit: contain;
-                                            border-radius: 4px;
-                                            display: block;
-                                        ">
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <!-- Product Information Section -->
-                    <div style="
-                        padding: 30px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        overflow-y: auto;
-                        max-height: calc(90vh - 40px);
-                    ">
-                        <h2 style="
-                            font-size: 1.3rem;
-                            font-weight: 600;
-                            color: #333;
-                            margin-bottom: 12px;
-                            line-height: 1.3;
-                        ">${product.ProductName}</h2>
-
-                        <p style="
-                            color: #666;
-                            font-size: 0.85rem;
-                            margin-bottom: 12px;
-                            line-height: 1.4;
-                        ">${product.ShortDescription || 'Boosts metabolism, improve digestion & assists in weight loss'}</p>
-
-                        <!-- Rating -->
-                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 15px;">
-                            <div style="display: flex; gap: 1px;">
-                                ${[1,2,3,4,5].map(i => `<span style="color: #ffd700; font-size: 12px;">★</span>`).join('')}
-                            </div>
-                            <span style="color: #666; font-size: 0.8rem;">4.8 | 6 Reviews</span>
-                        </div>
-
-                        <!-- MRP Label -->
-                        <div style="margin-bottom: 6px;">
-                            <span style="color: #666; font-size: 0.8rem;">MRP (Including all taxes)</span>
-                        </div>
-
-                        <!-- Price -->
-                        <div style="margin-bottom: 18px;">
-                            <span style="
-                                font-size: 1.5rem;
-                                font-weight: 700;
-                                color: #333;
-                            ">₹${defaultPrice.offer_price > 0 ? defaultPrice.offer_price.toFixed(0) : '249'}</span>
-                            ${defaultPrice.mrp > defaultPrice.offer_price ? `
-                                <span style="
-                                    color: #999;
-                                    text-decoration: line-through;
-                                    font-size: 0.9rem;
-                                    margin-left: 8px;
-                                ">₹${defaultPrice.mrp.toFixed(0)}</span>
-                                <span style="
-                                    background: #ff6a00;
-                                    color: white;
-                                    padding: 2px 6px;
-                                    border-radius: 3px;
-                                    font-size: 0.7rem;
-                                    margin-left: 8px;
-                                    font-weight: 600;
-                                ">Save ₹${(defaultPrice.mrp - defaultPrice.offer_price).toFixed(0)}</span>
-                            ` : ''}
-                        </div>
-
-                        <!-- Quantity -->
-                        <div style="margin-bottom: 18px;">
-                            <label style="
-                                display: block;
-                                color: #333;
-                                font-weight: 500;
-                                margin-bottom: 6px;
-                                font-size: 0.85rem;
-                            ">Quantity</label>
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                border: 1px solid #ddd;
-                                border-radius: 5px;
-                                width: fit-content;
-                                background: white;
-                            ">
-                                <button onclick="changeQuantity(-1)" style="
-                                    background: none;
-                                    border: none;
-                                    padding: 6px 10px;
-                                    cursor: pointer;
-                                    color: #666;
-                                    font-size: 14px;
-                                    font-weight: 600;
-                                " onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">−</button>
-                                <input type="text" id="previewQuantity" value="1" style="
-                                    border: none;
-                                    width: 35px;
-                                    text-align: center;
-                                    font-weight: 500;
-                                    background: none;
-                                    outline: none;
-                                    font-size: 14px;
-                                ">
-                                <button onclick="changeQuantity(1)" style="
-                                    background: none;
-                                    border: none;
-                                    padding: 6px 10px;
-                                    cursor: pointer;
-                                    color: #666;
-                                    font-size: 14px;
-                                    font-weight: 600;
-                                " onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Stock Status -->
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 6px;
-                            margin-bottom: 18px;
-                            color: #28a745;
-                            font-size: 0.8rem;
-                            font-weight: 500;
-                        ">
-                            <span style="
-                                width: 6px;
-                                height: 6px;
-                                background: #28a745;
-                                border-radius: 50%;
-                            "></span>
-                            In stock, ready to ship
-                        </div>
-
-                        <!-- Add to Cart Button -->
-                        <button onclick="addToCartFromPreview(${productId})" style="
-                            background: #333;
-                            color: white;
-                            border: none;
-                            padding: 12px 24px;
-                            border-radius: 6px;
-                            font-size: 0.9rem;
-                            font-weight: 500;
-                            cursor: pointer;
-                            transition: all 0.3s ease;
-                            width: 100%;
-                            margin-bottom: 12px;
-                        " onmouseover="this.style.background='#555'" onmouseout="this.style.background='#333'">
-                            Add to cart
-                        </button>
-
-                        <!-- Additional Info -->
-                        <div style="font-size: 0.75rem; color: #666; line-height: 1.3;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="color: #28a745;">✓</span>
-                                <span>100% Ayurvedic & Herbal</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="color: #28a745;">✓</span>
-                                <span>5% OFF Code "SAVE5" (Order above ₹499)</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="color: #28a745;">✓</span>
-                                <span>Free Delivery On All Orders Above ₹399/-</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="color: #28a745;">🔒</span>
-                                <span>Secure online payments</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Initialize modal image navigation
-        currentModalImageIndex = 0;
-        currentModalImages = images;
-    }
-
-    // Global variables for modal image navigation
-    let currentModalImageIndex = 0;
-    let currentModalImages = [];
-
-    // Change modal image when thumbnail is clicked
-    function changeModalImage(index) {
-        if (!currentModalImages || index < 0 || index >= currentModalImages.length) return;
-
-        currentModalImageIndex = index;
-
-        // Update main image
-        const mainImage = document.getElementById('modalMainImage');
-        if (mainImage) {
-            mainImage.src = currentModalImages[index];
-        }
-
-        // Update thumbnail active state
-        document.querySelectorAll('.modal-thumb').forEach((thumb, i) => {
-            if (i === index) {
-                thumb.style.borderColor = '#ff6a00';
-            } else {
-                thumb.style.borderColor = '#e2e8f0';
-            }
-        });
-    }
-
-    // Navigate images with arrow buttons
-    function changeModalImageNav(direction) {
-        if (!currentModalImages || currentModalImages.length <= 1) return;
-
-        let newIndex = currentModalImageIndex + direction;
-
-        // Loop around if at beginning or end
-        if (newIndex < 0) {
-            newIndex = currentModalImages.length - 1;
-        } else if (newIndex >= currentModalImages.length) {
-            newIndex = 0;
-        }
-
-        changeModalImage(newIndex);
-    }
-
-    // Keyboard navigation for modal
-    document.addEventListener('keydown', function(e) {
-        if (document.getElementById('productPreviewModal') && document.getElementById('productPreviewModal').style.display !== 'none') {
-            if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                changeModalImageNav(-1);
-            } else if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                changeModalImageNav(1);
-            } else if (e.key === 'Escape') {
-                e.preventDefault();
-                closePreview();
-            }
-        }
-    });
-
+=======
     function renderModalWithPricing(product, productId, pricingData, detailsData) {
         const modal = document.getElementById('previewModal');
-
-        // Set current product images from details data
-        currentProductImages = detailsData.images || [`cms/images/products/${product.PhotoPath}`];
-        currentImageIndex = 0;
-        currentQuantity = 1;
 
         // Generate main image tabs HTML (like product_details.php)
         const mainImageTabsHtml = `
@@ -2373,137 +1961,18 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 }
             }
         });
+>>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     function closePreview() {
         const modal = document.getElementById('previewModal');
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+<<<<<<< HEAD
+=======
         currentProductImages = [];
         currentImageIndex = 0;
         currentQuantity = 1;
-    }
-
-
-
-    // Change preview image function
-    function changePreviewImage(index) {
-        currentImageIndex = index;
-        const mainImage = document.getElementById('previewMainImage');
-        if (mainImage && currentProductImages[index]) {
-            mainImage.src = currentProductImages[index];
-
-            // Update zoom background
-            const zoomFigure = mainImage.closest('.zoom');
-            if (zoomFigure) {
-                zoomFigure.style.backgroundImage = `url('${currentProductImages[index]}')`;
-            }
-        }
-
-        // Update thumbnail borders
-        document.querySelectorAll('[class*="preview-thumbnail-"]').forEach((thumb, i) => {
-            if (i === index) {
-                thumb.style.border = '2px solid #ff6a00';
-                thumb.classList.add('active');
-            } else {
-                thumb.style.border = '2px solid #e2e8f0';
-                thumb.classList.remove('active');
-            }
-        });
-    }
-
-    // Change quantity function
-    function changeQuantity(change) {
-        const quantityInput = document.getElementById('previewQuantity');
-        if (quantityInput) {
-            let newQuantity = parseInt(quantityInput.value) + change;
-            if (newQuantity < 1) newQuantity = 1;
-            quantityInput.value = newQuantity;
-            currentQuantity = newQuantity;
-        }
-    }
-
-
-
-    // Modal zoom functionality
-    function modalZoom(event) {
-        const figure = event.currentTarget;
-        const img = figure.querySelector('img');
-        if (!img) return;
-
-        const rect = figure.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-
-        figure.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
-        figure.style.backgroundSize = '200%';
-    }
-
-    // Open image in full screen modal
-    function openImageModal(imageSrc) {
-        // Create full screen image modal
-        const imageModal = document.createElement('div');
-        imageModal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            cursor: pointer;
-        `;
-
-        imageModal.innerHTML = `
-            <img src="${imageSrc}" style="
-                max-width: 90%;
-                max-height: 90%;
-                object-fit: contain;
-                border-radius: 10px;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            ">
-            <button onclick="this.parentElement.remove()" style="
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: rgba(255, 255, 255, 0.9);
-                border: none;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                cursor: pointer;
-                font-size: 20px;
-                color: #333;
-            ">×</button>
-        `;
-
-        imageModal.onclick = function(e) {
-            if (e.target === imageModal) {
-                imageModal.remove();
-            }
-        };
-
-        document.body.appendChild(imageModal);
     }
 
     // Enhanced size selection handler for modal
@@ -2511,13 +1980,13 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         // Remove selected class from all size boxes
         document.querySelectorAll('.size-box').forEach(box => {
             box.classList.remove('selected');
-            box.style.border = '2px solid #e2e8f0';
+            box.style.borderColor = '#e2e8f0';
             box.style.background = 'white';
         });
 
         // Add selected class to clicked size box
         element.classList.add('selected');
-        element.style.border = '2px solid #ff6a00';
+        element.style.borderColor = '#ff6a00';
         element.style.background = '#fff5f0';
 
         // Get pricing data from the selected size
@@ -2606,7 +2075,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         zoomer.style.backgroundPosition = x + '% ' + y + '%';
     }
 
-
+    function changeQuantity(delta) {
+        const quantityInput = document.getElementById('previewQuantity');
+        if (quantityInput) {
+            const newQuantity = Math.max(1, Math.min(10, currentQuantity + delta));
+            currentQuantity = newQuantity;
+            quantityInput.value = newQuantity;
+        }
+    }
 
     function zoomImage() {
         const mainImage = document.getElementById('previewMainImage');
@@ -2649,13 +2125,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     }
 
     function addToCartFromPreview(productId) {
-        // Get selected size information (optional)
+        // Get selected size information
         const selectedSizeBox = document.querySelector('.size-box.selected');
+        if (!selectedSizeBox) {
+            showNotification('Please select a size before adding to cart', 'error');
+            return;
+        }
 
-        // Use default values if no size is selected
-        const size = selectedSizeBox ? selectedSizeBox.getAttribute('data-size') : '';
-        const offerPrice = selectedSizeBox ? selectedSizeBox.getAttribute('data-offer-price') : '';
-        const mrp = selectedSizeBox ? selectedSizeBox.getAttribute('data-mrp') : '';
+        const size = selectedSizeBox.getAttribute('data-size');
+        const offerPrice = selectedSizeBox.getAttribute('data-offer-price');
+        const mrp = selectedSizeBox.getAttribute('data-mrp');
         const quantity = document.getElementById('previewQuantity').value;
 
         // Add loading state to button
@@ -2685,16 +2164,12 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     addButton.innerHTML = '<i class="fa fa-check"></i> Added to Cart!';
                     addButton.style.background = '#22c55e';
 
-                    // No popup - just add to cart silently
-                    // displayCartPopup(); // Removed popup
+                    // Show cart popup like in product_details.php
+                    displayCartPopup();
 
                     setTimeout(() => {
-                        // Reset button and close modal
-                        addButton.innerHTML = originalText;
-                        addButton.style.background = '';
-                        addButton.disabled = false;
                         closePreview();
-                    }, 1500);
+                    }, 2000);
                 } else {
                     showNotification(response.message || 'Failed to add product to cart', 'error');
                     addButton.innerHTML = originalText;
@@ -2948,6 +2423,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 setTimeout(() => notification.remove(), 300);
             }
         }, 3000);
+>>>>>>> 4f7463e9ac46724d223cd946641e99739be68387
     }
 
     // Close modal when clicking outside
@@ -3056,20 +2532,15 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         try {
                             var data = JSON.parse(response);
                             if (data.status === 'success') {
-                                // No popup - just add to cart silently
-                                // $('#cart-popup').fadeIn();
+                                // Show the added to cart popup
+                                $('#cart-popup').fadeIn();
 
-                                // Show brief success message instead of popup
-                                if (typeof showNotification === 'function') {
-                                    showNotification('Product added to cart!', 'success');
-                                }
-
-                                // No page reload needed
-                                // setTimeout(function () {
-                                //     $('#cart-popup').fadeOut(function () {
-                                //         location.reload(); // Reload the page after popup is hidden
-                                //     });
-                                // }, 3000);
+                                // Automatically hide popup after a few seconds
+                                setTimeout(function () {
+                                    $('#cart-popup').fadeOut(function () {
+                                        location.reload(); // Reload the page after popup is hidden
+                                    });
+                                }, 3000);
                             } else {
                                 alert(data.message);
                             }
@@ -3085,71 +2556,40 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             });
 
             // Add to cart for non-logged-in users (session-based cart)
-            $(document).on('click', '.add-to-cart-session', function (e) { // Use event delegation
-                // Skip if this button has onclick handler (modal buttons)
-                if ($(this).attr('onclick')) {
-                    return; // Let the onclick handler take care of it
-                }
-
-                e.preventDefault(); // Prevent any default behavior
-
+            $(document).on('click', '.add-to-cart-session', function () { // Use event delegation
                 var productId = $(this).data('product-id'); // Get product ID
-                var button = $(this); // Store reference to button
-
                 console.log('Product ID:', productId); // Debugging: Log the product ID
-
-                // Add loading state to button
-                var originalText = button.html();
-                button.html('<i class="fa fa-spinner fa-spin"></i> Adding...');
-                button.prop('disabled', true);
 
                 $.ajax({
                     url: 'exe_files/add_to_cart_session.php', // PHP file to handle the cart addition in session
                     type: 'POST',
-                    dataType: 'json',
                     data: {
                         action: 'add_to_cart',
                         productId: productId
                     },
                     success: function (response) {
-                        if (response.status === 'success') {
-                            // Show success state on button
-                            button.html('<i class="fa fa-check"></i> Added to Cart!');
-                            button.css('background', '#22c55e');
+                        try {
+                            var data = JSON.parse(response); // Parse the response
+                            if (data.status === 'success') {
+                                // Show the added to cart popup
+                                $('#cart-popup').fadeIn();
 
-                            // No popup - just add to cart silently
-                            // if (typeof displayCartPopup === 'function') {
-                            //     displayCartPopup();
-                            // } else {
-                            //     $('#cart-popup').fadeIn();
-                            // }
-
-                            // Reset button after 1.5 seconds
-                            setTimeout(function() {
-                                button.html(originalText);
-                                button.css('background', '');
-                                button.prop('disabled', false);
-                            }, 1500);
-                        } else {
-                            // Show error and reset button
-                            if (typeof showNotification === 'function') {
-                                showNotification(response.message || 'Failed to add product to cart', 'error');
+                                // Automatically hide popup after a few seconds
+                                setTimeout(function () {
+                                    $('#cart-popup').fadeOut(function () {
+                                        location.reload(); // Reload the page after popup is hidden
+                                    });
+                                }, 3000);
                             } else {
-                                alert(response.message || 'Failed to add product to cart');
+                                alert(data.message);
                             }
-                            button.html(originalText);
-                            button.prop('disabled', false);
+                        } catch (e) {
+                            console.error('Error parsing JSON response:', e); // Log error if JSON parsing fails
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error('AJAX error:', status, error);
-                        if (typeof showNotification === 'function') {
-                            showNotification('An error occurred. Please try again.', 'error');
-                        } else {
-                            alert('An error occurred. Please try again.');
-                        }
-                        button.html(originalText);
-                        button.prop('disabled', false);
+                        alert('An error occurred. Please try again.');
                     }
                 });
             });
