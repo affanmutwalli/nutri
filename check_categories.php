@@ -24,14 +24,14 @@ if (!empty($categories)) {
 
 // Check subcategories
 echo "<h3>2. Subcategories in sub_category:</h3>";
-$subcategories = $obj->MysqliSelect1("SELECT SubCategoryId, SubCategoryName, CategoryId FROM sub_category ORDER BY CategoryId, SubCategoryId", 
-    array("SubCategoryId", "SubCategoryName", "CategoryId"), "", array());
+$subcategories = $obj->MysqliSelect1("SELECT SubCategoryId, SubCategoryName FROM sub_category ORDER BY SubCategoryId",
+    array("SubCategoryId", "SubCategoryName"), "", array());
 
 if (!empty($subcategories)) {
     echo "<table border='1' style='border-collapse: collapse; margin: 10px 0;'>";
-    echo "<tr><th>SubCategoryId</th><th>SubCategoryName</th><th>CategoryId</th></tr>";
+    echo "<tr><th>SubCategoryId</th><th>SubCategoryName</th></tr>";
     foreach ($subcategories as $subcat) {
-        echo "<tr><td>{$subcat['SubCategoryId']}</td><td>{$subcat['SubCategoryName']}</td><td>{$subcat['CategoryId']}</td></tr>";
+        echo "<tr><td>{$subcat['SubCategoryId']}</td><td>{$subcat['SubCategoryName']}</td></tr>";
     }
     echo "</table>";
 } else {
