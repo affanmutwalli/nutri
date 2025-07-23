@@ -15,7 +15,8 @@
         $Fields=implode(",",$FieldNames);
         $social=$obj->MysqliSelect1("Select ".$Fields." from social_links where SocialId= ? ",$FieldNames,"i",$ParamArray);
         
-        $FieldNames = array("ProductId", "ProductName", "MetaTag", "MetaKeywords", "IsActive", "PageHeading", "ShortDescription", "InFooter", "AdditionalInfo", "PhotoPath");
+        // Use only existing columns from product_master table
+        $FieldNames = array("ProductId", "ProductName", "MetaTags", "MetaKeywords", "ShortDescription", "PhotoPath");
         $ParamArray = array();
         $Fields = implode(",", $FieldNames);
         $products = $obj->MysqliSelect1("Select " . $Fields . " from product_master", $FieldNames, "s", $ParamArray);
