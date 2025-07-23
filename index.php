@@ -1689,9 +1689,8 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   position: relative;
   z-index: 2;
   max-width: 700px;
-  color: var(--white);
+  color: #ffffff;
   text-align: left;
-  /* Remove all box styling */
   background: none;
   backdrop-filter: none;
   padding: 0;
@@ -1704,24 +1703,24 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 .home-s-content span {
   display: block;
   font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 3px;
+  font-weight: 400;
+  letter-spacing: normal;
   margin-bottom: 1.5rem;
   opacity: 1;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-  color: var(--white);
-  text-transform: uppercase;
+  text-shadow: none;
+  color: #ffffff;
+  text-transform: none;
 }
 
 .home-s-content h1 {
   font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.1;
+  font-weight: 600;
+  line-height: 1.2;
   margin-bottom: 2.5rem;
   opacity: 1;
-  text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-  color: var(--white);
-  letter-spacing: -1px;
+  text-shadow: none;
+  color: #ffffff;
+  letter-spacing: normal;
 }
 
 /* ✅ Responsive Design - Clean Text Only */
