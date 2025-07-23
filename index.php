@@ -4518,7 +4518,7 @@ s0.parentNode.insertBefore(s1,s0);
                                 <h1 class="banner-main-title">Take Control of Your Blood Sugar</h1>
                                 
                                 <p class="banner-description">
-                                   Support healthy glucose levels naturally with <strong>Diabeti Care Juice</strong> your herbal ally for balanced living.
+                                   Support healthy glucose levels naturally with <strong>Diabetic Care Juice</strong> your herbal ally for balanced living.
                                 </p>
                                 
                                 <a href="product_details.php?ProductId=11" class="btn btn-style1 banner-cta">Explore More</a>
@@ -5946,7 +5946,7 @@ s0.parentNode.insertBefore(s1,s0);
         // Initialize Wellness Categories Slider
         $('.home-category').owlCarousel({
             loop: true,
-            margin: 20,
+            margin: 8,
             nav: true,
             dots: true,
             autoplay: true,
@@ -5959,27 +5959,27 @@ s0.parentNode.insertBefore(s1,s0);
             responsive: {
                 0: {
                     items: 2,
-                    margin: 10,
+                    margin: 8,
                     nav: false
                 },
                 480: {
                     items: 3,
-                    margin: 15,
+                    margin: 8,
                     nav: false
                 },
                 768: {
                     items: 4,
-                    margin: 20,
+                    margin: 8,
                     nav: true
                 },
                 992: {
                     items: 5,
-                    margin: 20,
+                    margin: 8,
                     nav: true
                 },
                 1200: {
                     items: 6,
-                    margin: 20,
+                    margin: 8,
                     nav: true
                 }
             }
