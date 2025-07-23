@@ -1661,7 +1661,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 70vh;
+  height: 100vh;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1986,17 +1986,17 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     /* Enhanced Section Spacing */
     .section-t-padding {
-        padding-top: 1px;
+        padding-top: 60px;
     }
 
     .section-b-padding {
-        padding-bottom: 1px;
+        padding-bottom: 60px;
     }
 
     .section-tb-padding {
-        padding: 1px 0;
+        padding: 60px 0;
     }
-s
+
     /* Full-Width Layout - Krishna Ayurveda Style */
     .container {
         max-width: 100% !important;
@@ -2018,6 +2018,8 @@ s
         width: 100% !important;
         max-width: 100% !important;
         overflow-x: hidden;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+        min-height: 100vh;
     }
 
     /* Header Full Width */
@@ -2869,7 +2871,7 @@ s
 .comparison-box {
     position: relative;
     display: flex;
-    max-width: 900px;
+    max-width: 1200px;
     width: 100%;
     background: #fff;
     border-radius: 16px;
@@ -4578,7 +4580,7 @@ s0.parentNode.insertBefore(s1,s0);
     </section>
     <!-- Category image slide -->
     <!-- Enhanced Trending Products Section - Krishna Style -->
-    <section class="h-t-products1 section-t-padding section-b-padding" style="background: var(--white);">
+    <section class="h-t-products1 section-t-padding section-b-padding" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
         <div class="container-fluid full-width">
             <div class="row">
                 <div class="col">

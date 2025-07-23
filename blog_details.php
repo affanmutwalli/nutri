@@ -60,40 +60,363 @@ if (!empty($blog_data)) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-    .blog-description {
-        margin: 10px auto;
-        /* Add spacing and center the content */
-        padding: 20px;
-        /* Add inner spacing */
-        max-width: 1200px;
-        /* Fixed maximum width for large screens */
-        width: 100%;
-        /* Ensure it scales for smaller screens */
-        box-sizing: border-box;
-        /* Include padding in width */
-        overflow-x: hidden;
-        /* Prevent horizontal scrolling */
+    /* Full Screen Responsive Blog Details */
+    .blog-page {
+        padding: 40px 0;
+        min-height: 100vh;
     }
 
+    /* Main Blog Container - Full Width Optimization */
+    .blog-style-1-details {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    /* Blog Image - Full Width Responsive */
+    .blog-style-1-details .text-center {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .blog-style-1-details .text-center img {
+        width: 100%;
+        height: clamp(300px, 40vh, 500px);
+        object-fit: cover;
+        border-radius: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .blog-style-1-details .text-center img:hover {
+        transform: scale(1.02);
+    }
+
+    /* Blog Content Container */
+    .single-blog-content {
+        padding: clamp(20px, 4vw, 60px);
+    }
+
+    /* Blog Title - Responsive Typography */
+    .single-b-title h2 {
+        font-size: clamp(24px, 4vw, 42px);
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    /* Blog Meta Information */
+    .date-edit-comments {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f8f9fa;
+    }
+
+    .blog-info-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(15px, 3vw, 30px);
+        align-items: center;
+    }
+
+    .blog-data {
+        display: flex;
+        align-items: center;
+        font-size: clamp(14px, 1.5vw, 16px);
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .blog-data i {
+        margin-right: 8px;
+        color: #ea652d;
+        font-size: clamp(16px, 1.8vw, 18px);
+    }
+
+    .editor {
+        color: #ea652d;
+        font-weight: 600;
+    }
+
+    /* Blog Description - Full Width Content */
+    .blog-description {
+        margin: 0 auto;
+        padding: 0;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        line-height: 1.8;
+    }
+
+    .blog-description p {
+        font-size: clamp(16px, 2vw, 18px);
+        color: #495057;
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+
+    /* Sidebar - Responsive Design */
+    .left-column {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        padding: clamp(20px, 3vw, 30px);
+        margin-top: 0;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+    }
+
+    /* Search Section */
+    .blog-search h4,
+    .blog-title h4 {
+        font-size: clamp(18px, 2.5vw, 22px);
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #ea652d;
+    }
+
+    .blog-search input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: clamp(14px, 1.5vw, 16px);
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .blog-search input:focus {
+        outline: none;
+        border-color: #ea652d;
+        box-shadow: 0 0 0 3px rgba(234, 101, 45, 0.1);
+    }
+
+    /* Recent Posts */
+    .blog-item {
+        border-bottom: 1px solid #f8f9fa;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .blog-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .l-blog-image img {
+        width: 100%;
+        height: clamp(80px, 12vw, 120px);
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .l-blog-image img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Product Cards in Sidebar */
+    .items {
+        border: 2px solid #f8f9fa;
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        background: #fff;
+    }
+
+    .items:hover {
+        border-color: #ea652d;
+        box-shadow: 0 8px 25px rgba(234, 101, 45, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .tr-pro-img img {
+        width: 100%;
+        height: clamp(120px, 15vw, 180px);
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .tr-pro-img img:hover {
+        transform: scale(1.05);
+    }
+
+    .caption h3 {
+        font-size: clamp(14px, 1.8vw, 16px);
+        font-weight: 600;
+        margin: 12px 0 8px 0;
+        line-height: 1.4;
+    }
+
+    .caption h3 a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .caption h3 a:hover {
+        color: #ea652d;
+    }
+
+    .pro-price {
+        margin: 10px 0;
+    }
+
+    .new-price {
+        font-size: clamp(14px, 1.6vw, 16px);
+        font-weight: 700;
+        color: #ea652d;
+    }
+
+    .old-price {
+        font-size: clamp(12px, 1.4vw, 14px);
+        margin-left: 8px;
+    }
+
+    .pro-btn .btn {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: clamp(13px, 1.4vw, 15px);
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    /* Related Blogs Section */
+    .blog-style-1-full-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .blog-start {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .blog-start:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-image img {
+        width: 100%;
+        height: clamp(200px, 25vh, 280px);
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .blog-image img:hover {
+        transform: scale(1.05);
+    }
+
+    .blog-content {
+        padding: clamp(15px, 3vw, 25px);
+    }
+
+    .blog-title h6 {
+        font-size: clamp(16px, 2vw, 20px);
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    .blog-title h6 a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .blog-title h6 a:hover {
+        color: #ea652d;
+    }
+
+    .blog-admin {
+        font-size: clamp(12px, 1.3vw, 14px);
+        color: #6c757d;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .blog-editor {
+        color: #ea652d;
+        font-weight: 600;
+    }
+
+    .read-link {
+        display: inline-flex;
+        align-items: center;
+        color: #ea652d;
+        font-weight: 600;
+        font-size: clamp(13px, 1.4vw, 15px);
+        text-decoration: none;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .read-link:hover {
+        color: #d4541f;
+        transform: translateX(5px);
+    }
+
+    .read-link i {
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .read-link:hover i {
+        transform: translateX(3px);
+    }
+
+    .blog-date-comment {
+        font-size: clamp(11px, 1.2vw, 13px);
+        color: #6c757d;
+        padding-top: 15px;
+        border-top: 1px solid #f8f9fa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Loading Screen */
     .loading {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 1);
+        background: rgba(255, 255, 255, 0.95);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
         animation: fadeOut 1.5s ease-out 3s forwards;
-        /* Fades out after 3 seconds */
     }
 
     .loader-img {
-        width: 150px;
-        height: 150px;
+        width: clamp(100px, 15vw, 150px);
+        height: clamp(100px, 15vw, 150px);
         animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
     @keyframes fadeOut {
@@ -101,10 +424,382 @@ if (!empty($blog_data)) {
             opacity: 1;
             visibility: visible;
         }
-
         100% {
             opacity: 0;
             visibility: hidden;
+        }
+    }
+
+    /* Large Desktop Screens (1920px+) */
+    @media (min-width: 1920px) {
+        .blog-page {
+            padding: 60px 0;
+        }
+
+        .single-blog-content {
+            padding: 80px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 600px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .left-column {
+            padding: 40px;
+        }
+    }
+
+    /* Standard Desktop (1200px - 1919px) */
+    @media (min-width: 1200px) and (max-width: 1919px) {
+        .blog-page {
+            padding: 50px 0;
+        }
+
+        .single-blog-content {
+            padding: 60px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 500px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+    }
+
+    /* Large Tablets & Small Desktops (992px - 1199px) */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .blog-page {
+            padding: 40px 0;
+        }
+
+        .single-blog-content {
+            padding: 40px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 400px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .left-column {
+            margin-top: 30px;
+        }
+    }
+
+    /* Tablets (768px - 991px) */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .blog-page {
+            padding: 30px 0;
+        }
+
+        .single-blog-content {
+            padding: 30px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 350px;
+        }
+
+        .blog-info-wrap {
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .left-column {
+            margin-top: 40px;
+            position: static;
+        }
+
+        .tr-pro-img img {
+            height: 150px;
+        }
+    }
+
+    /* Mobile Devices (up to 767px) */
+    @media (max-width: 767px) {
+        .blog-page {
+            padding: 20px 0;
+        }
+
+        .single-blog-content {
+            padding: 20px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 250px;
+        }
+
+        .single-b-title h2 {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .blog-info-wrap {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .blog-description p {
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .left-column {
+            margin-top: 30px;
+            padding: 20px;
+            position: static;
+        }
+
+        .blog-search input {
+            padding: 10px 12px;
+        }
+
+        .tr-pro-img img {
+            height: 120px;
+        }
+
+        .l-blog-image img {
+            height: 80px;
+        }
+
+        .blog-image img {
+            height: 200px;
+        }
+    }
+
+    /* Extra Small Mobile (up to 480px) */
+    @media (max-width: 480px) {
+        .blog-page {
+            padding: 15px 0;
+        }
+
+        .single-blog-content {
+            padding: 15px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 200px;
+        }
+
+        .blog-description p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .left-column {
+            padding: 15px;
+        }
+
+        .blog-style-1-full-grid {
+            gap: 15px;
+        }
+
+        .blog-content {
+            padding: 15px;
+        }
+
+        .tr-pro-img img {
+            height: 100px;
+        }
+
+        .l-blog-image img {
+            height: 60px;
+        }
+
+        .blog-image img {
+            height: 180px;
+        }
+    }
+
+    /* Full Screen PC Optimization */
+    .container-fluid {
+        max-width: 1920px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Enhanced Full Screen Layout */
+    @media (min-width: 1400px) {
+        .container-fluid {
+            max-width: 1800px;
+            padding: 0 40px;
+        }
+
+        .blog-page {
+            padding: 60px 0;
+        }
+
+        .single-blog-content {
+            padding: 60px 80px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 500px;
+            max-height: 50vh;
+        }
+
+        .left-column {
+            padding: 40px;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+        }
+    }
+
+    /* Ultra Wide Screens (2560px+) */
+    @media (min-width: 2560px) {
+        .container-fluid {
+            max-width: 2400px;
+            padding: 0 60px;
+        }
+
+        .blog-page {
+            padding: 80px 0;
+        }
+
+        .single-blog-content {
+            padding: 80px 120px;
+        }
+
+        .blog-style-1-details .text-center img {
+            height: 600px;
+            max-height: 45vh;
+        }
+
+        .blog-style-1-full-grid {
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+        }
+
+        .left-column {
+            padding: 50px;
+        }
+    }
+
+    /* Full Width Content Optimization */
+    @media (min-width: 1200px) {
+        .blog-description {
+            max-width: 100%;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .blog-description p {
+            margin-bottom: 25px;
+        }
+
+        .single-b-title h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .blog-info-wrap {
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .blog-data {
+            font-size: 16px;
+        }
+
+        .blog-data i {
+            font-size: 18px;
+        }
+    }
+
+    /* Enhanced Spacing for Full Screen */
+    @media (min-width: 1600px) {
+        .blog-page {
+            padding: 70px 0;
+        }
+
+        .container-fluid {
+            padding: 0 50px;
+        }
+
+        .single-blog-content {
+            padding: 70px 100px;
+        }
+
+        .blog-style-1-details {
+            margin-bottom: 60px;
+        }
+
+        .left-column {
+            padding: 45px;
+        }
+
+        .blog-style-1-full-grid {
+            margin-top: 50px;
+            gap: 45px;
+        }
+
+        .blog-start {
+            border-radius: 15px;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+    }
+
+    /* Improved Typography for Large Screens */
+    @media (min-width: 1800px) {
+        .single-b-title h2 {
+            font-size: 52px;
+            line-height: 1.2;
+        }
+
+        .blog-description p {
+            font-size: 20px;
+            line-height: 1.9;
+            margin-bottom: 30px;
+        }
+
+        .blog-data {
+            font-size: 17px;
+        }
+
+        .blog-search h4,
+        .blog-title h4 {
+            font-size: 24px;
+        }
+
+        .blog-title h6 {
+            font-size: 22px;
+        }
+
+        .blog-admin {
+            font-size: 15px;
+        }
+
+        .read-link {
+            font-size: 16px;
         }
     }
     </style>
@@ -124,9 +819,9 @@ if (!empty($blog_data)) {
     <!-- blog start -->
     <?php if (isset($_GET["BlogId"])) { ?>
     <section class="section-tb-padding blog-page">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xl-9 col-lg-8 col-md-7 col-12">
                     <div class="blog-style-1-details">
                         <div class="text-center">
                             <img src="cms/images/blogs/<?php echo htmlspecialchars($blog_data[0]["PhotoPath"] ?? 'default.jpg'); ?>"
@@ -352,11 +1047,11 @@ if (!empty($blog_data)) {
             $total_pages = ceil($total_blogs / $blogs_per_page);
             ?>
     <section class="section-tb-padding blog-page">
-        <h4 style="text-align:center; margin-bottom:20px;">Related Blogs / Articles</h4>
-        <div class="container">
+        <div class="container-fluid">
+            <h4 style="text-align:center; margin-bottom:40px; font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: #2c3e50;">Related Blogs / Articles</h4>
             <div class="row">
                 <div class="col">
-                    <div class="blog-style-1-full-grid">
+                    <div class="related-blogs-grid">
                         <?php
                                 // Display the blogs
                                 foreach ($blog_data as $blogs) {
@@ -367,43 +1062,33 @@ if (!empty($blog_data)) {
                                         $short_description .= "...";
                                     }
                                 ?>
-                        <div class="blog-start">
-                            <div class="blog-post">
-                                <div class="blog-image">
-                                    <a
-                                        href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>">
-                                        <img src="cms/images/blogs/<?php echo htmlspecialchars($blogs["PhotoPath"] ?? 'default.jpg'); ?>"
-                                            alt="<?php echo htmlspecialchars($blogs["BlogTitle"] ?? 'No Title'); ?>"
-                                            class="img-fluid">
+                        <div class="related-blog-card">
+                            <div class="blog-card-image">
+                                <a href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>">
+                                    <img src="cms/images/blogs/<?php echo htmlspecialchars($blogs["PhotoPath"] ?? 'default.jpg'); ?>"
+                                        alt="<?php echo htmlspecialchars($blogs["BlogTitle"] ?? 'No Title'); ?>"
+                                        class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="blog-card-content">
+                                <h5 class="blog-card-title">
+                                    <a href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>">
+                                        <?php echo htmlspecialchars($blogs["BlogTitle"] ?? 'Untitled Blog'); ?>
                                     </a>
-                                </div>
-                                <div class="blog-content">
-                                    <div class="blog-title">
-                                        <h6>
-                                            <a
-                                                href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>">
-                                                <?php echo htmlspecialchars($blogs["BlogTitle"] ?? 'Untitled Blog'); ?>
-                                            </a>
-                                        </h6>
-                                        <span class="blog-admin">By <span class="blog-editor">My Nutrify Herbal &
-                                                Ayurveda.</span></span>
-                                    </div>
-
-                                    <a href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>"
-                                        class="read-link">
-                                        <span>Read more</span>
-                                        <i class="ti-arrow-right"></i>
-                                    </a>
-                                    <div class="blog-date-comment">
-                                        <span class="blog-date">
-                                            <?php 
-                                                            $blogDate = isset($blogs["BlogDate"]) ? new DateTime($blogs["BlogDate"]) : null;
-                                                            echo $blogDate ? $blogDate->format('j M Y') : 'Unknown Date';
-                                                            ?>
-                                        </span>
-                                        <a href="javascript:void(0)"><?php echo htmlspecialchars($blogs["CommentCount"] ?? '0'); ?>
-                                            Comments</a>
-                                    </div>
+                                </h5>
+                                <p class="blog-card-author">By <span>My Nutrify Herbal & Ayurveda.</span></p>
+                                <a href="blog_details.php?BlogId=<?php echo htmlspecialchars($blogs["BlogId"] ?? ''); ?>"
+                                    class="blog-read-more">
+                                    Read more →
+                                </a>
+                                <div class="blog-card-meta">
+                                    <span class="blog-card-date">
+                                        <?php
+                                                        $blogDate = isset($blogs["BlogDate"]) ? new DateTime($blogs["BlogDate"]) : null;
+                                                        echo $blogDate ? $blogDate->format('j M Y') : 'Unknown Date';
+                                                        ?>
+                                    </span>
+                                    <span class="blog-card-comments"><?php echo htmlspecialchars($blogs["CommentCount"] ?? '0'); ?> Comments</span>
                                 </div>
                             </div>
                         </div>
