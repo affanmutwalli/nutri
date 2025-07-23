@@ -87,6 +87,8 @@ $order = $orderData[0];
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- responsive css -->
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- full width override -->
+    <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     
     <style>
         /* Order Details Styling - Site Consistent */

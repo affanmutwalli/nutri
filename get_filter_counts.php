@@ -113,19 +113,58 @@ try {
     $filterCounts['availability']['in-stock'] = $inStockCount[0]['count'] ?? 0;
     $filterCounts['availability']['out-of-stock'] = 0; // No out of stock tracking yet
     
-    // 4. Price Range
-    $priceRange = $obj->MysqliSelect1("
-        SELECT 
-            MIN(pp.OfferPrice) as min_price,
-            MAX(pp.OfferPrice) as max_price
-        FROM product_price pp 
-        INNER JOIN product_master pm ON pp.ProductId = pm.ProductId 
-        WHERE pm.IsCombo = 'Y' AND pp.OfferPrice > 0", 
-        array("min_price", "max_price"), "", array());
-    
+    // 4. Price Range - Get the actual min and max prices for combo products
+    // Use a simple and reliable approach
+    $allPrices = $obj->MysqliSelect1("
+        SELECT pp.OfferPrice
+        FROM product_price pp
+        INNER JOIN product_master pm ON pp.ProductId = pm.ProductId
+        WHERE pm.IsCombo = 'Y' AND pp.OfferPrice > 0
+        ORDER BY pp.OfferPrice ASC",
+        array("OfferPrice"), "", array());
+
+    // Calculate min/max from the results
+    if (!empty($allPrices)) {
+        $prices = array_column($allPrices, 'OfferPrice');
+        $minPrice = min($prices);
+        $maxPrice = max($prices);
+    } else {
+        $minPrice = 0;
+        $maxPrice = 2000;
+    }
+
+    // Debug: Log the extracted prices
+    error_log("Extracted prices - Min: $minPrice, Max: $maxPrice");
+
+    // Ensure min is actually less than max
+    if ($minPrice > $maxPrice) {
+        $temp = $minPrice;
+        $minPrice = $maxPrice;
+        $maxPrice = $temp;
+    }
+
+    // Set reasonable defaults if no prices found
+    if ($minPrice == 0 && $maxPrice == 0) {
+        $minPrice = 0;
+        $maxPrice = 2000;
+    }
+
+    // Make the price range more inclusive by adding some buffer
+    // Round down the minimum to nearest 50 and round up the maximum to nearest 100
+    $minPrice = floor($minPrice / 50) * 50;
+    $maxPrice = ceil($maxPrice / 100) * 100;
+
+    // Ensure minimum range of at least 500
+    if (($maxPrice - $minPrice) < 500) {
+        $maxPrice = $minPrice + 500;
+    }
+
+    // Debug: Log final price range
+    error_log("Final price range - Min: $minPrice, Max: $maxPrice");
+
     $filterCounts['price_range'] = array(
-        'min' => $priceRange[0]['min_price'] ?? 0,
-        'max' => $priceRange[0]['max_price'] ?? 2000
+        'min' => intval($minPrice),
+        'max' => intval($maxPrice)
     );
     
     // 5. Total product count

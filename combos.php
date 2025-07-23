@@ -44,6 +44,8 @@ $obj->connection();
     <!-- style -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- full width override -->
+    <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -1091,19 +1093,70 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                         $product_count++;
 
                                         // Get category and subcategory info for this product
-                                        $categorySubcategoryQuery = "SELECT pm.CategoryId, pm.SubCategoryId, cm.CategoryName, sc.SubCategoryName
-                                                                     FROM product_master pm
-                                                                     LEFT JOIN category_master cm ON pm.CategoryId = cm.CategoryId
-                                                                     LEFT JOIN sub_category sc ON pm.SubCategoryId = sc.SubCategoryId
-                                                                     WHERE pm.ProductId = ?";
-                                        $catSubResult = $obj->MysqliSelect1($categorySubcategoryQuery,
-                                            array("CategoryId", "SubCategoryId", "CategoryName", "SubCategoryName"),
+                                        // First get category info
+                                        $categoryQuery = "SELECT pm.CategoryId, cm.CategoryName
+                                                         FROM product_master pm
+                                                         LEFT JOIN category_master cm ON pm.CategoryId = cm.CategoryId
+                                                         WHERE pm.ProductId = ?";
+                                        $categoryResult = $obj->MysqliSelect1($categoryQuery,
+                                            array("CategoryId", "CategoryName"),
                                             "i", array($products["ProductId"]));
 
-                                        $categoryId = $catSubResult[0]["CategoryId"] ?? '';
-                                        $subcategoryId = $catSubResult[0]["SubCategoryId"] ?? '';
-                                        $categoryName = $catSubResult[0]["CategoryName"] ?? '';
-                                        $subcategoryName = $catSubResult[0]["SubCategoryName"] ?? '';
+                                        $categoryId = $categoryResult[0]["CategoryId"] ?? '';
+                                        $categoryName = $categoryResult[0]["CategoryName"] ?? '';
+
+                                        // Check if multiple subcategories system is being used
+                                        $multiSubQuery = "SELECT COUNT(*) as count FROM product_subcategories ps WHERE ps.ProductId = ?";
+                                        $multiSubResult = $obj->MysqliSelect1($multiSubQuery, array("count"), "i", array($products["ProductId"]));
+                                        $useMultipleSubcategories = ($multiSubResult[0]['count'] ?? 0) > 0;
+
+                                        $subcategoryId = '';
+                                        $subcategoryName = '';
+                                        $allSubcategoryIds = array();
+                                        $allSubcategoryNames = array();
+
+                                        if ($useMultipleSubcategories) {
+                                            // Use junction table for subcategories
+                                            $subcategoryQuery = "SELECT sc.SubCategoryId, sc.SubCategoryName, ps.is_primary
+                                                               FROM product_subcategories ps
+                                                               INNER JOIN sub_category sc ON ps.SubCategoryId = sc.SubCategoryId
+                                                               WHERE ps.ProductId = ?
+                                                               ORDER BY ps.is_primary DESC, sc.SubCategoryName";
+                                            $subcategoryResult = $obj->MysqliSelect1($subcategoryQuery,
+                                                array("SubCategoryId", "SubCategoryName", "is_primary"),
+                                                "i", array($products["ProductId"]));
+
+                                            if (!empty($subcategoryResult)) {
+                                                foreach ($subcategoryResult as $subcat) {
+                                                    $allSubcategoryIds[] = $subcat["SubCategoryId"];
+                                                    $allSubcategoryNames[] = $subcat["SubCategoryName"];
+
+                                                    // Use primary subcategory as main, or first one if no primary
+                                                    if (empty($subcategoryId) || $subcat["is_primary"] == 1) {
+                                                        $subcategoryId = $subcat["SubCategoryId"];
+                                                        $subcategoryName = $subcat["SubCategoryName"];
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            // Use direct subcategory relationship
+                                            $subcategoryQuery = "SELECT pm.SubCategoryId, sc.SubCategoryName
+                                                               FROM product_master pm
+                                                               LEFT JOIN sub_category sc ON pm.SubCategoryId = sc.SubCategoryId
+                                                               WHERE pm.ProductId = ?";
+                                            $subcategoryResult = $obj->MysqliSelect1($subcategoryQuery,
+                                                array("SubCategoryId", "SubCategoryName"),
+                                                "i", array($products["ProductId"]));
+
+                                            if (!empty($subcategoryResult)) {
+                                                $subcategoryId = $subcategoryResult[0]["SubCategoryId"] ?? '';
+                                                $subcategoryName = $subcategoryResult[0]["SubCategoryName"] ?? '';
+                                                if ($subcategoryId) {
+                                                    $allSubcategoryIds[] = $subcategoryId;
+                                                    $allSubcategoryNames[] = $subcategoryName;
+                                                }
+                                            }
+                                        }
 
                                         // Fetch price details
                                         $FieldNamesPrice = array("OfferPrice", "MRP");
@@ -1164,12 +1217,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                         ?>
                                         <li class="grid-items enhanced-grid-items"
                                             data-name="<?php echo htmlspecialchars($products["ProductName"]); ?>"
-                                            data-price="<?php echo $lowest_price != 'N/A' ? $lowest_price : 0; ?>"
+                                            data-price="<?php echo $lowest_price != 'N/A' ? $lowest_price : -1; ?>"
                                             data-date="<?php echo $products["ProductId"]; ?>"
                                             data-category-id="<?php echo htmlspecialchars($categoryId); ?>"
                                             data-subcategory-id="<?php echo htmlspecialchars($subcategoryId); ?>"
+                                            data-all-subcategory-ids="<?php echo htmlspecialchars(implode(',', $allSubcategoryIds)); ?>"
                                             data-category-name="<?php echo htmlspecialchars($categoryName); ?>"
-                                            data-subcategory-name="<?php echo htmlspecialchars($subcategoryName); ?>">
+                                            data-subcategory-name="<?php echo htmlspecialchars($subcategoryName); ?>"
+                                            data-all-subcategory-names="<?php echo htmlspecialchars(implode(',', $allSubcategoryNames)); ?>">
 
                                             <?php if ($savings > 0): ?>
                                                 <div class="sale-badge">Sale</div>
@@ -1614,20 +1669,23 @@ function removeFromCart(productId) {
                         name: item.dataset.name,
                         categoryId: item.dataset.categoryId,
                         subcategoryId: item.dataset.subcategoryId,
+                        allSubcategoryIds: item.dataset.allSubcategoryIds,
                         price: item.dataset.price
                     });
                 }
 
-                // Product type filter - since we're on combos page, if combos is checked, show all
+                // Product type filter - simplified for combos page
                 if (filterData.product_type.length > 0) {
+                    // Since we're on combos page, only show if combos is selected
+                    // If no product types are selected or combos is not selected, hide
                     if (!filterData.product_type.includes('combos')) {
-                        shouldShow = false; // Hide if combos is not selected
-                        if (visibleCount < 3) console.log('Hidden by product type filter');
+                        shouldShow = false;
+                        if (visibleCount < 3) console.log('Hidden by product type filter - combos not selected');
                     }
                 }
 
                 // Category filter
-                if (filterData.category.length > 0) {
+                if (shouldShow && filterData.category.length > 0) {
                     const itemCategoryId = String(item.dataset.categoryId || '');
                     const hasMatchingCategory = filterData.category.some(catId => String(catId) === itemCategoryId);
                     if (visibleCount < 3) {
@@ -1643,36 +1701,60 @@ function removeFromCart(productId) {
                     }
                 }
 
-                // Subcategory filter
-                if (filterData.subcategory.length > 0) {
+                // Subcategory filter - improved to check all subcategories
+                if (shouldShow && filterData.subcategory.length > 0) {
                     const itemSubcategoryId = String(item.dataset.subcategoryId || '');
-                    const hasMatchingSubcategory = filterData.subcategory.some(subId => String(subId) === itemSubcategoryId);
+                    const allSubcategoryIds = (item.dataset.allSubcategoryIds || '').split(',').filter(id => id.trim() !== '');
+
+                    // Check if any of the product's subcategories match the selected filters
+                    let hasMatchingSubcategory = false;
+
+                    // Check primary subcategory
+                    if (itemSubcategoryId && filterData.subcategory.some(subId => String(subId) === itemSubcategoryId)) {
+                        hasMatchingSubcategory = true;
+                    }
+
+                    // Check all subcategories
+                    if (!hasMatchingSubcategory && allSubcategoryIds.length > 0) {
+                        hasMatchingSubcategory = allSubcategoryIds.some(subId =>
+                            filterData.subcategory.some(selectedSubId => String(selectedSubId) === String(subId))
+                        );
+                    }
+
                     if (visibleCount < 3) {
                         console.log('Subcategory filter check:', {
                             selectedSubcategories: filterData.subcategory,
                             itemSubcategoryId: itemSubcategoryId,
+                            allSubcategoryIds: allSubcategoryIds,
                             match: hasMatchingSubcategory
                         });
                     }
+
                     if (!hasMatchingSubcategory) {
                         shouldShow = false;
                         if (visibleCount < 3) console.log('Hidden by subcategory filter');
                     }
                 }
 
-                // Price filter
-                const itemPrice = parseFloat(item.dataset.price) || 0;
-                if (itemPrice > 0) {
-                    if (itemPrice < filterData.price_min || itemPrice > filterData.price_max) {
-                        shouldShow = false;
-                        if (visibleCount < 3) console.log('Hidden by price filter');
+                // Price filter - improved to handle products without prices
+                if (shouldShow) {
+                    const itemPrice = parseFloat(item.dataset.price);
+
+                    // Only apply price filter if product has a valid price (not -1 for N/A)
+                    if (!isNaN(itemPrice) && itemPrice >= 0) {
+                        if (itemPrice < filterData.price_min || itemPrice > filterData.price_max) {
+                            shouldShow = false;
+                            if (visibleCount < 3) console.log('Hidden by price filter:', itemPrice, 'not in range', filterData.price_min, '-', filterData.price_max);
+                        }
                     }
+                    // Products with N/A prices (itemPrice === -1) are always shown regardless of price filter
                 }
 
                 // Availability filter
-                if (filterData.availability.length > 0) {
+                if (shouldShow && filterData.availability.length > 0) {
+                    // For now, all combo products are considered in stock
                     if (!filterData.availability.includes('in-stock')) {
-                        shouldShow = false; // For now, all products are in stock
+                        shouldShow = false;
                         if (visibleCount < 3) console.log('Hidden by availability filter');
                     }
                 }
@@ -1698,7 +1780,7 @@ function removeFromCart(productId) {
                 applySorting(filterData.sort);
             }
 
-            console.log('Filtered products:', visibleCount);
+            console.log('Filtered products:', visibleCount, 'out of', productItems.length);
         }
 
         // Apply sorting to visible products
@@ -1713,9 +1795,21 @@ function removeFromCart(productId) {
                     case 'name-desc':
                         return b.dataset.name.localeCompare(a.dataset.name);
                     case 'price-low':
-                        return (parseFloat(a.dataset.price) || 0) - (parseFloat(b.dataset.price) || 0);
+                        const priceA = parseFloat(a.dataset.price);
+                        const priceB = parseFloat(b.dataset.price);
+                        // Handle N/A prices (-1) by putting them at the end
+                        if (priceA === -1 && priceB === -1) return 0;
+                        if (priceA === -1) return 1;
+                        if (priceB === -1) return -1;
+                        return priceA - priceB;
                     case 'price-high':
-                        return (parseFloat(b.dataset.price) || 0) - (parseFloat(a.dataset.price) || 0);
+                        const priceA2 = parseFloat(a.dataset.price);
+                        const priceB2 = parseFloat(b.dataset.price);
+                        // Handle N/A prices (-1) by putting them at the end
+                        if (priceA2 === -1 && priceB2 === -1) return 0;
+                        if (priceA2 === -1) return 1;
+                        if (priceB2 === -1) return -1;
+                        return priceB2 - priceA2;
                     case 'date-new':
                         return (parseInt(b.dataset.date) || 0) - (parseInt(a.dataset.date) || 0);
                     case 'date-old':
@@ -1771,16 +1865,27 @@ function removeFromCart(productId) {
 
         // Load filter counts from database
         function loadFilterCounts() {
+            console.log('Loading filter counts...');
             fetch('get_filter_counts.php')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Filter counts loaded:', data);
                 if (data.success) {
                     const counts = data.filter_counts;
 
                     // Update product type counts
-                    document.getElementById('combos-count').textContent = `(${counts.product_type.combos})`;
-                    document.getElementById('cosmetics-count').textContent = `(${counts.product_type.cosmetics})`;
-                    document.getElementById('herbal-count').textContent = `(${counts.product_type['herbal-powders']})`;
+                    const combosCount = document.getElementById('combos-count');
+                    const cosmeticsCount = document.getElementById('cosmetics-count');
+                    const herbalCount = document.getElementById('herbal-count');
+
+                    if (combosCount) combosCount.textContent = `(${counts.product_type.combos})`;
+                    if (cosmeticsCount) cosmeticsCount.textContent = `(${counts.product_type.cosmetics})`;
+                    if (herbalCount) herbalCount.textContent = `(${counts.product_type['herbal-powders']})`;
 
                     // Load categories dynamically
                     loadCategoryFilters(counts.categories);
@@ -1789,8 +1894,11 @@ function removeFromCart(productId) {
                     loadSubcategoryFilters(counts.subcategories);
 
                     // Update availability counts
-                    document.getElementById('in-stock-count').textContent = `(${counts.availability['in-stock']})`;
-                    document.getElementById('out-stock-count').textContent = `(${counts.availability['out-of-stock']})`;
+                    const inStockCount = document.getElementById('in-stock-count');
+                    const outStockCount = document.getElementById('out-stock-count');
+
+                    if (inStockCount) inStockCount.textContent = `(${counts.availability['in-stock']})`;
+                    if (outStockCount) outStockCount.textContent = `(${counts.availability['out-of-stock']})`;
 
                     // Update price range
                     const priceMin = document.getElementById('price-min');
@@ -1798,28 +1906,46 @@ function removeFromCart(productId) {
                     const priceMinValue = document.getElementById('price-min-value');
                     const priceMaxValue = document.getElementById('price-max-value');
 
-                    priceMin.min = counts.price_range.min;
-                    priceMin.max = counts.price_range.max;
-                    priceMin.value = counts.price_range.min;
+                    if (priceMin && priceMax && priceMinValue && priceMaxValue) {
+                        priceMin.min = counts.price_range.min;
+                        priceMin.max = counts.price_range.max;
+                        priceMin.value = counts.price_range.min;
 
-                    priceMax.min = counts.price_range.min;
-                    priceMax.max = counts.price_range.max;
-                    priceMax.value = counts.price_range.max;
+                        priceMax.min = counts.price_range.min;
+                        priceMax.max = counts.price_range.max;
+                        priceMax.value = counts.price_range.max;
 
-                    priceMinValue.textContent = counts.price_range.min;
-                    priceMaxValue.textContent = counts.price_range.max;
+                        priceMinValue.textContent = counts.price_range.min;
+                        priceMaxValue.textContent = counts.price_range.max;
+                    }
 
                     // Hide filters with 0 count
-                    if (counts.product_type.cosmetics === 0) {
-                        document.querySelector('input[value="cosmetics"]').closest('.filter-option').style.display = 'none';
+                    try {
+                        if (counts.product_type.cosmetics === 0) {
+                            const cosmeticsFilter = document.querySelector('input[value="cosmetics"]');
+                            if (cosmeticsFilter) {
+                                cosmeticsFilter.closest('.filter-option').style.display = 'none';
+                            }
+                        }
+                        if (counts.product_type['herbal-powders'] === 0) {
+                            const herbalFilter = document.querySelector('input[value="herbal-powders"]');
+                            if (herbalFilter) {
+                                herbalFilter.closest('.filter-option').style.display = 'none';
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Error hiding zero-count filters:', e);
                     }
-                    if (counts.product_type['herbal-powders'] === 0) {
-                        document.querySelector('input[value="herbal-powders"]').closest('.filter-option').style.display = 'none';
-                    }
+
+                    console.log('Filter counts applied successfully');
+                } else {
+                    console.error('Failed to load filter counts:', data.error || 'Unknown error');
                 }
             })
             .catch(error => {
                 console.error('Error loading filter counts:', error);
+                // Fallback: still initialize the page even if filter counts fail
+                console.log('Continuing with default filter setup...');
             });
         }
 
@@ -1903,9 +2029,9 @@ function removeFromCart(productId) {
 
             initializePriceSliders();
 
-            // Add event listeners to filter checkboxes
-            const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
-            filterCheckboxes.forEach(checkbox => {
+            // Add event listeners to existing filter checkboxes (product type and availability)
+            const existingFilterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
+            existingFilterCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     console.log('Filter changed:', this.name, this.value, this.checked);
                     applyFilters();
@@ -1913,13 +2039,22 @@ function removeFromCart(productId) {
             });
 
             // Add event listener to sort dropdown
-            document.getElementById('sort-select').addEventListener('change', function() {
-                console.log('Sort changed:', this.value);
-                applyFilters();
-            });
+            const sortSelect = document.getElementById('sort-select');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    console.log('Sort changed:', this.value);
+                    applyFilters();
+                });
+            }
 
             // Attach initial add to cart listeners
             attachAddToCartListeners();
+
+            // Initial filter application to ensure everything is displayed correctly
+            setTimeout(() => {
+                console.log('Applying initial filters...');
+                applyFilters();
+            }, 500); // Small delay to ensure dynamic content is loaded
 
             console.log('Combos page initialized. Products loaded via PHP.');
         });

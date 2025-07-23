@@ -1,0 +1,244 @@
+/*=====================================
+Full Width Website Override CSS
+Remove all side spaces and make website 100% width
+======================================*/
+
+/* Reset body and html margins/padding */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* Make all containers full width */
+.container,
+.container-fluid {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Override Bootstrap container max-widths */
+@media (min-width: 576px) {
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* Override responsive.css container padding */
+@media (max-width: 1199px) {
+    .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 479px) {
+    .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Ensure header is full width */
+.header-main-area,
+.header-top,
+.header-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Ensure main content areas are full width */
+.main-content,
+.content-wrapper,
+.page-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Ensure footer is full width */
+.footer,
+.footer-area,
+.mega-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Ensure slider/banner areas are full width */
+.slider,
+.home-slider,
+.banner-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Add minimal padding only to content inside containers for readability */
+.container > .row,
+.container-fluid > .row {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* Specific overrides for sections that need some padding */
+.section-content,
+.product-content,
+.blog-content,
+.page-content {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* Ensure product grids and cards have proper spacing */
+.product-grid,
+.product-list,
+.blog-grid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* Override any wrapper classes */
+.wrapper,
+.site-wrapper,
+.page-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure navigation is full width */
+.navbar,
+.nav-wrapper,
+.navigation {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Override any boxed layout settings */
+.boxed-layout,
+.layout-boxed {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure full width for all major sections */
+section,
+.section,
+.section-area {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Mobile specific full width */
+@media (max-width: 768px) {
+    body, html {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Add minimal padding for mobile content readability */
+    .container > *:not(.row),
+    .container-fluid > *:not(.row) {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
+
+/* Tablet specific full width */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+/* Desktop full width */
+@media (min-width: 1025px) {
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}

@@ -25,6 +25,8 @@ $obj = new main();
     <link rel="stylesheet" type="text/css" href="css/animate.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- full width override -->
+    <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     
     <!-- Custom CSS for Over-the-Top Design -->
     <style>
