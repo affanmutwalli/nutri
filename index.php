@@ -2860,10 +2860,10 @@ s
             height: 40px;
         }
     }
- /* ✅ Desktop View */
+/* Simple & Elegant Comparison Section */
 .comparison-section {
-    padding: 30px;
-    background: #fff;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f8fffe 0%, #f0f9ff 100%);
     display: flex;
     justify-content: center;
 }
@@ -2871,55 +2871,59 @@ s
 .comparison-box {
     position: relative;
     display: flex;
-    max-width: 1200px;
+    max-width: 900px;
     width: 100%;
-    border: 2px solid #EA652D;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(234, 101, 45, 0.1);
 }
 
-/* Columns */
+/* Clean Columns */
 .comparison-column {
     flex: 1;
-    padding: 40px;
-    min-width: 300px;
+    padding: 40px 35px;
     position: relative;
 }
 
-/* Left Column */
+/* Krishna's Column - Clean Green */
 .comparison-column.left {
-    background: linear-gradient(to bottom right, #E6F7D8, #D3F4B3);
+    background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e8 100%);
+    border-right: 1px solid rgba(234, 101, 45, 0.15);
 }
 
-/* Right Column */
+/* Others Column - Clean Orange */
 .comparison-column.right {
-    background: linear-gradient(to bottom right, #FCE2CF, rgb(255, 215, 198));
-    border-left: 2px solid #EA652D;
+    background: linear-gradient(135deg, #fef7f0 0%, #fdf2f2 100%);
 }
 
-/* Brand Header */
+/* Simple Brand Header */
 .brand-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 25px;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(40, 167, 69, 0.2);
 }
 
 .brand-logo {
-    height: 50px;
+    height: 55px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .others-heading {
-    font-size: 24px;
-    font-weight: 600;
-    color: #5A2E0C;
-    margin-bottom: 50px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 30px;
     text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(234, 101, 45, 0.2);
 }
 
-/* List Styling */
+/* Clean List Styling */
 .comparison-list {
     list-style: none;
     padding: 0;
@@ -2929,19 +2933,32 @@ s
 .comparison-list li {
     display: flex;
     align-items: center;
-    font-size: 20px;
-    padding: 12px 0;
-    color: #333;
-    gap: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 15px 0;
+    color: #2c3e50;
+    gap: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.comparison-list li:hover {
+    color: #EA652D;
+    transform: translateX(5px);
+}
+
+.comparison-list li:last-child {
+    border-bottom: none;
 }
 
 .comparison-list li img {
-    height: 30px;
-    width: 30px;
+    height: 28px;
+    width: 28px;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
-/* ✅ VS Badge */
+/* Simple VS Badge */
 .vs-badge {
     position: absolute;
     left: 50%;
@@ -2950,105 +2967,113 @@ s
     background: #fff;
     border: 2px solid #EA652D;
     border-radius: 50px;
-    padding: 8px 20px;
-    font-weight: 700;
+    padding: 12px 24px;
+    font-weight: 800;
     color: #EA652D;
-    z-index: 2;
-    box-shadow: 0 4px 15px rgba(234, 101, 45, 0.2);
-    font-size: 18px;
+    z-index: 10;
+    box-shadow: 0 6px 20px rgba(234, 101, 45, 0.2);
+    font-size: 16px;
+    letter-spacing: 2px;
 }
+/* Simple Mobile Design */
 @media (max-width: 768px) {
     .comparison-section {
-        padding: 20px 0;
-        justify-content: flex-start;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        padding: 40px 15px;
     }
 
     .comparison-box {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        min-width: 768px; /* Minimum width for both columns */
-        border: none;
-        box-shadow: none;
-        gap: 20px;
-        padding: 0 20px;
+        flex-direction: column;
+        max-width: 100%;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
     }
 
     .comparison-column {
-        flex: 0 0 calc(100vw - 40px);
-        min-width: calc(100vw - 40px);
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        scroll-snap-align: center;
+        padding: 30px 25px;
+    }
+
+    .comparison-column.left {
+        border-right: none;
+        border-bottom: 1px solid rgba(234, 101, 45, 0.15);
+        border-radius: 16px 16px 0 0;
     }
 
     .comparison-column.right {
-        border-left: 2px solid #EA652D;
-        border-top: none;
+        border-radius: 0 0 16px 16px;
     }
 
     .vs-badge {
-        display: block;
-        position: fixed;
+        position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        background: #fff;
-        border: 2px solid #EA652D;
-        z-index: 3;
+        padding: 10px 20px;
+        font-size: 14px;
+        letter-spacing: 1px;
     }
 
-    /* Scroll Snap */
-    .comparison-section {
-        scroll-snap-type: x mandatory;
-    }
-
-    /* Scrollbar Styling */
-    .comparison-section::-webkit-scrollbar {
-        height: 6px;
-    }
-
-    .comparison-section::-webkit-scrollbar-thumb {
-        background: #EA652D;
-        border-radius: 4px;
-    }
-
-    /* Mobile Optimizations */
     .comparison-list li {
-        font-size: 16px;
-        padding: 8px 0;
+        font-size: 15px;
+        padding: 12px 0;
+        gap: 12px;
+    }
+
+    .comparison-list li:hover {
+        transform: translateX(3px);
     }
 
     .comparison-list li img {
-        height: 25px;
-        width: 25px;
+        height: 26px;
+        width: 26px;
     }
 
     .others-heading {
-        font-size: 20px;
-        margin-bottom: 30px;
+        font-size: 24px;
+        margin-bottom: 25px;
     }
 
     .brand-logo {
-        height: 40px;
+        height: 48px;
+    }
+
+    .brand-header {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
     }
 }
 
+/* Extra Small Mobile */
 @media (max-width: 480px) {
+    .comparison-section {
+        padding: 30px 10px;
+    }
+
     .comparison-column {
-        flex: 0 0 calc(100vw - 30px);
-        min-width: calc(100vw - 30px);
-        padding: 20px;
+        padding: 25px 20px;
     }
 
     .comparison-list li {
         font-size: 14px;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    .comparison-list li img {
+        height: 24px;
+        width: 24px;
+    }
+
+    .others-heading {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .brand-logo {
+        height: 42px;
     }
 
     .vs-badge {
-        display:none;
+        padding: 8px 16px;
+        font-size: 12px;
     }
 }
  
@@ -4983,31 +5008,51 @@ s0.parentNode.insertBefore(s1,s0);
         <div class="comparison-box">
             <div class="vs-badge">VS</div>
 
+            <!-- Krishna's Column -->
             <div class="comparison-column left">
                 <div class="brand-header">
-                    <img src="image/main_logo.png" alt="Brand Logo" class="brand-logo">
+                    <img src="image/main_logo.png" alt="Krishna's Ayurveda" class="brand-logo">
                 </div>
                 <ul class="comparison-list">
-                    <li><img src="cms/images/products/my_1.png">
-                        Pure & Natural Ingredients</li>
-                    <li><img src="cms/images/products/my_2.png"> No Artificial Additives</li>
-                    <li><img src="cms/images/products/my_3.png"> Lab-Tested & Certified</li>
-                    <li><img src="cms/images/products/my_4.png"> Eco-Friendly & BPA-Free Packaging</li>
-                    <li><img src="cms/images/products/my_5.png"> Manufactured in GMP & ISO Certified Facilities</li>
-                    <li><img src="cms/images/products/my_6.png"> Trusted & Transparent Brand</li>
-
+                    <li>
+                        <img src="cms/images/products/my_1.png" alt="Fresh Herbs">
+                        Made from Fresh Herbs only
+                    </li>
+                    <li>
+                        <img src="cms/images/products/my_2.png" alt="BPA Free">
+                        BPA Free Packaging
+                    </li>
+                    <li>
+                        <img src="cms/images/products/my_3.png" alt="Pure Herbs">
+                        No Extracts Used, Pure Herbs
+                    </li>
+                    <li>
+                        <img src="cms/images/products/my_4.png" alt="GMP Certified">
+                        GMP Certified Unit
+                    </li>
                 </ul>
             </div>
+
+            <!-- Others Column -->
             <div class="comparison-column right">
                 <h2 class="others-heading">Others</h2>
                 <ul class="comparison-list">
-                    <li><img src="cms/images/products/other_1.svg"> Contains Synthetic Ingredients</li>
-                    <li><img src="cms/images/products/other_2.svg"> Low-Quality & Diluted Formulations</li>
-                    <li><img src="cms/images/products/other_3.png"> Not Lab-Tested</li>
-                    <li><img src="cms/images/products/other_4.png"> Substandard Packaging </li>
-                    <li><img src="cms/images/products/other_5.png">Unverified Manufacturing Practices </li>
-                    <li><img src="cms/images/products/other_6.png"> Lack of Brand Transparency</li>
-
+                    <li>
+                        <img src="cms/images/products/other_1.svg" alt="Synthetic">
+                        Made from Synthetic Ingredients
+                    </li>
+                    <li>
+                        <img src="cms/images/products/other_2.svg" alt="Substandard">
+                        Substandard Packaging
+                    </li>
+                    <li>
+                        <img src="cms/images/products/other_3.png" alt="Extracts">
+                        Made from Substandard Extracts
+                    </li>
+                    <li>
+                        <img src="cms/images/products/other_4.png" alt="Low Hygiene">
+                        Low Hygienic Environment
+                    </li>
                 </ul>
             </div>
         </div>
