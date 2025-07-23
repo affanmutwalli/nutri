@@ -6,13 +6,25 @@ include('database/dbconnection.php');
 $obj = new main();
 $obj->connection();
 
-// $FieldNames = array("CustomerId", "Name", "MobileNo", "IsActive");
-// $ParamArray = [$_SESSION["CustomerId"]];
-// $Fields = implode(",", $FieldNames);
+// Get customer data for logged-in user
+$customerData = array();
+$orderHistory = array();
 
-// // Assuming MysqliSelect1 function handles the query correctly
-// $customerData = $obj->MysqliSelect1("SELECT $Fields FROM customer_master WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
-if($_SESSION["CustomerId"]){
+if (isset($_SESSION["CustomerId"]) && !empty($_SESSION["CustomerId"])) {
+    $FieldNames = array("CustomerId", "Name", "MobileNo", "Email", "IsActive");
+    $ParamArray = array($_SESSION["CustomerId"]);
+    $Fields = implode(",", $FieldNames);
+
+    $customerData = $obj->MysqliSelect1("SELECT $Fields FROM customer_master WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
+
+    // Get order history for the customer
+    $orderFieldNames = array("OrderId", "OrderDate", "Amount", "OrderStatus", "PaymentStatus");
+    $orderParamArray = array($_SESSION["CustomerId"]);
+    $orderFields = implode(",", $orderFieldNames);
+
+    $orderHistory = $obj->MysqliSelect1("SELECT $orderFields FROM order_master WHERE CustomerId = ? ORDER BY OrderDate DESC LIMIT 10", $orderFieldNames, "i", $orderParamArray);
+}
+if(isset($_SESSION["CustomerId"]) && !empty($_SESSION["CustomerId"])){
 ?>
 <html lang="en">
 <head>
@@ -48,6 +60,234 @@ if($_SESSION["CustomerId"]){
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Account Page Styling - Matching Site Design -->
+    <style>
+        /* Override the heavy modern styling with site-consistent design */
+        .shipping-area {
+            background: #fff;
+            padding: 80px 0;
+        }
+
+        .account-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .account-title h1 {
+            font-size: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .account-title h1 i {
+            color: #ec6504;
+            margin-right: 15px;
+        }
+
+        .account-title h1 span {
+            color: #ec6504;
+            font-weight: 600;
+        }
+
+        .account-area {
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 10%);
+            background: #fff;
+        }
+
+        .account-area .account {
+            width: 50%;
+        }
+
+        .account-area .account h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .account-area .account ul.page-name {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .account-area .account ul.page-name li.register-id {
+            margin-bottom: 5px;
+        }
+
+        .account-area .account ul.page-name li.register-id a {
+            color: #ec6504;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.2s ease;
+        }
+
+        .account-area .account ul.page-name li.register-id a:hover {
+            color: #d55a04;
+            padding-left: 10px;
+        }
+
+        .account-area .account ul.page-name li.register-id a i {
+            margin-right: 10px;
+            width: 16px;
+            font-size: 14px;
+        }
+
+        .account-area .account-detail {
+            width: 50%;
+        }
+
+        .account-area .account-detail h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .account-area .account-detail ul.a-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .account-area .account-detail ul.a-details li {
+            margin-top: 3px;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            color: #222;
+        }
+
+        .account-area .account-detail ul.a-details li i {
+            margin-right: 10px;
+            color: #ec6504;
+            width: 16px;
+            font-size: 14px;
+        }
+
+        .account-area .account-detail ul.a-details li.mail-register {
+            color: #ec6504;
+        }
+
+        .order-details {
+            margin-top: 30px;
+            background: #fff;
+        }
+
+        .order-details h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .table-responsive {
+            box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 10%);
+        }
+
+        .table {
+            margin: 0;
+            background: #fff;
+        }
+
+        .table thead th {
+            background-color: #ec6504;
+            color: #fff;
+            font-weight: 600;
+            padding: 15px;
+            border: none;
+            font-size: 14px;
+        }
+
+        .table tbody td {
+            padding: 15px;
+            vertical-align: middle;
+            border-color: #eee;
+            font-size: 14px;
+            color: #222;
+        }
+
+        .table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .badge-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #ec6504;
+            border-color: #ec6504;
+            color: #fff;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #d55a04;
+            border-color: #d55a04;
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .account-area {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .account-area .account,
+            .account-area .account-detail {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .account-title h1 {
+                font-size: 24px;
+            }
+
+            .table-responsive {
+                font-size: 12px;
+            }
+
+            .table thead th,
+            .table tbody td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <style>
         
@@ -99,14 +339,18 @@ if($_SESSION["CustomerId"]){
         <div class="row">
             <div class="col">
                 <div class="account-title">
-                    <h1>Welcome back, 
-                        <?php 
+                    <h1>
+                        <i class="fas fa-user-circle" style="margin-right: 15px; color: #28a745;"></i>
+                        Welcome back,
+                        <span style="color: #007bff; font-weight: 600;">
+                        <?php
                         if (!empty($customerData) && isset($customerData[0]['Name'])) {
                             echo htmlspecialchars($customerData[0]['Name']);
                         } else {
                             echo 'Guest';
                         }
                         ?>
+                        </span>
                     </h1>
                 </div>
                 <div class="account-area">
@@ -114,45 +358,117 @@ if($_SESSION["CustomerId"]){
                         <h4>My account</h4>
                         <ul class="page-name">
                             <li class="register-id">
-                                <a href="cart.php">Cart(<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a>
+                                <a href="cart.php">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Cart(<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)
+                                </a>
                             </li>
-                            <li class="register-id"><a href="address.php">View addresses</a></li>
-                            <li class="register-id"><a href="producttrack.php">Manage Orders</a></li>
-                            <li class="register-id"><a href="login.html">Logout</a></li>
+                            <li class="register-id">
+                                <a href="address.php">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    View addresses
+                                </a>
+                            </li>
+                            <li class="register-id">
+                                <a href="producttrack.php">
+                                    <i class="fas fa-box"></i>
+                                    Manage Orders
+                                </a>
+                            </li>
+                            <li class="register-id">
+                                <a href="logout.php">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="account-detail">
                         <h4>Account details</h4>
                         <ul class="a-details">
                             <li>
-                                <?php 
+                                <i class="fas fa-user"></i>
+                                <span>
+                                <?php
                                 if (!empty($customerData) && isset($customerData[0]['Name'])) {
                                     echo htmlspecialchars($customerData[0]['Name']);
                                 } else {
                                     echo 'Name not available';
                                 }
                                 ?>
+                                </span>
                             </li>
-                            <?php 
-                            if (!empty($customerData) && isset($customerData[0]['Email']) && $customerData[0]['Email'] != '') { 
+                            <?php
+                            if (!empty($customerData) && isset($customerData[0]['Email']) && $customerData[0]['Email'] != '') {
                                 ?>
-                                <li class="mail-register"><?php echo htmlspecialchars($customerData[0]['Email']); ?></li>
+                                <li class="mail-register">
+                                    <i class="fas fa-envelope"></i>
+                                    <span><?php echo htmlspecialchars($customerData[0]['Email']); ?></span>
+                                </li>
                             <?php } ?>
                             <li>
-                                <?php 
+                                <i class="fas fa-phone"></i>
+                                <span>
+                                <?php
                                 if (!empty($customerData) && isset($customerData[0]['MobileNo'])) {
                                     echo htmlspecialchars($customerData[0]['MobileNo']);
                                 } else {
                                     echo 'Mobile number not available';
                                 }
                                 ?>
+                                </span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="order-details">
                     <h4>Order history</h4>
-                    <p>You haven't placed any orders yet.</p>
+                    <?php if (!empty($orderHistory) && count($orderHistory) > 0) { ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Payment</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($orderHistory as $order) { ?>
+                                        <tr>
+                                            <td>#<?php echo htmlspecialchars($order['OrderId']); ?></td>
+                                            <td><?php echo date('d M Y', strtotime($order['OrderDate'])); ?></td>
+                                            <td>₹<?php echo number_format($order['Amount'], 2); ?></td>
+                                            <td>
+                                                <span class="badge badge-<?php
+                                                    echo ($order['OrderStatus'] == 'Delivered') ? 'success' :
+                                                         (($order['OrderStatus'] == 'Cancelled') ? 'danger' : 'warning');
+                                                ?>">
+                                                    <?php echo htmlspecialchars($order['OrderStatus']); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-<?php
+                                                    echo ($order['PaymentStatus'] == 'Paid') ? 'success' : 'warning';
+                                                ?>">
+                                                    <?php echo htmlspecialchars($order['PaymentStatus']); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="order-details.php?id=<?php echo $order['OrderId']; ?>" class="btn btn-sm btn-primary">View</a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php } else { ?>
+                        <p>You haven't placed any orders yet.</p>
+                        <p><a href="products.php" class="btn btn-primary">Start Shopping</a></p>
+                    <?php } ?>
                 </div>
             </div>
         </div>
