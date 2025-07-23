@@ -7724,7 +7724,8 @@ window.addEventListener('load', function() {
     });
 
     console.log('✅ Add to Cart override complete!');
-});                                 
+});
+</script>
 
 <?php
 // Add Analytics JavaScript Tracking
@@ -7778,8 +7779,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-</script>
-
 </script>
 
 </body>

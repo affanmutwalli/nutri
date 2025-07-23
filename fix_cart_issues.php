@@ -129,10 +129,10 @@ class EnhancedCartManager {
     }
     
     /**
-     * Validate product exists and is active
+     * Validate product exists
      */
     private function validateProduct($productId) {
-        $query = "SELECT ProductId FROM product_master WHERE ProductId = ? AND IsActive = \"Y\"";
+        $query = "SELECT ProductId FROM product_master WHERE ProductId = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $productId);
         $stmt->execute();

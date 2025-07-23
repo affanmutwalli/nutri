@@ -61,180 +61,358 @@ if (!$OrderData) {
     <!-- header start -->
         <?php include("components/header.php") ?>
         <!-- header end -->
-                        <div class="container" style="margin-top:20px;">
-          <a href="print-order.php?order_id=<?php echo $OrderData[0]['OrderId']; ?>" class="tracking-link btn btn-style1 ">Print Order</a>
 
+        <!-- Custom CSS for order page -->
+        <style>
+        .order-header {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .order-status-badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        .order-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .section-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #fff;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #495057;
+        }
+        .order-item-row {
+            border-bottom: 1px solid #f1f3f4;
+            padding: 1rem 0;
+        }
+        .order-item-row:last-child {
+            border-bottom: none;
+        }
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .info-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .info-value {
+            font-weight: 600;
+        }
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            color: #6c757d;
+        }
+        </style>
+
+        <div class="container" style="margin-top: 20px;">
+            <!-- Breadcrumb Navigation -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                    <li class="breadcrumb-item"><a href="account.php">Orders</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Order #<?php echo $OrderData[0]["OrderId"]; ?></li>
+                </ol>
+            </nav>
+
+            <!-- Order Header -->
+            <div class="order-header">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <div>
+                        <h1 class="h3 mb-2">Order #<?php echo $OrderData[0]["OrderId"]; ?></h1>
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <?php
+                            $statusClass = 'success';
+                            $statusText = 'Confirmed';
+                            if ($OrderData[0]['OrderStatus'] == 'Process') {
+                                $statusClass = 'warning';
+                                $statusText = 'Processing';
+                            } elseif ($OrderData[0]['OrderStatus'] == 'Shipped') {
+                                $statusClass = 'info';
+                                $statusText = 'Shipped';
+                            } elseif ($OrderData[0]['OrderStatus'] == 'Delivered') {
+                                $statusClass = 'success';
+                                $statusText = 'Delivered';
+                            }
+                            ?>
+                            <span class="badge badge-<?php echo $statusClass; ?> order-status-badge">
+                                <i class="fa fa-check-circle me-1"></i><?php echo $statusText; ?>
+                            </span>
+                            <span class="order-date"><?php echo date("M d", strtotime($OrderData[0]["CreatedAt"])); ?></span>
+                        </div>
+                        <p class="text-muted mb-0">Thank you for choosing My Nutrify! Your order has been successfully placed.</p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="buy-again.php?order_id=<?php echo $OrderData[0]['OrderId']; ?>" class="btn btn-outline-primary">
+                            <i class="fa fa-refresh me-1"></i>Buy again
+                        </a>
+                        <a href="print-order.php?order_id=<?php echo $OrderData[0]['OrderId']; ?>" class="btn btn-outline-secondary">
+                            <i class="fa fa-print me-1"></i>Print Order
+                        </a>
+                        <a href="tracking.php?OrderId=<?php echo $OrderData[0]['OrderId']; ?>" class="btn btn-primary">
+                            <i class="fa fa-truck me-1"></i>Track Order
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+
        <section id="order-section" class="section-tb-padding">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="order-area">
-                            <div class="order-price">
-                                <ul class="total-order">
-                                    <li>
-                                        <span class="order-no">Order no. <?php echo $OrderData[0]["OrderId"]; ?></span>
-                                        <span class="order-date"><?php echo date("d-m-Y h:i A", strtotime($OrderData[0]["CreatedAt"])); ?></span>
-                                    </li>
-                                    <li>
-                                        <span class="total-price">Order total</span>
-                                        <span class="amount">₹<?php echo number_format($OrderData[0]['Amount'], 2); ?></span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="order-details">
-                                <span class="text-success order-i"><i class="fa fa-check-circle"></i></span>
-                                <h4>Thank You for Choosing My Nutrify!</h4>
-                                <span class="order-s">Your order has been successfully placed.</span>
-                                <a href="tracking.php?OrderId=<?php echo $OrderData[0]['OrderId']; ?>" class="tracking-link btn btn-style1">Track Your Order</a>
-                            </div>
-                            <div class="order-details">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <!-- Add the print-hide class to hide this column in print -->
-                                                <th class="print-hide">Product Photo</th>
-                                                <th>Product Name</th>
-                                                <th>Product Code</th>
-                                                <th>Quantity</th>
-                                                <th>Size</th>
-                                                <th>Price</th>
-                                                <th>Sub Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            // Fetch order details from the order_details table
-                                            $FieldNames = array("ProductId", "ProductCode", "Quantity", "Size", "Price", "SubTotal");
-                                            $ParamArray = [$_GET["order_id"]];
-                                            $Fields = implode(",", $FieldNames);
-
-                                            // Use GROUP BY to prevent duplicate entries and SUM quantities if needed
-                                            $OrderDetails = $obj->MysqliSelect1(
-                                                "SELECT ProductId, ProductCode, SUM(Quantity) as Quantity, Size, Price, SUM(SubTotal) as SubTotal FROM order_details WHERE OrderId = ? GROUP BY ProductId, ProductCode, Size, Price ORDER BY ProductId",
-                                                $FieldNames,
-                                                "s",
-                                                $ParamArray
-                                            );
-
-                                            if ($OrderDetails) {
-                                                // Create an array to track processed products to avoid duplicates
-                                                $processedProducts = array();
-
-                                                // Loop through each order detail record
-                                                foreach ($OrderDetails as $OrderDetail) {
-                                                    // Skip if we've already processed this product
-                                                    $productKey = $OrderDetail["ProductId"] . "_" . $OrderDetail["Size"];
-                                                    if (in_array($productKey, $processedProducts)) {
-                                                        continue;
-                                                    }
-                                                    $processedProducts[] = $productKey;
-                                                    // For each order detail, fetch the product details from product_master table
-                                                    $prodFieldNames = array("ProductId", "ProductName", "PhotoPath", "SubCategoryId");
-                                                    $prodParamArray = array($OrderDetail["ProductId"]);
-                                                    $prodFields = implode(",", $prodFieldNames);
-                                                    $product_data = $obj->MysqliSelect1(
-                                                        "SELECT DISTINCT $prodFields FROM product_master WHERE ProductId = ? LIMIT 1",
-                                                        $prodFieldNames,
-                                                        "i",
-                                                        $prodParamArray
-                                                    );
-                                                    // Use the first (or only) row of product data
-                                                    $product = isset($product_data[0]) ? $product_data[0] : [];
-                                                    ?>
-                                                    <tr>
-                                                        <!-- Product Photo column with print-hide class -->
-                                                        <td class="print-hide">
-                                                            <?php if (!empty($product["PhotoPath"])) { ?>
-                                                                <img src="cms/images/products/<?php echo htmlspecialchars($product["PhotoPath"]); ?>" 
-                                                                     alt="Product Image" 
-                                                                     class="img-fluid" 
-                                                                     style="max-width:80px;">
-                                                            <?php } else { ?>
-                                                                N/A
-                                                            <?php } ?>
-                                                        </td>
-                                                        <td><?php echo htmlspecialchars($product["ProductName"] ?? "N/A"); ?></td>
-                                                        <td><?php echo htmlspecialchars($OrderDetail["ProductCode"]); ?></td>
-                                                        <td><?php echo htmlspecialchars($OrderDetail["Quantity"]); ?></td>
-                                                        <td><?php echo htmlspecialchars($OrderDetail["Size"]); ?></td>
-                                                        <td><?php echo htmlspecialchars($OrderDetail["Price"]); ?></td>
-                                                        <td><?php echo htmlspecialchars($OrderDetail["SubTotal"]); ?></td>
-                                                    </tr>
-                                                    <?php
-                                                }
-                                            } else {
-                                                // In case no order details were found
-                                                echo '<tr><td colspan="7">No order details found.</td></tr>';
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                    <div class="col-lg-8">
+                        <!-- Order Status Section -->
+                        <div class="section-card">
+                            <h3 class="section-title">Fulfillment status: <?php echo $statusText; ?></h3>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fa fa-check-circle text-success" style="font-size: 2rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1"><?php echo $statusText; ?></h5>
+                                    <p class="text-muted mb-0">
+                                        <time><?php echo date("M d", strtotime($OrderData[0]["CreatedAt"])); ?></time>
+                                        We've received your order.
+                                    </p>
                                 </div>
                             </div>
-        
-                            <div class="order-delivery">
-                                <ul class="delivery-payment">
-                                    <li class="delivery">
-                                        <h5>Delivery address</h5>
-                                        <span class="order-span">
-                                            <?php 
-                                                $shippingAddress = $OrderData[0]['ShipAddress'];
-                                                echo str_replace(",", "<br>", $shippingAddress);
-                                            ?>
-                                        </span>
-                                    </li>
-                                    <li class="pay">
-                                        <h5>Payment summary</h5>
-                                            <?php 
-                                                // Ensure that OrderData exists and TransactionId is not empty or "NA"
-                                                if (isset($OrderData[0]['TransactionId']) && !in_array($OrderData[0]['TransactionId'], ['NA', ''])) {
-                                                ?>
-                                                    <span class="order-span p-label">
-                                                        <span class="n-price">Transaction No : </span>
-                                                        <span class="o-price"><?php echo $OrderData[0]["TransactionId"]; ?></span>
-                                                    </span>
-                                                <?php 
-                                                } else {
-                                                ?>
-                                                    <span class="order-span p-label">
-                                                        <span class="n-price">Transaction No : </span>
-                                                        <span class="o-price">NA</span>
-                                                    </span>
-                                                <?php 
-                                                }
-                                                ?>
+                        </div>
+                        <!-- Order Items Section -->
+                        <div class="section-card">
+                            <h3 class="section-title">Order items</h3>
+                            <?php
+                            // Fetch order details from the order_details table
+                            $FieldNames = array("ProductId", "ProductCode", "Quantity", "Size", "Price", "SubTotal");
+                            $ParamArray = [$_GET["order_id"]];
+                            $Fields = implode(",", $FieldNames);
 
-                                        <span class="order-span p-label">
-                                            <span class="n-price">Order Total</span>
-                                            <span class="o-price">₹<?php echo number_format($OrderData[0]['Amount'], 2); ?></span>
-                                        </span>
-                                        <span class="order-span p-label">
-                                            <span class="n-price">Payment Type</span>
-                                            <span class="o-price"><?php echo $OrderData[0]["PaymentType"]; ?></span>
-                                        </span>
-                                        <span class="order-span p-label">
-                                            <span class="n-price">Payment Status</span>
-                                            <?php 
-                                                $paymentStatus = $OrderData[0]["PaymentStatus"];
-                                                $color = "text-danger"; // Default red for "Due" or "Failed"
-                                                
-                                                if ($paymentStatus == "Paid") {
-                                                    $color = "text-success"; // Green for Paid
-                                                } elseif ($paymentStatus == "Processing") {
-                                                    $color = "text-warning"; // Yellow for Processing
-                                                }
-                                            ?>
-                                            <span class="o-price <?php echo $color; ?>"><?php echo $paymentStatus; ?></span>
-                                        </span>
-                                    </li>
-                                </ul>
+                            // Use GROUP BY to prevent duplicate entries and SUM quantities if needed
+                            $OrderDetails = $obj->MysqliSelect1(
+                                "SELECT ProductId, ProductCode, SUM(Quantity) as Quantity, Size, Price, SUM(SubTotal) as SubTotal FROM order_details WHERE OrderId = ? GROUP BY ProductId, ProductCode, Size, Price ORDER BY ProductId",
+                                $FieldNames,
+                                "s",
+                                $ParamArray
+                            );
+
+                            if ($OrderDetails) {
+                                // Create an array to track processed products to avoid duplicates
+                                $processedProducts = array();
+
+                                // Loop through each order detail record
+                                foreach ($OrderDetails as $OrderDetail) {
+                                    // Skip if we've already processed this product
+                                    $productKey = $OrderDetail["ProductId"] . "_" . $OrderDetail["Size"];
+                                    if (in_array($productKey, $processedProducts)) {
+                                        continue;
+                                    }
+                                    $processedProducts[] = $productKey;
+                                    // For each order detail, fetch the product details from product_master table
+                                    $prodFieldNames = array("ProductId", "ProductName", "PhotoPath", "SubCategoryId");
+                                    $prodParamArray = array($OrderDetail["ProductId"]);
+                                    $prodFields = implode(",", $prodFieldNames);
+                                    $product_data = $obj->MysqliSelect1(
+                                        "SELECT DISTINCT $prodFields FROM product_master WHERE ProductId = ? LIMIT 1",
+                                        $prodFieldNames,
+                                        "i",
+                                        $prodParamArray
+                                    );
+                                    // Use the first (or only) row of product data
+                                    $product = isset($product_data[0]) ? $product_data[0] : [];
+                                    ?>
+                                    <div class="order-item-row">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2 print-hide">
+                                                <?php if (!empty($product["PhotoPath"])) { ?>
+                                                    <img src="cms/images/products/<?php echo htmlspecialchars($product["PhotoPath"]); ?>"
+                                                         alt="Product Image"
+                                                         class="product-image">
+                                                <?php } else { ?>
+                                                    <div class="product-image bg-light d-flex align-items-center justify-content-center">
+                                                        <i class="fa fa-image text-muted"></i>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="mb-1"><?php echo htmlspecialchars($product["ProductName"] ?? "N/A"); ?></h6>
+                                                <p class="text-muted mb-0 small">
+                                                    <?php echo htmlspecialchars($OrderDetail["Size"]); ?> |
+                                                    Code: <?php echo htmlspecialchars($OrderDetail["ProductCode"]); ?>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-2 text-center">
+                                                <span class="badge badge-light">Qty: <?php echo htmlspecialchars($OrderDetail["Quantity"]); ?></span>
+                                            </div>
+                                            <div class="col-md-2 text-right">
+                                                <strong>₹<?php echo number_format($OrderDetail["SubTotal"], 2); ?></strong>
+                                                <br><small class="text-muted">₹<?php echo number_format($OrderDetail["Price"], 2); ?> each</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            } else {
+                                echo '<p class="text-muted">No order details found.</p>';
+                            }
+                            ?>
+                        </div>
+
+                        <!-- Order Details Section -->
+                        <div class="section-card">
+                            <h3 class="section-title">Order details</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="mb-3">Contact information</h6>
+                                    <div class="info-row">
+                                        <span class="info-label">Name:</span>
+                                        <span class="info-value"><?php echo htmlspecialchars($OrderData[0]['Name']); ?></span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Email:</span>
+                                        <span class="info-value"><?php echo htmlspecialchars($OrderData[0]['Email']); ?></span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Phone:</span>
+                                        <span class="info-value"><?php echo htmlspecialchars($OrderData[0]['MobileNo']); ?></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-3">Shipping address</h6>
+                                    <address class="mb-0">
+                                        <?php
+                                        $shippingAddress = $OrderData[0]['ShipAddress'];
+                                        echo nl2br(htmlspecialchars(str_replace(",", "\n", $shippingAddress)));
+                                        ?>
+                                    </address>
+                                </div>
                             </div>
-                        </div><!-- order-area -->
-                    </div><!-- col -->
-                </div><!-- row -->
-            </div><!-- container -->
+
+                            <hr class="my-4">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="mb-3">Payment</h6>
+                                    <div class="info-row">
+                                        <span class="info-label">Payment Method:</span>
+                                        <span class="info-value"><?php echo htmlspecialchars($OrderData[0]["PaymentType"]); ?></span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Payment Status:</span>
+                                        <?php
+                                        $paymentStatus = $OrderData[0]["PaymentStatus"];
+                                        $statusColor = "text-danger"; // Default red for "Due" or "Failed"
+
+                                        if ($paymentStatus == "Paid") {
+                                            $statusColor = "text-success"; // Green for Paid
+                                        } elseif ($paymentStatus == "Processing") {
+                                            $statusColor = "text-warning"; // Yellow for Processing
+                                        }
+                                        ?>
+                                        <span class="info-value <?php echo $statusColor; ?>"><?php echo $paymentStatus; ?></span>
+                                    </div>
+                                    <?php if (isset($OrderData[0]['TransactionId']) && !in_array($OrderData[0]['TransactionId'], ['NA', ''])): ?>
+                                    <div class="info-row">
+                                        <span class="info-label">Transaction ID:</span>
+                                        <span class="info-value"><?php echo htmlspecialchars($OrderData[0]["TransactionId"]); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-3">Shipping method</h6>
+                                    <p class="mb-0">Standard Delivery</p>
+                                    <small class="text-muted">Delivered within 3-7 business days</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <!-- Payment Status Section -->
+                        <div class="section-card">
+                            <h3 class="section-title">Payment status</h3>
+                            <div class="text-center mb-3">
+                                <h4 class="text-primary">₹<?php echo number_format($OrderData[0]['Amount'], 2); ?> INR</h4>
+                                <?php
+                                $paymentStatus = $OrderData[0]["PaymentStatus"];
+                                $statusBadge = "badge-danger"; // Default red for "Due" or "Failed"
+
+                                if ($paymentStatus == "Paid") {
+                                    $statusBadge = "badge-success"; // Green for Paid
+                                } elseif ($paymentStatus == "Processing") {
+                                    $statusBadge = "badge-warning"; // Yellow for Processing
+                                }
+                                ?>
+                                <span class="badge <?php echo $statusBadge; ?>"><?php echo $paymentStatus; ?></span>
+                            </div>
+                        </div>
+
+                        <!-- Order Summary Section -->
+                        <div class="section-card">
+                            <h3 class="section-title">Order summary</h3>
+
+                            <?php
+                            // Calculate subtotal from order details
+                            $subtotal = 0;
+                            if ($OrderDetails) {
+                                foreach ($OrderDetails as $OrderDetail) {
+                                    $subtotal += $OrderDetail["SubTotal"];
+                                }
+                            }
+                            $shipping = 0; // You can calculate shipping if needed
+                            $total = $OrderData[0]['Amount'];
+                            ?>
+
+                            <div class="info-row">
+                                <span class="info-label">Subtotal:</span>
+                                <span class="info-value">₹<?php echo number_format($subtotal, 2); ?></span>
+                            </div>
+
+                            <?php if ($shipping > 0): ?>
+                            <div class="info-row">
+                                <span class="info-label">Shipping:</span>
+                                <span class="info-value">₹<?php echo number_format($shipping, 2); ?></span>
+                            </div>
+                            <?php endif; ?>
+
+                            <hr>
+
+                            <div class="info-row">
+                                <span class="info-label"><strong>Total:</strong></span>
+                                <span class="info-value"><strong>INR ₹<?php echo number_format($total, 2); ?></strong></span>
+                            </div>
+
+                            <?php
+                            // Calculate tax if included in total
+                            $taxAmount = $total * 0.18; // Assuming 18% tax, adjust as needed
+                            if ($taxAmount > 0):
+                            ?>
+                            <p class="text-muted small mt-2">Including ₹<?php echo number_format($taxAmount, 2); ?> in taxes</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- brand logo end -->
     
