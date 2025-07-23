@@ -1699,7 +1699,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   border: none;
   box-shadow: none;
   opacity: 1;
-  animation: fadeInLeft 1s ease-out forwards;
 }
 
 .home-s-content span {
@@ -1708,8 +1707,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   font-weight: 600;
   letter-spacing: 3px;
   margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeInUp 0.8s 0.2s ease-out forwards;
+  opacity: 1;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   color: var(--white);
   text-transform: uppercase;
@@ -1720,8 +1718,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: fadeInUp 0.8s 0.4s ease-out forwards;
+  opacity: 1;
   text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
   color: var(--white);
   letter-spacing: -1px;
