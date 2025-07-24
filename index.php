@@ -2247,6 +2247,66 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
             margin-bottom: 10px !important;
         }
     }
+
+/* ✨ ADDITIONAL SPECIAL OFFERS TAB ANIMATIONS ✨ */
+@keyframes offersShine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes fireFlicker {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        transform: scale(1.1) rotate(2deg);
+        filter: hue-rotate(10deg);
+    }
+    50% {
+        transform: scale(0.95) rotate(-1deg);
+        filter: hue-rotate(-5deg);
+    }
+    75% {
+        transform: scale(1.05) rotate(1deg);
+        filter: hue-rotate(15deg);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ✨ MAGNETIC EFFECT FOR SPECIAL OFFERS ✨ */
+.magnetic-effect {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.magnetic-effect:hover {
+    transform: translateY(-5px) scale(1.08) !important;
+    box-shadow:
+        0 15px 40px rgba(255, 107, 53, 0.7),
+        0 0 60px rgba(255, 107, 53, 0.5),
+        0 0 100px rgba(255, 140, 0, 0.3) !important;
+    filter: brightness(1.1) saturate(1.2);
+}
+
+.magnetic-effect:active {
+    transform: translateY(-2px) scale(1.05) !important;
+}
+
     </style>
 
     <style>
@@ -4697,7 +4757,17 @@ s0.parentNode.insertBefore(s1,s0);
                         <p style="color: var(--text-light); font-size: 18px; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">Choose from our carefully curated selection of premium ayurvedic products.</p>
                         <ul class="nav nav-tabs" style="border: none; justify-content: center; margin-top: 40px;">
                             <li class="nav-item" style="margin: 0 10px;">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#home" style="background: var(--primary-orange); color: var(--white); border: none; border-radius: 25px; padding: 12px 24px; font-weight: 600; transition: var(--transition);">SPECIAL OFFERS</a>
+                                <a class="nav-link active special-offers-tab magnetic-effect" data-bs-toggle="tab" href="#home" style="background: linear-gradient(135deg, #ff6b35, #ff8c00, #ff6b35); background-size: 200% 200%; color: var(--white); border: none; border-radius: 30px; padding: 15px 30px; font-weight: 800; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5), 0 0 40px rgba(255, 107, 53, 0.3); animation: specialOffersGradient 3s ease infinite;">
+                                    <span style="position: relative; z-index: 3; display: flex; align-items: center; gap: 8px;">
+                                        <span class="fire-icon" style="animation: fireFlicker 1.5s ease-in-out infinite;">🔥</span>
+                                        <span>SPECIAL OFFERS</span>
+                                        <span class="fire-icon" style="animation: fireFlicker 1.5s ease-in-out infinite reverse;">🔥</span>
+                                    </span>
+                                    <span class="offers-shine" style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: offersShine 2.5s infinite; z-index: 2;"></span>
+                                    <span class="sparkle-1" style="position: absolute; top: 10%; left: 20%; width: 4px; height: 4px; background: white; border-radius: 50%; animation: sparkle 2s ease-in-out infinite; z-index: 2;"></span>
+                                    <span class="sparkle-2" style="position: absolute; top: 70%; right: 25%; width: 3px; height: 3px; background: white; border-radius: 50%; animation: sparkle 2s ease-in-out infinite 0.5s; z-index: 2;"></span>
+                                    <span class="sparkle-3" style="position: absolute; top: 40%; right: 15%; width: 2px; height: 2px; background: white; border-radius: 50%; animation: sparkle 2s ease-in-out infinite 1s; z-index: 2;"></span>
+                                </a>
                             </li>
                             <li class="nav-item" style="margin: 0 10px;">
                                 <a class="nav-link" data-bs-toggle="tab" href="#profile" style="background: var(--white); color: var(--text-dark); border: 2px solid var(--border-light); border-radius: 25px; padding: 12px 24px; font-weight: 600; transition: var(--transition);">NEW PRODUCTS</a>

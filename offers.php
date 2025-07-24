@@ -64,11 +64,12 @@ $mysqli = $obj->connection();
         .offers-hero::before {
             content: '';
             position: absolute;
+            background:no repeat;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background: url('cms/images/banners/Special Offers.jpg');
             opacity: 0.3;
         }
 
@@ -527,8 +528,7 @@ $mysqli = $obj->connection();
     <!-- Hero Section -->
     <section class="offers-hero">
         <div class="container">
-            <h1><i class="fas fa-fire"></i> Special Offers</h1>
-            <p>Discover amazing deals on our premium health and wellness products</p>
+            <h1><i></i> </h1>
         </div>
     </section>
 

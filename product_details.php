@@ -5037,7 +5037,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 touchDrag: true,
                 animateOut: 'fadeOut',
                 animateIn: 'fadeIn',
-                smartSpeed: 600,
+                smartSpeed: -100,
                 responsive: {
                     0: {
                         nav: true,
