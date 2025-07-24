@@ -7797,17 +7797,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - attempting to show popup');
     setTimeout(showPromoPopup, 2000); // Show after 2 seconds
 
-    // Temporary test button (remove after testing)
-    setTimeout(() => {
-        const testBtn = document.createElement('div');
-        testBtn.innerHTML = 'Test Popup';
-        testBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#ff8c00;color:white;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:12px;z-index:9999;';
-        testBtn.onclick = function() {
-            sessionStorage.removeItem('promoPopupShownThisSession');
-            showPromoPopup();
-        };
-        document.body.appendChild(testBtn);
-    }, 3000);
+
 });
 
 // FORCE OVERRIDE: Add to Cart redirect functionality

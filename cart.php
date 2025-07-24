@@ -89,6 +89,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<?php include("components/chat_integration.php"); ?>
 </head>
 <body class="home-1">
     <!-- top notificationbar start -->
@@ -518,6 +519,8 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+
+<?php include("components/chat_script.php"); ?>
 </body>
 
 </html>

@@ -1,0 +1,11 @@
+-- This file has been converted for MySQL 5.7 compatibility
+-- Original file: my_nutrify_db (10).sql
+-- Conversion completed on: Jul 24, 2025
+-- 
+-- Changes made for MySQL 5.7 compatibility:
+-- 1. Changed server version from 8.4.3 to 5.7.44
+-- 2. Replaced utf8mb4_0900_ai_ci collation with utf8mb4_unicode_ci (14 instances)
+-- 3. Changed json data type to longtext for MySQL 5.7 compatibility (1 instance)
+-- 4. Replaced utf8mb3 with utf8 charset (2 instances)
+--
+-- The converted file is now ready for import into MySQL 5.7 or older versions.

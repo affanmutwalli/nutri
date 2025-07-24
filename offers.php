@@ -50,6 +50,17 @@ $mysqli = $obj->connection();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <style>
+        /* Fix navbar z-index issue */
+        .header-area {
+            position: relative !important;
+            z-index: 9999 !important;
+        }
+
+        .header-main-area {
+            position: relative !important;
+            z-index: 9999 !important;
+        }
+
         /* Special Offers Page Styles */
         .offers-hero {
             background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
@@ -115,19 +126,21 @@ $mysqli = $obj->connection();
 
         .product-card {
             background: white;
-            border: 2px solid #f0f0f0;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            position: relative;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
             margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .product-card:hover {
-            border-color: #ff6b35;
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            border-color: #ff6a00;
         }
         
         .offers-count {
@@ -197,27 +210,23 @@ $mysqli = $obj->connection();
         
         /* Enhanced product card styles for offers */
         .product-badge {
-            background: linear-gradient(45deg, #dc3545, #c82333);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
             position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 10;
-            animation: pulse 2s infinite;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 10px rgba(220, 53, 69, 0.4);
+            top: 12px;
+            left: 12px;
+            background: #e53e3e;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
         }
 
         .product-image {
             position: relative;
             overflow: hidden;
-            border-radius: 15px 15px 0 0;
-            height: 250px;
+            aspect-ratio: 1;
+            background: #f8f9fa;
         }
 
         .product-image img {
@@ -233,6 +242,9 @@ $mysqli = $obj->connection();
 
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 42%;
         }
 
         .product-title {
@@ -271,83 +283,106 @@ $mysqli = $obj->connection();
 
         .product-price {
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .price-current {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #ff6b35;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .price-original {
             font-size: 1rem;
             color: #999;
             text-decoration: line-through;
-            margin-left: 8px;
+            font-weight: 500;
         }
 
         .price-discount {
-            background: #28a745;
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             padding: 4px 8px;
             border-radius: 12px;
             font-size: 11px;
             font-weight: bold;
-            margin-left: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Responsive price display */
+        @media (max-width: 768px) {
+            .price-current {
+                font-size: 1.2rem;
+            }
+
+            .price-original {
+                font-size: 0.9rem;
+            }
+
+            .price-discount {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
         }
 
         .btn-add-cart {
             width: 100%;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            background: #305724 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            margin-top: auto !important;
+            align-self: flex-end !important;
         }
 
         .btn-add-cart:hover {
-            background: linear-gradient(135deg, #e55a2b 0%, #e8841a 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+            background: #1e3a16 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(48, 87, 36, 0.4) !important;
         }
 
         .product-actions {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 12px;
+            right: 12px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 3;
         }
 
         .product-card:hover .product-actions {
             opacity: 1;
+            transform: translateY(0);
         }
 
         .eye-btn {
             background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ff6b35;
-            color: #ff6b35;
-            width: 50px;
-            height: 50px;
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s ease;
             cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .eye-btn:hover {
-            background: #ff6b35;
+            background: #ff6a00;
             color: white;
             transform: scale(1.1);
         }
@@ -505,6 +540,7 @@ $mysqli = $obj->connection();
     src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+    <?php include("components/chat_integration.php"); ?>
 </head>
 
 <body class="home-1">
@@ -536,15 +572,108 @@ $mysqli = $obj->connection();
     <section class="py-5">
         <div class="container-fluid full-width">
             <?php
-            // Fetch all active offers using the view we created
+            // Get offers from the active_product_offers view and fix pricing
+            $offers = [];
+
+            // First try the original active_product_offers view
             $query = "SELECT * FROM active_product_offers ORDER BY created_date DESC";
             $result = $mysqli->query($query);
-            $offers = [];
-            if ($result) {
+
+            if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $offers[] = $row;
+                    // Get the correct pricing for this specific product
+                    $price_query = "SELECT MIN(OfferPrice) as min_offer_price, MIN(MRP) as min_mrp
+                                  FROM product_price
+                                  WHERE ProductId = ? AND OfferPrice > 0 AND MRP > 0";
+                    $price_stmt = $mysqli->prepare($price_query);
+                    $price_stmt->bind_param("i", $row['product_id']);
+                    $price_stmt->execute();
+                    $price_result = $price_stmt->get_result();
+
+                    if ($price_result && $price_row = $price_result->fetch_assoc()) {
+                        if ($price_row['min_offer_price'] > 0 && $price_row['min_mrp'] > 0) {
+                            // Update pricing data in the offer
+                            $row['min_offer_price'] = $price_row['min_offer_price'];
+                            $row['min_mrp'] = $price_row['min_mrp'];
+                            $row['savings_amount'] = $price_row['min_mrp'] - $price_row['min_offer_price'];
+                            $row['discount_percentage'] = round((($price_row['min_mrp'] - $price_row['min_offer_price']) / $price_row['min_mrp']) * 100);
+                            $offers[] = $row;
+                        }
+                    }
+                }
+            } else {
+                // Fall back to direct product query to show all products with discounts
+                $fallback_query = "SELECT
+                    p.ProductId as product_id,
+                    p.ProductName,
+                    p.PhotoPath,
+                    MIN(pp.OfferPrice) as min_offer_price,
+                    MIN(pp.MRP) as min_mrp,
+                    ROUND(((MIN(pp.MRP) - MIN(pp.OfferPrice)) / MIN(pp.MRP)) * 100) as discount_percentage,
+                    (MIN(pp.MRP) - MIN(pp.OfferPrice)) as savings_amount,
+                    NULL as offer_title,
+                    NULL as offer_description,
+                    NOW() as created_date
+                FROM product_master p
+                INNER JOIN product_price pp ON p.ProductId = pp.ProductId
+                WHERE pp.OfferPrice > 0 AND pp.MRP > 0 AND pp.OfferPrice < pp.MRP
+                GROUP BY p.ProductId, p.ProductName, p.PhotoPath
+                HAVING min_offer_price > 0 AND min_mrp > 0 AND discount_percentage > 0
+                ORDER BY discount_percentage DESC";
+
+                $result = $mysqli->query($fallback_query);
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $offers[] = $row;
+                    }
                 }
             }
+
+            // If still no offers found, try to get any products with pricing
+            if (empty($offers)) {
+                $simple_query = "SELECT
+                    p.ProductId as product_id,
+                    p.ProductName,
+                    p.PhotoPath,
+                    MIN(pp.OfferPrice) as min_offer_price,
+                    MIN(pp.MRP) as min_mrp,
+                    CASE
+                        WHEN MIN(pp.MRP) > MIN(pp.OfferPrice) AND MIN(pp.MRP) > 0
+                        THEN ROUND(((MIN(pp.MRP) - MIN(pp.OfferPrice)) / MIN(pp.MRP)) * 100)
+                        ELSE 0
+                    END as discount_percentage,
+                    CASE
+                        WHEN MIN(pp.MRP) > MIN(pp.OfferPrice)
+                        THEN (MIN(pp.MRP) - MIN(pp.OfferPrice))
+                        ELSE 0
+                    END as savings_amount,
+                    NULL as offer_title,
+                    NULL as offer_description,
+                    NOW() as created_date
+                FROM product_master p
+                INNER JOIN product_price pp ON p.ProductId = pp.ProductId
+                WHERE pp.OfferPrice > 0 AND pp.MRP > 0 AND pp.MRP > pp.OfferPrice
+                GROUP BY p.ProductId, p.ProductName, p.PhotoPath
+                HAVING min_offer_price > 0 AND min_mrp > min_offer_price
+                ORDER BY min_offer_price ASC
+                LIMIT 20";
+
+                $result = $mysqli->query($simple_query);
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $offers[] = $row;
+                    }
+                }
+            }
+
+            // Debug: Uncomment the lines below to see offer data structure
+            // if ($mysqli->error) {
+            //     echo '<div class="alert alert-warning">Database Error: ' . $mysqli->error . '</div>';
+            // }
+            // echo '<div class="alert alert-info">Found ' . count($offers) . ' offers</div>';
+            // if (count($offers) > 0) {
+            //     echo '<pre>'; print_r(array_slice($offers, 0, 1)); echo '</pre>';
+            // }
             ?>
             
             <?php if (!empty($offers)): ?>
@@ -556,7 +685,7 @@ $mysqli = $obj->connection();
 
             <!-- Offers Grid -->
             <div class="container">
-                <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 0 15px;">
+                <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 0 15px; align-items: stretch;">
                 <?php foreach ($offers as $offer): ?>
                 <div class="product-card" data-product-id="<?php echo htmlspecialchars($offer["product_id"]); ?>">
                     <div class="offers-badge">
@@ -593,7 +722,14 @@ $mysqli = $obj->connection();
                         <h3 class="product-title">
                             <a href="product_details.php?ProductId=<?php echo htmlspecialchars($offer["product_id"]); ?>"
                                style="text-decoration: none; color: inherit;">
-                                <?php echo htmlspecialchars($offer["ProductName"]); ?>
+                                <?php
+                                // Truncate long product names to 50 characters
+                                $productName = $offer["ProductName"];
+                                if (strlen($productName) > 50) {
+                                    $productName = substr($productName, 0, 50) . '...';
+                                }
+                                echo htmlspecialchars($productName);
+                                ?>
                             </a>
                         </h3>
                         
@@ -610,15 +746,29 @@ $mysqli = $obj->connection();
                         <?php endif; ?>
 
                         <div class="product-price">
-                            <span class="price-current">₹<?php echo number_format($offer['min_offer_price'], 2); ?></span>
-                            <?php if ($offer['min_mrp'] > $offer['min_offer_price']): ?>
-                                <span class="price-original">₹<?php echo number_format($offer['min_mrp'], 2); ?></span>
-                                <span class="price-discount"><?php echo $offer['discount_percentage']; ?>% OFF</span>
+                            <?php
+                            // Ensure price values are numeric and valid
+                            $current_price = isset($offer['min_offer_price']) && is_numeric($offer['min_offer_price']) ? floatval($offer['min_offer_price']) : 0;
+                            $original_price = isset($offer['min_mrp']) && is_numeric($offer['min_mrp']) ? floatval($offer['min_mrp']) : 0;
+                            $discount_percent = isset($offer['discount_percentage']) && is_numeric($offer['discount_percentage']) ? intval($offer['discount_percentage']) : 0;
+                            ?>
+
+                            <?php if ($current_price > 0): ?>
+                                <span class="price-current">₹<?php echo number_format($current_price, 2); ?></span>
+                                <?php if ($original_price > $current_price): ?>
+                                    <span class="price-original">₹<?php echo number_format($original_price, 2); ?></span>
+                                    <?php if ($discount_percent > 0): ?>
+                                        <span class="price-discount"><?php echo $discount_percent; ?>% OFF</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <span class="price-current" style="color: #666;">Price not available</span>
                             <?php endif; ?>
                         </div>
 
                         <button class="btn-add-cart add-to-cart-session"
-                                data-product-id="<?php echo htmlspecialchars($offer['product_id']); ?>">
+                                data-product-id="<?php echo htmlspecialchars($offer['product_id']); ?>"
+                                style="background: #305724; border: none; color: white; width: 100%; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
                             <i class="fa fa-shopping-cart me-2"></i>Add to Cart
                         </button>
                     </div>
@@ -706,6 +856,8 @@ $mysqli = $obj->connection();
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+
+    <?php include("components/chat_script.php"); ?>
 </body>
 
 </html>
