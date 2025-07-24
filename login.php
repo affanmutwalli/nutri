@@ -47,6 +47,9 @@ $obj->connection();
     <style>
 
     </style>
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
 </head>
 <body class="home-1">
     <!-- top notificationbar start -->

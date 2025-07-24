@@ -914,6 +914,9 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<!-- Tawk.to Integration -->
+<?php include("components/tawk-to.php"); ?>
 </head>
 
 <body class="home-1">

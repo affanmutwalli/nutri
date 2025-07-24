@@ -50,7 +50,10 @@ $obj->connection();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-   
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
+
 </head>
 <!--</head>-->
 <body class="home-1">

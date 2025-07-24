@@ -269,6 +269,9 @@ $order = $orderData[0];
             }
         }
     </style>
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
 </head>
 
 <body>

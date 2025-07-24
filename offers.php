@@ -48,7 +48,10 @@ $mysqli = $obj->connection();
     <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
+
     <style>
         /* Fix navbar z-index issue */
         .header-area {
@@ -239,7 +242,6 @@ $mysqli = $obj->connection();
         .product-card:hover .product-image img {
             transform: scale(1.05);
         }
-
         .product-info {
             padding: 20px;
             display: flex;

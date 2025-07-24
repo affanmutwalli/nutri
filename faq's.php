@@ -383,10 +383,12 @@ h1:after {
         }
     }
 
-   
-   
+
+
     </style>
-</head>
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
 </head>
 
 <body class="home-1">

@@ -99,8 +99,11 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
         height: 20px;
     }
 
-  
+
     </style>
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
 </head>
 
 <body class="home-1">
