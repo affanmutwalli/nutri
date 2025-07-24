@@ -693,8 +693,8 @@ input[name="quantity"] {
                                                     </a>
                                                 </li>
                                                 <li
-                                                    class="menu-link offers-menu <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">
-                                                    <a href="index.php#contact" class="link-title">
+                                                    class="menu-link offers-menu <?php echo (basename($_SERVER['PHP_SELF']) == 'offers.php') ? 'active' : ''; ?>">
+                                                    <a href="offers.php" class="link-title">
                                                         <span class="sp-link-title">Offers <span
                                                                 class="hot">Hot</span></span>
                                                     </a>
@@ -1051,7 +1051,7 @@ showSlides(); // Initial call to start slideshow
                                             </a>
                                         </li>
                                         <li class="menu-link offers-menu">
-                                            <a href="index.php#contact" class="link-title">
+                                            <a href="offers.php" class="link-title">
                                                 <span class="sp-link-title">Offers <span class="hot">Hot</span></span>
                                             </a>
                                         </li>
