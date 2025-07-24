@@ -189,29 +189,7 @@ $obj->connection();
         min-width: 180px;
     }
 
-    .view-toggle {
-        display: flex;
-        gap: 5px;
-    }
 
-    .view-toggle button {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        background: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .view-toggle button.active {
-        background: #305724;
-        color: white;
-        border-color: #305724;
-    }
-
-    .view-toggle button:hover {
-        background: #305724;
-        color: white;
-    }
 
     /* Filter Sidebar Styles */
     .filter-sidebar {
@@ -470,15 +448,26 @@ $obj->connection();
 
     .product-image-container {
         position: relative;
-        overflow: hidden;
-        height: 250px;
+        overflow: visible;
+        height: 350px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+        border-radius: 8px;
+        box-sizing: border-box;
     }
 
     .product-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        max-width: calc(100% - 10px);
+        max-height: calc(100% - 10px);
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
         transition: transform 0.3s ease;
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
     }
 
     .enhanced-grid-items:hover .product-image-container img {
@@ -699,10 +688,18 @@ $obj->connection();
     }
 
     .list-view .product-image-container {
-        width: 200px;
-        height: 150px;
+        width: 240px;
+        height: 220px;
         flex-shrink: 0;
         margin-right: 20px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        overflow: visible;
     }
 
     .list-view .enhanced-caption {
@@ -778,16 +775,22 @@ $obj->connection();
             justify-content: space-between;
         }
 
-        .view-toggle {
-            justify-content: center;
-        }
+
 
         .enhanced-grid-items {
             margin-bottom: 20px;
         }
 
         .product-image-container {
-            height: 200px;
+            height: 320px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         .enhanced-caption {
@@ -802,9 +805,17 @@ $obj->connection();
 
         .list-view .product-image-container {
             width: 100%;
-            height: 200px;
+            height: 320px;
             margin-right: 0;
             margin-bottom: 15px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         .list-view .enhanced-caption {
@@ -1047,20 +1058,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                 <!-- Products Section -->
                 <div class="col-lg-9 col-md-8 col-12">
-                    <!-- View Toggle -->
-                    <div class="view-controls">
-                        <div class="view-toggle">
-                            <button type="button" class="view-btn active" onclick="toggleView('grid')" id="grid-view">
-                                <i class="fa fa-th"></i> Large
-                            </button>
-                            <button type="button" class="view-btn" onclick="toggleView('grid-small')" id="grid-small-view">
-                                <i class="fa fa-th"></i> Small
-                            </button>
-                            <button type="button" class="view-btn" onclick="toggleView('list')" id="list-view">
-                                <i class="fa fa-list"></i> List
-                            </button>
-                        </div>
-                    </div>
+
                 <!-- Product Section -->
                 <div class="col-lg-12 col-md-12 col-12">
                     <!--<div class="grid-list-banner d-none d-md-block"-->
@@ -1581,29 +1579,7 @@ function removeFromCart(productId) {
             document.getElementById('product-count').textContent = count;
         }
 
-        function initializeView() {
-            // Set initial view state
-            const container = document.getElementById('products-container');
-            container.classList.add('grid-view');
-        }
 
-        function toggleView(viewType) {
-            const container = document.getElementById('products-container');
-            const gridBtn = document.getElementById('grid-view');
-            const listBtn = document.getElementById('list-view');
-
-            if (viewType === 'grid') {
-                container.classList.remove('list-view');
-                container.classList.add('grid-view');
-                gridBtn.classList.add('active');
-                listBtn.classList.remove('active');
-            } else {
-                container.classList.remove('grid-view');
-                container.classList.add('list-view');
-                listBtn.classList.add('active');
-                gridBtn.classList.remove('active');
-            }
-        }
 
         function sortProducts() {
             const sortValue = document.getElementById('sort-select').value;
