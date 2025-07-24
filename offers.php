@@ -354,40 +354,7 @@ $mysqli = $obj->connection();
             box-shadow: 0 4px 12px rgba(48, 87, 36, 0.4) !important;
         }
 
-        .product-actions {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 3;
-        }
 
-        .product-card:hover .product-actions {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .eye-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .eye-btn:hover {
-            background: #ff6a00;
-            color: white;
-            transform: scale(1.1);
-        }
         
         /* Popup Overlay */
         .cart-popup-overlay {
@@ -711,13 +678,6 @@ $mysqli = $obj->connection();
                                  alt="<?php echo htmlspecialchars($offer["ProductName"]); ?>"
                                  loading="lazy">
                         </a>
-
-                        <!-- Eye Button for Preview -->
-                        <div class="product-actions">
-                            <button class="eye-btn" onclick="showPreview(<?php echo htmlspecialchars($offer['product_id']); ?>)">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                        </div>
                     </div>
 
                     <div class="product-info">
@@ -795,8 +755,7 @@ $mysqli = $obj->connection();
     <?php include("components/footer.php"); ?>
     <!-- footer end -->
 
-    <!-- Modal for Product Preview -->
-    <?php include("components/product_preview_modal.php"); ?>
+
 
     <!-- jquery -->
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -814,8 +773,7 @@ $mysqli = $obj->connection();
     <script src="js/custom.js"></script>
     <!-- Add to cart functionality -->
     <script src="js/add-to-cart.js"></script>
-    <!-- Product preview functionality -->
-    <script src="js/product-preview.js"></script>
+
 
     <script>
         // Analytics tracking for offers page
@@ -826,7 +784,7 @@ $mysqli = $obj->connection();
         // Track offer interactions
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', function(e) {
-                if (!e.target.closest('.btn-add-cart') && !e.target.closest('.eye-btn')) {
+                if (!e.target.closest('.btn-add-cart')) {
                     const productId = this.dataset.productId;
                     if (typeof trackProductView === 'function') {
                         trackProductView(productId, 'offers_page');

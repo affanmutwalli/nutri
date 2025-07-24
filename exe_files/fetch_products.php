@@ -112,11 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '        <a href="product_details.php?ProductId=' . htmlspecialchars($product["ProductId"]) . '">';
         echo '            <img class="main-image" src="cms/images/products/' . htmlspecialchars($product["PhotoPath"]) . '" alt="' . htmlspecialchars($product["ProductName"]) . '" loading="lazy">';
         echo '        </a>';
-        echo '        <div class="product-actions">';
-        echo '            <button class="eye-btn" onclick="showPreview(' . htmlspecialchars($product['ProductId']) . ')">';
-        echo '                <i class="fa fa-eye"></i>';
-        echo '            </button>';
-        echo '        </div>';
         echo '    </div>';
 
         // Product info
