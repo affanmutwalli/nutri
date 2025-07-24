@@ -1,13 +1,14 @@
 <?php
-session_start();
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
 require_once '../database/dbconnection.php';
 
-// Simple admin check
-if (!isset($_SESSION['admin_logged_in'])) {
-    if (!isset($_SESSION['CustomerId'])) {
-        echo '<div class="alert alert-danger">Access denied</div>';
-        exit;
-    }
+sec_session_start();
+
+// Check if user is logged in using the CMS authentication system
+if (login_check($mysqli) != true) {
+    echo '<div class="alert alert-danger">Access denied</div>';
+    exit;
 }
 
 $obj = new main();
