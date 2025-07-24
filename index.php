@@ -1984,15 +1984,15 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     /* Enhanced Section Spacing */
     .section-t-padding {
-        padding-top: 60px;
+        padding-top: 0px;
     }
 
     .section-b-padding {
-        padding-bottom: 60px;
+        padding-bottom: 0px;
     }
 
     .section-tb-padding {
-        padding: 60px 0;
+        padding: 0px 0;
     }
 
     /* Full-Width Layout - Krishna Ayurveda Style */

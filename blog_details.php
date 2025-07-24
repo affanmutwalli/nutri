@@ -83,8 +83,9 @@ if (!empty($blog_data)) {
 
     .blog-style-1-details .text-center img {
         width: 100%;
-        height: clamp(300px, 40vh, 500px);
-        object-fit: cover;
+        height: auto;
+        max-height: clamp(300px, 40vh, 500px);
+        object-fit: contain;
         border-radius: 0;
         transition: transform 0.3s ease;
     }
@@ -213,8 +214,9 @@ if (!empty($blog_data)) {
 
     .l-blog-image img {
         width: 100%;
-        height: clamp(80px, 12vw, 120px);
-        object-fit: cover;
+        height: auto;
+        max-height: clamp(80px, 12vw, 120px);
+        object-fit: contain;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -241,8 +243,9 @@ if (!empty($blog_data)) {
 
     .tr-pro-img img {
         width: 100%;
-        height: clamp(120px, 15vw, 180px);
-        object-fit: cover;
+        height: auto;
+        max-height: clamp(120px, 15vw, 180px);
+        object-fit: contain;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -316,8 +319,9 @@ if (!empty($blog_data)) {
 
     .blog-image img {
         width: 100%;
-        height: clamp(200px, 25vh, 280px);
-        object-fit: cover;
+        height: auto;
+        max-height: clamp(200px, 25vh, 280px);
+        object-fit: contain;
         transition: transform 0.3s ease;
     }
 
@@ -441,7 +445,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 600px;
+            max-height: 600px;
+            height: auto;
         }
 
         .blog-style-1-full-grid {
@@ -465,7 +470,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 500px;
+            max-height: 500px;
+            height: auto;
         }
 
         .blog-style-1-full-grid {
@@ -485,7 +491,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 400px;
+            max-height: 400px;
+            height: auto;
         }
 
         .blog-style-1-full-grid {
@@ -509,7 +516,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 350px;
+            max-height: 350px;
+            height: auto;
         }
 
         .blog-info-wrap {
@@ -528,7 +536,8 @@ if (!empty($blog_data)) {
         }
 
         .tr-pro-img img {
-            height: 150px;
+            max-height: 150px;
+            height: auto;
         }
     }
 
@@ -543,7 +552,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 250px;
+            max-height: 250px;
+            height: auto;
         }
 
         .single-b-title h2 {
@@ -578,15 +588,18 @@ if (!empty($blog_data)) {
         }
 
         .tr-pro-img img {
-            height: 120px;
+            max-height: 120px;
+            height: auto;
         }
 
         .l-blog-image img {
-            height: 80px;
+            max-height: 80px;
+            height: auto;
         }
 
         .blog-image img {
-            height: 200px;
+            max-height: 200px;
+            height: auto;
         }
     }
 
@@ -601,7 +614,8 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 200px;
+            max-height: 200px;
+            height: auto;
         }
 
         .blog-description p {
@@ -622,15 +636,18 @@ if (!empty($blog_data)) {
         }
 
         .tr-pro-img img {
-            height: 100px;
+            max-height: 100px;
+            height: auto;
         }
 
         .l-blog-image img {
-            height: 60px;
+            max-height: 60px;
+            height: auto;
         }
 
         .blog-image img {
-            height: 180px;
+            max-height: 180px;
+            height: auto;
         }
     }
 
@@ -657,7 +674,7 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 500px;
+            height: auto;
             max-height: 50vh;
         }
 
@@ -687,7 +704,7 @@ if (!empty($blog_data)) {
         }
 
         .blog-style-1-details .text-center img {
-            height: 600px;
+            height: auto;
             max-height: 45vh;
         }
 
