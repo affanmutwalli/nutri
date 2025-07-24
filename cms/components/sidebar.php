@@ -64,13 +64,13 @@
               </li>   
             </ul>
           </li>
-          <li class="nav-item has-treeview <?php if($selected == "catlog.php") echo "menu-open"; ?>">
-            <a href="#" class="nav-link <?php if($selected == "catlog.php") echo "active"; ?>">
+          <li class="nav-item has-treeview <?php if(in_array($selected, ["catlog.php", "offers_management.php"])) echo "menu-open"; ?>">
+            <a href="#" class="nav-link <?php if(in_array($selected, ["catlog.php", "offers_management.php"])) echo "active"; ?>">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Catlog
                 <i class="fas fa-angle-left right"></i>
-               
+
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -117,7 +117,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Product Authenticity</p>
                 </a>
-              </li>     
+              </li>
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
@@ -125,7 +125,15 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Check Product Authenticity</p>
                 </a>
-              </li>     
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="offers_management.php" class="nav-link <?php if($page == "offers_management.php") echo "active"; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Offers Management</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview <?php if($selected == "product_details.php") echo "menu-open"; ?>">
