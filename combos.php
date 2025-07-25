@@ -979,27 +979,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             </div>
                         </div>
 
-                        <!-- Product Type Filter -->
-                        <div class="filter-group">
-                            <h4>Product type</h4>
-                            <div class="filter-options" id="product-type-filters">
-                                <label class="filter-option">
-                                    <input type="checkbox" name="product_type" value="combos" checked>
-                                    <span class="checkmark"></span>
-                                    Combos <span class="count" id="combos-count">(0)</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="product_type" value="cosmetics">
-                                    <span class="checkmark"></span>
-                                    Cosmetics <span class="count" id="cosmetics-count">(0)</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="product_type" value="herbal-powders">
-                                    <span class="checkmark"></span>
-                                    Herbal Powders/Churna <span class="count" id="herbal-count">(0)</span>
-                                </label>
-                            </div>
-                        </div>
+
 
                         <!-- Category Filter -->
                         <div class="filter-group">
@@ -1622,7 +1602,6 @@ function removeFromCart(productId) {
 
             // Collect filter data
             const filterData = {
-                product_type: Array.from(document.querySelectorAll('input[name="product_type"]:checked')).map(cb => cb.value),
                 category: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value),
                 subcategory: Array.from(document.querySelectorAll('input[name="subcategory"]:checked')).map(cb => cb.value),
                 availability: Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value),
@@ -1650,15 +1629,7 @@ function removeFromCart(productId) {
                     });
                 }
 
-                // Product type filter - simplified for combos page
-                if (filterData.product_type.length > 0) {
-                    // Since we're on combos page, only show if combos is selected
-                    // If no product types are selected or combos is not selected, hide
-                    if (!filterData.product_type.includes('combos')) {
-                        shouldShow = false;
-                        if (visibleCount < 3) console.log('Hidden by product type filter - combos not selected');
-                    }
-                }
+
 
                 // Category filter
                 if (shouldShow && filterData.category.length > 0) {
