@@ -155,6 +155,9 @@ if ($current_step === false) {
 
 
     </style>
+
+    <!-- Tawk.to Integration -->
+    <?php include("components/tawk-to.php"); ?>
 </head>
 
 <body class="home-1">
