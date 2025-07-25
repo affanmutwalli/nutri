@@ -987,11 +987,7 @@ if (!empty($blog_data)) {
                                             alt="<?php echo htmlspecialchars($products["ProductName"]); ?>">
                                     </a>
                                 </div>
-                                <?php if ($savings > 0): ?>
-                                <div class="Pro-lable">
-                                    <span class="p-text">Off ₹<?php echo htmlspecialchars($savings); ?></span>
-                                </div>
-                                <?php endif; ?>
+
                             </div>
                             <div class="caption">
                                 <h3><a

@@ -847,10 +847,12 @@ button.navbar-toggler span.line::after{
 .header-bottom-area .main-menu-area .main-navigation{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 .header-bottom-area .main-menu-area .main-navigation .navbar-collapse{
-    width: 75%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 .header-bottom-area .main-menu-area .main-navigation .img-hotline{
     width: 25%;
@@ -870,8 +872,20 @@ button.navbar-toggler span.line::after{
     line-height: 0;
 }
 /* main-menu css */
+.megamenu-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.megamenu-content .mainwrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 .megamenu-content .mainwrap ul.main-menu {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title{
     display: block;
@@ -883,7 +897,7 @@ button.navbar-toggler span.line::after{
     font-family: 'Outfit', sans-serif;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link:first-child a.link-title {
-    padding-left: 0px;
+    padding-left: 20px;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title i{
     font-size: 14px;
