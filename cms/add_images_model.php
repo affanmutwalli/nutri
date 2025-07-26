@@ -48,6 +48,49 @@ $page = "products.php";
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Custom CSS for sortable images -->
+  <style>
+    .sortable-images {
+      list-style: none;
+      padding: 0;
+    }
+    .sortable-images li {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      cursor: move;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sortable-images li:hover {
+      background: #e9ecef;
+    }
+    .sortable-images li.ui-sortable-helper {
+      background: #007bff;
+      color: white;
+      transform: rotate(5deg);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .sortable-images li.ui-sortable-placeholder {
+      background: #6c757d;
+      height: 80px;
+      border: 2px dashed #adb5bd;
+    }
+    .image-drag-handle {
+      cursor: move;
+      color: #6c757d;
+      margin-right: 10px;
+    }
+    .image-drag-handle:hover {
+      color: #007bff;
+    }
+    .delete-all-btn {
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div id="loading"></div>
@@ -148,42 +191,53 @@ $page = "products.php";
     <section class="content">
       <!-- Default box -->
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Image List</h3>
-        </div>
-        <div class="card-body">
-          <?php
-			$FieldNames=array("ImageId","PhotoPath");
+        <?php
+			$FieldNames=array("ImageId","PhotoPath","sort_order");
 			$ParamArray=array();
 			$ParamArray[0] = $_GET["ProductId"];
 			$Fields=implode(",",$FieldNames);
-			$all_data=$obj->MysqliSelect1("Select ".$Fields." from model_images Where ProductId = ?",$FieldNames,"i",$ParamArray);
-			
-		  ?>
-          <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                  	<th>Image</th>
-                    <th style="width:50px;">Delete</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                   	<?php
-                   	    if($all_data != NULL)
-                   	    {
-    						for($i=0; $i<count($all_data); $i++)
-    						{
-    						
-    							echo '<tr>
-    									<td><img src="images/products/'.$all_data[$i]["PhotoPath"].'" width="100"></td>
-    									<td><button onClick="javascript:fundelete('.$all_data[$i]["ImageId"].');" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default"><i class="fa fa-trash fa-sm"></i></button></td>
-    								  </tr>';
-    						}
-                   	    }
-					  ?>
-                  </tbody>
-                  
-          </table>
+			$all_data=$obj->MysqliSelect1("Select ".$Fields." from model_images Where ProductId = ? ORDER BY sort_order ASC, ImageId ASC",$FieldNames,"i",$ParamArray);
+		?>
+        <div class="card-header">
+          <h3 class="card-title">Image List</h3>
+          <div class="card-tools">
+            <?php if($all_data != NULL && count($all_data) > 0): ?>
+            <button type="button" class="btn btn-danger btn-sm delete-all-btn" data-toggle="modal" data-target="#modal-delete-all">
+              <i class="fas fa-trash"></i> Delete All Images
+            </button>
+            <?php endif; ?>
+          </div>
+        </div>
+        <div class="card-body">
+          <?php if($all_data != NULL && count($all_data) > 0): ?>
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> <strong>Tip:</strong> Drag and drop images to reorder them. Changes are saved automatically.
+          </div>
+          <ul id="sortable-images" class="sortable-images">
+            <?php
+                for($i=0; $i<count($all_data); $i++)
+                {
+                    echo '<li data-image-id="'.$all_data[$i]["ImageId"].'">
+                            <div style="display: flex; align-items: center;">
+                              <i class="fas fa-grip-vertical image-drag-handle"></i>
+                              <img src="images/products/'.$all_data[$i]["PhotoPath"].'" width="80" height="80" style="margin-right: 15px; border-radius: 5px;">
+                              <div>
+                                <strong>Image '.($i+1).'</strong><br>
+                                <small class="text-muted">'.$all_data[$i]["PhotoPath"].'</small>
+                              </div>
+                            </div>
+                            <button onClick="javascript:fundelete('.$all_data[$i]["ImageId"].');" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default">
+                              <i class="fa fa-trash fa-sm"></i> Delete
+                            </button>
+                          </li>';
+                }
+            ?>
+          </ul>
+          <?php else: ?>
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> No images found for this product. Upload some images to get started.
+          </div>
+          <?php endif; ?>
         </div>
         <!-- /.card-body -->
         
@@ -265,19 +319,19 @@ $page = "products.php";
     $('#NewsEvenDate').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
 	// Summernote
     $('.textarea').summernote()
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false
-      /*"buttons": ["excel", "pdf"]*/
-    });/*.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')*/
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+    // Initialize sortable functionality
+    $("#sortable-images").sortable({
+      handle: ".image-drag-handle",
+      placeholder: "ui-sortable-placeholder",
+      helper: "clone",
+      tolerance: "pointer",
+      update: function(event, ui) {
+        updateImageOrder();
+      }
     });
+
+    // Disable text selection on sortable items
+    $("#sortable-images").disableSelection();
   });
 </script>
 <script type="text/javascript">
@@ -365,10 +419,92 @@ function delete_info()
 												}
 		}).submit();
 }
+// Function to update image order via AJAX
+function updateImageOrder() {
+    var imageOrder = [];
+    $('#sortable-images li').each(function() {
+        imageOrder.push($(this).data('image-id'));
+    });
+
+    $.ajax({
+        url: 'update_image_order.php',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            imageOrder: imageOrder,
+            productId: <?php echo $_GET["ProductId"]; ?>
+        }),
+        success: function(response) {
+            if (response.success) {
+                // Show success message briefly
+                showMessage('Image order updated successfully!', 'success');
+            } else {
+                showMessage('Failed to update image order: ' + response.message, 'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            showMessage('Error updating image order: ' + error, 'error');
+        }
+    });
+}
+
+// Function to confirm and delete all images
+function confirmDeleteAll() {
+    $('#modal-delete-all').modal('hide');
+
+    $.ajax({
+        url: 'delete_all_images.php',
+        type: 'POST',
+        data: {
+            ProductId: <?php echo $_GET["ProductId"]; ?>
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            document.getElementById("loading").style.display = "block";
+        },
+        success: function(response) {
+            document.getElementById("loading").style.display = "none";
+            if (response.success) {
+                showMessage(response.message, 'success');
+                // Reload the page to reflect changes
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                showMessage('Failed to delete images: ' + response.message, 'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            document.getElementById("loading").style.display = "none";
+            showMessage('Error deleting images: ' + error, 'error');
+        }
+    });
+}
+
+// Function to show messages
+function showMessage(message, type) {
+    var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    var icon = type === 'success' ? 'fas fa-check' : 'fas fa-exclamation-triangle';
+
+    var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                    '<h5><i class="icon ' + icon + '"></i> ' + (type === 'success' ? 'Success!' : 'Error!') + '</h5>' +
+                    message +
+                    '</div>';
+
+    $('body').append(alertHtml);
+
+    // Auto-hide after 3 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut(400, function() {
+            $(this).remove();
+        });
+    }, 3000);
+}
+
 $( document ).ready(function() {
     bsCustomFileInput.init();
-   $(".alert").delay(1000).fadeOut(400);
-
+    $(".alert").delay(1000).fadeOut(400);
 });
 </script>
 <script type="text/javascript" src="js/common_functions.js"></script>
@@ -398,6 +534,36 @@ $( document ).ready(function() {
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- Delete All Images Modal -->
+<div class="modal fade" id="modal-delete-all">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete All Images</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        	<p><b>Are you sure you want to delete ALL images for this product?</b></p>
+        	<p class="text-danger"><i class="fas fa-exclamation-triangle"></i> This action cannot be undone and will permanently remove all images from both the database and the file system.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="confirmDeleteAll()">
+            <i class="fas fa-trash"></i> Yes, Delete All
+          </button>
+          <button type="button" class="btn btn-success" data-dismiss="modal">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 </body>
 </html>
 <?php

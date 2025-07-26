@@ -44,11 +44,27 @@ if (login_check($mysqli) == true)
 				$PhotoPath = $UploadPhoto;
 			}
 
+			// Get the next sort_order for this product
+			$FieldNames = array("sort_order");
+			$ParamArraySort = array($_POST["ProductId"]);
+			$maxSortOrder = $obj->MysqliSelect1(
+				"SELECT MAX(sort_order) as sort_order FROM model_images WHERE ProductId = ?",
+				$FieldNames,
+				"i",
+				$ParamArraySort
+			);
+
+			$nextSortOrder = 1;
+			if (!empty($maxSortOrder) && isset($maxSortOrder[0]["sort_order"])) {
+				$nextSortOrder = $maxSortOrder[0]["sort_order"] + 1;
+			}
+
 			$ParamArray=array();
 			$ParamArray[0]=$_POST["ProductId"];
 			$ParamArray[1]=$PhotoPath;
-			$InputDocId=$obj->fInsertNew("INSERT INTO model_images (ProductId, PhotoPath)
-			VALUES (?, ?)", "is",$ParamArray);
+			$ParamArray[2]=$nextSortOrder;
+			$InputDocId=$obj->fInsertNew("INSERT INTO model_images (ProductId, PhotoPath, sort_order)
+			VALUES (?, ?, ?)", "isi",$ParamArray);
 
 			$_SESSION["QueryStatus"]="SAVED";
 

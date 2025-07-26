@@ -66,7 +66,7 @@
               $ParamArray = array($productId);
               $Fields = implode(",", $FieldNames);
               $model_image = $obj->MysqliSelect1(
-                  "SELECT " . $Fields . " FROM model_images WHERE ProductId = ?",
+                  "SELECT " . $Fields . " FROM model_images WHERE ProductId = ? ORDER BY sort_order ASC, ImageId ASC",
                   $FieldNames,
                   "i",
                   $ParamArray

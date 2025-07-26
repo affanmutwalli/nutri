@@ -40,7 +40,7 @@ try {
         $ParamArrayImages = array($productId);
         $FieldsImages = implode(",", $FieldNamesImages);
         $additional_images = $obj->MysqliSelect1(
-            "SELECT " . $FieldsImages . " FROM model_images WHERE ProductId = ? ORDER BY ImageId",
+            "SELECT " . $FieldsImages . " FROM model_images WHERE ProductId = ? ORDER BY sort_order ASC, ImageId ASC",
             $FieldNamesImages,
             "i",
             $ParamArrayImages
