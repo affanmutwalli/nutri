@@ -470,15 +470,22 @@ $obj->connection();
 
     .product-image-container {
         position: relative;
-        overflow: hidden;
-        height: 250px;
+        overflow: visible;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        padding: 15px;
     }
 
     .product-image-container img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         transition: transform 0.3s ease;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     .enhanced-grid-items:hover .product-image-container img {

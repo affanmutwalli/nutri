@@ -4359,7 +4359,7 @@ s0.parentNode.insertBefore(s1,s0);
             <div id="promoStep1" class="promo-content promo-step">
                 <div class="promo-header">
                     <div class="promo-badge">EXCLUSIVE OFFER</div>
-                    <h2 class="promo-title">🌿 Welcome to My Nutrify! 🌿</h2>
+                    <h2 class="promo-title">🌿 Welcome to My Nutrify Herbal & Ayurveda! 🌿</h2>
                     <p class="promo-subtitle">Get 25% OFF + FREE Delivery on Your First Order!</p>
                 </div>
 
@@ -4573,10 +4573,7 @@ s0.parentNode.insertBefore(s1,s0);
                             <div class="o-t-content blood-sugar-content">
                                 <h1 class="banner-main-title">Take Control of Your Blood Sugar</h1>
                                 
-                                <p class="banner-description">
-                                   Support healthy glucose levels naturally with <strong>Diabetic Care Juice</strong> your herbal ally for balanced living.
-                                </p>
-                                
+                              
                                 <a href="product_details.php?ProductId=11" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
                         </div>
@@ -4587,9 +4584,7 @@ s0.parentNode.insertBefore(s1,s0);
                             <div class="o-t-content blood-sugar-content">
                                 <h1 class="banner-main-title">Balance Your Hormones, Naturally</h1>
 
-                                <p class="banner-description">
-                                   Find relief from PCOD/PCOS symptoms with <strong>She Care Plus Juice </strong> crafted for women's hormonal health.
-                                </p>
+                              
 
                                 <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
@@ -5528,7 +5523,7 @@ s0.parentNode.insertBefore(s1,s0);
                     <p class="testimonia-testimonial">"I received this product four days ago, and I must say it's
                         fantastic! I feel a surge of energy, no bloating, and improved digestion. Thank you, My Nutrify,
                         for this amazing product."</p>
-                    <p class="testimonia-overview"><b>Gouri Patil</b></p>
+                    <p class="testimonia-overview"><b>Kunal Verma</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5552,7 +5547,7 @@ s0.parentNode.insertBefore(s1,s0);
                     <p class="testimonia-testimonial">"I absolutely love this product! Been using it for a while now,
                         and I feel more energetic and active throughout the day. My Nutrify has truly made a difference
                         in my health!"</p>
-                    <p class="testimonia-overview"><b>Manpreet Singh</b></p>
+                    <p class="testimonia-overview"><b>Siddharth Chauhan</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>

@@ -48,10 +48,6 @@ $obj->connection();
     <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Tawk.to Integration -->
-    <?php include("components/tawk-to.php"); ?>
-
     <style>
     /* Modal Animations */
     @keyframes modalSlideIn {
