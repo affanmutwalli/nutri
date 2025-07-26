@@ -389,7 +389,7 @@
          font-size: 18px;
          color: white; /* Default icon color */
          text-decoration: none;
-         transition: transform 0.3s ease, color 0.3s ease;
+         transition: transform 1.2s ease, color 1.2s ease;
          }
          .f-icn-link:hover {
          transform: scale(1.1);
@@ -460,7 +460,7 @@
          .specification-tab-2content {
     padding: 15px;
  
-    transition: all 0.3s ease-in-out;
+    transition: all 1.2s ease-in-out;
 }
 
 .specification-tab-2content h4 {
@@ -706,7 +706,7 @@
                 color: #fff;
                 font-size: 14px;
                 font-weight: bold;
-                transition: background-color 0.3s ease;
+                transition: background-color 1.2s ease;
             }
             
             .cart-popup-actions .btn-view-cart {
@@ -791,13 +791,9 @@
     padding: 24px;
     background: white;
     border-radius: 12px;
-    transition: transform 0.3s ease;
+    transition: transform 1.2s ease;
     /* No shadow on desktop */
     box-shadow: none;
-}
-
-.ingredients:hover {
-    transform: translateY(-5px);
 }
 
 /* Image Wrapper */
@@ -827,7 +823,7 @@
 
 /* Hover Effects */
 .ingredients:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px) scale(1.02);
 }
 
 .image-container:hover img {
@@ -902,8 +898,8 @@
         font-size: 32px;
         font-weight: bold;
         color: #305724;
-        /*margin-bottom: 6px;*/
-        transition: transform 0.3s ease-in-out;
+        margin-bottom: 25px;
+        transition: transform 1.2s ease-in-out;
         text-align: center;
     }
 
@@ -918,7 +914,7 @@
         line-height: 1.6;
         max-width: 900px;
         margin: auto;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity 1.2s ease-in-out;
     }
 
     /* Product Container */
@@ -944,7 +940,7 @@
         object-fit: cover;
         border-radius: 10px;
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease-in-out;
+        transition: transform 1.2s ease-in-out;
     }
 
     /* Product Main Slider Styles */
@@ -1180,7 +1176,7 @@
     overflow: hidden;
     padding: 24px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 1.2s ease, box-shadow 1.2s ease;
     border-top: 4px solid #EA652D;
 }
 
@@ -1196,7 +1192,7 @@
     height: 80px;
     object-fit: cover;
     margin-bottom: 16px;
-    transition: transform 0.3s ease;
+    transition: transform 1.2s ease;
 }
 
 /* Hover Effect */
@@ -1389,7 +1385,7 @@
     text-align: center;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     border: 2px solid transparent;
-    transition: all 0.3s ease;
+    transition: all 1.2s ease;
     position: relative;
     counter-increment: step-counter;
 }
@@ -1425,7 +1421,7 @@
     height: 80px;
     object-fit: contain;
     margin-bottom: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 1.2s ease;
 }
 
 .use-cart:hover img {
@@ -1502,7 +1498,7 @@
 
     .reviews-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 30px;
         padding: 0 20px;
     }
@@ -1512,7 +1508,7 @@
         border-radius: 20px;
         padding: 30px;
         box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
         border: 1px solid #f0f0f0;
         position: relative;
         overflow: hidden;
@@ -1546,7 +1542,7 @@
     .reviewer-avatar {
         position: relative;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
     }
 
     .reviewer-avatar:hover {
@@ -1563,7 +1559,7 @@
         border-radius: 50%;
         object-fit: cover;
         border: 3px solid #EA652D;
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
     }
 
     .image-expand-overlay {
@@ -1578,7 +1574,7 @@
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
     }
 
     .image-expand-overlay i {
@@ -1659,7 +1655,7 @@
         border-radius: 15px;
         font-size: 0.8rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
     }
 
     .helpful-buttons button:hover {
@@ -1691,7 +1687,7 @@
         font-size: 16px;
         font-weight: 500;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 1.2s ease;
         box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);
     }
 
@@ -1703,7 +1699,7 @@
     /* === RESPONSIVE DESIGN === */
     @media (max-width: 1200px) {
         .reviews-grid {
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             padding: 0 15px;
         }
@@ -1711,7 +1707,7 @@
 
     @media (max-width: 992px) {
         .reviews-grid {
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
@@ -2828,7 +2824,7 @@
         padding: 40px 0;
     }
 
-    /* Read More Button Styling */
+    /* Read More Button Styling for Short Descriptions */
     .product-description-container {
         position: relative;
         margin-bottom: 20px;
@@ -2897,6 +2893,8 @@
             max-width: 200px;
         }
     }
+
+
       </style>
       <!-- Meta Pixel Code -->
 <script>
@@ -2915,7 +2913,6 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-   <?php include("components/chat_integration.php"); ?>
    </head>
    <body class="home-1">
        
@@ -3297,30 +3294,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     My Nutrify Herbal & Ayurveda’s
                     <span><?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== '' ? nl2br(htmlspecialchars(trim($filteredProductTitle))) : 'Product'; ?></span>
                 </h1>
-                <div class="product-description-container">
-                    <?php
-                    $fullDescription = $product_data[0]["Description"];
-                    $shortDescription = mb_substr($fullDescription, 0, 100, 'UTF-8');
-                    $hasMoreContent = mb_strlen($fullDescription, 'UTF-8') > 100;
-                    ?>
 
-                    <p class="ingredients-details-description" id="main-description-short">
-                        <?php echo nl2br(htmlspecialchars($shortDescription)); ?>
-                        <?php if ($hasMoreContent): ?>
-                            <span id="main-description-dots">...</span>
-                        <?php endif; ?>
-                    </p>
-
-                    <?php if ($hasMoreContent): ?>
-                        <p class="ingredients-details-description" id="main-description-full" style="display: none;">
-                            <?php echo nl2br(htmlspecialchars($fullDescription)); ?>
-                        </p>
-
-                        <button class="read-more-btn" id="main-read-more-btn" onclick="toggleDescription('main')">
-                            Read More
-                        </button>
-                    <?php endif; ?>
-                </div>
             </div>
 
 
@@ -3342,33 +3316,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
 
                     <div class="product-details-section">
-                        <div class="product-description-container">
-                            <?php
-                            $detailsDescription = !empty($product_details['Description']) ? $product_details['Description'] : '';
-                            if (!empty($detailsDescription)) {
-                                $detailsShortDescription = mb_substr($detailsDescription, 0, 100, 'UTF-8');
-                                $detailsHasMoreContent = mb_strlen($detailsDescription, 'UTF-8') > 100;
-                            ?>
-                                <p class="ingredients-details-description" id="details-description-short">
-                                    <?php echo nl2br(htmlspecialchars($detailsShortDescription)); ?>
-                                    <?php if ($detailsHasMoreContent): ?>
-                                        <span id="details-description-dots">...</span>
-                                    <?php endif; ?>
-                                </p>
 
-                                <?php if ($detailsHasMoreContent): ?>
-                                    <p class="ingredients-details-description" id="details-description-full" style="display: none;">
-                                        <?php echo nl2br(htmlspecialchars($detailsDescription)); ?>
-                                    </p>
-
-                                    <button class="read-more-btn" id="details-read-more-btn" onclick="toggleDescription('details')">
-                                        Read More
-                                    </button>
-                                <?php endif; ?>
-                            <?php } else { ?>
-                                <p class="ingredients-details-description">No description available.</p>
-                            <?php } ?>
-                        </div>
                     </div>
                 </div>
                 <?php else: ?>
@@ -3753,7 +3701,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 </div>
                 <?php if (!empty($review_data)): ?>
                 <div class="reviews-grid-container" style="width: 100%; margin: 0 auto;">
-                    <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; padding: 0 20px;">
+                    <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 20px;">
                         <?php foreach ($review_data as $review): ?>
                         <div class="modern-review-card" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; position: relative; overflow: hidden;">
                             <div class="review-card-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
@@ -4984,7 +4932,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Read More/Read Less functionality for product descriptions
+
+
+    // Read More/Read Less functionality for short descriptions
     function toggleDescription(type) {
         const shortElement = document.getElementById(type + '-description-short');
         const fullElement = document.getElementById(type + '-description-full');
@@ -5042,7 +4992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 touchDrag: true,
                 animateOut: 'fadeOut',
                 animateIn: 'fadeIn',
-                smartSpeed: -100,
+                smartSpeed: 600,
                 responsive: {
                     0: {
                         nav: true,
@@ -5110,7 +5060,5 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
-
-   <?php include("components/chat_script.php"); ?>
    </body>
    </html>

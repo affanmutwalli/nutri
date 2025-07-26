@@ -48,10 +48,6 @@ $obj->connection();
     <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Tawk.to Integration -->
-    <?php include("components/tawk-to.php"); ?>
-
     <style>
     /* Modal Animations */
     @keyframes modalSlideIn {
@@ -268,7 +264,7 @@ $obj->connection();
         align-items: center;
         padding: 8px 0;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.8s ease;
     }
 
     .filter-option:hover {
@@ -314,7 +310,7 @@ $obj->connection();
         background: transparent;
         border-radius: 6px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.8s ease;
     }
 
     .view-btn.active {
@@ -985,32 +981,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <?php } ?>
                         </div>
 
-                        <!-- Quick Product Types -->
-                        <div class="filter-group">
-                            <h4 class="filter-title">
-                                <i class="fa fa-cube me-2"></i>Product Types
-                            </h4>
-                            <label class="filter-option">
-                                <input type="radio" name="product_type" value="juice" class="product-type-radio">
-                                <span>Juices & Syrups</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="product_type" value="powder" class="product-type-radio">
-                                <span>Powders & Churna</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="product_type" value="tablet" class="product-type-radio">
-                                <span>Tablets & Capsules</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="product_type" value="oil" class="product-type-radio">
-                                <span>Oils & Extracts</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="product_type" value="combo" class="product-type-radio">
-                                <span>Combo Packs</span>
-                            </label>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Products Area -->
@@ -1325,7 +1296,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     document.addEventListener("DOMContentLoaded", function() {
         const categoryCheckboxes = document.querySelectorAll(".category-checkbox");
         const subCategoryCheckboxes = document.querySelectorAll(".subcategory-checkbox");
-        const productTypeRadios = document.querySelectorAll(".product-type-radio");
+
 
         // Update product count
         function updateProductCount() {
@@ -1405,19 +1376,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             });
         });
 
-        // Product type radio functionality
-        productTypeRadios.forEach((radio) => {
-            radio.addEventListener("change", function() {
-                if (this.checked) {
-                    // Clear other filters
-                    categoryCheckboxes.forEach(cb => cb.checked = false);
-                    subCategoryCheckboxes.forEach(cb => cb.checked = false);
 
-                    // Redirect to product type filter
-                    window.location.href = `products.php?product_type=${this.value}`;
-                }
-            });
-        });
 
         // View toggle functionality
         const viewButtons = document.querySelectorAll('.view-btn');

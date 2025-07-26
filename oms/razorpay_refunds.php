@@ -21,17 +21,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $refundAmount = $_POST['refund_amount'];
         $refundReason = $_POST['refund_reason'];
 
-        // Here you would integrate with Razorpay API to initiate actual refund
-        // For now, we'll just show a success message (no database changes)
-        $message = "Refund request noted for Order ID: $orderId. Amount: ₹$refundAmount. Reason: $refundReason. Please process this manually in Razorpay dashboard.";
-        $messageType = "success";
+        // Get customer ID from order
+        $orderDetails = $obj->MysqliSelect1(
+            "SELECT CustomerId FROM order_master WHERE OrderId = ?",
+            ["CustomerId"],
+            "s",
+            [$orderId]
+        );
+
+        if (!empty($orderDetails)) {
+            $customerId = $orderDetails[0]['CustomerId'];
+
+            // Insert refund request into database
+            $result = $obj->fInsertNew(
+                "INSERT INTO refund_requests (order_id, customer_id, transaction_id, refund_amount, refund_reason, status, created_by) VALUES (?, ?, ?, ?, ?, 'Initiated', 'admin')",
+                "sisds",
+                [$orderId, $customerId, $transactionId, $refundAmount, $refundReason]
+            );
+
+            if ($result) {
+                $message = "Refund request created successfully for Order ID: $orderId. Amount: ₹$refundAmount. Reason: $refundReason. Please process this manually in Razorpay dashboard.";
+                $messageType = "success";
+            } else {
+                $message = "Failed to create refund request. Please try again.";
+                $messageType = "danger";
+            }
+        } else {
+            $message = "Order not found. Cannot create refund request.";
+            $messageType = "danger";
+        }
     }
 }
 
-// Get refund statistics (using existing order_master table only)
-$refundStats = [
-    ['total_refunds' => 0, 'completed_refunds' => 0, 'pending_refunds' => 0, 'failed_refunds' => 0, 'total_refunded' => 0]
-];
+// Get refund statistics from refund_requests table
+$refundStats = $obj->MysqliSelect1(
+    "SELECT
+        COUNT(*) as total_refunds,
+        COUNT(CASE WHEN status = 'Completed' THEN 1 END) as completed_refunds,
+        COUNT(CASE WHEN status IN ('Initiated', 'Processing') THEN 1 END) as pending_refunds,
+        COUNT(CASE WHEN status = 'Failed' THEN 1 END) as failed_refunds,
+        COALESCE(SUM(CASE WHEN status = 'Completed' THEN refund_amount ELSE 0 END), 0) as total_refunded
+     FROM refund_requests",
+    ["total_refunds", "completed_refunds", "pending_refunds", "failed_refunds", "total_refunded"],
+    "",
+    []
+);
+
+// If no data, set defaults
+if (empty($refundStats)) {
+    $refundStats = [
+        ['total_refunds' => 0, 'completed_refunds' => 0, 'pending_refunds' => 0, 'failed_refunds' => 0, 'total_refunded' => 0]
+    ];
+}
 
 // Get eligible orders for refund (Paid orders)
 $eligibleOrders = $obj->MysqliSelect1(
@@ -46,9 +87,16 @@ $eligibleOrders = $obj->MysqliSelect1(
     []
 );
 
-// Get recent refund requests (using existing order_master table only)
-// Note: In a real implementation, you would track refunds separately
-$recentRefunds = [];
+// Get recent refund requests from refund_requests table
+$recentRefunds = $obj->MysqliSelect1(
+    "SELECT r.id, r.order_id, r.customer_id, r.transaction_id, r.refund_amount, r.refund_reason, r.status, r.requested_at
+     FROM refund_requests r
+     ORDER BY r.requested_at DESC
+     LIMIT 10",
+    ["id", "order_id", "customer_id", "transaction_id", "refund_amount", "refund_reason", "status", "requested_at"],
+    "",
+    []
+);
 ?>
 
 <!DOCTYPE html>
@@ -241,7 +289,7 @@ $recentRefunds = [];
                                                         <?php echo ucfirst(htmlspecialchars($refund['status'])); ?>
                                                     </span>
                                                 </td>
-                                                <td><?php echo date("d-m-Y H:i", strtotime($refund['created_at'])); ?></td>
+                                                <td><?php echo date("d-m-Y H:i", strtotime($refund['requested_at'])); ?></td>
                                                 <td>
                                                     <a href="order_details.php?OrderId=<?php echo urlencode($refund['order_id']); ?>" 
                                                        class="btn btn-sm btn-info">
