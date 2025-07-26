@@ -20,7 +20,7 @@ $selected = "dashboard.php";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CRM | This Month  Order</title>
+  <title>CRM | This Month Orders</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -59,12 +59,12 @@ $selected = "dashboard.php";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Delivered  Order</h1>
+            <h1 class="m-0">This Month Orders</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Delivered  Order</li>
+              <li class="breadcrumb-item active">This Month Orders</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -82,12 +82,12 @@ $selected = "dashboard.php";
     $firstDay = date('Y-m-01'); // e.g., "2025-02-01"
     $lastDay = date('Y-m-t');   // e.g., "2025-02-28" or "2025-02-29" for leap year
 
-    // Fetch all orders with status 'Placed' and OrderDate between the first and last day of the current month
-    $ParamArray = array("Placed", $firstDay, $lastDay);
+    // Fetch all orders with OrderDate between the first and last day of the current month
+    $ParamArray = array($firstDay, $lastDay);
     $all_orders = $obj->MysqliSelect1(
-        "SELECT $Fields FROM order_master WHERE OrderStatus = ? AND OrderDate BETWEEN ? AND ?",
+        "SELECT $Fields FROM order_master WHERE OrderDate BETWEEN ? AND ?",
         $FieldNames,
-        "sss",
+        "ss",
         $ParamArray
     );
 
@@ -99,7 +99,7 @@ $selected = "dashboard.php";
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Delivered Order List</h3>
+                <h3 class="card-title">This Month Orders List</h3>
             </div>
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
@@ -171,7 +171,7 @@ $selected = "dashboard.php";
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="9" class="text-center">No orders available today.</td>
+                                <td colspan="10" class="text-center">No orders found for this month.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
