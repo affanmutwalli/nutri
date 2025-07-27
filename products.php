@@ -2085,64 +2085,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     }
 
     function addToCartFromPreview(productId) {
-        // Get selected size information
-        const selectedSizeBox = document.querySelector('.size-box.selected');
-        if (!selectedSizeBox) {
-            showNotification('Please select a size before adding to cart', 'error');
-            return;
-        }
-
-        const size = selectedSizeBox.getAttribute('data-size');
-        const offerPrice = selectedSizeBox.getAttribute('data-offer-price');
-        const mrp = selectedSizeBox.getAttribute('data-mrp');
-        const quantity = document.getElementById('previewQuantity').value;
-
-        // Add loading state to button
-        const addButton = document.querySelector('.add-to-cart-session');
-        if (!addButton) return;
-
-        const originalText = addButton.innerHTML;
-        addButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
-        addButton.disabled = true;
-
-        // Use the same AJAX structure as product_details.php
-        $.ajax({
-            url: 'exe_files/add_to_cart_session.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'add_to_cart',
-                productId: productId,
-                size: size,
-                quantity: quantity,
-                offer_price: offerPrice,
-                mrp: mrp
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    // Show success animation
-                    addButton.innerHTML = '<i class="fa fa-check"></i> Added to Cart!';
-                    addButton.style.background = '#22c55e';
-
-                    // Show cart popup like in product_details.php
-                    displayCartPopup();
-
-                    setTimeout(() => {
-                        closePreview();
-                    }, 2000);
-                } else {
-                    showNotification(response.message || 'Failed to add product to cart', 'error');
-                    addButton.innerHTML = originalText;
-                    addButton.disabled = false;
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                showNotification('An error occurred while processing your request. Please try again.', 'error');
-                addButton.innerHTML = originalText;
-                addButton.disabled = false;
-            }
-        });
+        // Redirect to product details page instead of adding to cart
+        console.log('Redirecting to product page for Product ID:', productId);
+        window.location.href = 'product_details.php?ProductId=' + productId;
     }
 
     // Display cart popup (matching product_details.php functionality)
@@ -2514,43 +2459,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 });
             });
 
-            // Add to cart for non-logged-in users (session-based cart)
-            $(document).on('click', '.add-to-cart-session', function () { // Use event delegation
+            // Add to cart for non-logged-in users - redirect to product page
+            $(document).on('click', '.add-to-cart-session', function (e) { // Use event delegation
+                e.preventDefault(); // Prevent default action
                 var productId = $(this).data('product-id'); // Get product ID
-                console.log('Product ID:', productId); // Debugging: Log the product ID
+                console.log('Redirecting to product page for Product ID:', productId); // Debugging: Log the product ID
 
-                $.ajax({
-                    url: 'exe_files/add_to_cart_session.php', // PHP file to handle the cart addition in session
-                    type: 'POST',
-                    data: {
-                        action: 'add_to_cart',
-                        productId: productId
-                    },
-                    success: function (response) {
-                        try {
-                            var data = JSON.parse(response); // Parse the response
-                            if (data.status === 'success') {
-                                // Show the added to cart popup
-                                $('#cart-popup').fadeIn();
-
-                                // Automatically hide popup after a few seconds
-                                setTimeout(function () {
-                                    $('#cart-popup').fadeOut(function () {
-                                        location.reload(); // Reload the page after popup is hidden
-                                    });
-                                }, 3000);
-                            } else {
-                                alert(data.message);
-                            }
-                        } catch (e) {
-                            console.error('Error parsing JSON response:', e); // Log error if JSON parsing fails
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('AJAX error:', status, error);
-                        alert('An error occurred. Please try again.');
-                    }
-                });
+                // Redirect to product details page
+                window.location.href = 'product_details.php?ProductId=' + productId;
             });
         });
 
