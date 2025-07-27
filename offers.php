@@ -66,7 +66,6 @@ $mysqli = $obj->connection();
 
         /* Special Offers Page Styles */
         .offers-hero {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
             color: white;
             padding: 80px 0;
             text-align: center;
@@ -78,13 +77,15 @@ $mysqli = $obj->connection();
         .offers-hero::before {
             content: '';
             position: absolute;
-            background:no repeat;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background: url('cms/images/banners/Special Offers.jpg');
-            opacity: 0.3;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+           
         }
 
         .offers-hero h1 {

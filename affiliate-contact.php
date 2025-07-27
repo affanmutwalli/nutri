@@ -47,55 +47,12 @@ $obj = new main();
         <?php include("components/header.php") ?>
         <!-- header end -->
 
-       <!-- Page Title Section -->
-       <section class="page-title" style="background: #f8f9fa; padding: 40px 0; border-bottom: 1px solid #eee;">
-           <div class="container">
-               <div class="row">
-                   <div class="col-12">
-                       <nav aria-label="breadcrumb">
-                           <ol class="breadcrumb" style="background: none; padding: 0; margin: 0; font-size: 14px;">
-                               <li class="breadcrumb-item">
-                                   <a href="index.php" style="color: #666; text-decoration: none;">Home</a>
-                               </li>
-                               <li class="breadcrumb-item active" aria-current="page" style="color: #333;">
-                                   Affiliate Partnership
-                               </li>
-                           </ol>
-                       </nav>
-                   </div>
-               </div>
-           </div>
-       </section>
+       
 
        <!-- Affiliate Hero Section -->
-       <section class="affiliate-hero-section" style="padding: 80px 0; background: linear-gradient(135deg, #ec6504 0%, #ff8533 100%); color: white; text-align: center;">
-           <div class="container">
-               <div class="row justify-content-center">
-                   <div class="col-lg-8">
-                       <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Join Our Affiliate Program</h1>
-                       <p style="font-size: 1.3rem; opacity: 0.9; margin-bottom: 30px; line-height: 1.6;">
-                           Partner with Nutrify and earn attractive commissions by promoting our premium health and wellness products. 
-                           Join thousands of successful affiliates worldwide!
-                       </p>
-                       <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px;">
-                           <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                               <i class="fas fa-percentage" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                               <h4>Up to 15% Commission</h4>
-                               <p style="margin: 0; opacity: 0.9;">Competitive rates on all products</p>
-                           </div>
-                           <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                               <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                               <h4>Real-time Tracking</h4>
-                               <p style="margin: 0; opacity: 0.9;">Monitor your earnings instantly</p>
-                           </div>
-                           <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                               <i class="fas fa-headset" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                               <h4>Dedicated Support</h4>
-                               <p style="margin: 0; opacity: 0.9;">Personal affiliate manager</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
+       <section class="affiliate-hero-section" style="padding: 0; background: #fff; width: 100%; margin: 0;">
+           <div style="width: 100%; padding: 0; margin: 0;">
+               <img src="cms/images/banners/Banner Aff.jpg" alt="Be Our Affiliate - Gain 15% Commission" style="width: 100%; height: auto; display: block; margin: 0; padding: 0;">
            </div>
        </section>
 

@@ -4008,148 +4008,538 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     font-weight: bold;
 }
 
-/* Mobile Responsive */
+/* Enhanced Mobile Responsive Design */
 @media (max-width: 768px) {
+    .promo-popup-overlay {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+
     .promo-popup-container {
-        margin: 15px;
+        margin: 0;
         max-width: none;
-        width: calc(100% - 30px);
+        width: 100%;
+        max-width: 420px;
         border-radius: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
     }
 
     .promo-content {
-        padding: 25px 20px 20px;
+        padding: 20px 18px 18px;
+    }
+
+    .promo-badge {
+        font-size: 11px;
+        padding: 6px 16px;
+        border-radius: 15px;
     }
 
     .promo-title {
-        font-size: 22px;
-        line-height: 1.2;
+        font-size: 20px;
+        line-height: 1.3;
+        margin-bottom: 12px;
     }
 
     .promo-subtitle {
-        font-size: 15px;
+        font-size: 14px;
+        margin-bottom: 20px;
     }
 
     .promo-offer-box {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
-        padding: 20px;
+        gap: 15px;
+        padding: 18px;
         margin-bottom: 20px;
+        border-radius: 15px;
+    }
+
+    .promo-discount, .promo-bonus {
+        min-height: auto;
     }
 
     .promo-plus {
         margin: 0;
         transform: rotate(90deg);
-        font-size: 24px;
+        font-size: 20px;
         animation: plusPulse 1.5s ease-in-out infinite;
     }
 
     .promo-percent, .promo-free {
-        font-size: 20px;
+        font-size: 18px;
+        padding: 8px 0;
     }
 
     .promo-text, .promo-condition {
-        font-size: 12px;
+        font-size: 11px;
+        margin-top: 4px;
+    }
+
+    .promo-mobile-section {
+        margin-bottom: 20px;
+    }
+
+    .promo-mobile-text, .promo-otp-text {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .promo-mobile-input-group {
+        flex-direction: row;
+        gap: 0;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    .promo-country-code {
+        border-radius: 12px 0 0 12px;
+        padding: 14px 16px;
+        font-size: 14px;
+        min-width: 60px;
+    }
+
+    .promo-mobile-input {
+        border-radius: 0 12px 12px 0;
+        padding: 14px 16px;
+        font-size: 14px;
+        flex: 1;
+    }
+
+    .promo-verify-btn, .promo-shop-btn {
+        padding: 14px 25px;
+        font-size: 14px;
+        border-radius: 25px;
+        width: 100%;
+    }
+
+    .promo-otp-input-group {
+        gap: 6px;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .promo-otp-input {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    .promo-features {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .promo-feature {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+    .promo-feature .promo-icon {
+        font-size: 16px;
+        margin-right: 8px;
+    }
+
+    .promo-close-btn {
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        border-radius: 18px;
     }
 
     .promo-code-box {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+        padding: 15px;
+        border-radius: 12px;
     }
 
     .promo-code {
         margin: 0;
-        font-size: 18px;
-        padding: 12px 20px;
+        font-size: 16px;
+        padding: 10px 16px;
+        border-radius: 8px;
     }
 
-    .promo-mobile-input-group {
-        flex-direction: column;
-        gap: 0;
-        border-radius: 12px;
+    .promo-copy-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+        border-radius: 15px;
     }
 
-    .promo-country-code {
-        border-radius: 12px 12px 0 0;
-        padding: 15px 20px;
+    .promo-resend-section {
+        margin-top: 15px;
     }
 
-    .promo-country-code::after {
-        display: none;
+    .promo-resend-text {
+        font-size: 12px;
+        margin-bottom: 10px;
     }
 
-    .promo-mobile-input {
-        border-radius: 0 0 12px 12px;
-        max-width: none;
-        padding: 15px 20px;
+    .promo-change-number-btn {
+        font-size: 12px;
+        padding: 6px 12px;
     }
 
-    .promo-verify-btn {
-        padding: 16px 30px;
-        font-size: 15px;
-    }
-
-    .promo-otp-input-group {
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .promo-otp-input {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-        border-radius: 10px;
-    }
-
-    .promo-features {
-        gap: 12px;
-    }
-
-    .promo-feature {
-        font-size: 14px;
-        padding: 8px 0;
-    }
-
-    .promo-close-btn {
-        top: 15px;
-        right: 15px;
-        width: 38px;
-        height: 38px;
-        font-size: 20px;
-    }
-
-    .promo-mobile-text, .promo-otp-text {
-        font-size: 15px;
+    .promo-timer {
+        font-size: 12px;
+        margin-top: 10px;
     }
 }
 
 @media (max-width: 480px) {
+    .promo-popup-overlay {
+        padding: 5px;
+        padding-top: 10px;
+    }
+
     .promo-popup-container {
-        margin: 10px;
-        width: calc(100% - 20px);
+        width: 100%;
+        max-width: 100%;
+        border-radius: 15px;
+        max-height: calc(100vh - 20px);
     }
 
     .promo-content {
-        padding: 20px 15px 15px;
+        padding: 16px 14px 14px;
+    }
+
+    .promo-badge {
+        font-size: 10px;
+        padding: 5px 12px;
     }
 
     .promo-title {
-        font-size: 20px;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .promo-subtitle {
+        font-size: 13px;
+        margin-bottom: 16px;
     }
 
     .promo-offer-box {
-        padding: 15px;
+        padding: 14px;
+        gap: 12px;
+        margin-bottom: 16px;
     }
 
     .promo-percent, .promo-free {
+        font-size: 16px;
+        padding: 6px 0;
+    }
+
+    .promo-text, .promo-condition {
+        font-size: 10px;
+    }
+
+    .promo-plus {
         font-size: 18px;
     }
 
+    .promo-mobile-text, .promo-otp-text {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .promo-country-code {
+        padding: 12px 14px;
+        font-size: 13px;
+        min-width: 55px;
+    }
+
+    .promo-mobile-input {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+
+    .promo-verify-btn, .promo-shop-btn {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
     .promo-otp-input {
-        width: 35px;
-        height: 35px;
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+        border-radius: 6px;
+    }
+
+    .promo-otp-input-group {
+        gap: 4px;
+        margin-bottom: 12px;
+    }
+
+    .promo-features {
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .promo-feature {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    .promo-feature .promo-icon {
+        font-size: 14px;
+        margin-right: 6px;
+    }
+
+    .promo-close-btn {
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
         font-size: 16px;
+        border-radius: 16px;
+    }
+
+    .promo-code-box {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .promo-code {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .promo-copy-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .promo-resend-text {
+        font-size: 11px;
+    }
+
+    .promo-change-number-btn {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+
+    .promo-timer {
+        font-size: 11px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .promo-popup-container {
+        border-radius: 12px;
+    }
+
+    .promo-content {
+        padding: 14px 12px 12px;
+    }
+
+    .promo-title {
+        font-size: 16px;
+    }
+
+    .promo-subtitle {
+        font-size: 12px;
+    }
+
+    .promo-offer-box {
+        padding: 12px;
+    }
+
+    .promo-percent, .promo-free {
+        font-size: 14px;
+    }
+
+    .promo-otp-input {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .promo-otp-input-group {
+        gap: 3px;
+    }
+
+    .promo-mobile-input-group {
+        border-radius: 10px;
+    }
+
+    .promo-country-code {
+        border-radius: 10px 0 0 10px;
+        padding: 10px 12px;
+        font-size: 12px;
+        min-width: 50px;
+    }
+
+    .promo-mobile-input {
+        border-radius: 0 10px 10px 0;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .promo-popup-overlay {
+        padding-top: 10px;
+    }
+
+    .promo-popup-container {
+        max-height: calc(100vh - 20px);
+    }
+
+    .promo-content {
+        padding: 15px;
+    }
+
+    .promo-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .promo-subtitle {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .promo-offer-box {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (max-width: 768px) {
+    .promo-verify-btn, .promo-shop-btn, .promo-copy-btn {
+        min-height: 44px; /* Apple's recommended touch target size */
+        touch-action: manipulation; /* Prevents zoom on double-tap */
+    }
+
+    .promo-otp-input {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    .promo-mobile-input {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    .promo-close-btn {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+    }
+
+    /* Prevent text selection on buttons */
+    .promo-verify-btn, .promo-shop-btn, .promo-copy-btn, .promo-close-btn {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Improved scrolling for mobile */
+@media (max-width: 768px) {
+    .promo-popup-container {
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        scrollbar-width: none; /* Hide scrollbar on Firefox */
+        -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
+    }
+
+    .promo-popup-container::-webkit-scrollbar {
+        display: none; /* Hide scrollbar on WebKit browsers */
+    }
+}
+
+/* Focus states for better accessibility on mobile */
+@media (max-width: 768px) {
+    .promo-mobile-input:focus,
+    .promo-otp-input:focus {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
+        border-color: #4CAF50;
+    }
+
+    .promo-verify-btn:focus,
+    .promo-shop-btn:focus {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+    }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media (max-width: 768px) {
+    .promo-mobile-input,
+    .promo-otp-input {
+        font-size: 16px !important; /* Prevents zoom on iOS when font-size is less than 16px */
+    }
+}
+
+/* High DPI/Retina display adjustments */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+    .promo-popup-container {
+        border-width: 0.5px; /* Thinner borders on high DPI displays */
+    }
+
+    .promo-close-btn {
+        border-width: 0.5px;
+    }
+}
+
+/* Dark mode support for mobile */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+    .promo-popup-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(234, 101, 45, 0.2));
+    }
+}
+
+/* Reduced motion preferences */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .promo-popup-container {
+        transition: none;
+        transform: none !important;
+    }
+
+    .promo-plus {
+        animation: none;
+    }
+
+    @keyframes plusPulse {
+        0%, 100% { transform: rotate(90deg) scale(1); }
+    }
+}
+
+/* Safe area adjustments for devices with notches */
+@media (max-width: 768px) {
+    .promo-popup-overlay {
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
+    }
+}
+
+/* Improved button spacing for better touch targets */
+@media (max-width: 768px) {
+    .promo-resend-section {
+        margin-top: 20px;
+    }
+
+    .promo-resend-btn,
+    .promo-change-number-btn {
+        margin: 8px 4px;
+        min-height: 40px;
+        padding: 8px 16px;
+    }
+
+    .promo-footer {
+        padding-top: 20px;
     }
 }
 </style>
@@ -5420,7 +5810,7 @@ s0.parentNode.insertBefore(s1,s0);
                 <!-- Slide 1 -->
                 <div class="carousel-item active testimonia-carousel-item">
                     <p class="testimonia-testimonial">"Very good product! I have been using it for two months now, and I
-                        can feel a great boost in my energy levels. Thanks to My Nutrify for this amazing supplement!"
+                        can feel a great boost in my energy levels." Thanks to My Nutrify for this amazing supplement!
                     </p>
                     <p class="testimonia-overview"><b>Aarav Sharma</b></p>
                     <div class="testimonia-star-rating">
@@ -5431,9 +5821,11 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 2 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"I have completed three bottles, and the results are fantastic! My
-                        digestion has improved, and I feel more active. My Nutrify truly delivers quality!"</p>
-                    <p class="testimonia-overview"><b>Neha Patel</b></p>
+                    <p class="testimonia-testimonial">"Mere periods irregular the, par ye product use karne ke 3
+                                weeks ke andar hi cycle regular ho gaya. Ye hormonal balance
+                                maintain karne me bhi madad karta hai." Bahut accha product
+                                hai, highly recommended!</p>
+                    <p class="testimonia-overview"><b>Anita Sharma</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5442,9 +5834,10 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 3 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"Been using My Nutrify's product for four days now, and I already
-                        feel a difference, more energy, no bloating, and improved digestion. I love it!"</p>
-                    <p class="testimonia-overview"><b>Rahul Desai</b></p>
+                    <p class="testimonia-testimonial">"I have been using She Care Plus for almost three months and I can see visible results, I have regular
+                            menstural cycle and less bloating and also it had no side effects on my health A big Thanks to My Nutrify
+                            for this product."</p>
+                    <p class="testimonia-overview"><b>Sakshi Mane</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5453,8 +5846,9 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 4 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"Not just a good product, but an excellent one! This is my fifth
-                        bottle, and my health has improved significantly. My Nutrify is now my go-to brand!"</p>
+                    <p class="testimonia-testimonial">"Quality product, no side effects, and helps in maintaining
+                                energy levels throughout the day. Really satisfied with my
+                                purchase."</p>
                     <p class="testimonia-overview"><b>Priya Mehta</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
@@ -5466,7 +5860,7 @@ s0.parentNode.insertBefore(s1,s0);
                 <div class="carousel-item testimonia-carousel-item">
                     <p class="testimonia-testimonial">"I was struggling with fatigue, but after using My Nutrify's
                         product for a month, my energy levels are back to normal! Highly recommended."</p>
-                    <p class="testimonia-overview"><b>Rohan Verma</b></p>
+                    <p class="testimonia-overview"><b>Pankaj Verma</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5475,8 +5869,8 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 6 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"My sugar levels are now stable, and I have reduced my allopathic
-                        medicine dosage significantly. Thanks to My Nutrify for this life-changing product!"</p>
+                    <p class="testimonia-testimonial">"Quality product. Helps in keeping my cholesterol in
+                        check".</p>
                     <p class="testimonia-overview"><b>Arjun Singh</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
@@ -5486,9 +5880,11 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 7 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"I feel lighter, more energetic, and my digestion has improved
-                        significantly. My Nutrify's product has made a huge difference in my daily life."</p>
-                    <p class="testimonia-overview"><b>Megha Kapoor</b></p>
+                    <p class="testimonia-testimonial">“Muze ayurvedic products itne aache nahin lagte hai lekin meri dost ne muze bataya isiliye maine my
+                            nutrify se amla juice order kiya tha aur bina umeed ke issi use karna start kiya aur dekhte hi dekhte meri
+                            skin glowing hone lagi hai aur digestion bhi behtar hogya hai aur ek aamla juice mere maa keliye order
+                            kardiya hai really nice product”.</p>
+                    <p class="testimonia-overview"><b>Sayali patil</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5497,9 +5893,10 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 8 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"After just two weeks of using My Nutrify, I noticed a significant
-                        boost in my energy and focus. This product is a game-changer!"</p>
-                    <p class="testimonia-overview"><b>Simran Kaur</b></p>
+                <p class="testimonia-testimonial">Good quality."Helped my metabolism
+                       and overall health".
+                       </p>
+                    <p class="testimonia-overview"><b>Neha Bansal</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5508,10 +5905,9 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 9 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"This product is excellent! I have been using it for the last
-                        three months and have completed three bottles. My blood cholesterol was 324, and now it's 146.
-                        Grateful to My Nutrify for such a wonderful product."</p>
-                    <p class="testimonia-overview"><b>Sahil Mujawar</b></p>
+                    <p class="testimonia-testimonial">“Apple Cider Vinegar se mera weight maintained hai aur metabolism bhi baad gaya hai , skin texture
+                      bhi smooth hogyi hai bhoth accha feel hora hai thank you My Nutrify”.</p>
+                    <p class="testimonia-overview"><b>Riya Sharma</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5520,10 +5916,10 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 10 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"I received this product four days ago, and I must say it's
-                        fantastic! I feel a surge of energy, no bloating, and improved digestion. Thank you, My Nutrify,
-                        for this amazing product."</p>
-                    <p class="testimonia-overview"><b>Kunal Verma</b></p>
+                    <p class="testimonia-testimonial">"I bought this for my mother, and she has been using it
+                        regularly. It's excellent for managing high blood pressure
+                        and sugar levels". A great herbal remedy!</p>
+                    <p class="testimonia-overview"><b>Gogi Sharma</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5532,10 +5928,11 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 11 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"Not just a good product, but a highly recommended one! I'm now on
-                        my fifth bottle. My sugar levels yesterday were Fasting - 104 and PP - 130, and I have stopped
-                        taking allopathic medicine. Thanks to My Nutrify!"</p>
-                    <p class="testimonia-overview"><b>Akash Kamble</b></p>
+                    <p class="testimonia-testimonial">“Sirf sunkar pata tha ke karele juice se sugar control mai aati hai lekin my nutrify ke karela , neem ,
+                        jamun juice pina start kiya tha 3 mahinose aur ab yaakeen hogya hai ki vakimai hi kaam karta hai
+                        sachmai mara blood sugar control mai hai aur digestion bhi proper hora hai bina side effects ke thank
+                        you so much for this product ”.</p>
+                    <p class="testimonia-overview"><b>Ashiwarya Gupta</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
@@ -5544,16 +5941,42 @@ s0.parentNode.insertBefore(s1,s0);
 
                 <!-- Slide 12 -->
                 <div class="carousel-item testimonia-carousel-item">
-                    <p class="testimonia-testimonial">"I absolutely love this product! Been using it for a while now,
-                        and I feel more energetic and active throughout the day. My Nutrify has truly made a difference
-                        in my health!"</p>
+                    <p class="testimonia-testimonial">"This juice has helped improve my digestion and overall
+                                    well-being. I feel lighter and more energetic".</p>
                     <p class="testimonia-overview"><b>Siddharth Chauhan</b></p>
                     <div class="testimonia-star-rating">
                         <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
                     </div>
                 </div>
+                 <!-- Slide 13 -->
+                <div class="carousel-item testimonia-carousel-item">
+                    <p class="testimonia-testimonial">“Thyroid ki takleef se mere papa bhoth pareshan the isiliye maine Thyro balance care juice mangvaya
+                        hai aur 3 weeks mai hi papa ko raht mil rahi hai muze khushi hai ki papa iss product se khush hai big
+                        thanks My Nutrify Thyro Balance Care Juice”.</p>
+                    <p class="testimonia-overview"><b>Rakhi Mishra</b></p>
 
+                     <!-- Slide 14 -->
+                <div class="carousel-item testimonia-carousel-item">
+                    <p class="testimonia-testimonial">"Superb juice! Taste raw but benefit very good. I take
+                          every day".</p>
+                    <p class="testimonia-overview"><b>Priya Malhotra</b></p>
+                    <div class="testimonia-star-rating">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                            class="fa fa-star"></i><i class="fa fa-star"></i>
+                    </div>
+                </div>
+                <!-- Slide 15 -->
+                <div class="carousel-item testimonia-carousel-item">
+                    <p class="testimonia-testimonial">"Nice product. Taste little strong but good for health.
+                    My digestion better now".</p>
+                    <p class="testimonia-overview"><b>Sneha verma</b></p>
+                    <div class="testimonia-star-rating">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                            class="fa fa-star"></i><i class="fa fa-star"></i>
+                    </div>
+                </div>
+             
             </div>
 
             <!-- Controls -->
