@@ -66,22 +66,39 @@ try {
     
     if ($data['paymentMethod'] === 'Online') {
         try {
+            // Log order creation attempt
+            error_log("Order creation: Starting Razorpay order for " . $simpleOrderId);
+            error_log("Order creation: Amount = " . $data['final_total']);
+
             // Initialize Razorpay
             $api = new Api('rzp_live_DJ1mSUEz1DK4De', '2C8q79zzBNMd6jadotjz6Tci');
-            
+
             $amount = floatval($data['final_total']) * 100; // Convert to paise
-            
+
+            // Validate amount
+            if ($amount <= 0) {
+                throw new Exception("Invalid amount: " . $amount);
+            }
+
+            error_log("Order creation: Amount in paise = " . $amount);
+
             $razorpayOrderData = [
                 'receipt' => $simpleOrderId,
-                'amount' => $amount,
+                'amount' => intval($amount), // Ensure it's an integer
                 'currency' => 'INR',
                 'payment_capture' => 1
             ];
-            
+
+            error_log("Order creation: Razorpay order data = " . json_encode($razorpayOrderData));
+
             $razorpayOrder = $api->order->create($razorpayOrderData);
             $razorpayOrderId = $razorpayOrder['id'];
-            
+
+            error_log("Order creation: Razorpay order created successfully - " . $razorpayOrderId);
+
         } catch (Exception $e) {
+            error_log("Order creation: Razorpay error - " . $e->getMessage());
+            error_log("Order creation: Error type - " . get_class($e));
             throw new Exception("Razorpay error: " . $e->getMessage());
         }
     }
@@ -103,7 +120,25 @@ try {
             'created_at' => date('Y-m-d H:i:s')
         ];
 
-        // Store in session temporarily
+        // Store in database for payment verification (more reliable than session)
+        $orderDataJson = json_encode($orderData);
+        $insertPendingQuery = "INSERT INTO pending_orders (order_id, order_data, created_at) VALUES (?, ?, NOW())
+                              ON DUPLICATE KEY UPDATE order_data = VALUES(order_data), created_at = VALUES(created_at)";
+
+        $pendingStmt = $mysqli->prepare($insertPendingQuery);
+        if ($pendingStmt) {
+            $pendingStmt->bind_param("ss", $simpleOrderId, $orderDataJson);
+            if ($pendingStmt->execute()) {
+                error_log("Order creation: Pending order data stored in database for " . $simpleOrderId);
+            } else {
+                error_log("Order creation: Failed to execute pending order insert: " . $pendingStmt->error);
+            }
+            $pendingStmt->close();
+        } else {
+            error_log("Order creation: Failed to prepare pending order insert: " . $mysqli->error);
+        }
+
+        // Also store in session as backup
         $_SESSION['pending_order_' . $simpleOrderId] = $orderData;
 
         // Don't create database order yet - wait for payment success

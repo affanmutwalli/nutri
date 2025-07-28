@@ -1,6 +1,23 @@
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+
+// Configure Tawk.to positioning
+Tawk_API.customStyle = {
+    visibility : {
+        desktop : {
+            position : 'br',
+            xOffset : 20,
+            yOffset : 140  // Position Tawk.to higher (140px from bottom)
+        },
+        mobile : {
+            position : 'br',
+            xOffset : 15,
+            yOffset : 120
+        }
+    }
+};
+
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
@@ -9,19 +26,51 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+
+// Additional positioning fix after Tawk.to loads
+Tawk_API.onLoad = function(){
+    // Force Tawk.to positioning
+    setTimeout(function() {
+        var tawkWidget = document.getElementById('tawkchat-minified-container');
+        if (tawkWidget) {
+            tawkWidget.style.bottom = '140px !important';
+            tawkWidget.style.zIndex = '10001 !important';
+        }
+
+        var tawkContainer = document.getElementById('tawkchat-container');
+        if (tawkContainer) {
+            tawkContainer.style.bottom = '140px !important';
+            tawkContainer.style.zIndex = '10001 !important';
+        }
+    }, 1000);
+};
 </script>
 <!--End of Tawk.to Script-->
 
 <style>
+/* Tawk.to positioning - move it higher */
+#tawkchat-minified-container {
+    bottom: 140px !important; /* Move Tawk.to above AI Assistant */
+    right: 20px !important;
+    z-index: 10001 !important; /* Higher z-index than AI Assistant */
+}
+
+#tawkchat-container {
+    bottom: 140px !important; /* Move Tawk.to chat window above AI Assistant */
+    right: 20px !important;
+    z-index: 10001 !important;
+}
+
+/* AI Assistant positioning - keep it lower */
 #chat-icon {
     position: fixed;
-    bottom: 50px;
+    bottom: 20px; /* Lower position for AI Assistant */
     right: 20px;
     cursor: pointer;
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    z-index: 9999; /* Ensures it stays above other elements */
+    z-index: 9999; /* Lower z-index than Tawk.to */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -55,7 +104,7 @@ s0.parentNode.insertBefore(s1,s0);
 #chat-widget {
     display: none;
     position: fixed;
-    bottom: 20px;
+    bottom: 90px; /* Position AI Assistant chat window higher to avoid overlap */
     right: 20px;
     width: 350px;
     height: 500px;
@@ -63,7 +112,7 @@ s0.parentNode.insertBefore(s1,s0);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     flex-direction: column;
-    z-index: 10000;
+    z-index: 9998; /* Lower z-index than Tawk.to */
     overflow: hidden;
 }
 
@@ -263,15 +312,27 @@ s0.parentNode.insertBefore(s1,s0);
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+    /* Tawk.to mobile positioning */
+    #tawkchat-minified-container {
+        bottom: 120px !important;
+        right: 15px !important;
+    }
+
+    #tawkchat-container {
+        bottom: 120px !important;
+        right: 15px !important;
+    }
+
+    /* AI Assistant mobile positioning */
     #chat-widget {
         width: 90%;
         height: 70%;
-        bottom: 10px;
+        bottom: 70px; /* Higher position on mobile to avoid overlap */
         right: 5%;
     }
-    
+
     #chat-icon {
-        bottom: 30px;
+        bottom: 15px; /* Lower position for AI Assistant icon */
         right: 15px;
         width: 50px;
         height: 50px;

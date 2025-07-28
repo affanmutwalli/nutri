@@ -359,8 +359,53 @@
          }
          @media (min-width: 768px) {
          .desktop-margin {
-         margin: 20px; /* Add margins for desktop view */
+         margin: 20px 30px; /* Moderate left and right margins for desktop view */
          }
+         }
+         @media (min-width: 1200px) {
+         .desktop-margin {
+         margin: 20px 50px; /* More spacing for larger screens but not too much */
+         }
+         }
+         @media (min-width: 1400px) {
+         .desktop-margin {
+         margin: 20px 80px; /* Maximum spacing for very large screens */
+         }
+         }
+
+         /* Fix product info text overflow */
+         .pro-info {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+         max-width: 100%;
+         }
+
+         .pro-info h4 {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+         line-height: 1.4;
+         margin-bottom: 15px;
+         }
+
+         .pro-info p, .pro-info div {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+         }
+
+         /* Ensure container doesn't overflow */
+         .pro-page .container {
+         max-width: 100%;
+         overflow-x: hidden;
+         }
+
+         .pro-page .row {
+         margin-left: 0;
+         margin-right: 0;
+         }
+
+         .pro-page [class*="col-"] {
+         padding-left: 15px;
+         padding-right: 15px;
          }
          .share {
          display: flex;
@@ -2935,7 +2980,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
          <div class="container">
             <div class="row">
                   <!-- Product Images Section -->
-                  <div class="col-xl-20 col-lg-16 col-md-12 col-xs-12 pro-image">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-12 pro-image">
                      <div class="row">
                         <!-- Main Image with Slider -->
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 larg-image">

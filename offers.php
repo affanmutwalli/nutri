@@ -781,7 +781,7 @@ $mysqli = $obj->connection();
         if (typeof trackPageView === 'function') {
             trackPageView('offers');
         }
-        
+
         // Track offer interactions
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', function(e) {
@@ -790,6 +790,24 @@ $mysqli = $obj->connection();
                     if (typeof trackProductView === 'function') {
                         trackProductView(productId, 'offers_page');
                     }
+                }
+            });
+        });
+
+        // Add to cart functionality - redirect to product page (using vanilla JavaScript)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add to cart for non-logged-in users - redirect to product page
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart-session') || e.target.closest('.add-to-cart-session')) {
+                    e.preventDefault(); // Prevent default action
+
+                    // Get the button element (in case we clicked on an icon inside the button)
+                    var button = e.target.classList.contains('add-to-cart-session') ? e.target : e.target.closest('.add-to-cart-session');
+                    var productId = button.getAttribute('data-product-id'); // Get product ID
+                    console.log('Redirecting to product page for Product ID:', productId); // Debugging: Log the product ID
+
+                    // Redirect to product details page
+                    window.location.href = 'product_details.php?ProductId=' + productId;
                 }
             });
         });
