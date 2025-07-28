@@ -851,6 +851,8 @@ function sendOrderData() {
                         timer: 3000,
                         showConfirmButton: false
                     }).then(() => {
+                        // Clear cart display before redirecting
+                        clearCartDisplay();
                         window.location.href = "order-placed.php?order_id=" + data.order_id;
                     });
                 });
@@ -864,6 +866,8 @@ function sendOrderData() {
                     timer: 3000,
                     showConfirmButton: false
                 }).then(() => {
+                    // Clear cart display before redirecting
+                    clearCartDisplay();
                     window.location.href = "order-placed.php?order_id=" + data.order_id;
                 });
             }
@@ -952,7 +956,7 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                             "logo": "https://mynutrify.com/image/main_logo.png"
                         },
                         "handler": function(response) {
-                            fetch("exe_files/razorpay_callback.php", {
+                            fetch("exe_files/razorpay_callback_bulletproof.php", {
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json"
@@ -964,7 +968,27 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                                         razorpay_signature: response.razorpay_signature
                                     })
                                 })
-                                .then(res => res.json())
+                                .then(res => {
+                                    // Check if response is ok
+                                    if (!res.ok) {
+                                        throw new Error(`HTTP error! status: ${res.status}`);
+                                    }
+
+                                    // Get response text first
+                                    return res.text();
+                                })
+                                .then(text => {
+                                    console.log("Raw response:", text);
+
+                                    // Try to parse as JSON
+                                    try {
+                                        return JSON.parse(text);
+                                    } catch (e) {
+                                        console.error("JSON parse error:", e);
+                                        console.error("Response text:", text);
+                                        throw new Error("Invalid JSON response from server");
+                                    }
+                                })
                                 .then(result => {
                                     if (result?.status === "success") {
                                         // Show points earned popup first (if points were awarded)
@@ -985,10 +1009,34 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                                                 showConfirmButton: true,
                                                 allowOutsideClick: false
                                             }).then(() => {
-                                                window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                                // Then show order success message (same as COD)
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Payment Successful!',
+                                                    text: 'Your payment has been processed and order confirmed. You will receive a confirmation soon.',
+                                                    confirmButtonColor: '#ec6504',
+                                                    timer: 3000,
+                                                    showConfirmButton: false
+                                                }).then(() => {
+                                                    // Clear cart display before redirecting
+                                                    clearCartDisplay();
+                                                    window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                                });
                                             });
                                         } else {
-                                            window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                            // No points awarded, show regular success message
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Payment Successful!',
+                                                text: 'Your payment has been processed and order confirmed. You will receive a confirmation soon.',
+                                                confirmButtonColor: '#ec6504',
+                                                timer: 3000,
+                                                showConfirmButton: false
+                                            }).then(() => {
+                                                // Clear cart display before redirecting
+                                                clearCartDisplay();
+                                                window.location.href = "order-placed.php?order_id=" + data.order_id;
+                                            });
                                         }
                                     } else {
                                         Swal.fire({
@@ -1001,11 +1049,20 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
                                 })
                                 .catch(error => {
                                     console.error("Verification Error:", error);
+
+                                    let errorMessage = "Error verifying payment.";
+                                    if (error.message.includes("Invalid JSON")) {
+                                        errorMessage = "Server response error. Please contact support with your payment details.";
+                                    } else if (error.message.includes("HTTP error")) {
+                                        errorMessage = "Server connection error. Please try again or contact support.";
+                                    }
+
                                     Swal.fire({
                                         icon: 'error',
-                                        title: 'Error',
-                                        text: "Error verifying payment.",
-                                        confirmButtonColor: '#ec6504'
+                                        title: 'Payment Verification Error',
+                                        text: errorMessage,
+                                        confirmButtonColor: '#ec6504',
+                                        footer: 'If payment was deducted, please contact customer support.'
                                     });
                                 });
                         }
@@ -1219,6 +1276,39 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
 
         // Remove any previously applied discount
         removeDiscountFromCart();
+    }
+
+    // Function to clear cart display after successful order
+    function clearCartDisplay() {
+        try {
+            // Clear cart items from display
+            const cartContainer = document.querySelector('.checkout-items');
+            if (cartContainer) {
+                cartContainer.innerHTML = '<p class="text-center text-muted">Your cart is now empty</p>';
+            }
+
+            // Update cart summary
+            const cartSummary = document.querySelector('.cart-summary');
+            if (cartSummary) {
+                cartSummary.innerHTML = '<p class="text-center text-muted">Cart cleared</p>';
+            }
+
+            // Update any cart count displays
+            const cartCounts = document.querySelectorAll('.cart-count, .cart-counter');
+            cartCounts.forEach(element => {
+                element.textContent = '0';
+            });
+
+            // Update total displays
+            const totalElements = document.querySelectorAll('.total-amount, .final-total');
+            totalElements.forEach(element => {
+                element.textContent = '₹0.00';
+            });
+
+            console.log('Cart display cleared successfully');
+        } catch (error) {
+            console.error('Error clearing cart display:', error);
+        }
     }
 
     </script>

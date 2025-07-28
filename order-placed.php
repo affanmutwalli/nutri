@@ -9,12 +9,54 @@ $obj->connection();
 
 $FieldNames = array("OrderId", "OrderDate", "Amount", "PaymentStatus","OrderStatus","ShipAddress","PaymentType","TransactionId","CreatedAt","CustomerId","Name","Email","MobileNo");
 $ParamArray = [$_GET["order_id"]];
+
+// Log the order lookup attempt
+error_log("Order-placed.php: Looking for order ID: " . $_GET["order_id"]);
+
 // Get order data with customer details - fix column names to match actual table structure
 $OrderData = $obj->MysqliSelect1("SELECT om.OrderId, om.OrderDate, om.Amount, om.PaymentStatus, om.OrderStatus, om.ShipAddress, om.PaymentType, om.TransactionId, om.CreatedAt, om.CustomerId, c.Name, c.Email, c.MobileNo FROM order_master om JOIN customer_master c ON om.CustomerId = c.CustomerId WHERE om.OrderId = ?", $FieldNames, "s", $ParamArray);
 
+// Log the result
+if ($OrderData) {
+    error_log("Order-placed.php: Order found successfully");
+} else {
+    error_log("Order-placed.php: Order not found in database");
+
+    // Try to find recent orders for debugging
+    $recentOrders = $obj->MysqliSelect1("SELECT OrderId FROM order_master ORDER BY CreatedAt DESC LIMIT 5", ["OrderId"], "", []);
+    if ($recentOrders) {
+        error_log("Order-placed.php: Recent orders: " . print_r($recentOrders, true));
+    }
+}
+
 if (!$OrderData) {
     header("HTTP/1.1 404 Not Found");
-    die("Order not found");
+    die("Order not found. Order ID searched: " . htmlspecialchars($_GET["order_id"]));
+}
+
+// Check if this order just earned points (for showing notification)
+$pointsAwarded = 0;
+$showPointsNotification = false;
+
+// Check if there's a recent points transaction for this order
+try {
+    $pointsQuery = "SELECT points FROM points_transactions WHERE order_id = ? AND transaction_type = 'earned' ORDER BY created_at DESC LIMIT 1";
+    $pointsResult = $obj->MysqliSelect1($pointsQuery, ["points"], "s", [$_GET["order_id"]]);
+
+    if ($pointsResult && count($pointsResult) > 0) {
+        $pointsAwarded = $pointsResult[0]["points"];
+
+        // Show notification if order was placed in the last 10 minutes (likely just placed)
+        $orderTime = strtotime($OrderData[0]["CreatedAt"]);
+        $currentTime = time();
+        $timeDifference = $currentTime - $orderTime;
+
+        if ($timeDifference <= 600) { // 10 minutes
+            $showPointsNotification = true;
+        }
+    }
+} catch (Exception $e) {
+    error_log("Error checking points for order: " . $e->getMessage());
 }
 
 ?>
@@ -163,6 +205,19 @@ if (!$OrderData) {
                             <span class="order-date"><?php echo date("M d", strtotime($OrderData[0]["CreatedAt"])); ?></span>
                         </div>
                         <p class="text-muted mb-0">Thank you for choosing My Nutrify! Your order has been successfully placed.</p>
+
+                        <?php if ($pointsAwarded > 0): ?>
+                        <div class="alert alert-success mt-3" style="border-left: 4px solid #ff8c00; background-color: #fff8f0;">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-star text-warning me-2" style="font-size: 1.2rem;"></i>
+                                <div>
+                                    <strong style="color: #ff8c00;">🎉 You earned <?php echo $pointsAwarded; ?> reward points!</strong>
+                                    <br>
+                                    <small class="text-muted">Points have been added to your account and can be used for future purchases.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
                         <a href="buy-again.php?order_id=<?php echo $OrderData[0]['OrderId']; ?>" class="btn btn-outline-primary">
@@ -450,6 +505,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
         <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<?php if ($showPointsNotification && $pointsAwarded > 0): ?>
+<script>
+// Show points notification for recently placed orders
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure page is fully loaded
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: '🎉 Congratulations!',
+            html: `<div style="font-size: 18px; color: #ff8c00; font-weight: bold; margin: 10px 0;">
+                      You earned +<?php echo $pointsAwarded; ?> Points!
+                   </div>
+                   <div style="font-size: 14px; color: #666;">
+                      Points have been added to your account for this order.
+                   </div>`,
+            confirmButtonText: 'Awesome!',
+            confirmButtonColor: '#ff8c00',
+            timer: 5000,
+            timerProgressBar: true,
+            showConfirmButton: true,
+            allowOutsideClick: true,
+            backdrop: true
+        });
+    }, 1000); // 1 second delay
+});
+</script>
+<?php endif; ?>
 
 </body>
 </html>

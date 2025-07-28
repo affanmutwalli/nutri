@@ -1,6 +1,8 @@
 <?php
-$keyId = "rzp_live_6Tqc7v1RVluQL3";
-$keySecret = "GfgtJzhiIxt0h5ixpVNIzObg";
+// Use consistent credentials from config file
+include_once 'razorpay_config.php';
+$keyId = RAZORPAY_KEY_ID;
+$keySecret = RAZORPAY_KEY_SECRET;
 
 $data = json_decode(file_get_contents("php://input"));
 

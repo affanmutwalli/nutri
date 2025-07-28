@@ -1,0 +1,165 @@
+[2025-07-28 06:05:25] === BULLETPROOF CALLBACK START ===
+[2025-07-28 06:05:25] POST data: Array
+(
+)
+
+[2025-07-28 06:05:25] GET data: Array
+(
+)
+
+[2025-07-28 06:05:25] Raw input: {"order_db_id":"ON1753682671607","razorpay_payment_id":"pay_QyNkLPGcdFH64I","razorpay_order_id":"order_QyNk7GsDoPzGug","razorpay_signature":"0fb6a75533a68137d9b21e78cb22bcfa35916371fedf50cb9a79f17a6ef6b4d1"}
+[2025-07-28 06:05:25] Using JSON input data
+[2025-07-28 06:05:25] Data received: Array
+(
+    [order_db_id] => ON1753682671607
+    [razorpay_payment_id] => pay_QyNkLPGcdFH64I
+    [razorpay_order_id] => order_QyNk7GsDoPzGug
+    [razorpay_signature] => 0fb6a75533a68137d9b21e78cb22bcfa35916371fedf50cb9a79f17a6ef6b4d1
+)
+
+[2025-07-28 06:05:25] Extracted - OrderDbId: ON1753682671607, PaymentId: pay_QyNkLPGcdFH64I, RazorpayOrderId: order_QyNk7GsDoPzGug, Signature: 0fb6a75533a68137d9b21e78cb22bcfa35916371fedf50cb9a79f17a6ef6b4d1
+[2025-07-28 06:05:25] Database connected successfully
+[2025-07-28 06:05:25] Generated signature: 0fb6a75533a68137d9b21e78cb22bcfa35916371fedf50cb9a79f17a6ef6b4d1
+[2025-07-28 06:05:25] Received signature: 0fb6a75533a68137d9b21e78cb22bcfa35916371fedf50cb9a79f17a6ef6b4d1
+[2025-07-28 06:05:25] Signature verified successfully
+[2025-07-28 06:05:25] Order data found in database
+[2025-07-28 06:05:25] Order data: Array
+(
+    [OrderId] => ON1753682671607
+    [CustomerId] => 16
+    [CustomerType] => Registered
+    [Amount] => 1
+    [ShipAddress] => Samtangar, Sangli, Maharashtra - 416410
+    [PaymentType] => Online
+    [RazorpayOrderId] => order_QyNk7GsDoPzGug
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 15
+                    [name] => My Nutrify Herbal & Ayurveda's Apple Cider Vinegar- 1 Ltr | Raw, Unfiltered & With Mother | Aids Digestion, Detox, Supports Weight Management, Boosts Immunity, Improves Skin & Hair Health
+                    [code] => 
+                    [size] => .00 1000 ml | Pack of 1
+                    [quantity] => 1
+                    [image] => http://localhost/nutrify/cms/images/products/7579.jpg
+                    [offer_price] => 1
+                )
+
+        )
+
+    [created_at] => 2025-07-28 11:34:33
+)
+
+[2025-07-28 06:05:25] FATAL ERROR: mysqli_stmt::bind_param(): Argument #4 could not be passed by reference
+[2025-07-28 06:05:25] === BULLETPROOF CALLBACK END ===
+[2025-07-28 06:07:14] === BULLETPROOF CALLBACK START ===
+[2025-07-28 06:07:14] POST data: Array
+(
+)
+
+[2025-07-28 06:07:14] GET data: Array
+(
+)
+
+[2025-07-28 06:07:14] Raw input: {"order_db_id":"ON1753682793766","razorpay_payment_id":"pay_QyNmPKui5lOXac","razorpay_order_id":"order_QyNmG2Olpr5fjq","razorpay_signature":"741871c4f36f46a8214acf0aad8115d1de492a216b6212a6618f3e5bfc0fdbb1"}
+[2025-07-28 06:07:14] Using JSON input data
+[2025-07-28 06:07:14] Data received: Array
+(
+    [order_db_id] => ON1753682793766
+    [razorpay_payment_id] => pay_QyNmPKui5lOXac
+    [razorpay_order_id] => order_QyNmG2Olpr5fjq
+    [razorpay_signature] => 741871c4f36f46a8214acf0aad8115d1de492a216b6212a6618f3e5bfc0fdbb1
+)
+
+[2025-07-28 06:07:14] Extracted - OrderDbId: ON1753682793766, PaymentId: pay_QyNmPKui5lOXac, RazorpayOrderId: order_QyNmG2Olpr5fjq, Signature: 741871c4f36f46a8214acf0aad8115d1de492a216b6212a6618f3e5bfc0fdbb1
+[2025-07-28 06:07:14] Database connected successfully
+[2025-07-28 06:07:14] Generated signature: 741871c4f36f46a8214acf0aad8115d1de492a216b6212a6618f3e5bfc0fdbb1
+[2025-07-28 06:07:14] Received signature: 741871c4f36f46a8214acf0aad8115d1de492a216b6212a6618f3e5bfc0fdbb1
+[2025-07-28 06:07:14] Signature verified successfully
+[2025-07-28 06:07:14] Order data found in database
+[2025-07-28 06:07:14] Order data: Array
+(
+    [OrderId] => ON1753682793766
+    [CustomerId] => 16
+    [CustomerType] => Registered
+    [Amount] => 1
+    [ShipAddress] => Samtangar, Sangli, Maharashtra - 416410
+    [PaymentType] => Online
+    [RazorpayOrderId] => order_QyNmG2Olpr5fjq
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 15
+                    [name] => My Nutrify Herbal & Ayurveda's Apple Cider Vinegar- 1 Ltr | Raw, Unfiltered & With Mother | Aids Digestion, Detox, Supports Weight Management, Boosts Immunity, Improves Skin & Hair Health
+                    [code] => 
+                    [size] => .00 1000 ml | Pack of 1
+                    [quantity] => 1
+                    [image] => http://localhost/nutrify/cms/images/products/7579.jpg
+                    [offer_price] => 1
+                )
+
+        )
+
+    [created_at] => 2025-07-28 11:36:34
+)
+
+[2025-07-28 06:07:14] FATAL ERROR: mysqli_stmt::bind_param(): Argument #4 could not be passed by reference
+[2025-07-28 06:07:14] === BULLETPROOF CALLBACK END ===
+[2025-07-28 06:10:18] === BULLETPROOF CALLBACK START ===
+[2025-07-28 06:10:18] POST data: Array
+(
+)
+
+[2025-07-28 06:10:18] GET data: Array
+(
+)
+
+[2025-07-28 06:10:18] Raw input: {"order_db_id":"ON1753682979664","razorpay_payment_id":"pay_QyNpdcdwAe8Fiy","razorpay_order_id":"order_QyNpXc5keguQp7","razorpay_signature":"eeb29d970e8f9dd899b692338571dde755c55d00a04d016af68abb38c0ddf081"}
+[2025-07-28 06:10:18] Using JSON input data
+[2025-07-28 06:10:18] Data received: Array
+(
+    [order_db_id] => ON1753682979664
+    [razorpay_payment_id] => pay_QyNpdcdwAe8Fiy
+    [razorpay_order_id] => order_QyNpXc5keguQp7
+    [razorpay_signature] => eeb29d970e8f9dd899b692338571dde755c55d00a04d016af68abb38c0ddf081
+)
+
+[2025-07-28 06:10:18] Extracted - OrderDbId: ON1753682979664, PaymentId: pay_QyNpdcdwAe8Fiy, RazorpayOrderId: order_QyNpXc5keguQp7, Signature: eeb29d970e8f9dd899b692338571dde755c55d00a04d016af68abb38c0ddf081
+[2025-07-28 06:10:18] Database connected successfully
+[2025-07-28 06:10:18] Generated signature: eeb29d970e8f9dd899b692338571dde755c55d00a04d016af68abb38c0ddf081
+[2025-07-28 06:10:18] Received signature: eeb29d970e8f9dd899b692338571dde755c55d00a04d016af68abb38c0ddf081
+[2025-07-28 06:10:18] Signature verified successfully
+[2025-07-28 06:10:18] Order data found in database
+[2025-07-28 06:10:18] Order data: Array
+(
+    [OrderId] => ON1753682979664
+    [CustomerId] => 16
+    [CustomerType] => Registered
+    [Amount] => 1
+    [ShipAddress] => Samtangar, Sangli, Maharashtra - 416410
+    [PaymentType] => Online
+    [RazorpayOrderId] => order_QyNpXc5keguQp7
+    [products] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 15
+                    [name] => My Nutrify Herbal & Ayurveda's Apple Cider Vinegar- 1 Ltr | Raw, Unfiltered & With Mother | Aids Digestion, Detox, Supports Weight Management, Boosts Immunity, Improves Skin & Hair Health
+                    [code] => 
+                    [size] => .00 1000 ml | Pack of 1
+                    [quantity] => 1
+                    [image] => http://localhost/nutrify/cms/images/products/7579.jpg
+                    [offer_price] => 1
+                )
+
+        )
+
+    [created_at] => 2025-07-28 11:39:41
+)
+
+[2025-07-28 06:10:18] Order created successfully in database
+[2025-07-28 06:10:18] Order details inserted successfully
+[2025-07-28 06:10:18] Cleanup completed
+[2025-07-28 06:10:18] SUCCESS: Payment verification completed
+[2025-07-28 06:10:18] === BULLETPROOF CALLBACK END ===
