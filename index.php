@@ -2991,7 +2991,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 .comparison-list li {
     display: flex;
     align-items: center;
-    font-size: 16px;
+    font-size: 27px;
     font-weight: 500;
     padding: 15px 0;
     color: #2c3e50;
@@ -5549,12 +5549,7 @@ s0.parentNode.insertBefore(s1,s0);
                     <p>BPA Free </p>
                 </div>
             </div>
-            <div class="use-cart">
-                <div>
-                    <img src="cms/images/products/Halal.png" alt="">
-                    <p>Halal Certified</p>
-                </div>
-            </div>
+            
             <div class="use-cart">
                 <div>
                     <img src="cms/images/products/Gmp.png" alt="">
