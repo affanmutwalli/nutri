@@ -299,16 +299,27 @@
       const typingElement = showTypingIndicator();
     
       try {
-        // First try to use actual API
-        const response = await fetch("chatbot_api.php", {
+        // Create AbortController for aggressive timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout (Groq is super fast)
+
+        // Use lightning-fast Groq API
+        const response = await fetch("chatbot_api_groq.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userMsg })
+          body: JSON.stringify({ message: userMsg }),
+          signal: controller.signal
         });
-        
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         typingElement.remove();
-    
+
         // Process API response
         if (data.response) {
           displayMessage(data.response, "bot");
@@ -317,36 +328,18 @@
           addProductCarousel(data.products);
         }
       } catch (error) {
-        // Fallback to static mock data if API fails
+        // Handle timeout and other errors
         typingElement.remove();
-        
-        const mockResponse = {
-          response: "For weakness, I recommend My Nutrify Herbal & Ayurveda's Pure Shilajit Resin. It boosts immunity and energy levels.",
-          products: [
-            {
-              name: "Pure Shilajit Resin",
-              price: 1499,
-              image_url: "images/shilajit.png"
-            },
-            {
-              name: "Ashwagandha Capsules",
-              price: 899,
-              image_url: "images/ashwagandha.png"
-            },
-            {
-              name: "Triphala Powder",
-              price: 599,
-              image_url: "images/triphala.png"
-            }
-          ]
-        };
-    
-        if (mockResponse.response) {
-          displayMessage(mockResponse.response, "bot");
+
+        let errorMessage = "Sorry, I'm having trouble responding right now. Please try again in a moment.";
+
+        if (error.name === 'AbortError') {
+          errorMessage = "Sorry, that took too long to process. Please try asking a shorter question.";
+        } else if (error.message.includes('HTTP error')) {
+          errorMessage = "Sorry, I'm experiencing technical difficulties. Please try again later.";
         }
-        if (mockResponse.products?.length > 0) {
-          addProductCarousel(mockResponse.products);
-        }
+
+        displayMessage(errorMessage, "bot");
       } finally {
         chatInput.disabled = false;
         sendBtn.disabled = false;
@@ -398,7 +391,7 @@
           <div class="single-product-card">
             <img src="${product.image_url}" alt="${product.name}" class="single-product-image">
             <div class="single-product-name">${product.name}</div>
-            <div class="single-product-price">${product.price.toLocaleString()}</div>
+            <div class="single-product-price">${product.price}</div>
             <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
           </div>
         `;
@@ -414,7 +407,7 @@
           card.innerHTML = `
             <img src="${product.image_url}" alt="${product.name}">
             <div class="product-name">${product.name}</div>
-            <div class="product-price">₹${product.price.toLocaleString()}</div>
+            <div class="product-price">${product.price}</div>
             <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
           `;
           carousel.appendChild(card);

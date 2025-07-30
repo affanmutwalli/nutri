@@ -4957,7 +4957,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             </div>
                         </div>
                         <div class="o-t-banner">
-                            <a href="product_details.php?ProductId=12" class="image-b">
+                            <a href="product_details.php?ProductId=23" class="image-b">
                                 <img class="img-fluid" src="cms/images/products/banner_2.webp" alt="banner image">
                             </a>
                             <div class="o-t-content blood-sugar-content">
@@ -4965,7 +4965,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                               
 
-                                <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
+                                <a href="product_details.php?ProductId=23" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
                         </div>
                     </div>
@@ -6789,16 +6789,27 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       const typingElement = showTypingIndicator();
     
       try {
-        // First try to use actual API
-        const response = await fetch("chatbot_api.php", {
+        // Create AbortController for aggressive timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout (Groq is super fast)
+
+        // Use lightning-fast Groq API
+        const response = await fetch("chatbot_api_groq.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userMsg })
+          body: JSON.stringify({ message: userMsg }),
+          signal: controller.signal
         });
-        
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         typingElement.remove();
-    
+
         // Process API response
         if (data.response) {
           displayMessage(data.response, "bot");
@@ -6807,36 +6818,18 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
           addProductCarousel(data.products);
         }
       } catch (error) {
-        // Fallback to static mock data if API fails
+        // Handle timeout and other errors
         typingElement.remove();
-        
-        const mockResponse = {
-          response: "For weakness, I recommend My Nutrify Herbal & Ayurveda's Pure Shilajit Resin. It boosts immunity and energy levels.",
-          products: [
-            {
-              name: "Pure Shilajit Resin",
-              price: 1499,
-              image_url: "images/shilajit.png"
-            },
-            {
-              name: "Ashwagandha Capsules",
-              price: 899,
-              image_url: "images/ashwagandha.png"
-            },
-            {
-              name: "Triphala Powder",
-              price: 599,
-              image_url: "images/triphala.png"
-            }
-          ]
-        };
-    
-        if (mockResponse.response) {
-          displayMessage(mockResponse.response, "bot");
+
+        let errorMessage = "Sorry, I'm having trouble responding right now. Please try again in a moment.";
+
+        if (error.name === 'AbortError') {
+          errorMessage = "Sorry, that took too long to process. Please try asking a shorter question.";
+        } else if (error.message.includes('HTTP error')) {
+          errorMessage = "Sorry, I'm experiencing technical difficulties. Please try again later.";
         }
-        if (mockResponse.products?.length > 0) {
-          addProductCarousel(mockResponse.products);
-        }
+
+        displayMessage(errorMessage, "bot");
       } finally {
         chatInput.disabled = false;
         sendBtn.disabled = false;
@@ -6878,18 +6871,48 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
  function addProductCarousel(products) {
       const chatBody = document.getElementById("chat-body");
-      
+
+      // Function to clean URLs and make them relative
+      function cleanUrl(url) {
+        if (!url) return 'product_details.php?ProductId=1';
+
+        // Remove any full domain URLs
+        let cleanedUrl = url.replace(/^https?:\/\/[^\/]+\//, '');
+        cleanedUrl = cleanedUrl.replace(/^https?:\/\/[^\/]+/, '');
+
+        // Remove specific domain references
+        cleanedUrl = cleanedUrl.replace(/mynutrify\.com\//g, '');
+        cleanedUrl = cleanedUrl.replace(/mynutrify\.com/g, '');
+        cleanedUrl = cleanedUrl.replace(/www\.mynutrify\.com\//g, '');
+        cleanedUrl = cleanedUrl.replace(/www\.mynutrify\.com/g, '');
+
+        // Remove any leading slashes
+        cleanedUrl = cleanedUrl.replace(/^\/+/, '');
+
+        // If URL doesn't start with product_details.php, extract ProductId and rebuild
+        if (!cleanedUrl.startsWith('product_details.php')) {
+          const productIdMatch = cleanedUrl.match(/ProductId=(\d+)/);
+          if (productIdMatch) {
+            cleanedUrl = 'product_details.php?ProductId=' + productIdMatch[1];
+          } else {
+            cleanedUrl = 'product_details.php?ProductId=1';
+          }
+        }
+
+        return cleanedUrl;
+      }
+
       if(products.length === 1) {
         // Single product layout
         const container = document.createElement('div');
         const product = products[0];
-        
+
         container.innerHTML = `
           <div class="single-product-card">
             <img src="${product.image_url}" alt="${product.name}" class="single-product-image">
             <div class="single-product-name">${product.name}</div>
-            <div class="single-product-price">${product.price.toLocaleString()}</div>
-            <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
+            <div class="single-product-price">${product.price}</div>
+            <a href="${cleanUrl(product.url)}" class="single-product-add-btn" role="button">Buy Now</a>
           </div>
         `;
         chatBody.appendChild(container);
@@ -6897,21 +6920,21 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         // Multiple products carousel
         const carousel = document.createElement('div');
         carousel.className = 'product-carousel';
-        
+
         products.forEach(product => {
           const card = document.createElement("div");
           card.className = "product-card";
           card.innerHTML = `
             <img src="${product.image_url}" alt="${product.name}">
             <div class="product-name">${product.name}</div>
-            <div class="product-price">â‚¹${product.price.toLocaleString()}</div>
-            <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
+            <div class="product-price">${product.price}</div>
+            <a href="${cleanUrl(product.url)}" class="single-product-add-btn" role="button">Buy Now</a>
           `;
           carousel.appendChild(card);
         });
         chatBody.appendChild(carousel);
       }
-      
+
       chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
     }
   </script>
