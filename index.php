@@ -2596,6 +2596,23 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         padding: 10px;
         cursor: pointer;
         z-index: 10;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .combo-carousel-button:hover {
+        background: rgba(0, 0, 0, 0.7);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .combo-carousel-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
     }
 
     .combo-carousel-button.prev {
@@ -2612,6 +2629,23 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         justify-content: center;
         gap: 20px;
         position: relative;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        .combo-card-images {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .combo-carousel-container {
+            max-width: 100%;
+        }
+
+        .plus-sign {
+            font-size: 24px;
+            margin: 10px 0;
+        }
     }
 
     .plus-sign {
@@ -5681,7 +5715,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
+                            <a href="product_details.php?ProductId=25"><img src="cms/images/products/1368.jpg" alt="Product 7"></a>
                         </div>
                         <div class="combo-carousel-item">
                             <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
@@ -5714,7 +5748,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
+                            <a href="product_details.php?ProductId=25"><img src="cms/images/products/1368.jpg" alt="Product 7"></a>
                         </div>
                         <div class="combo-carousel-item">
                             <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
@@ -7086,44 +7120,151 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const carousels = document.querySelectorAll('.combo-carousel-container');
+    let selectedProducts = {
+        left: null,
+        right: null
+    };
 
-    carousels.forEach((carousel) => {
+    carousels.forEach((carousel, carouselIndex) => {
         const track = carousel.querySelector('.combo-carousel-track');
         const items = carousel.querySelectorAll('.combo-carousel-item');
         const prevButton = carousel.querySelector('.combo-carousel-button.prev');
         const nextButton = carousel.querySelector('.combo-carousel-button.next');
 
+        // Check if required elements exist
+        if (!track || !items.length || !prevButton || !nextButton) {
+            console.warn('Combo carousel: Missing required elements');
+            return;
+        }
+
         let currentIndex = 0;
         const itemWidth = items[0].offsetWidth + 15; // include margin/gap
-
-        const maxScrollIndex = items.length - Math.floor(carousel.offsetWidth / itemWidth);
+        const visibleItems = Math.floor(carousel.offsetWidth / itemWidth) || 1;
+        const maxScrollIndex = Math.max(0, items.length - visibleItems);
 
         const updateCarousel = () => {
             track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+            // Update button states
+            prevButton.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextButton.style.opacity = currentIndex >= maxScrollIndex ? '0.5' : '1';
         };
 
+        // Initialize carousel
+        updateCarousel();
+
         prevButton.addEventListener('click', () => {
-            currentIndex = Math.max(0, currentIndex - 1);
-            updateCarousel();
+            if (currentIndex > 0) {
+                currentIndex = Math.max(0, currentIndex - 1);
+                updateCarousel();
+            }
         });
 
         nextButton.addEventListener('click', () => {
-            currentIndex = Math.min(maxScrollIndex, currentIndex + 1);
-            updateCarousel();
+            if (currentIndex < maxScrollIndex) {
+                currentIndex = Math.min(maxScrollIndex, currentIndex + 1);
+                updateCarousel();
+            }
         });
 
         // Image selection logic for this carousel
         items.forEach(item => {
             const img = item.querySelector('img');
-            img.addEventListener('click', function () {
-                // Remove selected class from all images in this carousel
-                carousel.querySelectorAll('.combo-carousel-item img').forEach(i => i.classList.remove('selected'));
-                // Add selected class to the clicked image
-                this.classList.add('selected');
-                console.log('Selected:', this.alt);
-            });
+            const link = item.querySelector('a');
+            if (img && link) {
+                img.addEventListener('click', function (e) {
+                    e.preventDefault(); // Prevent navigation to product page
+
+                    // Get product ID from the link href
+                    const href = link.getAttribute('href');
+                    const productIdMatch = href.match(/ProductId=(\d+)/);
+                    if (!productIdMatch) return;
+
+                    const productId = parseInt(productIdMatch[1]);
+                    const carouselSide = carouselIndex === 0 ? 'left' : 'right';
+
+                    // Remove selected class from all images in this carousel
+                    carousel.querySelectorAll('.combo-carousel-item img').forEach(i => i.classList.remove('selected'));
+                    // Add selected class to the clicked image
+                    this.classList.add('selected');
+
+                    // Store selection
+                    selectedProducts[carouselSide] = productId;
+
+                    console.log(`Selected ${carouselSide} product:`, productId);
+                    console.log('Current selections:', selectedProducts);
+
+                    // Check if both products are selected
+                    if (selectedProducts.left && selectedProducts.right) {
+                        createCombo(selectedProducts.left, selectedProducts.right);
+                    }
+                });
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const newVisibleItems = Math.floor(carousel.offsetWidth / itemWidth) || 1;
+            const newMaxScrollIndex = Math.max(0, items.length - newVisibleItems);
+            if (currentIndex > newMaxScrollIndex) {
+                currentIndex = newMaxScrollIndex;
+            }
+            updateCarousel();
         });
     });
+
+    // Function to create combo
+    function createCombo(product1Id, product2Id) {
+        console.log('Creating combo with products:', product1Id, product2Id);
+
+        // Show loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                    <p>Creating your combo...</p>
+                    <div style="border: 4px solid #f3f3f3; border-top: 4px solid #ff6b35; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 10px auto;"></div>
+                </div>
+            </div>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        `;
+        document.body.appendChild(loadingDiv);
+
+        // Create combo via AJAX
+        fetch('exe_files/create_dynamic_combo.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'create_combo',
+                product1_id: product1Id,
+                product2_id: product2Id
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.body.removeChild(loadingDiv);
+
+            if (data.success) {
+                console.log('Combo created successfully:', data);
+                // Redirect to combo product page
+                window.location.href = data.redirect_url;
+            } else {
+                alert('Error creating combo: ' + data.message);
+            }
+        })
+        .catch(error => {
+            document.body.removeChild(loadingDiv);
+            console.error('Error:', error);
+            alert('An error occurred while creating the combo. Please try again.');
+        });
+    }
 });
 
 // Krishna Ayurved Style Section Title Animations
