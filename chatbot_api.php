@@ -55,7 +55,11 @@ You have the following static data:
      URL: https://mynutrify.com/product_details.php?ProductId=23
 
 4) Blood Purifier:
-   - My Nutrify Herbal & Ayurveda's BP Care Juice 1000ml (₹999): Natural Blood Pressure Management juice that helps reduce stress and supports heart function. Enriched with Bach, Sarpagandha, Shankhpushpi, and other herbs. (Offer: Off ₹50; Original: ₹1049)
+   - **BP Care Juice 1000ml** (₹999)
+     🌿 Natural Blood Pressure Management
+     ✅ Helps reduce stress and supports heart function
+     🌱 Enriched with Bach, Sarpagandha, Shankhpushpi, and other herbs
+     💰 Special Offer: Save ₹50 (Original: ₹1049)
      Image: https://mynutrify.com/cms/images/products/7674.jpg
      URL: https://mynutrify.com/product_details.php?ProductId=22
 

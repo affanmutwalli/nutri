@@ -1158,7 +1158,7 @@ button.navbar-toggler span.line::after{
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 /* Modern Overlay Effect */
@@ -1183,7 +1183,8 @@ button.navbar-toggler span.line::after{
 .slider .home-slider .img-back .home-s-content {
     position: relative;
     z-index: 2;
-    max-width: 600px;
+    max-width: 90%;
+    width: 90%;
     color: #ffffff;
     transform: translateY(0);
     opacity: 1;
@@ -1196,8 +1197,9 @@ button.navbar-toggler span.line::after{
 
 .slider .home-slider .img-back .h-s-content.slide-c-l,
 .slider .home-slider .img-back .home-s-content.slide-c-l{
-    margin-left: 8%;
+    margin-left: 5%;
     margin-right: 0;
+    text-align: left;
     transform: translateX(-100px);
 }
 
@@ -1249,14 +1251,15 @@ button.navbar-toggler span.line::after{
 /* Simple Typography */
 .slider .home-slider .img-back .h-s-content span,
 .slider .home-slider .img-back .home-s-content span{
-    font-size: 28px;
-    font-weight: 400;
+    font-size: 32px;
+    font-weight: 500;
     color: #ffffff;
     text-transform: none;
     letter-spacing: normal;
     display: block;
     margin-bottom: 15px;
     position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .slider .home-slider .img-back .h-s-content span::after,
@@ -1266,30 +1269,31 @@ button.navbar-toggler span.line::after{
 
 .slider .home-slider .img-back .h-s-content h1,
 .slider .home-slider .img-back .home-s-content h1{
-    font-size: 51px;
-    font-weight: 600;
+    font-size: 58px;
+    font-weight: 700;
     line-height: 1.2;
     color: #ffffff;
     margin: 25px 0 20px 0;
-    text-shadow: none;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
 
 .slider .home-slider .img-back .h-s-content a,
 .slider .home-slider .img-back .home-s-content a{
     margin-top: 30px;
     display: inline-block;
-    padding: 12px 24px;
+    padding: 15px 30px;
     background: #2d5016;
     color: white;
     text-decoration: none;
-    border-radius: 4px;
-    font-weight: 400;
-    font-size: 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 18px;
     text-transform: none;
     letter-spacing: normal;
-    transition: background-color 0.3s ease;
-    box-shadow: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     border: 1px solid #2d5016;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .slider .home-slider .img-back .h-s-content a:hover,
@@ -1428,7 +1432,7 @@ button.navbar-toggler span.line::after{
 
     .slider .home-slider .img-back .h-s-content,
     .slider .home-slider .img-back .home-s-content {
-        width: 85%;
+        width: 90%;
         max-width: none;
         margin: 0 auto;
         padding: 25px;
@@ -1447,21 +1451,24 @@ button.navbar-toggler span.line::after{
 
     .slider .home-slider .img-back .h-s-content h1,
     .slider .home-slider .img-back .home-s-content h1 {
-        font-size: 32px;
+        font-size: 38px;
         margin: 15px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .slider .home-slider .img-back .h-s-content span,
     .slider .home-slider .img-back .home-s-content span {
-        font-size: 14px;
+        font-size: 18px;
         letter-spacing: 1px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
 
     .slider .home-slider .img-back .h-s-content a,
     .slider .home-slider .img-back .home-s-content a {
-        padding: 12px 25px;
-        font-size: 14px;
+        padding: 14px 28px;
+        font-size: 16px;
         margin-top: 20px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     .slider .home-slider .owl-nav button {

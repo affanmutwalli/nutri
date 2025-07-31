@@ -407,6 +407,19 @@
          padding-left: 15px;
          padding-right: 15px;
          }
+
+         /* Reduce main product section height */
+         .pro-page {
+         padding: 15px 0;
+         }
+
+         .pro-page .container {
+         padding: 10px 15px;
+         }
+
+         .pro-image {
+         margin-bottom: 20px;
+         }
          .share {
          display: flex;
          align-items: center;
@@ -788,29 +801,29 @@
         visibility: visible !important;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         border-radius: 20px;
-        padding: 40px 20px;
-        margin: 40px 0;
+        padding: 20px 15px;
+        margin: 20px 0;
     }
 
     .review-header-wrapper {
         display: flex !important;
         flex-wrap: wrap;
-        gap: 20px;
-        margin-bottom: 40px;
+        gap: 15px;
+        margin-bottom: 20px;
         background: white;
-        padding: 30px;
+        padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
     .slider-container {
         display: block !important;
-        margin-top: 30px;
+        margin-top: 15px;
     }
 
     .product-tab-section {
-        padding: 30px 20px;
-        margin-bottom: 30px;
+        padding: 15px 10px;
+        margin-bottom: 15px;
         background: #fff;
         border-radius: 10px;
         box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
@@ -822,8 +835,8 @@
 .ingredients-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    padding: 40px 20px;
+    gap: 15px;
+    padding: 15px 15px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -833,7 +846,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 24px;
+    padding: 15px;
     background: white;
     border-radius: 12px;
     transition: transform 1.2s ease;
@@ -952,6 +965,76 @@
         color: #EA652D;
     }
 
+    /* Global responsive text styling for product details */
+    .product-name,
+    .product-title,
+    .pro-info h4,
+    .caption h3,
+    .caption h3 a,
+    .items .caption h3,
+    .items .caption h3 a,
+    .product-details-title {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.4 !important;
+        display: block !important;
+        max-width: 100% !important;
+    }
+
+    /* Responsive adjustments for product details text */
+    @media (max-width: 768px) {
+        .product-details-title {
+            font-size: 24px !important;
+            margin-bottom: 20px !important;
+        }
+
+        .pro-info h4 {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .caption h3 a,
+        .items .caption h3 a {
+            font-size: 16px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-name,
+        .product-title {
+            font-size: 14px !important;
+            line-height: 1.3 !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .product-details-title {
+            font-size: 20px !important;
+            margin-bottom: 15px !important;
+        }
+
+        .pro-info h4 {
+            font-size: 1.2rem !important;
+            line-height: 1.2 !important;
+        }
+
+        .caption h3 a,
+        .items .caption h3 a {
+            font-size: 14px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-name,
+        .product-title {
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+        }
+
+        .caption {
+            padding: 15px !important;
+        }
+    }
+
     /* Product Description */
     .product-details-description {
         font-size: 16px;
@@ -974,14 +1057,15 @@
 
     /* Product Image Styling */
     .product-details-image {
-        flex: 1 1 300px;
-        max-width: 400px;
+        flex: 1 1 250px;
+        max-width: 350px;
         height: auto;
     }
 
     .product-details-image img {
         width: 100%;
         height: auto;
+        max-height: 400px;
         object-fit: cover;
         border-radius: 10px;
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -1112,7 +1196,7 @@
     .product-details-section {
         max-width: 1500px;
         margin: 0 auto;
-        padding: 40px 20px;
+        padding: 15px 15px;
         text-align: center;
         background: #fff;
         box-sizing: border-box;
@@ -1208,8 +1292,8 @@
 .benifit-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    padding: 40px 20px;
+    gap: 15px;
+    padding: 15px 15px;
     background-color: #f9f9f9;
 }
 
@@ -1219,7 +1303,7 @@
     border-radius: 20px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    padding: 24px;
+    padding: 15px;
     text-align: center;
     transition: transform 1.2s ease, box-shadow 1.2s ease;
     border-top: 4px solid #EA652D;
@@ -1313,8 +1397,8 @@
 .use-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    padding: 40px 20px;
+    gap: 15px;
+    padding: 15px 15px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -1323,7 +1407,7 @@
 .use-cart {
     background: white;
     border-radius: 12px;
-    padding: 24px;
+    padding: 15px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
@@ -1412,14 +1496,14 @@
 .how-to-use-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 15px;
 }
 
 .how-to-use-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
+    gap: 20px;
+    margin-top: 20px;
     counter-reset: step-counter;
 }
 
@@ -2852,9 +2936,9 @@
 
     /* Ensure all product sections are visible and properly styled */
     [id^="section"] {
-        min-height: 200px;
-        padding: 20px 0;
-        margin-bottom: 30px;
+        min-height: 80px;
+        padding: 10px 0;
+        margin-bottom: 15px;
     }
 
     /* Make sure sections are visible when selected */
@@ -2866,7 +2950,7 @@
 
     /* Ensure proper spacing between sections */
     .section-b-padding {
-        padding: 40px 0;
+        padding: 15px 0;
     }
 
     /* Read More Button Styling for Short Descriptions */
@@ -3329,7 +3413,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       
       
     <!-- Display all product sections without categorization -->
-      <section class="" style="margin-top: 50px;">
+      <section class="" style="margin-top: 20px;">
         <div class="container">
             <?php
             $filteredProductTitle = str_replace("My Nutrify Herbal & Ayurveda’s", "", $product_data[0]["Title"]);
@@ -3390,7 +3474,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </div>
             <?php endif; ?>
             </section>
-            <section class="section-b-padding pro-releted" id="section3" style="margin-top: 20px;">
+            <section class="section-b-padding pro-releted" id="section3" style="margin-top: 15px;">
                  <h1 class="product-details-title">
                   Why Drink My Nutrify Herbal & Ayurveda’s?
                     <span><?php echo nl2br(htmlspecialchars(trim($filteredProductTitle))); ?></span>
@@ -3570,12 +3654,12 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <?php endif; ?>
             </section>
 
-            <section class="section-b-padding pro-releted" id="section6" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 80px 0;">
+            <section class="section-b-padding pro-releted" id="section6" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 30px 0;">
                 <div class="container-fluid" style="max-width: 100%; padding: 0 20px;">
-                    <h1 class="product-details-title" style="text-align: center; margin-bottom: 60px; font-size: 3rem; color: #333; font-weight: 700;">
+                    <h1 class="product-details-title" style="text-align: center; margin-bottom: 30px; font-size: 3rem; color: #333; font-weight: 700;">
                         Customer <span style="color: #EA652D;">Reviews</span>
                     </h1>
-                    <div class="review-header-wrapper" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); margin-bottom: 50px;">
+                    <div class="review-header-wrapper" style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); margin-bottom: 30px;">
                         <div class="review-left-section">
                             <div class="overall-rating-display" style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
                                 <div class="rating-number-large" style="font-size: 4rem; font-weight: 700; color: #EA652D;">5.0</div>
@@ -3709,7 +3793,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
 
                     <!-- Review Form (Hidden by default) -->
-                    <div class="review-form collapse" id="add-review" style="display: none; background: white; padding: 30px; border-radius: 15px; margin-top: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div class="review-form collapse" id="add-review" style="display: none; background: white; padding: 20px; border-radius: 15px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
                         <h4 style="color: #333; margin-bottom: 20px; font-size: 1.5rem;">Write a Review</h4>
                         <form style="display: grid; gap: 15px;">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -3748,7 +3832,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <div class="reviews-grid-container" style="width: 100%; margin: 0 auto;">
                     <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 20px;">
                         <?php foreach ($review_data as $review): ?>
-                        <div class="modern-review-card" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; position: relative; overflow: hidden;">
+                        <div class="modern-review-card" style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 1px solid #f0f0f0; position: relative; overflow: hidden;">
                             <div class="review-card-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
                                 <div class="reviewer-avatar" style="position: relative; cursor: pointer;" onclick="openImageModal('cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>', '<?php echo htmlspecialchars($review['Name']); ?>')">
                                     <img src="cms/images/ingredient/<?php echo htmlspecialchars($review['PhotoPath']); ?>"
@@ -3810,14 +3894,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
 
                     <!-- Load More Button -->
-                    <div class="load-more-section" style="text-align: center; margin-top: 50px;">
+                    <div class="load-more-section" style="text-align: center; margin-top: 30px;">
                         <button class="load-more-btn" style="background: linear-gradient(135deg, #EA652D 0%, #d4541f 100%); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 101, 45, 0.3);">
                             Load More Reviews
                         </button>
                     </div>
                 </div>
                 <?php else: ?>
-                <div class="no-reviews-section" style="text-align: center; color: #666; font-size: 18px; padding: 80px 20px; background: white; border-radius: 20px; margin-top: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+                <div class="no-reviews-section" style="text-align: center; color: #666; font-size: 18px; padding: 40px 20px; background: white; border-radius: 20px; margin-top: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
                     <div style="font-size: 64px; color: #EA652D; margin-bottom: 30px;">💬</div>
                     <h3 style="color: #333; margin-bottom: 15px; font-size: 2rem; font-weight: 600;">No Reviews Yet</h3>
                     <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666;">Be the first to share your experience with this amazing product!</p>

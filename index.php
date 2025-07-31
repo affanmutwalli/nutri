@@ -969,6 +969,67 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         }
     }
 
+    /* Global Responsive Text Styling for All Products */
+    .product-name, .product-title, h3 a, .caption h3 a, .product-card h3 a {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.4 !important;
+        display: block !important;
+        max-width: 100% !important;
+    }
+
+    .product-description, .product-text, .caption p, .product-info {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+    }
+
+    /* Responsive Product Text */
+    @media (max-width: 768px) {
+        .caption h3 a, .product-card h3 a {
+            font-size: 16px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-name, .product-title {
+            font-size: 14px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-description, .product-text {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+        }
+
+        .pro-price .new-price {
+            font-size: 18px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .caption h3 a, .product-card h3 a {
+            font-size: 14px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-name, .product-title {
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-description, .product-text {
+            font-size: 11px !important;
+            line-height: 1.3 !important;
+        }
+
+        .caption {
+            padding: 15px !important;
+        }
+    }
+
     /* Container for the marquee */
     #chat-widget {
       position: fixed;
@@ -996,9 +1057,61 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     .bot-message, .user-message {
       margin: 4px 0; padding: 10px; border-radius: 15px;
       max-width: 85%; word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      line-height: 1.4;
+      font-size: 14px;
     }
-    .bot-message { background: #fff; align-self: flex-start; border: 1px solid #e0e0e0; }
-    .user-message { background: #ec6504; color: #fff; align-self: flex-end; }
+    .bot-message {
+      background: #fff;
+      align-self: flex-start;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .user-message {
+      background: #ec6504;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    /* Responsive Chat Widget */
+    @media (max-width: 768px) {
+      #chat-widget {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 40px);
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .bot-message, .user-message {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 8px 12px;
+        line-height: 1.5;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #chat-widget {
+        width: calc(100vw - 10px);
+        height: calc(100vh - 20px);
+        bottom: 5px;
+        right: 5px;
+        left: 5px;
+        border-radius: 12px;
+      }
+
+      .bot-message, .user-message {
+        max-width: 95%;
+        font-size: 12px;
+        padding: 8px 10px;
+        line-height: 1.6;
+      }
+    }
     #chat-input-container { display: flex; border-top: 1px solid #ccc; padding: 8px; }
     #chat-input { flex: 1; border: none; padding: 10px; font-size: 14px; border-radius: 20px; margin-right: 8px; }
     #chat-input:focus { outline: none; box-shadow: 0 0 0 2px #ec650455; }
@@ -4927,7 +5040,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="items">
                 <div class="img-back"
                     style="background-image:url('cms/images/banners/<?php echo htmlspecialchars($banners["PhotoPath"]); ?>');">
-                    <div class="home-s-content slide-c-r">
+                    <div class="home-s-content slide-c-l">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
                         <a href="products.php" class="btn btn-style1">Shop now</a>

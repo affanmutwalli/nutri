@@ -434,6 +434,67 @@ $obj->connection();
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        max-width: 100% !important;
+    }
+
+    /* Global responsive text styling for products page */
+    .product-card h3,
+    .product-card h3 a,
+    .product-name,
+    .product-description,
+    .product-info h4 {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.4 !important;
+        display: block !important;
+        max-width: 100% !important;
+    }
+
+    /* Responsive adjustments for product text */
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 1rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-card h3,
+        .product-card h3 a,
+        .product-name {
+            font-size: 14px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-info h4 {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .product-title {
+            font-size: 0.9rem !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-card h3,
+        .product-card h3 a,
+        .product-name {
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-info h4 {
+            font-size: 1.2rem !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-card {
+            padding: 10px !important;
+        }
     }
 
     .product-price {
