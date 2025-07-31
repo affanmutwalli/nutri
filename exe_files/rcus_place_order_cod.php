@@ -129,6 +129,13 @@ if ($InputDocId) {
     // Keep track of processed products to prevent duplicates
     $processedProducts = array();
 
+    // Log all products being received to debug phantom product issues
+    error_log("COD Order $newOrderId - Received " . count($data['products']) . " products:");
+    foreach ($data['products'] as $index => $product) {
+        error_log("Product $index: ID=" . $product['id'] . ", Name=" . ($product['name'] ?? 'N/A') .
+                 ", Price=" . $product['offer_price'] . ", Qty=" . $product['quantity']);
+    }
+
     foreach ($data['products'] as $product) {
         try {
             // Create a unique key for this product (ProductId + Size)
@@ -159,10 +166,13 @@ if ($InputDocId) {
                 $subTotalInt // SubTotal (integer) - converted from decimal
             );
 
-            // Debug logging
+            // Debug logging to prevent phantom products
             error_log("Inserting order detail - OrderId: $newOrderId, ProductId: " . $product['id'] .
                      ", Code: " . $product['code'] . ", Quantity: " . $product['quantity'] .
                      ", Size: " . $product['size'] . ", Price: $priceInt, SubTotal: $subTotalInt");
+
+            // Additional safety check - log all products being processed
+            error_log("Total products in this order: " . count($data['products']) . " for OrderId: $newOrderId");
 
             // Call the fInsertNew method to insert the product data
             // Let Id column auto-increment

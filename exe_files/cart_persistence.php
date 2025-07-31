@@ -91,18 +91,18 @@ class CartPersistence {
                     $_SESSION['cart'] = array();
                 }
                 
-                // Merge database cart with session cart
-                foreach ($cartData as $item) {
-                    $productId = $item['ProductId'];
-                    $quantity = $item['Quantity'];
-                    
-                    if (isset($_SESSION['cart'][$productId])) {
-                        // If product exists in session, take the maximum quantity
-                        $_SESSION['cart'][$productId] = max($_SESSION['cart'][$productId], $quantity);
-                    } else {
-                        // Add new product to session cart
+                // Only merge database cart if session cart is empty
+                // This prevents phantom products from old sessions
+                if (empty($_SESSION['cart'])) {
+                    foreach ($cartData as $item) {
+                        $productId = $item['ProductId'];
+                        $quantity = $item['Quantity'];
                         $_SESSION['cart'][$productId] = $quantity;
                     }
+                } else {
+                    // If session cart has items, clear the database cart to prevent conflicts
+                    // This ensures fresh session cart takes precedence
+                    $this->clearDatabaseCart($customerId);
                 }
                 
                 return true;
