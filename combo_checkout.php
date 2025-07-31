@@ -270,7 +270,7 @@ try {
     <?php include("components/footer.php"); ?>
     <!-- footer end -->
     
-    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/custom.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>

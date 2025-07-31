@@ -125,14 +125,14 @@ try {
         throw new Exception("Failed to prepare order insert: " . $mysqli->error);
     }
     
-    $orderStmt->bind_param("sssdsssss", 
-        $simpleOrderId, 
-        $data['CustomerId'], 
-        $orderDate, 
-        $data['final_total'], 
-        $paymentStatus, 
-        $shippingAddress, 
-        $paymentMethod, 
+    $orderStmt->bind_param("sisdsssss",
+        $simpleOrderId,
+        $data['CustomerId'],
+        $orderDate,
+        $data['final_total'],
+        $paymentStatus,
+        $shippingAddress,
+        $paymentMethod,
         $razorpayOrderId,
         $createdAt
     );
@@ -154,21 +154,45 @@ try {
         throw new Exception("Failed to prepare product1 insert: " . $mysqli->error);
     }
     
-    // Calculate individual product prices (split combo price)
-    $individualPrice = $comboData['combo_price'] / 2;
-    $individualSubTotal = $individualPrice * $quantity;
-    
+    // Get actual product prices from product_price table
+    $price1_query = "SELECT OfferPrice FROM product_price WHERE ProductId = ? AND OfferPrice IS NOT NULL AND OfferPrice != '' LIMIT 1";
+    $price1_stmt = $mysqli->prepare($price1_query);
+    $price1_stmt->bind_param("i", $data['combo']['product1_id']);
+    $price1_stmt->execute();
+    $price1_result = $price1_stmt->get_result();
+    $product1_price = 0;
+    if ($price1_result->num_rows > 0) {
+        $price1_row = $price1_result->fetch_assoc();
+        $product1_price = intval($price1_row['OfferPrice']);
+    }
+    $price1_stmt->close();
+
+    $price2_query = "SELECT OfferPrice FROM product_price WHERE ProductId = ? AND OfferPrice IS NOT NULL AND OfferPrice != '' LIMIT 1";
+    $price2_stmt = $mysqli->prepare($price2_query);
+    $price2_stmt->bind_param("i", $data['combo']['product2_id']);
+    $price2_stmt->execute();
+    $price2_result = $price2_stmt->get_result();
+    $product2_price = 0;
+    if ($price2_result->num_rows > 0) {
+        $price2_row = $price2_result->fetch_assoc();
+        $product2_price = intval($price2_row['OfferPrice']);
+    }
+    $price2_stmt->close();
+
+    // Calculate subtotals
+    $product1_subtotal = $product1_price * $quantity;
+
     // Get product codes
     $product1Code = "COMBO-P1-" . $data['combo']['product1_id'];
     $product2Code = "COMBO-P2-" . $data['combo']['product2_id'];
-    
-    $product1Stmt->bind_param("sissdd", 
-        $simpleOrderId, 
-        $data['combo']['product1_id'], 
+
+    $product1Stmt->bind_param("sisiii",
+        $simpleOrderId,
+        $data['combo']['product1_id'],
         $product1Code,
-        $quantity, 
-        $individualPrice, 
-        $individualSubTotal
+        $quantity,
+        $product1_price,
+        $product1_subtotal
     );
     
     if (!$product1Stmt->execute()) {
@@ -181,14 +205,16 @@ try {
     if (!$product2Stmt) {
         throw new Exception("Failed to prepare product2 insert: " . $mysqli->error);
     }
-    
-    $product2Stmt->bind_param("sissdd", 
-        $simpleOrderId, 
-        $data['combo']['product2_id'], 
+
+    $product2_subtotal = $product2_price * $quantity;
+
+    $product2Stmt->bind_param("sisiii",
+        $simpleOrderId,
+        $data['combo']['product2_id'],
         $product2Code,
-        $quantity, 
-        $individualPrice, 
-        $individualSubTotal
+        $quantity,
+        $product2_price,
+        $product2_subtotal
     );
     
     if (!$product2Stmt->execute()) {
