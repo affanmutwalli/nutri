@@ -969,6 +969,67 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         }
     }
 
+    /* Global Responsive Text Styling for All Products */
+    .product-name, .product-title, h3 a, .caption h3 a, .product-card h3 a {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.4 !important;
+        display: block !important;
+        max-width: 100% !important;
+    }
+
+    .product-description, .product-text, .caption p, .product-info {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+    }
+
+    /* Responsive Product Text */
+    @media (max-width: 768px) {
+        .caption h3 a, .product-card h3 a {
+            font-size: 16px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-name, .product-title {
+            font-size: 14px !important;
+            line-height: 1.3 !important;
+        }
+
+        .product-description, .product-text {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+        }
+
+        .pro-price .new-price {
+            font-size: 18px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .caption h3 a, .product-card h3 a {
+            font-size: 14px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-name, .product-title {
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+        }
+
+        .product-description, .product-text {
+            font-size: 11px !important;
+            line-height: 1.3 !important;
+        }
+
+        .caption {
+            padding: 15px !important;
+        }
+    }
+
     /* Container for the marquee */
     #chat-widget {
       position: fixed;
@@ -996,9 +1057,61 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     .bot-message, .user-message {
       margin: 4px 0; padding: 10px; border-radius: 15px;
       max-width: 85%; word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      line-height: 1.4;
+      font-size: 14px;
     }
-    .bot-message { background: #fff; align-self: flex-start; border: 1px solid #e0e0e0; }
-    .user-message { background: #ec6504; color: #fff; align-self: flex-end; }
+    .bot-message {
+      background: #fff;
+      align-self: flex-start;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .user-message {
+      background: #ec6504;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    /* Responsive Chat Widget */
+    @media (max-width: 768px) {
+      #chat-widget {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 40px);
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .bot-message, .user-message {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 8px 12px;
+        line-height: 1.5;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #chat-widget {
+        width: calc(100vw - 10px);
+        height: calc(100vh - 20px);
+        bottom: 5px;
+        right: 5px;
+        left: 5px;
+        border-radius: 12px;
+      }
+
+      .bot-message, .user-message {
+        max-width: 95%;
+        font-size: 12px;
+        padding: 8px 10px;
+        line-height: 1.6;
+      }
+    }
     #chat-input-container { display: flex; border-top: 1px solid #ccc; padding: 8px; }
     #chat-input { flex: 1; border: none; padding: 10px; font-size: 14px; border-radius: 20px; margin-right: 8px; }
     #chat-input:focus { outline: none; box-shadow: 0 0 0 2px #ec650455; }
@@ -2596,23 +2709,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         padding: 10px;
         cursor: pointer;
         z-index: 10;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
-
-    .combo-carousel-button:hover {
-        background: rgba(0, 0, 0, 0.7);
-        transform: translateY(-50%) scale(1.1);
-    }
-
-    .combo-carousel-button:disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
     }
 
     .combo-carousel-button.prev {
@@ -2629,23 +2725,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         justify-content: center;
         gap: 20px;
         position: relative;
-        flex-wrap: wrap;
-    }
-
-    @media (max-width: 768px) {
-        .combo-card-images {
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .combo-carousel-container {
-            max-width: 100%;
-        }
-
-        .plus-sign {
-            font-size: 24px;
-            margin: 10px 0;
-        }
     }
 
     .plus-sign {
@@ -4910,7 +4989,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <?php include("components/header.php"); ?>
     <div id="chat-icon">
         <img src="image/doc.png" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%;">
-        <span id="chat-notification">1</span>
+        <span id="chat-notification" style="display: none;">1</span>
         <span id="chat-online"></span>
     </div>
 
@@ -4961,7 +5040,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="items">
                 <div class="img-back"
                     style="background-image:url('cms/images/banners/<?php echo htmlspecialchars($banners["PhotoPath"]); ?>');">
-                    <div class="home-s-content slide-c-r">
+                    <div class="home-s-content slide-c-l">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
                         <a href="products.php" class="btn btn-style1">Shop now</a>
@@ -4991,7 +5070,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             </div>
                         </div>
                         <div class="o-t-banner">
-                            <a href="product_details.php?ProductId=23" class="image-b">
+                            <a href="product_details.php?ProductId=12" class="image-b">
                                 <img class="img-fluid" src="cms/images/products/banner_2.webp" alt="banner image">
                             </a>
                             <div class="o-t-content blood-sugar-content">
@@ -4999,7 +5078,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                               
 
-                                <a href="product_details.php?ProductId=23" class="btn btn-style1 banner-cta">Explore More</a>
+                                <a href="product_details.php?ProductId=12" class="btn btn-style1 banner-cta">Explore More</a>
                             </div>
                         </div>
                     </div>
@@ -5715,7 +5794,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"><img src="cms/images/products/1368.jpg" alt="Product 7"></a>
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
                         </div>
                         <div class="combo-carousel-item">
                             <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
@@ -5748,7 +5827,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                             <a href="product_details.php?ProductId=10"><img src="cms/images/products/4772.jpg" alt="Product 6"></a>
                         </div>
                         <div class="combo-carousel-item">
-                            <a href="product_details.php?ProductId=25"><img src="cms/images/products/1368.jpg" alt="Product 7"></a>
+                            <a href="product_details.php?ProductId=25"></a><img src="cms/images/products/1368.jpg" alt="Product 7">
                         </div>
                         <div class="combo-carousel-item">
                             <a href="product_details.php?ProductId=9"><img src="cms/images/products/9444.jpg" alt="Product 8"></a>
@@ -6823,27 +6902,16 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       const typingElement = showTypingIndicator();
     
       try {
-        // Create AbortController for aggressive timeout
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout (Groq is super fast)
-
-        // Use lightning-fast Groq API
-        const response = await fetch("chatbot_api_groq.php", {
+        // First try to use actual API
+        const response = await fetch("chatbot_api.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userMsg }),
-          signal: controller.signal
+          body: JSON.stringify({ message: userMsg })
         });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        
         const data = await response.json();
         typingElement.remove();
-
+    
         // Process API response
         if (data.response) {
           displayMessage(data.response, "bot");
@@ -6852,18 +6920,36 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
           addProductCarousel(data.products);
         }
       } catch (error) {
-        // Handle timeout and other errors
+        // Fallback to static mock data if API fails
         typingElement.remove();
-
-        let errorMessage = "Sorry, I'm having trouble responding right now. Please try again in a moment.";
-
-        if (error.name === 'AbortError') {
-          errorMessage = "Sorry, that took too long to process. Please try asking a shorter question.";
-        } else if (error.message.includes('HTTP error')) {
-          errorMessage = "Sorry, I'm experiencing technical difficulties. Please try again later.";
+        
+        const mockResponse = {
+          response: "For weakness, I recommend My Nutrify Herbal & Ayurveda's Pure Shilajit Resin. It boosts immunity and energy levels.",
+          products: [
+            {
+              name: "Pure Shilajit Resin",
+              price: 1499,
+              image_url: "images/shilajit.png"
+            },
+            {
+              name: "Ashwagandha Capsules",
+              price: 899,
+              image_url: "images/ashwagandha.png"
+            },
+            {
+              name: "Triphala Powder",
+              price: 599,
+              image_url: "images/triphala.png"
+            }
+          ]
+        };
+    
+        if (mockResponse.response) {
+          displayMessage(mockResponse.response, "bot");
         }
-
-        displayMessage(errorMessage, "bot");
+        if (mockResponse.products?.length > 0) {
+          addProductCarousel(mockResponse.products);
+        }
       } finally {
         chatInput.disabled = false;
         sendBtn.disabled = false;
@@ -6905,48 +6991,18 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
  function addProductCarousel(products) {
       const chatBody = document.getElementById("chat-body");
-
-      // Function to clean URLs and make them relative
-      function cleanUrl(url) {
-        if (!url) return 'product_details.php?ProductId=1';
-
-        // Remove any full domain URLs
-        let cleanedUrl = url.replace(/^https?:\/\/[^\/]+\//, '');
-        cleanedUrl = cleanedUrl.replace(/^https?:\/\/[^\/]+/, '');
-
-        // Remove specific domain references
-        cleanedUrl = cleanedUrl.replace(/mynutrify\.com\//g, '');
-        cleanedUrl = cleanedUrl.replace(/mynutrify\.com/g, '');
-        cleanedUrl = cleanedUrl.replace(/www\.mynutrify\.com\//g, '');
-        cleanedUrl = cleanedUrl.replace(/www\.mynutrify\.com/g, '');
-
-        // Remove any leading slashes
-        cleanedUrl = cleanedUrl.replace(/^\/+/, '');
-
-        // If URL doesn't start with product_details.php, extract ProductId and rebuild
-        if (!cleanedUrl.startsWith('product_details.php')) {
-          const productIdMatch = cleanedUrl.match(/ProductId=(\d+)/);
-          if (productIdMatch) {
-            cleanedUrl = 'product_details.php?ProductId=' + productIdMatch[1];
-          } else {
-            cleanedUrl = 'product_details.php?ProductId=1';
-          }
-        }
-
-        return cleanedUrl;
-      }
-
+      
       if(products.length === 1) {
         // Single product layout
         const container = document.createElement('div');
         const product = products[0];
-
+        
         container.innerHTML = `
           <div class="single-product-card">
             <img src="${product.image_url}" alt="${product.name}" class="single-product-image">
             <div class="single-product-name">${product.name}</div>
-            <div class="single-product-price">${product.price}</div>
-            <a href="${cleanUrl(product.url)}" class="single-product-add-btn" role="button">Buy Now</a>
+            <div class="single-product-price">${product.price.toLocaleString()}</div>
+            <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
           </div>
         `;
         chatBody.appendChild(container);
@@ -6954,21 +7010,21 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
         // Multiple products carousel
         const carousel = document.createElement('div');
         carousel.className = 'product-carousel';
-
+        
         products.forEach(product => {
           const card = document.createElement("div");
           card.className = "product-card";
           card.innerHTML = `
             <img src="${product.image_url}" alt="${product.name}">
             <div class="product-name">${product.name}</div>
-            <div class="product-price">${product.price}</div>
-            <a href="${cleanUrl(product.url)}" class="single-product-add-btn" role="button">Buy Now</a>
+            <div class="product-price">â‚¹${product.price.toLocaleString()}</div>
+            <a href="${product.url}" class="single-product-add-btn" role="button">Buy Now</a>
           `;
           carousel.appendChild(card);
         });
         chatBody.appendChild(carousel);
       }
-
+      
       chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
     }
   </script>
@@ -7120,151 +7176,44 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const carousels = document.querySelectorAll('.combo-carousel-container');
-    let selectedProducts = {
-        left: null,
-        right: null
-    };
 
-    carousels.forEach((carousel, carouselIndex) => {
+    carousels.forEach((carousel) => {
         const track = carousel.querySelector('.combo-carousel-track');
         const items = carousel.querySelectorAll('.combo-carousel-item');
         const prevButton = carousel.querySelector('.combo-carousel-button.prev');
         const nextButton = carousel.querySelector('.combo-carousel-button.next');
 
-        // Check if required elements exist
-        if (!track || !items.length || !prevButton || !nextButton) {
-            console.warn('Combo carousel: Missing required elements');
-            return;
-        }
-
         let currentIndex = 0;
         const itemWidth = items[0].offsetWidth + 15; // include margin/gap
-        const visibleItems = Math.floor(carousel.offsetWidth / itemWidth) || 1;
-        const maxScrollIndex = Math.max(0, items.length - visibleItems);
+
+        const maxScrollIndex = items.length - Math.floor(carousel.offsetWidth / itemWidth);
 
         const updateCarousel = () => {
             track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-
-            // Update button states
-            prevButton.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextButton.style.opacity = currentIndex >= maxScrollIndex ? '0.5' : '1';
         };
 
-        // Initialize carousel
-        updateCarousel();
-
         prevButton.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex = Math.max(0, currentIndex - 1);
-                updateCarousel();
-            }
+            currentIndex = Math.max(0, currentIndex - 1);
+            updateCarousel();
         });
 
         nextButton.addEventListener('click', () => {
-            if (currentIndex < maxScrollIndex) {
-                currentIndex = Math.min(maxScrollIndex, currentIndex + 1);
-                updateCarousel();
-            }
+            currentIndex = Math.min(maxScrollIndex, currentIndex + 1);
+            updateCarousel();
         });
 
         // Image selection logic for this carousel
         items.forEach(item => {
             const img = item.querySelector('img');
-            const link = item.querySelector('a');
-            if (img && link) {
-                img.addEventListener('click', function (e) {
-                    e.preventDefault(); // Prevent navigation to product page
-
-                    // Get product ID from the link href
-                    const href = link.getAttribute('href');
-                    const productIdMatch = href.match(/ProductId=(\d+)/);
-                    if (!productIdMatch) return;
-
-                    const productId = parseInt(productIdMatch[1]);
-                    const carouselSide = carouselIndex === 0 ? 'left' : 'right';
-
-                    // Remove selected class from all images in this carousel
-                    carousel.querySelectorAll('.combo-carousel-item img').forEach(i => i.classList.remove('selected'));
-                    // Add selected class to the clicked image
-                    this.classList.add('selected');
-
-                    // Store selection
-                    selectedProducts[carouselSide] = productId;
-
-                    console.log(`Selected ${carouselSide} product:`, productId);
-                    console.log('Current selections:', selectedProducts);
-
-                    // Check if both products are selected
-                    if (selectedProducts.left && selectedProducts.right) {
-                        createCombo(selectedProducts.left, selectedProducts.right);
-                    }
-                });
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            const newVisibleItems = Math.floor(carousel.offsetWidth / itemWidth) || 1;
-            const newMaxScrollIndex = Math.max(0, items.length - newVisibleItems);
-            if (currentIndex > newMaxScrollIndex) {
-                currentIndex = newMaxScrollIndex;
-            }
-            updateCarousel();
+            img.addEventListener('click', function () {
+                // Remove selected class from all images in this carousel
+                carousel.querySelectorAll('.combo-carousel-item img').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked image
+                this.classList.add('selected');
+                console.log('Selected:', this.alt);
+            });
         });
     });
-
-    // Function to create combo
-    function createCombo(product1Id, product2Id) {
-        console.log('Creating combo with products:', product1Id, product2Id);
-
-        // Show loading indicator
-        const loadingDiv = document.createElement('div');
-        loadingDiv.innerHTML = `
-            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; justify-content: center; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
-                    <p>Creating your combo...</p>
-                    <div style="border: 4px solid #f3f3f3; border-top: 4px solid #ff6b35; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 10px auto;"></div>
-                </div>
-            </div>
-            <style>
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            </style>
-        `;
-        document.body.appendChild(loadingDiv);
-
-        // Create combo via AJAX
-        fetch('exe_files/create_dynamic_combo.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                action: 'create_combo',
-                product1_id: product1Id,
-                product2_id: product2Id
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.body.removeChild(loadingDiv);
-
-            if (data.success) {
-                console.log('Combo created successfully:', data);
-                // Redirect to combo product page
-                window.location.href = data.redirect_url;
-            } else {
-                alert('Error creating combo: ' + data.message);
-            }
-        })
-        .catch(error => {
-            document.body.removeChild(loadingDiv);
-            console.error('Error:', error);
-            alert('An error occurred while creating the combo. Please try again.');
-        });
-    }
 });
 
 // Krishna Ayurved Style Section Title Animations
