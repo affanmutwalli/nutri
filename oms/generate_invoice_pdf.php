@@ -60,6 +60,63 @@ while ($item = mysqli_fetch_assoc($itemsResult)) {
     $orderItems[] = $item;
 }
 
+// Check if this is a combo order and handle missing order_details
+$isComboOrder = strpos($orderId, 'CB') === 0;
+if ($isComboOrder && empty($orderItems)) {
+    // Try to get combo tracking data
+    $comboQuery = "SELECT combo_id, combo_name, combo_price, quantity, total_amount FROM combo_order_tracking WHERE order_id = ?";
+    $comboStmt = mysqli_prepare($mysqli, $comboQuery);
+    if ($comboStmt) {
+        mysqli_stmt_bind_param($comboStmt, "s", $orderId);
+        mysqli_stmt_execute($comboStmt);
+        $comboResult = mysqli_stmt_get_result($comboStmt);
+        $comboData = mysqli_fetch_assoc($comboResult);
+
+        if ($comboData) {
+            $orderItems[] = [
+                'ProductName' => $comboData['combo_name'],
+                'ProductCode' => $comboData['combo_id'],
+                'Quantity' => $comboData['quantity'],
+                'Price' => $comboData['combo_price'],
+                'SubTotal' => $comboData['total_amount']
+            ];
+        }
+    }
+
+    // If still no items, try to find combo from dynamic_combos based on amount
+    if (empty($orderItems)) {
+        $comboFallbackQuery = "SELECT combo_id, combo_name, combo_price, product1_id, product2_id FROM dynamic_combos WHERE combo_price = ? LIMIT 1";
+        $comboFallbackStmt = mysqli_prepare($mysqli, $comboFallbackQuery);
+        if ($comboFallbackStmt) {
+            mysqli_stmt_bind_param($comboFallbackStmt, "d", $order['Amount']);
+            mysqli_stmt_execute($comboFallbackStmt);
+            $comboFallbackResult = mysqli_stmt_get_result($comboFallbackStmt);
+            $comboFallbackData = mysqli_fetch_assoc($comboFallbackResult);
+
+            if ($comboFallbackData) {
+                $orderItems[] = [
+                    'ProductName' => $comboFallbackData['combo_name'],
+                    'ProductCode' => $comboFallbackData['combo_id'],
+                    'Quantity' => 1,
+                    'Price' => $comboFallbackData['combo_price'],
+                    'SubTotal' => $order['Amount']
+                ];
+            }
+        }
+    }
+
+    // Final fallback for combo orders
+    if (empty($orderItems)) {
+        $orderItems[] = [
+            'ProductName' => 'Combo Order (Details Unavailable)',
+            'ProductCode' => $orderId,
+            'Quantity' => 1,
+            'Price' => $order['Amount'],
+            'SubTotal' => $order['Amount']
+        ];
+    }
+}
+
 // Set content type to HTML
 header('Content-Type: text/html; charset=UTF-8');
 

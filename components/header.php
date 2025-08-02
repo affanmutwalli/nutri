@@ -709,6 +709,9 @@ input[name="quantity"] {
 
                                                 <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'rewards.php') ? 'active' : ''; ?>">
+                                                    <a href="#" onclick="openLiveChat()" class="link-title">
+                                                        <span class="sp-link-title">Chat Assistance</span>
+                                                    </a>
                                                     <a href="rewards.php" class="link-title">
                                                         <span class="sp-link-title">Rewards</span>
                                                     </a>
@@ -722,7 +725,7 @@ input[name="quantity"] {
                                                 <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'customer-care.php') ? 'active' : ''; ?>">
                                                     <a href="customer-care.php" class="link-title">
-                                                        <span class="sp-link-title">Customer Care</span>
+                                                        <span class="sp-link-title">Customer Care <i class="fas fa-comments" style="margin-left: 5px; color: #007bff;"></i></span>
                                                     </a>
                                                 </li>
                                                 <li
@@ -1072,7 +1075,7 @@ showSlides(); // Initial call to start slideshow
                                         </li>
                                         <li class="menu-link">
                                             <a href="customer-care.php" class="link-title">
-                                                <span class="sp-link-title">Customer Care</span>
+                                                <span class="sp-link-title">Customer Care <i class="fas fa-comments" style="margin-left: 5px; color: #007bff;"></i></span>
                                             </a>
                                         </li>
                                         <li class="menu-link">

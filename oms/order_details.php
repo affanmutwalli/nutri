@@ -35,6 +35,40 @@ if (login_check($mysqli) == true)
     $Fields=implode(",",$FieldNames);
     $order_details=$obj->MysqliSelect1("Select ".$Fields." from order_details where OrderId= ? ",$FieldNames,"s",$ParamArray);
 
+    // Check if this is a combo order and handle missing order_details
+    $isComboOrder = strpos($_GET["OrderId"], 'CB') === 0;
+    $combo_data = null;
+
+    if ($isComboOrder && empty($order_details)) {
+        // Try to get combo tracking data
+        $comboFieldNames = array("combo_id", "combo_name", "combo_price", "quantity", "total_amount");
+        $comboParamArray = array($_GET["OrderId"]);
+        $comboFields = implode(",", $comboFieldNames);
+        $combo_tracking = $obj->MysqliSelect1("SELECT ".$comboFields." FROM combo_order_tracking WHERE order_id = ?", $comboFieldNames, "s", $comboParamArray);
+
+        if (!empty($combo_tracking)) {
+            $combo_data = $combo_tracking[0];
+        } else {
+            // Fallback: Try to find the combo based on order amount
+            $orderAmount = $order_master[0]["Amount"];
+            $comboFallbackFields = array("combo_id", "combo_name", "combo_price", "product1_id", "product2_id");
+            $comboFallbackParams = array($orderAmount);
+            $combo_fallback = $obj->MysqliSelect1("SELECT ".implode(",", $comboFallbackFields)." FROM dynamic_combos WHERE combo_price = ? LIMIT 1", $comboFallbackFields, "d", $comboFallbackParams);
+
+            if (!empty($combo_fallback)) {
+                $combo_data = array(
+                    'combo_id' => $combo_fallback[0]['combo_id'],
+                    'combo_name' => $combo_fallback[0]['combo_name'],
+                    'combo_price' => $combo_fallback[0]['combo_price'],
+                    'quantity' => 1,
+                    'total_amount' => $orderAmount,
+                    'product1_id' => $combo_fallback[0]['product1_id'],
+                    'product2_id' => $combo_fallback[0]['product2_id']
+                );
+            }
+        }
+    }
+
       $Name = "";
       $MobileNo = "";
       $Email = "";
@@ -256,10 +290,10 @@ $selected = "dashboard.php";
                 </tr>
             </thead>
             <tbody>
-              <?php 
+              <?php
               $totalAmount = 0;
-              
-              // Debugging: Check if $order_details is set
+
+              // Check if we have regular order details
               if (!empty($order_details) && is_array($order_details)) {
                   foreach ($order_details as $item) {
                       // Fetch product name using ProductId
@@ -267,7 +301,7 @@ $selected = "dashboard.php";
                       $ParamArray = array($item["ProductId"]);  // Fixed ProductId reference
                       $Fields = implode(",", $FieldNames);
                       $product_data = $obj->MysqliSelect1("SELECT ".$Fields." FROM product_master WHERE ProductId = ?", $FieldNames, "i", $ParamArray);
-                      
+
                       $ProductName = $product_data[0]["ProductName"] ?? "Unknown Product"; // Handle missing product name
                       $subtotal = $item["Quantity"] * $item["Price"]; // Fixed subtotal calculation
                       $totalAmount += $subtotal; // Accumulate total amount
@@ -280,8 +314,65 @@ $selected = "dashboard.php";
                               <td>{$subtotal}</td>
                             </tr>";
                   }
-              } else {
-                  echo "<tr><td colspan='4'>No order details found.</td></tr>";
+              }
+              // Handle combo orders without order_details
+              elseif ($isComboOrder && !empty($combo_data)) {
+                  $comboName = $combo_data['combo_name'] ?? 'Combo Product';
+                  $comboCode = $combo_data['combo_id'] ?? 'COMBO';
+                  $comboQuantity = $combo_data['quantity'] ?? 1;
+                  $comboPrice = $combo_data['combo_price'] ?? $order_master[0]["Amount"];
+                  $comboSubtotal = $comboQuantity * $comboPrice;
+                  $totalAmount = $comboSubtotal;
+
+                  echo "<tr>
+                          <td>{$comboName}</td>
+                          <td>{$comboCode}</td>
+                          <td>{$comboQuantity}</td>
+                          <td>{$comboPrice}</td>
+                          <td>{$comboSubtotal}</td>
+                        </tr>";
+
+                  // If we have individual product info, show them as sub-items
+                  if (isset($combo_data['product1_id']) && isset($combo_data['product2_id'])) {
+                      // Get product names for the combo items
+                      $product1_data = $obj->MysqliSelect1("SELECT ProductName FROM product_master WHERE ProductId = ?", array("ProductName"), "i", array($combo_data['product1_id']));
+                      $product2_data = $obj->MysqliSelect1("SELECT ProductName FROM product_master WHERE ProductId = ?", array("ProductName"), "i", array($combo_data['product2_id']));
+
+                      $product1Name = $product1_data[0]["ProductName"] ?? "Product 1";
+                      $product2Name = $product2_data[0]["ProductName"] ?? "Product 2";
+
+                      echo "<tr style='background-color: #f8f9fa; font-size: 0.9em;'>
+                              <td style='padding-left: 20px;'>├─ {$product1Name}</td>
+                              <td>COMBO-P1-{$combo_data['product1_id']}</td>
+                              <td>{$comboQuantity}</td>
+                              <td>-</td>
+                              <td>-</td>
+                            </tr>";
+                      echo "<tr style='background-color: #f8f9fa; font-size: 0.9em;'>
+                              <td style='padding-left: 20px;'>└─ {$product2Name}</td>
+                              <td>COMBO-P2-{$combo_data['product2_id']}</td>
+                              <td>{$comboQuantity}</td>
+                              <td>-</td>
+                              <td>-</td>
+                            </tr>";
+                  }
+              }
+              // Fallback for combo orders without any data
+              elseif ($isComboOrder) {
+                  $orderAmount = $order_master[0]["Amount"];
+                  $totalAmount = $orderAmount;
+
+                  echo "<tr>
+                          <td>Combo Order (Details Unavailable)</td>
+                          <td>{$_GET['OrderId']}</td>
+                          <td>1</td>
+                          <td>{$orderAmount}</td>
+                          <td>{$orderAmount}</td>
+                        </tr>";
+              }
+              // Regular orders with no details
+              else {
+                  echo "<tr><td colspan='5'>No order details found.</td></tr>";
               }
               ?>
           </tbody>
