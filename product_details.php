@@ -843,12 +843,15 @@
 
 /* Image Wrapper */
 .image-container {
-    width: 176px;
-    height: 176px;
+    width: 280px;
+    height: 280px;
     border: 4px solid #EA652D;
     border-radius: 50%;
     overflow: hidden;
     transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .image-container img {
@@ -856,6 +859,7 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s;
+    border-radius: 50%;
 }
 
 /* Text Styling */
@@ -907,8 +911,8 @@
     }
 
     .image-container {
-        width: 140px;
-        height: 140px;
+        width: 240px;
+        height: 240px;
     }
 
     .ingredients-text {
@@ -926,8 +930,8 @@
     }
 
     .image-container {
-        width: 120px;
-        height: 120px;
+        width: 200px;
+        height: 200px;
     }
 
     .ingredients-text {
@@ -935,8 +939,22 @@
     }
 }
 
+/* ✅ Specific styling for ProductId=6 (Amla), ProductId=14 (Wheatgrass), and ProductId=15 (Apple Cider Vinegar) - Centered ingredient */
+<?php if (isset($_GET['ProductId']) && ($_GET['ProductId'] == '6' || $_GET['ProductId'] == '14' || $_GET['ProductId'] == '15')): ?>
+.ingredients-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    max-width: 1200px !important;
+    padding: 40px 20px !important;
+}
 
-
+.ingredients {
+    margin-left: 0 !important; /* Centered positioning */
+    margin-right: 0 !important;
+}
+<?php endif; ?>
 
     /* Title Styling */
     .product-details-title {
