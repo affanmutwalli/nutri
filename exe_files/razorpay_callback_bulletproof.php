@@ -49,96 +49,100 @@ try {
         echo json_encode(["status" => "failure", "message" => "No data received"]);
         exit;
     }
-    
-    // Check required fields with flexible names
-    $orderDbId = $data['order_db_id'] ?? $data['order_id'] ?? null;
-    $paymentId = $data['razorpay_payment_id'] ?? $data['payment_id'] ?? null;
-    $razorpayOrderId = $data['razorpay_order_id'] ?? $data['order_id'] ?? null;
-    $signature = $data['razorpay_signature'] ?? $data['signature'] ?? null;
 
-    if (!$orderDbId || !$paymentId || !$razorpayOrderId || !$signature) {
-        logToFile("ERROR: Missing required fields");
+    // Extract payment data
+    $razorpayPaymentId = $data['razorpay_payment_id'] ?? '';
+    $razorpayOrderId = $data['razorpay_order_id'] ?? '';
+    $razorpaySignature = $data['razorpay_signature'] ?? '';
+    $orderDbId = $data['order_db_id'] ?? '';
+
+    logToFile("Received payment data - Order ID: $orderDbId, Payment ID: $razorpayPaymentId");
+
+    if (empty($razorpayPaymentId) || empty($razorpayOrderId) || empty($razorpaySignature) || empty($orderDbId)) {
+        logToFile("ERROR: Missing required payment data");
         ob_clean();
-        echo json_encode(["status" => "failure", "message" => "Missing required payment data"]);
+        echo json_encode(["status" => "failure", "message" => "Missing payment data"]);
         exit;
     }
-    
+
     // Database connection
-    $mysqli = new mysqli("localhost", "root", "", "my_nutrify_db");
-    if ($mysqli->connect_error) {
-        logToFile("ERROR: Database connection failed: " . $mysqli->connect_error);
+    include_once '../database/dbconnection.php';
+    $obj = new main();
+    $mysqli = $obj->connection();
+
+    if (!$mysqli || $mysqli->connect_error) {
+        logToFile("ERROR: Database connection failed");
         ob_clean();
         echo json_encode(["status" => "failure", "message" => "Database connection failed"]);
         exit;
     }
 
     // Verify signature
-    $keySecret = '2C8q79zzBNMd6jadotjz6Tci';
-    $generatedSignature = hash_hmac('sha256', $razorpayOrderId . "|" . $paymentId, $keySecret);
-
-    if ($generatedSignature !== $signature) {
-        logToFile("ERROR: Signature verification failed");
+    $expectedSignature = hash_hmac('sha256', $razorpayOrderId . "|" . $razorpayPaymentId, '2C8q79zzBNMd6jadotjz6Tci');
+    
+    if (!hash_equals($expectedSignature, $razorpaySignature)) {
+        logToFile("ERROR: Invalid signature");
         ob_clean();
-        echo json_encode(["status" => "failure", "message" => "Payment verification failed"]);
+        echo json_encode(["status" => "failure", "message" => "Invalid signature"]);
         exit;
     }
-    
-    // Get order data - try multiple sources
+
+    // Get order data from database first (more reliable), then fallback to session
     $orderData = null;
-    
-    // Try database first
-    $stmt = $mysqli->prepare("SELECT order_data FROM pending_orders WHERE order_id = ?");
-    if ($stmt) {
-        $stmt->bind_param("s", $orderDbId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $orderData = json_decode($row['order_data'], true);
-            logToFile("Order data found in database");
+
+    // Try to get from pending_orders table first
+    $getPendingQuery = "SELECT order_data FROM pending_orders WHERE order_id = ?";
+    $pendingStmt = $mysqli->prepare($getPendingQuery);
+
+    if ($pendingStmt) {
+        $pendingStmt->bind_param("s", $orderDbId);
+        $pendingStmt->execute();
+        $pendingResult = $pendingStmt->get_result();
+
+        if ($pendingResult && $pendingResult->num_rows > 0) {
+            $pendingRow = $pendingResult->fetch_assoc();
+            $orderData = json_decode($pendingRow['order_data'], true);
+            logToFile("INFO: Order data retrieved from database for " . $orderDbId);
         }
-        $stmt->close();
+        $pendingStmt->close();
     }
-    
-    // Try session as fallback
+
+    // Fallback to session if database doesn't have the data
     if (!$orderData) {
         $sessionKey = 'pending_order_' . $orderDbId;
         if (isset($_SESSION[$sessionKey])) {
             $orderData = $_SESSION[$sessionKey];
-            logToFile("Order data found in session");
+            logToFile("INFO: Order data retrieved from session for " . $orderDbId);
+        } else {
+            logToFile("ERROR: No order data found in database or session for " . $orderDbId);
+            ob_clean();
+            echo json_encode(["status" => "failure", "message" => "No order data found"]);
+            exit;
         }
     }
     
-    if (!$orderData) {
-        logToFile("ERROR: Order data not found anywhere");
-        ob_clean();
-        echo json_encode(["status" => "failure", "message" => "Order data not found"]);
-        exit;
-    }
-    
-    logToFile("Order data: " . print_r($orderData, true));
-    
-    // Create the actual order
-    $insertQuery = "INSERT INTO order_master (
+    // Create the order in database with Paid status (for online orders, we create after payment success)
+    $insertOrderQuery = "INSERT INTO order_master (
         OrderId, CustomerId, CustomerType, OrderDate, Amount, PaymentStatus,
         OrderStatus, ShipAddress, PaymentType, TransactionId, CreatedAt
     ) VALUES (?, ?, ?, NOW(), ?, 'Paid', 'Placed', ?, ?, ?, NOW())";
-    
-    $stmt = $mysqli->prepare($insertQuery);
+
+    $stmt = $mysqli->prepare($insertOrderQuery);
+
     if (!$stmt) {
-        logToFile("ERROR: Failed to prepare order insert: " . $mysqli->error);
+        logToFile("ERROR: Failed to prepare order insert query");
         ob_clean();
         echo json_encode(["status" => "failure", "message" => "Database error"]);
         exit;
     }
-    
-    // Fix PHP 8+ reference issue by using variables
+
+    // Extract variables for bind_param (needs references)
     $orderId = $orderData['OrderId'];
     $customerId = $orderData['CustomerId'];
-    $customerType = $orderData['CustomerType'] ?? 'Registered';
+    $customerType = $orderData['CustomerType'];
     $amount = $orderData['Amount'];
     $shipAddress = $orderData['ShipAddress'];
-    $paymentType = $orderData['PaymentType'] ?? 'Online';
+    $paymentType = $orderData['PaymentType'];
 
     $stmt->bind_param("sisssss",
         $orderId,
@@ -147,77 +151,69 @@ try {
         $amount,
         $shipAddress,
         $paymentType,
-        $paymentId
+        $razorpayPaymentId
     );
-    
+
     if (!$stmt->execute()) {
-        logToFile("ERROR: Failed to create order: " . $stmt->error);
+        logToFile("ERROR: Failed to create order - " . $stmt->error);
         ob_clean();
         echo json_encode(["status" => "failure", "message" => "Failed to create order"]);
         exit;
     }
-    
+
+    $orderDbId = $orderData['OrderId'];
     $stmt->close();
-    logToFile("Order created successfully in database");
-    
-    // Insert order details if available
+
+    // Insert order details if products exist
     if (isset($orderData['products']) && is_array($orderData['products'])) {
-        $detailsQuery = "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $detailsStmt = $mysqli->prepare($detailsQuery);
-        
-        if ($detailsStmt) {
-            foreach ($orderData['products'] as $product) {
-                $subTotal = floatval($product['quantity'] ?? 1) * floatval($product['offer_price'] ?? $product['price'] ?? 0);
+        foreach ($orderData['products'] as $product) {
+            $detailQuery = "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $detailStmt = $mysqli->prepare($detailQuery);
 
-                // Fix PHP 8+ reference issue
+            if ($detailStmt) {
+                // Extract variables for bind_param (needs references)
+                // Handle both old and new data structures
                 $detailOrderId = $orderData['OrderId'];
-                $productId = intval($product['id'] ?? $product['ProductId'] ?? 0);
-                $productCode = $product['code'] ?? $product['ProductCode'] ?? '';
-                $productSize = $product['size'] ?? '';
-                $productQuantity = intval($product['quantity'] ?? 1);
-                $productPrice = floatval($product['offer_price'] ?? $product['price'] ?? 0);
+                $productId = $product['ProductId'] ?? $product['id'] ?? 0;
+                $productCode = $product['ProductCode'] ?? $product['code'] ?? '';
+                $size = $product['Size'] ?? $product['size'] ?? '';
+                $quantity = $product['Quantity'] ?? $product['quantity'] ?? 1;
+                $price = $product['Price'] ?? $product['offer_price'] ?? $product['price'] ?? 0;
+                $subTotal = $product['SubTotal'] ?? $product['subtotal'] ?? ($price * $quantity);
 
-                $detailsStmt->bind_param("sissidd",
+                logToFile("Inserting order detail - ProductId: $productId, Price: $price, Quantity: $quantity");
+
+                $detailStmt->bind_param("sissidd",
                     $detailOrderId,
                     $productId,
                     $productCode,
-                    $productSize,
-                    $productQuantity,
-                    $productPrice,
+                    $size,
+                    $quantity,
+                    $price,
                     $subTotal
                 );
 
-                if (!$detailsStmt->execute()) {
-                    logToFile("ERROR: Failed to insert order detail for product " . $productId . ": " . $detailsStmt->error);
-                } else {
-                    logToFile("Order detail inserted for product " . $productId);
+                if (!$detailStmt->execute()) {
+                    logToFile("ERROR: Failed to insert order detail - " . $detailStmt->error);
                 }
+                $detailStmt->close();
             }
-            $detailsStmt->close();
-            logToFile("Order details insertion completed");
-        } else {
-            logToFile("ERROR: Failed to prepare order details statement: " . $mysqli->error);
         }
-    } else {
-        logToFile("ERROR: No products data found in order data");
-    }
-    }
-    
-    // Clean up pending order data
-    $mysqli->query("DELETE FROM pending_orders WHERE order_id = '$orderDbId'");
-    if (isset($_SESSION['pending_order_' . $orderDbId])) {
-        unset($_SESSION['pending_order_' . $orderDbId]);
     }
 
-    // Clear cart sessions after successful payment
+    // Clear session data
+    $sessionKey = 'pending_order_' . $orderDbId;
+    if (isset($_SESSION[$sessionKey])) {
+        unset($_SESSION[$sessionKey]);
+    }
+    if (isset($_SESSION['applied_coupon'])) {
+        unset($_SESSION['applied_coupon']);
+    }
     if (isset($_SESSION['cart'])) {
         unset($_SESSION['cart']);
     }
     if (isset($_SESSION['buy_now'])) {
         unset($_SESSION['buy_now']);
-    }
-    if (isset($_SESSION['applied_coupon'])) {
-        unset($_SESSION['applied_coupon']);
     }
 
     // Clear database cart if user is logged in
@@ -235,6 +231,16 @@ try {
             // Log error but don't fail the order
             logToFile("ERROR: Cart clearing failed - " . $e->getMessage());
         }
+    }
+
+    // Clear pending order data from database
+    $deletePendingQuery = "DELETE FROM pending_orders WHERE order_id = ?";
+    $deleteStmt = $mysqli->prepare($deletePendingQuery);
+    if ($deleteStmt) {
+        $deleteStmt->bind_param("s", $orderDbId);
+        $deleteStmt->execute();
+        $deleteStmt->close();
+        logToFile("INFO: Cleaned up pending order data for " . $orderDbId);
     }
 
     logToFile("Cleanup completed");

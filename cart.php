@@ -288,6 +288,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                 </div>
 
                             <a href="checkout.php" id="checkout_btn" class="check-link btn btn-style1">Checkout</a>
+                            <button id="clear_cart_btn" class="btn btn-danger" style="margin-top: 10px; width: 100%;">Clear Cart Completely</button>
                         </div>
                     </div>
                     
@@ -349,6 +350,51 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 // Fallback: redirect to login
                 window.location.href = "login.php";
             });
+    };
+
+    // Clear cart completely functionality
+    document.getElementById('clear_cart_btn').onclick = function () {
+        Swal.fire({
+            title: 'Clear Cart?',
+            text: 'This will remove all items from your cart permanently.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, clear cart!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('exe_files/clear_cart_completely.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Cart Cleared!',
+                            text: 'Your cart has been completely cleared.',
+                            icon: 'success'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message,
+                            icon: 'error'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to clear cart. Please try again.',
+                        icon: 'error'
+                    });
+                });
+            }
+        });
     };
     
     function clearCart() {

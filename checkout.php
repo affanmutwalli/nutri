@@ -762,7 +762,9 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
             customerType: 'Registered'
         };
 
-        // Debug logging
+        // Debug logging - log products being sent to prevent phantom products
+        console.log("Products being sent in order:", products);
+        console.log("Total products count:", products.length);
         console.log("Order data prepared:", orderData);
         console.log("Payment method selected:", selectedPaymentMethod);
         console.log("Products count:", products.length);

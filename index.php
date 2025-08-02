@@ -4989,7 +4989,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     <?php include("components/header.php"); ?>
     <div id="chat-icon">
         <img src="image/doc.png" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%;">
-        <span id="chat-notification">1</span>
+        <span id="chat-notification" style="display: none;">1</span>
         <span id="chat-online"></span>
     </div>
 

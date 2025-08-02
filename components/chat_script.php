@@ -41,13 +41,24 @@ async function sendMessage() {
   const typingElement = showTypingIndicator();
 
   try {
-    // First try to use actual API
-    const response = await fetch("chatbot_api.php", {
+    // Create AbortController for aggressive timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout (Groq is super fast)
+
+    // Use lightning-fast Groq API
+    const response = await fetch("chatbot_api_groq.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMsg })
+      body: JSON.stringify({ message: userMsg }),
+      signal: controller.signal
     });
-    
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     typingElement.remove();
 
@@ -59,36 +70,34 @@ async function sendMessage() {
       addProductCarousel(data.products);
     }
   } catch (error) {
-    // Fallback to static mock data if API fails
+    // Handle timeout and other errors
     typingElement.remove();
-    
-    const mockResponse = {
-      response: "For weakness, I recommend My Nutrify Herbal & Ayurveda's Pure Shilajit Resin. It boosts immunity and energy levels.",
-      products: [
-        {
-          name: "Pure Shilajit Resin",
-          price: 1499,
-          image_url: "images/shilajit.png"
-        },
-        {
-          name: "Ashwagandha Capsules",
-          price: 899,
-          image_url: "images/ashwagandha.png"
-        },
-        {
-          name: "Triphala Powder",
-          price: 599,
-          image_url: "images/triphala.png"
-        }
-      ]
-    };
 
-    if (mockResponse.response) {
-      displayMessage(mockResponse.response, "bot");
+    let errorMessage = "Sorry, I'm having trouble responding right now. Please try again in a moment.";
+
+    if (error.name === 'AbortError') {
+      errorMessage = "Sorry, that took too long to process. Please try asking a shorter question.";
+    } else if (error.message.includes('HTTP error')) {
+      errorMessage = "Sorry, I'm experiencing technical difficulties. Please try again later.";
     }
-    if (mockResponse.products?.length > 0) {
-      addProductCarousel(mockResponse.products);
-    }
+
+    displayMessage(errorMessage, "bot");
+
+    // Add a suggestion to try again
+    setTimeout(() => {
+      const chatBody = document.getElementById("chat-body");
+      const suggestionDiv = document.createElement("div");
+      suggestionDiv.className = "bot-message";
+      suggestionDiv.innerHTML = `
+        <div style="margin-top: 10px;">
+          <small>You can try asking about:</small><br>
+          <button class="suggestion-btn" onclick="document.getElementById('chat-input').value='What products do you have for immunity?'; sendMessage();" style="background: #28a745; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 15px; font-size: 12px; cursor: pointer;">Immunity products</button>
+          <button class="suggestion-btn" onclick="document.getElementById('chat-input').value='I need help with digestion'; sendMessage();" style="background: #28a745; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 15px; font-size: 12px; cursor: pointer;">Digestive health</button>
+        </div>
+      `;
+      chatBody.appendChild(suggestionDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }, 1000);
   } finally {
     chatInput.disabled = false;
     sendBtn.disabled = false;
@@ -121,22 +130,43 @@ function showTypingIndicator() {
 
 function addProductCarousel(products) {
   const chatBody = document.getElementById("chat-body");
-  const carouselDiv = document.createElement("div");
-  carouselDiv.className = "product-carousel";
-  
-  products.forEach(product => {
-    const productCard = document.createElement("div");
-    productCard.className = "product-card-chat";
-    productCard.innerHTML = `
-      <img src="${product.image_url}" alt="${product.name}" onerror="this.src='image/placeholder.png'">
-      <h6>${product.name}</h6>
-      <div class="price">₹${product.price}</div>
+
+  if(products.length === 1) {
+    // Single product layout
+    const container = document.createElement('div');
+    const product = products[0];
+
+    container.innerHTML = `
+      <div class="single-product-card" onclick="window.location.href='${product.url}'" style="cursor: pointer;">
+        <img src="${product.image_url}" alt="${product.name}" class="single-product-image" onerror="this.src='image/placeholder.png'">
+        <div class="single-product-name">${product.name}</div>
+        <div class="single-product-price">${product.price}</div>
+        <a href="${product.url}" class="single-product-add-btn" role="button" onclick="event.stopPropagation();">Buy Now</a>
+      </div>
     `;
-    carouselDiv.appendChild(productCard);
-  });
-  
-  chatBody.appendChild(carouselDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
+    chatBody.appendChild(container);
+  } else {
+    // Multiple products carousel
+    const carousel = document.createElement('div');
+    carousel.className = 'product-carousel';
+
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${product.image_url}" alt="${product.name}" onerror="this.src='image/placeholder.png'">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">${product.price}</div>
+        <a href="${product.url}" class="single-product-add-btn" role="button" onclick="event.stopPropagation();">Buy Now</a>
+      `;
+      card.onclick = () => window.location.href = product.url;
+      card.style.cursor = 'pointer';
+      carousel.appendChild(card);
+    });
+    chatBody.appendChild(carousel);
+  }
+
+  chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
 }
 
 // Auto-open chat if URL parameter is present

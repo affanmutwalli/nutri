@@ -39,21 +39,22 @@ if (!empty($_POST["email"])) {
                 setcookie("session_id", $sessionId, time() + (30 * 24 * 60 * 60), "/", "", true, true); // 30 days
 
                 // Restore cart from database after successful login
+                // Only load database cart if session cart is empty to prevent phantom products
                 try {
-                    // Simple cart restoration without external dependencies
                     if (file_exists('cart_persistence.php')) {
                         include_once 'cart_persistence.php';
                         if (class_exists('CartPersistence')) {
                             $cartManager = new CartPersistence();
-                            $cartManager->syncCart($single_data[0]["CustomerId"]);
+                            // Use loadCartFromDatabase instead of syncCart to prevent merging issues
+                            $cartManager->loadCartFromDatabase($single_data[0]["CustomerId"]);
                         }
                     }
                 } catch (Exception $e) {
                     // Log error but don't break login process
-                    error_log("Cart sync error during login: " . $e->getMessage());
+                    error_log("Cart load error during login: " . $e->getMessage());
                 } catch (Error $e) {
                     // Log fatal errors but don't break login process
-                    error_log("Cart sync fatal error during login: " . $e->getMessage());
+                    error_log("Cart load fatal error during login: " . $e->getMessage());
                 }
 
                 // Optionally, store additional information (e.g., user-agent or IP) to prevent session hijacking

@@ -965,6 +965,20 @@
         color: #EA652D;
     }
 
+    .product-details-subtitle {
+        font-size: 36px;
+        font-weight: bold;
+        color: #EA652D;
+        margin-bottom: 25px;
+        text-align: center;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .product-details-subtitle span {
+        color: #EA652D;
+    }
+
     /* Global responsive text styling for product details */
     .product-name,
     .product-title,
@@ -989,6 +1003,11 @@
             margin-bottom: 20px !important;
         }
 
+        .product-details-subtitle {
+            font-size: 28px !important;
+            margin-bottom: 20px !important;
+        }
+
         .pro-info h4 {
             font-size: 1.4rem !important;
             line-height: 1.3 !important;
@@ -1010,6 +1029,11 @@
     @media (max-width: 480px) {
         .product-details-title {
             font-size: 20px !important;
+            margin-bottom: 15px !important;
+        }
+
+        .product-details-subtitle {
+            font-size: 24px !important;
             margin-bottom: 15px !important;
         }
 
@@ -1504,7 +1528,6 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-top: 20px;
-    counter-reset: step-counter;
 }
 
 .use-cart {
@@ -1516,28 +1539,9 @@
     border: 2px solid transparent;
     transition: all 1.2s ease;
     position: relative;
-    counter-increment: step-counter;
 }
 
-/* Step number styling */
-.use-cart::before {
-    content: counter(step-counter);
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff6b35;
-    color: white;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
-}
+
 
 .use-cart:hover {
     transform: translateY(-8px);
@@ -1585,13 +1589,6 @@
 
     .use-cart p {
         font-size: 14px;
-    }
-
-    .use-cart::before {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-        top: -12px;
     }
 }
 
@@ -3416,13 +3413,15 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       <section class="" style="margin-top: 20px;">
         <div class="container">
             <?php
-            $filteredProductTitle = str_replace("My Nutrify Herbal & Ayurveda’s", "", $product_data[0]["Title"]);
+            $filteredProductTitle = str_replace("My Nutrify Herbal & Ayurveda's", "", $product_data[0]["Title"]);
             ?>
             <div class="product-details-section" id="section1">
                 <h1 class="product-details-title">
-                    My Nutrify Herbal & Ayurveda’s
-                    <span><?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== '' ? nl2br(htmlspecialchars(trim($filteredProductTitle))) : 'Product'; ?></span>
+                    My Nutrify Herbal & Ayurveda's
                 </h1>
+                <h2 class="product-details-subtitle">
+                    <span><?php echo isset($filteredProductTitle) && trim($filteredProductTitle) !== '' ? nl2br(htmlspecialchars(trim($filteredProductTitle))) : 'Product'; ?></span>
+                </h2>
 
             </div>
 
@@ -3476,9 +3475,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </section>
             <section class="section-b-padding pro-releted" id="section3" style="margin-top: 15px;">
                  <h1 class="product-details-title">
-                  Why Drink My Nutrify Herbal & Ayurveda’s?
-                    <span><?php echo nl2br(htmlspecialchars(trim($filteredProductTitle))); ?></span>
+                  Why Drink My Nutrify Herbal & Ayurveda's?
                 </h1>
+                <h2 class="product-details-subtitle">
+                    <span><?php echo nl2br(htmlspecialchars(trim($filteredProductTitle))); ?></span>
+                </h2>
                 <?php if (!empty($benefit_data)): ?>
                 <div class="benifit-container">
                     <?php foreach ($benefit_data as $benefit): ?>
@@ -3521,7 +3522,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         <div class="use-cart">
 
                             <img src="cms/images/products/stunk.png" alt="">
-                            <p>Take on an empty stomach in the’ orig and 30 mins after dinner.</p>
+                            <p>Take on an empty stomach in the' orig and 30 mins after dinner.</p>
                         </div>
                         <div class="use-cart">
                             <img src="cms/images/products/temp.png" alt="">
@@ -3593,12 +3594,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         <div>
                             <img src="cms/images/products/Bpa free.png" alt="">
                             <p>BPA Free </p>
-                        </div>
-                    </div>
-                    <div class="use-cart">
-                        <div>
-                            <img src="cms/images/products/Halal.png" alt="">
-                            <p>Halal Certified</p>
                         </div>
                     </div>
                     <div class="use-cart">

@@ -163,3 +163,16 @@
 [2025-07-28 06:10:18] Cleanup completed
 [2025-07-28 06:10:18] SUCCESS: Payment verification completed
 [2025-07-28 06:10:18] === BULLETPROOF CALLBACK END ===
+[2025-07-30 10:19:37] ERROR: No data received
+[2025-07-30 10:20:58] ERROR: No data received
+[2025-07-30 10:23:07] ERROR: No data received
+[2025-07-30 10:23:08] ERROR: No data received
+[2025-07-30 10:24:50] ERROR: Database connection failed
+[2025-07-30 10:26:33] ERROR: No data received
+[2025-07-30 10:28:05] ERROR: No data received
+[2025-07-30 15:58:38] ERROR: Invalid signature
+[2025-07-30 16:00:03] ERROR: No order data in session
+[2025-07-30 10:32:53] ERROR: No data received
+[2025-07-30 16:05:18] ERROR: No order data found in database or session for 
+[2025-07-30 16:07:05] FATAL ERROR: mysqli_stmt::bind_param(): Argument #4 could not be passed by reference
+[2025-07-30 16:11:13] EXCEPTION: Column 'ProductId' cannot be null
