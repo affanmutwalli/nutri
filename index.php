@@ -5040,7 +5040,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <div class="items">
                 <div class="img-back"
                     style="background-image:url('cms/images/banners/<?php echo htmlspecialchars($banners["PhotoPath"]); ?>');">
-                    <div class="home-s-content slide-c-l">
+                    <div class="home-s-content slide-c-r">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
                         <a href="products.php" class="btn btn-style1">Shop now</a>
