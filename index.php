@@ -391,49 +391,30 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         margin-left: 8px;
     }
 
-    /* ✅ Premium Green CTA Button */
+    /* Enhanced Buttons */
     .btn-style1 {
-        background: linear-gradient(135deg, #2d5a3d, #4a7c59);
-        color: #ffffff;
+        background: linear-gradient(135deg, var(--primary-green), #4a7c59);
+        color: var(--white);
         border: none;
-        padding: 14px 32px;
-        border-radius: 30px;
+        padding: 12px 24px;
+        border-radius: 25px;
         font-weight: 600;
-        font-size: 15px;
+        font-size: 14px;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 6px 20px rgba(45, 90, 61, 0.4);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-style1::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-style1:hover::before {
-        left: 100%;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(48, 87, 36, 0.3);
     }
 
     .btn-style1:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(45, 90, 61, 0.5);
-        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(48, 87, 36, 0.4);
+        color: var(--white);
         text-decoration: none;
-        background: linear-gradient(135deg, #4a7c59, #2d5a3d);
+        background: linear-gradient(135deg, #4a7c59, var(--primary-green));
     }
 
     /* Responsive adjustments for Dynamic Rewards Element */
@@ -1790,11 +1771,11 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 }
 
 
-/* ✅ Premium Shilajit Banner - Right-Aligned Layout */
+/* ✅ Clean Hero Banner - Text Only Overlay */
 .img-back {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -1813,51 +1794,46 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%);
+  background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
   z-index: 1;
 }
 
 .home-s-content {
   position: relative;
   z-index: 2;
-  max-width: 650px;
+  max-width: 700px;
   color: #ffffff;
-  text-align: right;
+  text-align: left;
   background: none;
   backdrop-filter: none;
-  padding: 2rem 0;
+  padding: 0;
   border-radius: 0;
   border: none;
   box-shadow: none;
   opacity: 1;
-  animation: fadeInRight 1.2s ease-out;
 }
 
-/* ✅ Premium Typography - Subtitle */
 .home-s-content span {
   display: block;
-  font-size: 1.4rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
-  opacity: 0.95;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  margin-bottom: 1.5rem;
+  opacity: 1;
+  text-shadow: none;
   color: #ffffff;
-  text-transform: uppercase;
-  font-family: 'Arial', sans-serif;
+  text-transform: none;
 }
 
-/* ✅ Premium Typography - Main Title */
 .home-s-content h1 {
-  font-size: 4.2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 2rem;
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
   opacity: 1;
-  text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  text-shadow: none;
   color: #ffffff;
-  letter-spacing: -1px;
-  font-family: 'Arial', sans-serif;
+  letter-spacing: normal;
 }
 
 /* ✅ Responsive Design - Clean Text Only */
@@ -1934,18 +1910,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   }
 }
 
-/* ✅ Premium Animation Keyframes */
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
+/* ✅ Animation Keyframes for Clean Text */
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -1966,12 +1931,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* ✅ Premium Text Shadow Effects */
-.home-s-content span,
-.home-s-content h1 {
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
 /* Tablet View */
@@ -2117,9 +2076,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         transition: var(--transition);
         overflow: hidden;
         border: 1px solid var(--border-light);
-        position: relative;
-        display: flex;
-        align-items: center;
     }
 
     .o-t-banner:hover {
@@ -2129,26 +2085,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     .o-t-content {
         padding: 30px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 50%;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: var(--border-radius);
-        margin-right: 20px;
-    }
-
-    .o-t-banner .image-b {
-        width: 100%;
-        display: block;
-    }
-
-    .o-t-banner .image-b img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
     }
 
     .o-t-content h6 {
@@ -2316,47 +2252,28 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
             flex-direction: column;
             gap: 20px;
         }
-
-        .o-t-banner {
-            flex-direction: column;
-            display: block;
-        }
-
-        .o-t-content {
-            position: static;
-            transform: none;
-            width: 100%;
-            margin: 0;
-            background: var(--white);
-            backdrop-filter: none;
-        }
-
-        .o-t-banner .image-b img {
-            height: 200px;
-        }
     }
 
     /* ✅ ENHANCED BLOOD SUGAR BANNER FORMATTING */
     .blood-sugar-content {
-        padding: 25px !important;
-        text-align: left;
+        padding: 30px 30px 30px 45px !important;
     }
 
     .banner-main-title {
-        font-size: 28px !important;
+        font-size: 30px !important;
         font-weight: 700 !important;
-        color: var(--text-dark) !important;
+        color: white !important;
         margin-bottom: 18px !important;
         line-height: 1.3 !important;
         text-align: left !important;
     }
 
     .banner-description {
-        font-size: 18px !important;
+        font-size: 22px !important;
         line-height: 1.6 !important;
-        color: var(--text-light) !important;
+        color: white !important;
         margin-bottom: 25px !important;
-        text-align: left !important;
+        text-align: scrollright !important;
     }
 
     .banner-description strong {

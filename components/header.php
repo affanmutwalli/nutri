@@ -707,15 +707,7 @@ input[name="quantity"] {
                                                 </li>
 
 
-                                                <li
-                                                    class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'rewards.php') ? 'active' : ''; ?>">
-                                                    <a href="#" onclick="openLiveChat()" class="link-title">
-                                                        <span class="sp-link-title">Chat Assistance</span>
-                                                    </a>
-                                                    <a href="rewards.php" class="link-title">
-                                                        <span class="sp-link-title">Rewards</span>
-                                                    </a>
-                                                </li>
+                                              
                                                 <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'authenticate.php') ? 'active' : ''; ?>">
                                                     <a href="authenticate.php" class="link-title">
