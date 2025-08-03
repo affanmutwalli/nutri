@@ -517,7 +517,7 @@
          }
          .specification-tab-2content {
     padding: 15px;
- 
+
     transition: all 1.2s ease-in-out;
 }
 
@@ -535,11 +535,46 @@
     margin: 10px 0;
     padding: 10px;
     line-height: 1.6;
-   
+
 }
 
 .specification-tab-2content p:hover {
     transform: translateY(-3px);
+}
+
+/* Simple Description Section Styles */
+.simple-description-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.description-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.read-more-button {
+    background: none;
+    border: none;
+    color: #EA652D;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s ease;
+    display: block;
+    margin: 10px auto 0;
+}
+
+.read-more-button:hover {
+    color: #d4541f;
 }
 
 /* Responsive Design */
@@ -547,14 +582,26 @@
     .specification-tab-2content {
         padding: 10px;
     }
-    
+
     .specification-tab-2content h4 {
         font-size: 1.3rem;
     }
-    
+
     .specification-tab-2content p {
         font-size: 0.9rem;
         padding: 8px;
+    }
+
+    .simple-description-content {
+        padding: 15px 10px;
+    }
+
+    .description-text {
+        font-size: 15px;
+    }
+
+    .read-more-button {
+        font-size: 15px;
     }
 }
 
@@ -573,6 +620,19 @@
         font-size: 0.85rem;
         padding: 6px;
         text-align: justify;
+    }
+
+    .simple-description-content {
+        padding: 10px 5px;
+    }
+
+    .description-text {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .read-more-button {
+        font-size: 14px;
     }
 }
 
@@ -3443,7 +3503,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
             </div>
 
-
+            <!-- Long Description Section -->
+            <?php if (!empty($product_details) && !empty($product_details['Description'])): ?>
+            <section id="long-description-section" style="margin-top: 30px;">
+                <div class="container">
+                    <div class="simple-description-content">
+                        <div class="description-text" id="description-text">
+                            <?php
+                            $description = htmlspecialchars($product_details['Description']);
+                            $words = explode(' ', $description);
+                            $preview_words = array_slice($words, 0, 30); // Show first 30 words
+                            $preview_text = implode(' ', $preview_words);
+                            $full_text = $description;
+                            ?>
+                            <span id="description-preview"><?php echo nl2br($preview_text); ?><?php if (count($words) > 30): ?>...</span>
+                            <span id="description-full" style="display: none;"><?php echo nl2br($full_text); ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (count($words) > 30): ?>
+                        <button id="read-more-btn" class="read-more-button" onclick="toggleLongDescription()">Read More</button>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+            <?php endif; ?>
 
             <section class="section-b-padding pro-releted" id="section2">
                 <h1 class="product-details-title">
@@ -3462,7 +3545,11 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     </div>
 
                     <div class="product-details-section">
-
+                        <?php if (!empty($product_details) && !empty($product_details['Description'])): ?>
+                        <div class="ingredients-details-description">
+                            <?php echo nl2br(htmlspecialchars($product_details['Description'])); ?>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <?php else: ?>
@@ -5193,6 +5280,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start the initialization
     initializeProductSlider();
+
+    // Read More functionality for long product description
+    function toggleLongDescription() {
+        const preview = document.getElementById('description-preview');
+        const full = document.getElementById('description-full');
+        const button = document.getElementById('read-more-btn');
+
+        if (full.style.display === 'none') {
+            // Show full description
+            preview.style.display = 'none';
+            full.style.display = 'inline';
+            button.textContent = 'Read Less';
+        } else {
+            // Show preview
+            preview.style.display = 'inline';
+            full.style.display = 'none';
+            button.textContent = 'Read More';
+        }
+    }
     </script>
 
 
