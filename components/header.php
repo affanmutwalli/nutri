@@ -410,6 +410,58 @@ input[name="quantity"] {
     /* Rotates the arrow when the menu is expanded */
 }
 
+/* Tawk.to Navigation Button Styling */
+.tawk-nav-button {
+    position: relative;
+}
+
+#tawk-nav-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4);
+}
+
+.tawk-nav-button-mobile {
+    position: relative;
+}
+
+#tawk-nav-icon-mobile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(255, 140, 0, 0.4);
+}
+
+/* Responsive adjustments for Tawk.to navigation button */
+@media (max-width: 1200px) {
+    #tawk-nav-icon span {
+        font-size: 13px;
+    }
+    #tawk-nav-icon div {
+        width: 22px;
+        height: 22px;
+    }
+    #tawk-nav-icon i {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 992px) {
+    #tawk-nav-icon span {
+        font-size: 12px;
+    }
+    #tawk-nav-icon div {
+        width: 20px;
+        height: 20px;
+    }
+    #tawk-nav-icon i {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tawk-nav-button {
+        display: none;
+    }
+}
+
 .menu-link.active a {
     color: #ec6504 !important;
 }
@@ -720,6 +772,16 @@ input[name="quantity"] {
                                                         <span class="sp-link-title">Customer Care <i class="fas fa-comments" style="margin-left: 5px; color: #007bff;"></i></span>
                                                     </a>
                                                 </li>
+                                                <li class="menu-link tawk-nav-button">
+                                                    <div id="tawk-nav-icon" style="cursor: pointer; display: flex; align-items: center; padding: 8px 15px; border-radius: 25px; background: linear-gradient(135deg, #ff8c00, #ff6b35); color: white; box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3); transition: all 0.3s ease; position: relative;">
+                                                        <div style="width: 24px; height: 24px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                                                            <i class="fas fa-comments" style="color: #ff8c00; font-size: 12px;"></i>
+                                                        </div>
+                                                        <span style="font-size: 14px; font-weight: 500;">Live Chat</span>
+                                                        <span id="tawk-nav-notification" style="position: absolute; top: -2px; right: -2px; background-color: red; color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 16px; font-weight: bold;">1</span>
+                                                        <span id="tawk-nav-online" style="position: absolute; bottom: 2px; right: 8px; background-color: #0BDA51; width: 8px; height: 8px; border-radius: 50%; border: 1px solid white;"></span>
+                                                    </div>
+                                                </li>
                                                 <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' && isset($_GET['open_chat'])) ? 'active' : ''; ?>">
                                                     <a href="index.php?open_chat=1" class="link-title">
@@ -964,6 +1026,61 @@ function showSlides() {
 }
 
 showSlides(); // Initial call to start slideshow
+
+// Tawk.to Navigation Button Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Desktop Tawk.to navigation button
+    const tawkNavIcon = document.getElementById('tawk-nav-icon');
+    if (tawkNavIcon) {
+        tawkNavIcon.addEventListener('click', function() {
+            // Check if Tawk.to is loaded and available
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                // Open Tawk.to chat widget
+                Tawk_API.maximize();
+            } else {
+                // Fallback: wait for Tawk.to to load and then open
+                setTimeout(function() {
+                    if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                        Tawk_API.maximize();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // Mobile Tawk.to navigation button
+    const tawkNavIconMobile = document.getElementById('tawk-nav-icon-mobile');
+    if (tawkNavIconMobile) {
+        tawkNavIconMobile.addEventListener('click', function() {
+            // Check if Tawk.to is loaded and available
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                // Open Tawk.to chat widget
+                Tawk_API.maximize();
+            } else {
+                // Fallback: wait for Tawk.to to load and then open
+                setTimeout(function() {
+                    if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                        Tawk_API.maximize();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // Update online status indicator based on Tawk.to status
+    if (typeof Tawk_API !== 'undefined') {
+        Tawk_API.onStatusChange = function(status) {
+            const onlineIndicators = document.querySelectorAll('#tawk-nav-online, #tawk-nav-online-mobile');
+            onlineIndicators.forEach(function(indicator) {
+                if (status === 'online') {
+                    indicator.style.backgroundColor = '#0BDA51'; // Green for online
+                } else {
+                    indicator.style.backgroundColor = '#ff6b35'; // Orange for offline
+                }
+            });
+        };
+    }
+});
 </script>
 <!-- mobile menu start -->
 <div class="header-bottom-area mobile">
@@ -1069,6 +1186,16 @@ showSlides(); // Initial call to start slideshow
                                             <a href="customer-care.php" class="link-title">
                                                 <span class="sp-link-title">Customer Care <i class="fas fa-comments" style="margin-left: 5px; color: #007bff;"></i></span>
                                             </a>
+                                        </li>
+                                        <li class="menu-link tawk-nav-button-mobile">
+                                            <div id="tawk-nav-icon-mobile" style="cursor: pointer; display: flex; align-items: center; padding: 12px 20px; margin: 5px 0; border-radius: 25px; background: linear-gradient(135deg, #ff8c00, #ff6b35); color: white; box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3); position: relative;">
+                                                <div style="width: 28px; height: 28px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                                    <i class="fas fa-comments" style="color: #ff8c00; font-size: 14px;"></i>
+                                                </div>
+                                                <span style="font-size: 16px; font-weight: 500;">Live Chat</span>
+                                                <span id="tawk-nav-notification-mobile" style="position: absolute; top: -2px; right: -2px; background-color: red; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; text-align: center; line-height: 18px; font-weight: bold;">1</span>
+                                                <span id="tawk-nav-online-mobile" style="position: absolute; bottom: 2px; right: 10px; background-color: #0BDA51; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white;"></span>
+                                            </div>
                                         </li>
                                         <li class="menu-link">
                                             <a href="index.php?open_chat=1" class="link-title">

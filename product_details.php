@@ -278,6 +278,8 @@
       <link rel="stylesheet" type="text/css" href="css/responsive.css">
     <!-- full width override -->
     <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
+    <!-- product name fix -->
+    <link rel="stylesheet" type="text/css" href="css/product-name-fix.css">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
       <!-- Tawk.to Integration -->
@@ -997,21 +999,46 @@
         color: #EA652D;
     }
 
-    /* Global responsive text styling for product details */
+    /* Global responsive text styling for product details - Enhanced with higher specificity */
     .product-name,
     .product-title,
     .pro-info h4,
+    .pro-info h4 span,
+    .pro-page .pro-image .pro-info h4,
+    .pro-page .pro-image .pro-info h4 span,
     .caption h3,
     .caption h3 a,
     .items .caption h3,
     .items .caption h3 a,
-    .product-details-title {
+    .trending-products .items .caption h3 a,
+    .product-details-title,
+    div.caption h3 a,
+    div.items .caption h3 a {
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
         hyphens: auto !important;
         line-height: 1.4 !important;
         display: block !important;
         max-width: 100% !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        width: auto !important;
+    }
+
+    /* Override main CSS file text truncation rules for all product listings */
+    .list-product .list-items .caption h3 a,
+    .grid-list-area .grid-pro ul.grid-product li.grid-items .caption h3 a,
+    .grid-2-product .grid-pro ul.grid-product li.grid-items .caption h3 a,
+    .grid-4-product .grid-pro ul.grid-product li.grid-items .caption h3 a,
+    .footer-style-1-pro .header-pro .caption h3 a {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        width: auto !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        line-height: 1.4 !important;
     }
 
     /* Responsive adjustments for product details text */

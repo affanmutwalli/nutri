@@ -68,6 +68,8 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
     <!-- full width override -->
     <link rel="stylesheet" type="text/css" href="css/full-width-override.css">
+    <!-- product name fix -->
+    <link rel="stylesheet" type="text/css" href="css/product-name-fix.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">

@@ -1,0 +1,152 @@
+/* 
+ * Product Name Text Truncation Fix
+ * This CSS file fixes product name cutting/truncation issues across all pages
+ * Author: Augment Agent
+ * Date: 2025-08-03
+ */
+
+/* Global fix for all product name truncation issues */
+.product-name,
+.product-title,
+.pro-info h4,
+.pro-info h4 span,
+.pro-page .pro-image .pro-info h4,
+.pro-page .pro-image .pro-info h4 span,
+.caption h3,
+.caption h3 a,
+.items .caption h3,
+.items .caption h3 a,
+.trending-products .items .caption h3 a,
+.product-details-title,
+div.caption h3 a,
+div.items .caption h3 a,
+.list-product .list-items .caption h3 a,
+.grid-list-area .grid-pro ul.grid-product li.grid-items .caption h3 a,
+.grid-2-product .grid-pro ul.grid-product li.grid-items .caption h3 a,
+.grid-4-product .grid-pro ul.grid-product li.grid-items .caption h3 a,
+.footer-style-1-pro .header-pro .caption h3 a,
+.single-product-wrap .product-content h4.title a,
+.search-pro-area .search-pro-items .search-caption h4 a,
+.style-2-search-pro-area .search-pro-items .search-caption h4 a,
+.style-2-list-search-pro-area .search-pro-items .search-caption h4 a {
+    /* Remove text truncation */
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    width: auto !important;
+    
+    /* Enable proper text wrapping */
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    
+    /* Improve readability */
+    line-height: 1.4 !important;
+    display: block !important;
+    max-width: 100% !important;
+}
+
+/* Specific fixes for product detail page */
+.pro-page .pro-info h4 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pro-info h4 {
+        font-size: 1.4rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .caption h3 a,
+    .items .caption h3 a {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+    }
+    
+    .product-name,
+    .product-title {
+        font-size: 14px !important;
+        line-height: 1.3 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .pro-info h4 {
+        font-size: 1.2rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .caption h3 a,
+    .items .caption h3 a {
+        font-size: 14px !important;
+        line-height: 1.2 !important;
+    }
+    
+    .product-name,
+    .product-title {
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+    }
+}
+
+/* Ensure containers don't cause overflow issues */
+.pro-page .container,
+.product-container,
+.caption {
+    max-width: 100% !important;
+    overflow-x: visible !important;
+}
+
+.pro-page .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Fix for combo page product names */
+.combo-product-name,
+.combo-product-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4 !important;
+}
+
+/* Additional fixes for search results */
+.search-category .search-pro .search-pro-main .search-main-caption a {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4 !important;
+}
+
+/* Blog title fixes (if product names appear in blog sections) */
+.blog-start .blog-content .blog-title h6 a,
+.left-blog .blog-item .l-blog-caption h4 a {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4 !important;
+}
+
+/* Ensure proper spacing for wrapped text */
+.caption {
+    padding: 15px !important;
+    min-height: auto !important;
+}
+
+/* Fix for any remaining truncated elements */
+*[style*="text-overflow: ellipsis"],
+*[style*="white-space: nowrap"] {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+}
