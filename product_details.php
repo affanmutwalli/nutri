@@ -3573,9 +3573,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                     <div class="product-details-section">
                         <?php if (!empty($product_details) && !empty($product_details['Description'])): ?>
-                        <div class="ingredients-details-description">
-                            <?php echo nl2br(htmlspecialchars($product_details['Description'])); ?>
-                        </div>
+                        
                         <?php endif; ?>
                     </div>
                 </div>

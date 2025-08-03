@@ -335,7 +335,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         border-radius: var(--border-radius);
         transition: var(--transition);
         overflow: hidden;
-        
+
     }
 
 
