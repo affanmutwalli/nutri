@@ -971,7 +971,7 @@
 
     /* Title Styling */
     .product-details-title {
-        font-size: 32px;
+        font-size: 42px;
         font-weight: bold;
         color: #305724;
         margin-bottom: 25px;
@@ -1017,7 +1017,7 @@
     /* Responsive adjustments for product details text */
     @media (max-width: 768px) {
         .product-details-title {
-            font-size: 24px !important;
+            font-size: 32px !important;
             margin-bottom: 20px !important;
         }
 
@@ -1046,7 +1046,7 @@
 
     @media (max-width: 480px) {
         .product-details-title {
-            font-size: 20px !important;
+            font-size: 28px !important;
             margin-bottom: 15px !important;
         }
 
@@ -1909,7 +1909,7 @@
         }
 
         .product-details-title {
-            font-size: 2.2rem !important;
+            font-size: 2.8rem !important;
             margin-bottom: 40px !important;
         }
 
