@@ -99,6 +99,7 @@
                     $MetaTags = "";
                     $MetaKeywords = "";
                     $ShortDescription = "";
+                    $LongDescription = "";
                     $Specifications = "";
                     $PhotoPath = "Choose File";
                     $CategoryId = "";
@@ -158,7 +159,16 @@
                       $ParamArray[0] = $_GET["ProductId"];
                       $Fields = implode(",", $FieldNames);
                       $product_price = $obj->MysqliSelect1("Select " . $Fields . " from product_price where ProductId= ? ", $FieldNames, "i", $ParamArray);
-                      
+
+                      // Fetch Long Description from product_details table
+                      $FieldNames = array("Description");
+                      $ParamArray = array($_GET["ProductId"]);
+                      $Fields = implode(",", $FieldNames);
+                      $product_details_data = $obj->MysqliSelect1("SELECT " . $Fields . " FROM product_details WHERE ProductId = ? LIMIT 1", $FieldNames, "i", $ParamArray);
+
+                      if (!empty($product_details_data) && isset($product_details_data[0]['Description'])) {
+                          $LongDescription = $product_details_data[0]['Description'];
+                      }
 
                     }
                     
@@ -311,6 +321,12 @@
                                         <div class="form-group">
                                             <label>Short Description</label>
                                             <textarea class="form-control" id="ShortDescription" name="ShortDescription" placeholder="Enter Short Description" rows="4"><?php echo htmlspecialchars($ShortDescription); ?></textarea>
+                                        </div>
+                                    </div>
+                                <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Long Description</label>
+                                            <textarea class="form-control" id="LongDescription" name="LongDescription" placeholder="Enter Long Description for product details page" rows="6"><?php echo htmlspecialchars($LongDescription); ?></textarea>
                                         </div>
                                     </div>
                                 <div class="row" style="margin: bottom 10px;">

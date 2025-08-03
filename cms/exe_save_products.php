@@ -119,7 +119,32 @@ if (login_check($mysqli) == true) {
                     }
                 }
             }
-            
+
+            // Handle Long Description in product_details table
+            if (isset($_POST['LongDescription'])) {
+                $longDescription = $_POST['LongDescription'];
+
+                // Check if product_details record exists
+                $checkStmt = $mysqli->prepare("SELECT Product_DetailsId FROM product_details WHERE ProductId = ?");
+                $checkStmt->bind_param("i", $_POST["ProductId"]);
+                $checkStmt->execute();
+                $result = $checkStmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    // Update existing record
+                    $updateDescStmt = $mysqli->prepare("UPDATE product_details SET Description = ? WHERE ProductId = ?");
+                    $updateDescStmt->bind_param("si", $longDescription, $_POST["ProductId"]);
+                    $updateDescStmt->execute();
+                    $updateDescStmt->close();
+                } else {
+                    // Insert new record
+                    $insertDescStmt = $mysqli->prepare("INSERT INTO product_details (ProductId, Description) VALUES (?, ?)");
+                    $insertDescStmt->bind_param("is", $_POST["ProductId"], $longDescription);
+                    $insertDescStmt->execute();
+                    $insertDescStmt->close();
+                }
+                $checkStmt->close();
+            }
 
             $_SESSION["QueryStatus"] = "UPDATED";
             echo json_encode(["msg" => "Product updated successfully.", "response" => "S"]);
@@ -206,6 +231,15 @@ if (login_check($mysqli) == true) {
                 }
             }
         }
+
+            // Handle Long Description in product_details table for new product
+            if (isset($_POST['LongDescription']) && !empty($_POST['LongDescription'])) {
+                $longDescription = $_POST['LongDescription'];
+                $insertDescStmt = $mysqli->prepare("INSERT INTO product_details (ProductId, Description) VALUES (?, ?)");
+                $insertDescStmt->bind_param("is", $ProductId, $longDescription);
+                $insertDescStmt->execute();
+                $insertDescStmt->close();
+            }
 
             $_SESSION["QueryStatus"] = "SAVED";
             echo json_encode(["msg" => "Product saved successfully.", "response" => "S"]);
