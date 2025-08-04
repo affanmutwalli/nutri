@@ -2736,6 +2736,70 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
         margin: 0 20px;
     }
 
+    .combo-create-section {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+
+    .combo-create-btn {
+        background: linear-gradient(135deg, #ff6b35, #f7931e);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 180px;
+        justify-content: center;
+    }
+
+    .combo-create-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        background: linear-gradient(135deg, #ff5722, #f57c00);
+    }
+
+    .combo-btn-text {
+        font-weight: 600;
+    }
+
+    .combo-btn-price {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* Selected product styling */
+    .combo-carousel-item img.selected {
+        border: 3px solid #ff6b35;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+
+    .combo-carousel-item img {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .combo-carousel-item img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
     .combo-card-content {
         display: flex;
         flex-direction: column;
@@ -5848,6 +5912,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
                 <div class="plus-sign">+</div>
 
+                <!-- Combo Creation Button -->
+                <div class="combo-create-section" style="display: none;">
+                    <button class="combo-create-btn" onclick="createCombo()">
+                        <span class="combo-btn-text">Create Combo</span>
+                        <span class="combo-btn-price" id="combo-total-price">₹0</span>
+                    </button>
+                </div>
+
                 <div class="combo-carousel-container">
                     <button class="combo-carousel-button prev">❮</button>
                     <div class="combo-carousel-track">
@@ -7245,16 +7317,185 @@ document.addEventListener('DOMContentLoaded', function () {
         // Image selection logic for this carousel
         items.forEach(item => {
             const img = item.querySelector('img');
-            img.addEventListener('click', function () {
+            const link = item.querySelector('a');
+
+            img.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent navigation
+                if (link) link.onclick = function(e) { e.preventDefault(); return false; }; // Disable link
+
                 // Remove selected class from all images in this carousel
                 carousel.querySelectorAll('.combo-carousel-item img').forEach(i => i.classList.remove('selected'));
                 // Add selected class to the clicked image
                 this.classList.add('selected');
-                console.log('Selected:', this.alt);
+
+                // Get product ID from the link
+                const productId = link ? link.href.match(/ProductId=(\d+)/)?.[1] : null;
+
+                // Store selection data
+                const carouselIndex = Array.from(document.querySelectorAll('.combo-carousel-container')).indexOf(carousel);
+                if (carouselIndex === 0) {
+                    window.selectedProduct1 = { id: productId, name: this.alt, img: this.src };
+                } else if (carouselIndex === 1) {
+                    window.selectedProduct2 = { id: productId, name: this.alt, img: this.src };
+                }
+
+                console.log('Selected:', this.alt, 'Product ID:', productId);
+                checkComboSelection();
             });
         });
     });
 });
+
+// Combo Creation Functions
+window.selectedProduct1 = null;
+window.selectedProduct2 = null;
+
+function checkComboSelection() {
+    const createSection = document.querySelector('.combo-create-section');
+    const priceElement = document.getElementById('combo-total-price');
+
+    if (window.selectedProduct1 && window.selectedProduct2) {
+        // Show create combo button
+        createSection.style.display = 'block';
+
+        // Fetch actual product prices
+        fetchComboPrice(window.selectedProduct1.id, window.selectedProduct2.id)
+            .then(totalPrice => {
+                priceElement.textContent = `₹${totalPrice}`;
+            })
+            .catch(error => {
+                console.error('Error fetching combo price:', error);
+                priceElement.textContent = '₹999'; // Fallback price
+            });
+
+        console.log('Both products selected:', window.selectedProduct1, window.selectedProduct2);
+    } else {
+        // Hide create combo button
+        createSection.style.display = 'none';
+    }
+}
+
+function fetchComboPrice(product1Id, product2Id) {
+    return fetch('exe_files/get_combo_price.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            product1_id: product1Id,
+            product2_id: product2Id
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            return data.combo_price;
+        } else {
+            throw new Error(data.message || 'Failed to fetch price');
+        }
+    });
+}
+
+function createCombo() {
+    if (!window.selectedProduct1 || !window.selectedProduct2) {
+        alert('Please select products from both sides to create a combo.');
+        return;
+    }
+
+    // Show loading state
+    const btn = document.querySelector('.combo-create-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span>Creating Combo...</span>';
+    btn.disabled = true;
+
+    // Create combo data
+    const comboData = {
+        product1_id: window.selectedProduct1.id,
+        product2_id: window.selectedProduct2.id,
+        product1_name: window.selectedProduct1.name,
+        product2_name: window.selectedProduct2.name,
+        action: 'create_combo'
+    };
+
+    // Send AJAX request to create combo
+    fetch('exe_files/create_combo.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(comboData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+
+        if (data.status === 'success') {
+            // Show success message and redirect to combo page
+            alert(`Combo created successfully! "${window.selectedProduct1.name}" + "${window.selectedProduct2.name}"`);
+
+            // Add both products to cart or redirect to combo page
+            addComboToCart(window.selectedProduct1.id, window.selectedProduct2.id);
+        } else {
+            alert('Error creating combo: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        console.error('Error:', error);
+
+        // Fallback: Add both products to cart directly
+        addComboToCart(window.selectedProduct1.id, window.selectedProduct2.id);
+    });
+}
+
+function addComboToCart(product1Id, product2Id) {
+    // Add first product to cart
+    addProductToCart(product1Id, 1, function() {
+        // Add second product to cart
+        addProductToCart(product2Id, 1, function() {
+            alert('Combo added to cart successfully!');
+
+            // Reset selections
+            document.querySelectorAll('.combo-carousel-item img.selected').forEach(img => {
+                img.classList.remove('selected');
+            });
+            window.selectedProduct1 = null;
+            window.selectedProduct2 = null;
+            checkComboSelection();
+
+            // Optionally reload page to update cart count
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        });
+    });
+}
+
+function addProductToCart(productId, quantity, callback) {
+    $.ajax({
+        url: 'exe_files/add_to_cart_session.php',
+        type: 'POST',
+        data: {
+            action: 'add_to_cart',
+            productId: productId,
+            quantity: quantity || 1
+        },
+        dataType: 'json',
+        success: function(data) {
+            if (data.status === 'success') {
+                if (callback) callback();
+            } else {
+                alert('Error adding product to cart: ' + data.message);
+            }
+        },
+        error: function() {
+            alert('An error occurred while adding to cart');
+            if (callback) callback(); // Continue anyway
+        }
+    });
+}
 
 // Krishna Ayurved Style Section Title Animations
 document.addEventListener('DOMContentLoaded', function() {

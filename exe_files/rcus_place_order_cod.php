@@ -98,11 +98,18 @@ try {
 }
 
 if ($InputDocId) {
+    // Get a persistent connection for the entire order processing
+    $connection = $obj->connection();
+    if (!$connection || !mysqli_ping($connection)) {
+        echo json_encode(["response" => "E", "message" => "Database connection lost"]);
+        exit();
+    }
+
     // Auto-save customer address for registered customers
     try {
         // Check if customer already has an address saved
         $checkAddressQuery = "SELECT CustomerId FROM customer_address WHERE CustomerId = ?";
-        $checkStmt = mysqli_prepare($obj->connection(), $checkAddressQuery);
+        $checkStmt = mysqli_prepare($connection, $checkAddressQuery);
         mysqli_stmt_bind_param($checkStmt, "i", $data['CustomerId']);
         mysqli_stmt_execute($checkStmt);
         $checkResult = mysqli_stmt_get_result($checkStmt);
@@ -110,7 +117,7 @@ if ($InputDocId) {
         if (mysqli_num_rows($checkResult) == 0) {
             // No address exists, save the address from order data
             $saveAddressQuery = "INSERT INTO customer_address (CustomerId, Address, Landmark, City, PinCode, State) VALUES (?, ?, ?, ?, ?, ?)";
-            $saveStmt = mysqli_prepare($obj->connection(), $saveAddressQuery);
+            $saveStmt = mysqli_prepare($connection, $saveAddressQuery);
             mysqli_stmt_bind_param($saveStmt, "isssss",
                 $data['CustomerId'],
                 $data['address'],
@@ -138,6 +145,20 @@ if ($InputDocId) {
 
     foreach ($data['products'] as $product) {
         try {
+            // Validate product exists in database before processing
+            $productValidationQuery = "SELECT ProductId, ProductName, ProductCode FROM product_master WHERE ProductId = ?";
+            $validationStmt = $connection->prepare($productValidationQuery);
+            $validationStmt->bind_param("i", $product['id']);
+            $validationStmt->execute();
+            $validationResult = $validationStmt->get_result();
+
+            if ($validationResult->num_rows === 0) {
+                error_log("PHANTOM PRODUCT DETECTED: ProductId=" . $product['id'] . " does not exist in product_master table. Skipping.");
+                $validationStmt->close();
+                continue; // Skip phantom products
+            }
+            $validationStmt->close();
+
             // Create a unique key for this product (ProductId + Size)
             $productKey = $product['id'] . '_' . ($product['size'] ?? '');
 
@@ -299,7 +320,7 @@ if ($InputDocId) {
 
     // Trigger auto-processing webhook GUARANTEED
     try {
-        $webhookUrl = "http://localhost/nutrify/auto_process_webhook.php";
+        $webhookUrl = "http://localhost/nutrify/nutri/auto_process_webhook.php";
         $postData = http_build_query(['order_id' => $newOrderId]);
 
         $context = stream_context_create([

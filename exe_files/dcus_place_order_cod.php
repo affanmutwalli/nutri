@@ -39,12 +39,16 @@ $newOrderId = null;
 $maxRetries = 5;
 $retryCount = 0;
 
-// Create direct mysqli connection for transaction handling
+// Create direct mysqli connection for transaction handling with proper settings
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if ($mysqli->connect_error) {
     echo json_encode(["response" => "E", "message" => "Database connection failed"]);
     exit();
 }
+
+// Set connection timeout and charset
+$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 60);
+$mysqli->set_charset("utf8mb4");
 
 // Start transaction
 mysqli_autocommit($mysqli, FALSE);
@@ -145,6 +149,32 @@ if ($InputDocId) {
     $processedProducts = array();
 
     foreach ($data['products'] as $product) {
+        // Check if connection is still alive, reconnect if needed
+        if (!$mysqli->ping()) {
+            $mysqli->close();
+            $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+            $mysqli->set_charset("utf8mb4");
+            mysqli_autocommit($mysqli, FALSE);
+        }
+
+        // Validate product exists in database before processing
+        $productValidationQuery = "SELECT ProductId, ProductName, ProductCode FROM product_master WHERE ProductId = ?";
+        $validationStmt = $mysqli->prepare($productValidationQuery);
+        if (!$validationStmt) {
+            error_log("Failed to prepare validation statement: " . $mysqli->error);
+            continue;
+        }
+        $validationStmt->bind_param("i", $product['id']);
+        $validationStmt->execute();
+        $validationResult = $validationStmt->get_result();
+
+        if ($validationResult->num_rows === 0) {
+            error_log("PHANTOM PRODUCT DETECTED: ProductId=" . $product['id'] . " does not exist in product_master table. Skipping.");
+            $validationStmt->close();
+            continue; // Skip phantom products
+        }
+        $validationStmt->close();
+
         // Create a unique key for this product (ProductId + Size)
         $productKey = $product['id'] . '_' . ($product['size'] ?? '');
 
@@ -156,35 +186,43 @@ if ($InputDocId) {
         $processedProducts[] = $productKey;
 
         $sub_total = $product["offer_price"] * $product["quantity"];
-        $ParamArray = array(
-            $newOrderId,
-            $product['id'],
-            $product['code'],
-            $product['size'],
-            $product['quantity'],
-            $product['offer_price'],
-            $sub_total
-        );
-        $productInsertId = $obj->fInsertNew(
-            "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) 
-             VALUES (?, ?, ?, ?, ?, ?, ?)", 
-            "sissidd", 
-            $ParamArray
-        );
+
+        // Use the same mysqli connection for product insertion
+        $productInsertQuery = "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $productStmt = $mysqli->prepare($productInsertQuery);
+
+        if (!$productStmt) {
+            error_log("Failed to prepare product insert statement: " . $mysqli->error);
+            mysqli_rollback($mysqli);
+            echo json_encode(["response" => "E", "message" => "Error inserting product details: " . $mysqli->error]);
+            exit();
+        }
+
+        $productStmt->bind_param("sissidd", $newOrderId, $product['id'], $product['code'], $product['size'], $product['quantity'], $product['offer_price'], $sub_total);
+
+        if (!$productStmt->execute()) {
+            error_log("Failed to insert product: " . $productStmt->error);
+            $productStmt->close();
+            mysqli_rollback($mysqli);
+            echo json_encode(["response" => "E", "message" => "Error inserting product details: " . $productStmt->error]);
+            exit();
+        }
+
+        $productStmt->close();
     }
 
     // Auto-process the order immediately if automation is enabled
     try {
         // Check if automation is enabled
         $autoQuery = "SELECT config_value FROM delivery_config WHERE config_key = 'auto_accept_orders'";
-        $autoResult = mysqli_query($obj->connection(), $autoQuery);
+        $autoResult = mysqli_query($mysqli, $autoQuery);
 
         if ($autoResult && $row = mysqli_fetch_assoc($autoResult)) {
             if ($row['config_value'] == '1') {
                 // Auto-approve and ship the order using real Delhivery API
                 try {
                     require_once '../includes/DeliveryManager.php';
-                    $deliveryManager = new DeliveryManager($obj->connection());
+                    $deliveryManager = new DeliveryManager($mysqli);
 
                     if ($deliveryManager->isDelhiveryConfigured()) {
                         // Prepare order data for Delhivery
