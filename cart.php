@@ -2,6 +2,16 @@
 <html lang="en">
 <?php
 session_start();
+// PHANTOM PRODUCT MONITOR - INJECTED
+if (file_exists(__DIR__ . "/cart_monitor.php")) {
+    include_once __DIR__ . "/cart_monitor.php";
+    if (class_exists("CartMonitor")) {
+        $phantomMonitor = new CartMonitor();
+        $phantomMonitor->log("📍 CHECKPOINT: " . basename(__FILE__));
+        $phantomMonitor->checkForPhantomProducts();
+    }
+}
+
 include('includes/urls.php');
 include('database/dbconnection.php');
 $obj = new main();

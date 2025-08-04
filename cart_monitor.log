@@ -1,0 +1,157 @@
+[2025-08-04 10:33:47] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:33:52] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:33:53] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:33:53] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:33:59] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:33:59] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:34:04] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:34:04] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:34:05] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:34:10] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:35:27] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:35:33] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:35:35] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: Empty
+[2025-08-04 10:35:35] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 👻 PHANTOM SIMULATED: Wild Amla Juice (ProductId 6) added for testing | Cart: {"6":1}
+[2025-08-04 10:35:35] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:35:35] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:35:35] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:35:40] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:35:40] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:35:40] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:35:45] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:35:45] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:35:45] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:35:50] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:35:50] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:35:50] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:35:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:35:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:35:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:11] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:11] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:11] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:16] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:16] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:16] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:21] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:21] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:21] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:26] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:26] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:26] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:31] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:31] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:31] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:36] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:36] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:36] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:41] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:41] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:41] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:46] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:46] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:46] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:51] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:51] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:51] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:36:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:36:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:36:56] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:37:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:37:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:37:01] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:37:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 📄 PAGE ACCESS: cart_monitor.php | Cart: {"6":1}
+[2025-08-04 10:37:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🚨 PHANTOM PRODUCT DETECTED: ProductId 6 (Wild Amla Juice) found in cart with quantity 1 | Cart: {"6":1}
+[2025-08-04 10:37:06] [Session: 7n79m3q0r798vb4dko9dtp8221] [Customer: Guest] 🔍 PHANTOM SOURCE: Called from Unknown | Cart: {"6":1}
+[2025-08-04 10:38:37] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: product_details.php | Cart: Empty
+[2025-08-04 10:38:37] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: product_details.php | Cart: Empty
+[2025-08-04 10:38:42] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: product_details.php | Cart: Empty
+[2025-08-04 10:38:42] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: product_details.php | Cart: Empty
+[2025-08-04 10:38:47] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: product_details.php | Cart: Empty
+[2025-08-04 10:38:47] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: product_details.php | Cart: Empty
+[2025-08-04 10:38:52] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: product_details.php | Cart: Empty
+[2025-08-04 10:38:52] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: product_details.php | Cart: Empty
+[2025-08-04 10:38:57] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: product_details.php | Cart: Empty
+[2025-08-04 10:38:57] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: product_details.php | Cart: Empty
+[2025-08-04 10:39:00] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: checkout.php | Cart: Empty
+[2025-08-04 10:39:00] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: checkout.php | Cart: Empty
+[2025-08-04 10:39:05] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: checkout.php | Cart: Empty
+[2025-08-04 10:39:05] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: checkout.php | Cart: Empty
+[2025-08-04 10:39:10] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: checkout.php | Cart: Empty
+[2025-08-04 10:39:10] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: checkout.php | Cart: Empty
+[2025-08-04 10:39:15] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: checkout.php | Cart: Empty
+[2025-08-04 10:39:15] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: checkout.php | Cart: Empty
+[2025-08-04 10:39:20] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: checkout.php | Cart: Empty
+[2025-08-04 10:39:20] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: checkout.php | Cart: Empty
+[2025-08-04 10:42:54] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:42:54] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:42:56] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:42:56] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:01] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:01] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:07] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:07] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:13] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:13] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:19] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:19] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:25] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:25] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:31] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:31] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:37] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:37] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:43] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:43] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:49] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:49] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:43:55] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:43:55] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:02] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:02] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:08] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:08] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:14] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:14] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:19] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:19] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:28] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:28] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:34] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:34] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:39] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:39] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:45] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:45] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:52] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:52] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:44:58] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:44:58] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:03] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:03] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:09] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:09] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:16] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:16] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:22] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:22] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:27] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:27] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:33] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:33] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:40] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:40] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:45] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:45] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:48] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:48] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:53] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:53] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty
+[2025-08-04 10:45:59] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📄 PAGE ACCESS: index.php | Cart: Empty
+[2025-08-04 10:45:59] [Session: ip3f5g6kh0l7lp9ae8hl5vcraj] [Customer: 16] 📍 CHECKPOINT: index.php | Cart: Empty

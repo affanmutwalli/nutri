@@ -2,6 +2,16 @@
 <html lang="en">
 <?php
 session_start();
+// PHANTOM PRODUCT MONITOR - INJECTED
+if (file_exists(__DIR__ . "/cart_monitor.php")) {
+    include_once __DIR__ . "/cart_monitor.php";
+    if (class_exists("CartMonitor")) {
+        $phantomMonitor = new CartMonitor();
+        $phantomMonitor->log("📍 CHECKPOINT: " . basename(__FILE__));
+        $phantomMonitor->checkForPhantomProducts();
+    }
+}
+
 include('includes/urls.php');
 include('database/dbconnection.php');
 $obj = new main();
@@ -757,7 +767,16 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
             city: city,
             final_total: final_total,
             paymentMethod: selectedPaymentMethod,
-            products: products,
+            
+                        // PHANTOM_PRODUCT_FILTER: Remove ProductId 6 before sending
+                        products = products.filter(function(product) {
+                            if (product.ProductId == 6) {
+                                console.log("PHANTOM PRODUCT BLOCKED: ProductId 6 removed from order");
+                                return false;
+                            }
+                            return true;
+                        });
+                        products: products,
             CustomerId: CustomerId,
             customerType: 'Registered'
         };

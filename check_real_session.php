@@ -44,19 +44,7 @@ if (isset($_SESSION['CustomerId'])) {
     echo "</div>";
 }
 
-// Add cart items for the current logged-in user
-if (isset($_GET['add_cart_for_real_user']) && isset($_SESSION['CustomerId'])) {
-    $_SESSION['cart'] = [
-        6 => 1,  // Wild Amla Juice
-        9 => 1   // Cholesterol Care Juice
-    ];
-    
-    echo "<div style='background: #d4edda; padding: 10px; border: 1px solid #c3e6cb; margin: 10px 0;'>";
-    echo "<h4>✅ Cart Added for Your Real Account!</h4>";
-    echo "<p>Cart items added for Customer ID: " . $_SESSION['CustomerId'] . "</p>";
-    echo "<p><a href='cart.php' style='background: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>🛒 View Cart</a></p>";
-    echo "<p><a href='checkout.php' style='background: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>💳 Test Checkout</a></p>";
-    echo "</div>";
+// Debug code removed to prevent phantom products
 }
 
 // Clear buy_now session if it exists
@@ -77,7 +65,7 @@ if (isset($_SESSION['buy_now'])) {
 
 echo "<div style='margin: 20px 0;'>";
 if (isset($_SESSION['CustomerId'])) {
-    echo "<a href='check_real_session.php?add_cart_for_real_user=true' style='background: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-right: 10px;'>🛒 Add Cart for My Account</a>";
+    // Debug button removed
 }
 echo "<a href='check_real_session.php' style='background: #17a2b8; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>🔄 Refresh</a>";
 echo "</div>";

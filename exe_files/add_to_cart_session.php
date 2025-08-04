@@ -1,5 +1,15 @@
 <?php
 session_start();
+// PHANTOM PRODUCT MONITOR - INJECTED
+if (file_exists(__DIR__ . "/cart_monitor.php")) {
+    include_once __DIR__ . "/cart_monitor.php";
+    if (class_exists("CartMonitor")) {
+        $phantomMonitor = new CartMonitor();
+        $phantomMonitor->log("📍 CHECKPOINT: " . basename(__FILE__));
+        $phantomMonitor->checkForPhantomProducts();
+    }
+}
+
 
 // Set JSON header first
 header('Content-Type: application/json');
