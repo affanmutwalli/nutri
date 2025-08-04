@@ -153,22 +153,25 @@
                                             </a>
                                         </div>
                                         <div class="brand-logo">
-                                            <a href="https://www.jiomart.com/s/pure-nutrition-co/76258/products" target="_blank">
-                                                <img src="cms/images/platforms/2.png" alt="Available on Jio Mart">
+                                            <a href="https://shorturl.at/4ex6H" target="_blank">
+                                                <img src="cms/images/platforms/2.png" alt="Available on Flipkart">
                                             </a>
                                         </div>
                                         <div class="brand-logo">
-                                            <a href="https://www.1mg.com/marketer/my-nutrify-94132" target="_blank">
-                                                <img src="cms/images/platforms/3.png" alt="Available on Tata 1mg">
+                                            <a href="https://www.jiomart.com/search/my%20nutrify" target="_blank">
+                                                <img src="cms/images/platforms/3.png" alt="Available on jiomart">
                                             </a>
                                         </div>
                                         <div class="brand-logo">
-                                            <a href="https://www.snapdeal.com/seller/S741f4" target="_blank">
-                                                <img src="cms/images/platforms/4.png" alt="Available on Snapdeal">
+                                            <a href="https://www.1mg.com/search/all?name=my+nutrify" target="_blank">
+                                                <img src="cms/images/platforms/4.png" alt="Available on Tata1mg">
                                             </a>
                                         </div>
+                                        
                                         <div class="brand-logo">
+                                            <a href=" https://encr.pw/koRSX" target="_blank">
                                             <img src="cms/images/platforms/5.png" alt="Available on Platform 5">
+                                             </a>
                                         </div>
                                          <div class="brand-logo">
                                             <img src="cms/images/platforms/6.png" alt="Available on Platform 6">

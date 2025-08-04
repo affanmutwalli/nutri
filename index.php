@@ -7497,6 +7497,32 @@ function addProductToCart(productId, quantity, callback) {
     });
 }
 
+// Real-time Phantom Product Monitor
+function monitorPhantomProducts() {
+    fetch('phantom_monitor.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success' && data.eliminated_count > 0) {
+                console.log('🚫 Phantom products eliminated:', data.eliminated_count);
+                // Optionally reload page if phantom products were found and eliminated
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Phantom monitor error:', error);
+        });
+}
+
+// Run phantom product monitor every 30 seconds
+setInterval(monitorPhantomProducts, 30000);
+
+// Run immediately on page load
+document.addEventListener('DOMContentLoaded', function() {
+    monitorPhantomProducts();
+});
+
 // Krishna Ayurved Style Section Title Animations
 document.addEventListener('DOMContentLoaded', function() {
     // Create intersection observer for section titles

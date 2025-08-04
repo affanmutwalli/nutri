@@ -187,6 +187,39 @@ if ($InputDocId) {
                 $subTotalInt // SubTotal (integer) - converted from decimal
             );
 
+            // Validate product before insertion to prevent phantom products
+            $validateQuery = "SELECT ProductName, ProductCode FROM product_master WHERE ProductId = ? AND ProductName IS NOT NULL AND ProductName != '' AND ProductName != 'N/A'";
+            $validateStmt = $conn->prepare($validateQuery);
+            $validateStmt->bind_param("i", $product['id']);
+            $validateStmt->execute();
+            $validateResult = $validateStmt->get_result();
+
+            if ($validateResult->num_rows === 0) {
+                error_log("Phantom product detected in order: ProductId " . $product['id']);
+                $validateStmt->close();
+                ob_clean();
+                echo json_encode(["response" => "E", "message" => "Invalid product detected in order"]);
+                exit();
+            }
+
+            $productData = $validateResult->fetch_assoc();
+            // Enhanced phantom product detection
+            if (empty($productData['ProductName']) ||
+                $productData['ProductName'] === 'N/A' ||
+                strpos($productData['ProductCode'], 'SJ100') !== false ||
+                strpos($productData['ProductCode'], 'XX-000') !== false ||
+                $productData['ProductCode'] === 'MN-SJ100' ||
+                $productData['ProductCode'] === 'MN-XX-000' ||
+                (strpos($productData['ProductCode'], 'MN-XX-') === 0) ||
+                (strpos($productData['ProductCode'], 'MN-SJ') === 0)) {
+                error_log("Phantom product detected: " . json_encode($productData));
+                $validateStmt->close();
+                ob_clean();
+                echo json_encode(["response" => "E", "message" => "Phantom product blocked in order"]);
+                exit();
+            }
+            $validateStmt->close();
+
             // Debug logging to prevent phantom products
             error_log("Inserting order detail - OrderId: $newOrderId, ProductId: " . $product['id'] .
                      ", Code: " . $product['code'] . ", Quantity: " . $product['quantity'] .
