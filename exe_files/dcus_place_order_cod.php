@@ -187,6 +187,39 @@ if ($InputDocId) {
 
         $sub_total = $product["offer_price"] * $product["quantity"];
 
+        // Validate product before insertion to prevent phantom products
+        $validateQuery = "SELECT ProductName, ProductCode FROM product_master WHERE ProductId = ? AND ProductName IS NOT NULL AND ProductName != '' AND ProductName != 'N/A'";
+        $validateStmt = $mysqli->prepare($validateQuery);
+        $validateStmt->bind_param("i", $product['id']);
+        $validateStmt->execute();
+        $validateResult = $validateStmt->get_result();
+
+        if ($validateResult->num_rows === 0) {
+            error_log("Phantom product detected in order: ProductId " . $product['id']);
+            $validateStmt->close();
+            mysqli_rollback($mysqli);
+            echo json_encode(["response" => "E", "message" => "Invalid product detected in order"]);
+            exit();
+        }
+
+        $productData = $validateResult->fetch_assoc();
+        // Enhanced phantom product detection
+        if (empty($productData['ProductName']) ||
+            $productData['ProductName'] === 'N/A' ||
+            strpos($productData['ProductCode'], 'SJ100') !== false ||
+            strpos($productData['ProductCode'], 'XX-000') !== false ||
+            $productData['ProductCode'] === 'MN-SJ100' ||
+            $productData['ProductCode'] === 'MN-XX-000' ||
+            (strpos($productData['ProductCode'], 'MN-XX-') === 0) ||
+            (strpos($productData['ProductCode'], 'MN-SJ') === 0)) {
+            error_log("Phantom product detected: " . json_encode($productData));
+            $validateStmt->close();
+            mysqli_rollback($mysqli);
+            echo json_encode(["response" => "E", "message" => "Phantom product blocked in order"]);
+            exit();
+        }
+        $validateStmt->close();
+
         // Use the same mysqli connection for product insertion
         $productInsertQuery = "INSERT INTO order_details (OrderId, ProductId, ProductCode, Size, Quantity, Price, SubTotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $productStmt = $mysqli->prepare($productInsertQuery);

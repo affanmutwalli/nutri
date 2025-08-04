@@ -16,18 +16,41 @@ $cartManager = new CartPersistence();
 if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart' && isset($_POST['productId'])) {
     $productId = $_POST['productId'];
 
-    // Fetch product details
+    // Validate product ID first
+    if (!is_numeric($productId) || $productId <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid product ID']);
+        exit;
+    }
+
+    // Fetch product details with validation
     $FieldNames = array("ProductId", "ProductName", "ShortDescription", "Specification", "PhotoPath", "SubCategoryId", "MetaTags", "MetaKeywords", "ProductCode", "CategoryId");
     $ParamArray = array($productId);
     $Fields = implode(",", $FieldNames);
     $product_data = $obj->MysqliSelect1(
-        "SELECT " . $Fields . " FROM product_master WHERE ProductId = ?",
+        "SELECT " . $Fields . " FROM product_master WHERE ProductId = ? AND ProductName IS NOT NULL AND ProductName != '' AND ProductName != 'N/A'",
         $FieldNames,
         "i",
         $ParamArray
     );
 
     if ($product_data > 0) {
+        // Enhanced validation to prevent ALL phantom products
+        $productName = $product_data[0]['ProductName'] ?? '';
+        $productCode = $product_data[0]['ProductCode'] ?? '';
+
+        // Block all phantom product patterns
+        if (empty($productName) ||
+            $productName === 'N/A' ||
+            empty($productCode) ||
+            strpos($productCode, 'SJ100') !== false ||
+            strpos($productCode, 'XX-000') !== false ||
+            $productCode === 'MN-SJ100' ||
+            $productCode === 'MN-XX-000' ||
+            (strpos($productCode, 'MN-XX-') === 0) ||
+            (strpos($productCode, 'MN-SJ') === 0)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid product - phantom product blocked']);
+            exit;
+        }
         // Get customer ID if logged in
         $customerId = isset($_SESSION['CustomerId']) ? $_SESSION['CustomerId'] : null;
 
