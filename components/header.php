@@ -772,22 +772,22 @@ input[name="quantity"] {
                                                         <span class="sp-link-title">Customer Care <i class="fas fa-comments" style="margin-left: 5px; color: #007bff;"></i></span>
                                                     </a>
                                                 </li>
-                                                <li class="menu-link tawk-nav-button">
-                                                    <div id="tawk-nav-icon" style="cursor: pointer; display: flex; align-items: center; padding: 8px 15px; border-radius: 25px; background: linear-gradient(135deg, #ff8c00, #ff6b35); color: white; box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3); transition: all 0.3s ease; position: relative;">
-                                                        <div style="width: 24px; height: 24px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
-                                                            <i class="fas fa-comments" style="color: #ff8c00; font-size: 12px;"></i>
-                                                        </div>
-                                                        <span style="font-size: 14px; font-weight: 500;">Live Chat</span>
-                                                        <span id="tawk-nav-notification" style="position: absolute; top: -2px; right: -2px; background-color: red; color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 16px; font-weight: bold;">1</span>
-                                                        <span id="tawk-nav-online" style="position: absolute; bottom: 2px; right: 8px; background-color: #0BDA51; width: 8px; height: 8px; border-radius: 50%; border: 1px solid white;"></span>
-                                                    </div>
-                                                </li>
                                                 <li
                                                     class="menu-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php' && isset($_GET['open_chat'])) ? 'active' : ''; ?>">
                                                     <a href="index.php?open_chat=1" class="link-title">
                                                         <span class="sp-link-title">Consult by AI <img src="./cms/images/microchip.png" alt="AI Icon"
                                                                 style="width: 16px; height: 16px; margin-left: 5px; vertical-align: middle;"></span>
                                                     </a>
+                                                </li>
+                                                <li class="menu-link chat-nav-button">
+                                                    <div id="chat-nav-icon" onclick="toggleTawkChat()" style="cursor: pointer; display: flex; align-items: center; padding: 8px 15px; border-radius: 25px; background: linear-gradient(135deg, #ff8c00, #ff6b35); color: white; box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3); transition: all 0.3s ease; position: relative;">
+                                                        <div style="width: 24px; height: 24px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                                                            <i class="fas fa-comments" style="color: #ff8c00; font-size: 12px;"></i>
+                                                        </div>
+                                                        <span style="font-size: 14px; font-weight: 500;">Live Chat</span>
+                                                        <span id="chat-nav-notification" style="position: absolute; top: -2px; right: -2px; background-color: red; color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 16px; font-weight: bold;">1</span>
+                                                        <span id="chat-nav-online" style="position: absolute; bottom: 2px; right: 8px; background-color: #0BDA51; width: 8px; height: 8px; border-radius: 50%; border: 1px solid white;"></span>
+                                                    </div>
                                                 </li>
                                                 
 
@@ -1203,7 +1203,17 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                 style="width: 16px; height: 16px; margin-left: 5px; vertical-align: middle;"></span>
                                             </a>
                                         </li>
-                                        
+                                        <li class="menu-link chat-nav-button-mobile">
+                                            <div onclick="toggleTawkChat()" style="cursor: pointer; display: flex; align-items: center; padding: 10px 15px; margin: 5px 0; border-radius: 25px; background: linear-gradient(135deg, #ff8c00, #ff6b35); color: white; box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3); transition: all 0.3s ease; position: relative;">
+                                                <div style="width: 24px; height: 24px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
+                                                    <i class="fas fa-comments" style="color: #ff8c00; font-size: 12px;"></i>
+                                                </div>
+                                                <span style="font-size: 14px; font-weight: 500;">Live Chat</span>
+                                                <span style="position: absolute; top: -2px; right: -2px; background-color: red; color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 16px; font-weight: bold;">1</span>
+                                                <span style="position: absolute; bottom: 2px; right: 8px; background-color: #0BDA51; width: 8px; height: 8px; border-radius: 50%; border: 1px solid white;"></span>
+                                            </div>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -1617,4 +1627,74 @@ inputs.forEach(input => {
         });
     }
 });
+
+// Chat Navigation Button Functions
+function toggleTawkChat() {
+    // Try to open Tawk.to chat if available
+    if (typeof Tawk_API !== 'undefined' && Tawk_API.toggle) {
+        Tawk_API.toggle();
+    } else if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+        Tawk_API.maximize();
+    } else {
+        // Fallback - try to find and click Tawk.to widget
+        const tawkWidget = document.querySelector('#tawkchat-minified-container, .tawk-min-container');
+        if (tawkWidget) {
+            tawkWidget.click();
+        } else {
+            // If no Tawk.to found, show a message
+            alert('Chat service is currently unavailable. Please contact us through other means.');
+        }
+    }
+}
+
+// Add hover effects to chat navigation button
+document.addEventListener('DOMContentLoaded', function() {
+    const chatNavIcon = document.getElementById('chat-nav-icon');
+    if (chatNavIcon) {
+        chatNavIcon.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(255, 140, 0, 0.4)';
+        });
+
+        chatNavIcon.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(255, 140, 0, 0.3)';
+        });
+    }
+});
 </script>
+
+<style>
+/* Chat Navigation Button Styles */
+.chat-nav-button {
+    position: relative;
+}
+
+#chat-nav-icon:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4) !important;
+}
+
+#chat-nav-icon:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(255, 140, 0, 0.5) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    #chat-nav-icon {
+        padding: 6px 12px !important;
+    }
+
+    #chat-nav-icon span {
+        font-size: 12px !important;
+    }
+
+    #chat-nav-notification {
+        width: 14px !important;
+        height: 14px !important;
+        font-size: 9px !important;
+        line-height: 14px !important;
+    }
+}
+</style>
