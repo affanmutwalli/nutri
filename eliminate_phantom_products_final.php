@@ -12,9 +12,9 @@ echo "<h2>🚫 FINAL Phantom Product Elimination</h2>";
 echo "<h3>Step 1: Finding ALL Phantom Products</h3>";
 
 $phantomQuery = "
-    SELECT pm.ProductId, pm.ProductName, pm.ProductCode, pm.IsActive
+    SELECT pm.ProductId, pm.ProductName, pm.ProductCode
     FROM product_master pm
-    WHERE pm.ProductName = 'N/A' 
+    WHERE pm.ProductName = 'N/A'
     OR pm.ProductName LIKE '%N/A%'
     OR pm.ProductCode = 'MN-SJ100'
     OR pm.ProductCode = 'MN-XX-000'

@@ -173,9 +173,7 @@
                                             <img src="cms/images/platforms/5.png" alt="Available on Platform 5">
                                              </a>
                                         </div>
-                                         <div class="brand-logo">
-                                            <img src="cms/images/platforms/6.png" alt="Available on Platform 6">
-                                        </div>
+                                         
                                     </div>
 
 
