@@ -131,7 +131,7 @@ $mysqli = $obj->connection();
         .product-card {
             background: white;
             border-radius: 12px;
-            overflow: hidden;
+            overflow: visible;
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
             position: relative;
@@ -228,15 +228,16 @@ $mysqli = $obj->connection();
 
         .product-image {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             aspect-ratio: 1;
-            background: #f8f9fa;
+            background: #fff;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            padding: 15px;
             transition: transform 0.3s ease;
         }
 

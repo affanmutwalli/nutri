@@ -353,9 +353,9 @@ $obj->connection();
 
     .product-image {
         position: relative;
-        overflow: hidden;
+        overflow: visible;
         aspect-ratio: 1;
-        background: #f8f9fa;
+        background: #fff;
     }
 
     .product-actions {
@@ -396,7 +396,8 @@ $obj->connection();
     .product-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        padding: 15px;
         transition: transform 0.3s ease;
     }
 
@@ -425,12 +426,12 @@ $obj->connection();
     }
 
     .product-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         color: #2d3748;
         margin-bottom: 8px;
-        line-height: 1.4;
-        height: 2.8em; /* Fixed height for 2 lines */
+        line-height: 1.3;
+        height: 2.6em; /* Reduced height for shorter titles */
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -1195,7 +1196,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                 <h3 class="product-title">
                                                     <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>"
                                                        style="text-decoration: none; color: inherit;">
-                                                        <?php echo htmlspecialchars($products["ProductName"]); ?>
+                                                        <?php
+                                                        // Truncate long product names for better image visibility
+                                                        $productName = $products["ProductName"];
+                                                        if (strlen($productName) > 55) {
+                                                            $productName = substr($productName, 0, 55) . '...';
+                                                        }
+                                                        echo htmlspecialchars($productName);
+                                                        ?>
                                                     </a>
                                                 </h3>
 

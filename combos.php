@@ -445,7 +445,7 @@ $obj->connection();
         border: 1px solid #e5e5e5;
         border-radius: 8px;
         transition: all 0.3s ease;
-        overflow: hidden;
+        overflow: visible;
         margin-bottom: 30px;
         position: relative;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -556,11 +556,11 @@ $obj->connection();
     }
 
     .enhanced-caption h3 {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
-        margin-bottom: 10px;
-        line-height: 1.4;
-        height: 44px;
+        margin-bottom: 8px;
+        line-height: 1.3;
+        height: 38px;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -1237,7 +1237,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                             <div class="enhanced-caption">
                                                 <h3>
                                                     <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
-                                                        <?php echo htmlspecialchars($products["ProductName"]); ?>
+                                                        <?php
+                                                        // Truncate long product names for better image visibility
+                                                        $productName = $products["ProductName"];
+                                                        if (strlen($productName) > 50) {
+                                                            $productName = substr($productName, 0, 50) . '...';
+                                                        }
+                                                        echo htmlspecialchars($productName);
+                                                        ?>
                                                     </a>
                                                 </h3>
 

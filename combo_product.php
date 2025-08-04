@@ -85,9 +85,11 @@ $stmt->close();
         .combo-product-mini img {
             width: 80px;
             height: 80px;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 8px;
             margin-bottom: 10px;
+            padding: 5px;
+            background: #fff;
         }
 
         .combo-product-mini h6 {

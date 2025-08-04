@@ -342,7 +342,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     .tr-pro-img, .c-img {
         position: relative;
-        overflow: hidden;
+        overflow: visible;
     }
 
     .tr-pro-img img, .c-img img {
@@ -5185,37 +5185,48 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     }
                                 }
                         ?>
-                        <div class="items" style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); overflow: hidden; border: 1px solid var(--border-light); margin-top: 20px;">
+                        <div class="items" style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); overflow: hidden; border: 1px solid var(--border-light); margin-top: 20px; height: 500px; display: flex; flex-direction: column;">
                             <div class="tred-pro">
-                                <div class="tr-pro-img" style="position: relative; overflow: hidden;">
+                                <div class="tr-pro-img" style="position: relative; overflow: visible;">
                                     <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
-                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 250px; object-fit: contain; transition: var(--transition);">
+                                        <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 280px; object-fit: contain; object-position: center; padding: 20px; background: #fff; transition: var(--transition);">
                                         <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                     </a>
                                 </div>
                             </div>
-                            <div class="caption" style="padding: 20px;">
-                                <h3 style="margin-bottom: 12px;"><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>" style="color: var(--text-dark); text-decoration: none; font-size: 18px; font-weight: 600; line-height: 1.3; transition: var(--transition);"><?php echo htmlspecialchars($products["ProductName"]); ?></a></h3>
-                                <div class="rating" style="margin-bottom: 15px;">
-                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
-                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
-                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
-                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
-                                    <i class="fa fa-star-o" style="color: #ddd; font-size: 14px;"></i>
-                                    <span style="color: var(--text-light); font-size: 14px; margin-left: 8px;">(4.0)</span>
+                            <div class="caption" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div class="product-info-top">
+                                    <h3 style="margin-bottom: 12px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>" style="color: var(--text-dark); text-decoration: none; font-size: 16px; font-weight: 600; line-height: 1.3; transition: var(--transition);"><?php
+                                    // Truncate long product names for better image visibility
+                                    $productName = $products["ProductName"];
+                                    if (strlen($productName) > 50) {
+                                        $productName = substr($productName, 0, 50) . '...';
+                                    }
+                                    echo htmlspecialchars($productName);
+                                    ?></a></h3>
+                                    <div class="rating" style="margin-bottom: 15px;">
+                                        <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                        <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                        <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                        <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                        <i class="fa fa-star-o" style="color: #ddd; font-size: 14px;"></i>
+                                        <span style="color: var(--text-light); font-size: 14px; margin-left: 8px;">(4.0)</span>
+                                    </div>
                                 </div>
-                                <div class="pro-price" style="margin-bottom: 20px;">
-                                    <span class="new-price" style="font-size: 20px; font-weight: 700; color: var(--primary-orange);">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
-                                    <?php if ($mrp !== "N/A"): ?>
-                                        <span class="old-price" style="text-decoration: line-through; color: var(--text-light); font-size: 16px; margin-left: 8px;">₹<?php echo htmlspecialchars($mrp); ?></span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="pro-btn text-center">
-                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo $products["ProductId"]; ?>" style="width: 100%; justify-content: center;">
-                                            <i class="fa fa-shopping-bag"></i>Add to Cart
-                                        </a>
+                                <div class="product-info-bottom">
+                                    <div class="pro-price" style="margin-bottom: 20px;">
+                                        <span class="new-price" style="font-size: 20px; font-weight: 700; color: var(--primary-orange);">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
+                                        <?php if ($mrp !== "N/A"): ?>
+                                            <span class="old-price" style="text-decoration: line-through; color: var(--text-light); font-size: 16px; margin-left: 8px;">₹<?php echo htmlspecialchars($mrp); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="pro-btn text-center">
+                                            <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo $products["ProductId"]; ?>" style="width: 100%; justify-content: center;">
+                                                <i class="fa fa-shopping-bag"></i>Add to Cart
+                                            </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -5322,37 +5333,48 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                 }
                                             }
                                     ?>
-                                    <div class="items" style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                                    <div class="items" style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); overflow: hidden; border: 1px solid var(--border-light); margin-top: 20px; height: 500px; display: flex; flex-direction: column;">
                                         <div class="tred-pro">
-                                            <div class="tr-pro-img">
-                                                <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
-                                                    <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>">
-                                                    <img class="img-fluid additional-image" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>">
+                                            <div class="tr-pro-img" style="position: relative; overflow: visible;">
+                                                <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
+                                                    <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 280px; object-fit: contain; object-position: center; padding: 20px; background: #fff; transition: var(--transition);">
+                                                    <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                                 </a>
                                             </div>
-                                           
                                         </div>
-                                        <div class="caption">
-                                            <h3><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>"><?php echo htmlspecialchars($products["ProductName"]); ?></a></h3>
-                                            <div class="rating">
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                        <div class="caption" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                            <div class="product-info-top">
+                                                <h3 style="margin-bottom: 12px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>" style="color: var(--text-dark); text-decoration: none; font-size: 16px; font-weight: 600; line-height: 1.3; transition: var(--transition);"><?php
+                                                // Truncate long product names for better image visibility
+                                                $productName = $products["ProductName"];
+                                                if (strlen($productName) > 50) {
+                                                    $productName = substr($productName, 0, 50) . '...';
+                                                }
+                                                echo htmlspecialchars($productName);
+                                                ?></a></h3>
+                                                <div class="rating" style="margin-bottom: 15px;">
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star-o" style="color: #ddd; font-size: 14px;"></i>
+                                                    <span style="color: var(--text-light); font-size: 14px; margin-left: 8px;">(4.0)</span>
+                                                </div>
                                             </div>
-                                            <div class="pro-price">
-                                                <span class="new-price">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
-                                                <?php if ($mrp != "N/A"): ?>
-                                                <span class="old-price" style="text-decoration: line-through; color: #999;">₹<?php echo htmlspecialchars($mrp); ?></span>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="pro-btn text-center" style="margin: 5px;">
-                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo htmlspecialchars($products['ProductId']); ?>">
-                                                            <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                                            <div class="product-info-bottom">
+                                                <div class="pro-price" style="margin-bottom: 20px;">
+                                                    <span class="new-price" style="font-size: 20px; font-weight: 700; color: var(--primary-orange);">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
+                                                    <?php if ($mrp !== "N/A"): ?>
+                                                        <span class="old-price" style="text-decoration: line-through; color: var(--text-light); font-size: 16px; margin-left: 8px;">₹<?php echo htmlspecialchars($mrp); ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="pro-btn text-center">
+                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo $products["ProductId"]; ?>" style="width: 100%; justify-content: center;">
+                                                            <i class="fa fa-shopping-bag"></i>Add to Cart
                                                         </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5386,73 +5408,81 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                 );
 
                                         ?>
-                                    <div class="items" style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top:15px;">
+                                    <?php
+                                    $lowest_price = PHP_INT_MAX; // Initialize to a high value
+                                    $mrp = PHP_INT_MAX;          // Initialize to a high value
+                                    $savings = 0;
+                                    if (!empty($product_prices)) {
+                                        // Loop through all rows and find the lowest MRP and OfferPrice greater than 0
+                                        foreach ($product_prices as $product_price) {
+                                            $current_offer_price = floatval($product_price["OfferPrice"]);
+                                            $current_mrp = floatval($product_price["MRP"]);
+
+                                            if ($current_offer_price > 0 && $current_offer_price < $lowest_price) {
+                                                $lowest_price = $current_offer_price;
+                                            }
+                                            if ($current_mrp > 0 && $current_mrp < $mrp) {
+                                                $mrp = $current_mrp;
+                                            }
+                                        }
+
+                                        if ($lowest_price == PHP_INT_MAX) {
+                                            $lowest_price = "N/A";
+                                        }
+                                        if ($mrp == PHP_INT_MAX) {
+                                            $mrp = "N/A";
+                                        }
+
+                                        if ($mrp != "N/A" && $lowest_price != "N/A" && $mrp > $lowest_price) {
+                                            $savings = $mrp - $lowest_price;
+                                        }
+                                    }
+                                    ?>
+                                    <div class="items" style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); overflow: hidden; border: 1px solid var(--border-light); margin-top: 20px; height: 500px; display: flex; flex-direction: column;">
                                         <div class="tred-pro">
-                                            <div class="tr-pro-img">
-                                                <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
-                                                    <img class="img-fluid" src="cms/images/products/<?php echo $products["PhotoPath"]; ?>" alt="<?php echo $products["ProductName"]; ?>">
-                                                    <img class="img-fluid additional-image" src="cms/images/products/<?php echo $products["PhotoPath"]; ?>" alt="<?php echo $products["ProductName"]; ?>"
-                                                        alt="additional image">
+                                            <div class="tr-pro-img" style="position: relative; overflow: visible;">
+                                                <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
+                                                    <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 280px; object-fit: contain; object-position: center; padding: 20px; background: #fff; transition: var(--transition);">
+                                                    <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                                 </a>
                                             </div>
-                                            <?php 
-                                            $lowest_price = PHP_INT_MAX; // Initialize to a high value
-                                            $mrp = PHP_INT_MAX;          // Initialize to a high value
-                                            $savings = 0;   
-                                            if (!empty($product_prices)) {
-                                                // Loop through all rows and find the lowest MRP and OfferPrice greater than 0
-                                                foreach ($product_prices as $product_price) {
-                                                    $current_offer_price = floatval($product_price["OfferPrice"]);
-                                                    $current_mrp = floatval($product_price["MRP"]);
-                                    
-                                                    if ($current_offer_price > 0 && $current_offer_price < $lowest_price) {
-                                                        $lowest_price = $current_offer_price;
-                                                    }
-                                                    if ($current_mrp > 0 && $current_mrp < $mrp) {
-                                                        $mrp = $current_mrp;
-                                                    }
-                                                }
-
-                                                if ($lowest_price == PHP_INT_MAX) {
-                                                    $lowest_price = "N/A";
-                                                }
-                                                if ($mrp == PHP_INT_MAX) {
-                                                    $mrp = "N/A";
-                                                }
-
-                                                if ($mrp != "N/A" && $lowest_price != "N/A" && $mrp > $lowest_price) {
-                                                    $savings = $mrp - $lowest_price;
-                                                }
-                                            }
-                                          
-                                            ?>
                                         </div>
-                                        <div class="caption">
-                                            <h3><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>"><?php echo htmlspecialchars($products["ProductName"]); ?></a></h3>
-                                            <div class="rating">
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                        <div class="caption" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                            <div class="product-info-top">
+                                                <h3 style="margin-bottom: 12px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>" style="color: var(--text-dark); text-decoration: none; font-size: 16px; font-weight: 600; line-height: 1.3; transition: var(--transition);"><?php
+                                                // Truncate long product names for better image visibility
+                                                $productName = $products["ProductName"];
+                                                if (strlen($productName) > 50) {
+                                                    $productName = substr($productName, 0, 50) . '...';
+                                                }
+                                                echo htmlspecialchars($productName);
+                                                ?></a></h3>
+                                                <div class="rating" style="margin-bottom: 15px;">
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star-o" style="color: #ddd; font-size: 14px;"></i>
+                                                    <span style="color: var(--text-light); font-size: 14px; margin-left: 8px;">(4.0)</span>
+                                                </div>
                                             </div>
-                                            <?php
-                                            echo '        <div class="pro-price">';
-                                            echo '            <span class="new-price">Starting from ₹' . htmlspecialchars($lowest_price) . '</span>';
-                                            if ($mrp != "N/A") {
-                                                echo '            <span class="old-price" style="text-decoration: line-through; color: #999;">â‚¹' . htmlspecialchars($mrp) . '</span>';
-                                            }
-                                            echo '        </div>';
-                                            echo '<div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="pro-btn text-center" style="margin: 5px;">
-                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="'.htmlspecialchars($products['ProductId']).'">
-                                                            <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                                            <div class="product-info-bottom">
+                                                <div class="pro-price" style="margin-bottom: 20px;">
+                                                    <span class="new-price" style="font-size: 20px; font-weight: 700; color: var(--primary-orange);">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
+                                                    <?php if ($mrp !== "N/A"): ?>
+                                                        <span class="old-price" style="text-decoration: line-through; color: var(--text-light); font-size: 16px; margin-left: 8px;">₹<?php echo htmlspecialchars($mrp); ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="pro-btn text-center">
+                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo $products["ProductId"]; ?>" style="width: 100%; justify-content: center;">
+                                                            <i class="fa fa-shopping-bag"></i>Add to Cart
                                                         </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>';
-                                            ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <?php } ?>
@@ -5482,73 +5512,81 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                                 );
 
                                         ?>
-                                    <div class="items" style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top:15px;">
+                                    <?php
+                                    $lowest_price = PHP_INT_MAX; // Initialize to a high value
+                                    $mrp = PHP_INT_MAX;          // Initialize to a high value
+                                    $savings = 0;
+                                    if (!empty($product_prices)) {
+                                        // Loop through all rows and find the lowest MRP and OfferPrice greater than 0
+                                        foreach ($product_prices as $product_price) {
+                                            $current_offer_price = floatval($product_price["OfferPrice"]);
+                                            $current_mrp = floatval($product_price["MRP"]);
+
+                                            if ($current_offer_price > 0 && $current_offer_price < $lowest_price) {
+                                                $lowest_price = $current_offer_price;
+                                            }
+                                            if ($current_mrp > 0 && $current_mrp < $mrp) {
+                                                $mrp = $current_mrp;
+                                            }
+                                        }
+
+                                        if ($lowest_price == PHP_INT_MAX) {
+                                            $lowest_price = "N/A";
+                                        }
+                                        if ($mrp == PHP_INT_MAX) {
+                                            $mrp = "N/A";
+                                        }
+
+                                        if ($mrp != "N/A" && $lowest_price != "N/A" && $mrp > $lowest_price) {
+                                            $savings = $mrp - $lowest_price;
+                                        }
+                                    }
+                                    ?>
+                                    <div class="items" style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: var(--transition); overflow: hidden; border: 1px solid var(--border-light); margin-top: 20px; height: 500px; display: flex; flex-direction: column;">
                                         <div class="tred-pro">
-                                            <div class="tr-pro-img">
-                                                <a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>">
-                                                    <img class="img-fluid" src="cms/images/products/<?php echo $products["PhotoPath"]; ?>" alt="<?php echo $products["ProductName"]; ?>">
-                                                    <img class="img-fluid additional-image" src="cms/images/products/<?php echo $products["PhotoPath"]; ?>" alt="<?php echo $products["ProductName"]; ?>"
-                                                        alt="additional image">
+                                            <div class="tr-pro-img" style="position: relative; overflow: visible;">
+                                                <a href="product_details.php?ProductId=<?php echo $products["ProductId"]; ?>" style="display: block;">
+                                                    <img class="img-fluid" src="cms/images/products/<?php echo htmlspecialchars($products["PhotoPath"]); ?>" alt="<?php echo htmlspecialchars($products["ProductName"]); ?>" style="width: 100%; height: 280px; object-fit: contain; object-position: center; padding: 20px; background: #fff; transition: var(--transition);">
+                                                    <div style="position: absolute; top: 15px; right: 15px; background: var(--primary-orange); color: var(--white); padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">New</div>
                                                 </a>
                                             </div>
-                                            <?php 
-                                            $lowest_price = PHP_INT_MAX; // Initialize to a high value
-                                            $mrp = PHP_INT_MAX;          // Initialize to a high value
-                                            $savings = 0;   
-                                            if (!empty($product_prices)) {
-                                                // Loop through all rows and find the lowest MRP and OfferPrice greater than 0
-                                                foreach ($product_prices as $product_price) {
-                                                    $current_offer_price = floatval($product_price["OfferPrice"]);
-                                                    $current_mrp = floatval($product_price["MRP"]);
-                                    
-                                                    if ($current_offer_price > 0 && $current_offer_price < $lowest_price) {
-                                                        $lowest_price = $current_offer_price;
-                                                    }
-                                                    if ($current_mrp > 0 && $current_mrp < $mrp) {
-                                                        $mrp = $current_mrp;
-                                                    }
-                                                }
-
-                                                if ($lowest_price == PHP_INT_MAX) {
-                                                    $lowest_price = "N/A";
-                                                }
-                                                if ($mrp == PHP_INT_MAX) {
-                                                    $mrp = "N/A";
-                                                }
-
-                                                if ($mrp != "N/A" && $lowest_price != "N/A" && $mrp > $lowest_price) {
-                                                    $savings = $mrp - $lowest_price;
-                                                }
-                                            }
-                                          
-                                            ?>
                                         </div>
-                                        <div class="caption">
-                                            <h3><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>"><?php echo htmlspecialchars($products["ProductName"]); ?></a></h3>
-                                            <div class="rating">
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star c-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                        <div class="caption" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                            <div class="product-info-top">
+                                                <h3 style="margin-bottom: 12px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><a href="product_details.php?ProductId=<?php echo htmlspecialchars($products["ProductId"]); ?>" style="color: var(--text-dark); text-decoration: none; font-size: 16px; font-weight: 600; line-height: 1.3; transition: var(--transition);"><?php
+                                                // Truncate long product names for better image visibility
+                                                $productName = $products["ProductName"];
+                                                if (strlen($productName) > 50) {
+                                                    $productName = substr($productName, 0, 50) . '...';
+                                                }
+                                                echo htmlspecialchars($productName);
+                                                ?></a></h3>
+                                                <div class="rating" style="margin-bottom: 15px;">
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star" style="color: #ffc107; font-size: 14px;"></i>
+                                                    <i class="fa fa-star-o" style="color: #ddd; font-size: 14px;"></i>
+                                                    <span style="color: var(--text-light); font-size: 14px; margin-left: 8px;">(4.0)</span>
+                                                </div>
                                             </div>
-                                            <?php
-                                            echo '        <div class="pro-price">';
-                                            echo '            <span class="new-price">Starting from ₹' . htmlspecialchars($lowest_price) . '</span>';
-                                            if ($mrp != "N/A") {
-                                                echo '            <span class="old-price" style="text-decoration: line-through; color: #999;">₹' . htmlspecialchars($mrp) . '</span>';
-                                            }
-                                            echo '        </div>';
-                                            echo '<div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="pro-btn text-center" style="margin: 5px;">
-                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="'.htmlspecialchars($products['ProductId']).'">
-                                                            <i class="fa fa-shopping-bag" style="margin-right: 8px;"></i>Add to Cart
+                                            <div class="product-info-bottom">
+                                                <div class="pro-price" style="margin-bottom: 20px;">
+                                                    <span class="new-price" style="font-size: 20px; font-weight: 700; color: var(--primary-orange);">Starting from ₹<?php echo htmlspecialchars($lowest_price); ?></span>
+                                                    <?php if ($mrp !== "N/A"): ?>
+                                                        <span class="old-price" style="text-decoration: line-through; color: var(--text-light); font-size: 16px; margin-left: 8px;">₹<?php echo htmlspecialchars($mrp); ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="pro-btn text-center">
+                                                        <a href="javascript:void(0);" class="btn btn-style1 add-to-cart-session" data-product-id="<?php echo $products["ProductId"]; ?>" style="width: 100%; justify-content: center;">
+                                                            <i class="fa fa-shopping-bag"></i>Add to Cart
                                                         </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>';
-                                            ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <?php } ?>

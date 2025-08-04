@@ -1194,8 +1194,10 @@
     .product-details-image img {
         width: 100%;
         height: auto;
-        max-height: 400px;
-        object-fit: cover;
+        max-height: 450px;
+        object-fit: contain;
+        padding: 20px;
+        background: #fff;
         border-radius: 10px;
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
         transition: transform 1.2s ease-in-out;
@@ -1210,6 +1212,41 @@
 
     .product-main-slider {
         position: relative;
+    }
+
+    /* Override zoom figure styling for full bottle visibility */
+    .long-img figure.zoom {
+        background-size: contain !important;
+        background-position: center center !important;
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    .long-img figure.zoom img {
+        object-fit: contain !important;
+        padding: 20px;
+        background: #fff;
+    }
+
+    /* Ensure slider items show full bottles */
+    .slider-item .long-img {
+        background: #fff;
+        padding: 10px;
+    }
+
+    /* Thumbnail navigation images - full bottle visibility */
+    .pro-page-slider .nav-item img {
+        object-fit: contain !important;
+        padding: 10px;
+        background: #fff;
+        border-radius: 8px;
+    }
+
+    /* Related products at bottom - full bottle visibility */
+    .tr-pro-img img {
+        object-fit: contain !important;
+        padding: 15px;
+        background: #fff;
     }
 
     .product-main-slider .owl-nav {
