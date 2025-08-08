@@ -21,7 +21,7 @@ $analytics = initializeAnalytics();
 
 $obj = new main();
 $obj->connection();
-$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position","ShowButton");
+$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position");
 $ParamArray=array();
 $Fields=implode(",",$FieldNames);
 $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,"s",$ParamArray);
@@ -5186,9 +5186,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <div class="home-s-content slide-c-r">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
-                        <?php if(isset($banners["ShowButton"]) && $banners["ShowButton"] == 1): ?>
-                            <a href="products.php" class="btn btn-style1">Shop now</a>
-                        <?php endif; ?>
+                        <a href="products.php" class="btn btn-style1">Shop now</a>
                     </div>
                 </div>
             </div>

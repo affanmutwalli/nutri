@@ -905,12 +905,29 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     /* Main container */
  /* ✅ Desktop Grid Layout (Without Shadow) */
 .ingredients-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
-    padding: 15px 15px;
+    padding: 20px 15px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Uniform styling for all ingredients - no special positioning */
+.ingredients {
+    flex: 0 0 auto;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+}
+
+/* Remove special positioning - all ingredients follow uniform grid */
+.last-two-ingredients {
+    flex: 0 0 auto;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
 }
 
 .ingredients {
@@ -918,25 +935,27 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 15px;
+    padding: 20px 15px;
     background: white;
-    border-radius: 12px;
-    transition: transform 1.2s ease;
-    /* No shadow on desktop */
-    box-shadow: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    /* Clean subtle shadow for better visual appeal */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 2px solid #f0f0f0;
 }
 
 /* Image Wrapper */
 .image-container {
-    width: 280px;
-    height: 280px;
-    border: 4px solid #EA652D;
+    width: 150px;
+    height: 150px;
+    border: 3px solid #EA652D;
     border-radius: 50%;
     overflow: hidden;
     transition: transform 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 15px;
 }
 
 .image-container img {
@@ -1038,6 +1057,37 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
 .ingredients {
     margin-left: 0 !important; /* Centered positioning */
     margin-right: 0 !important;
+}
+<?php endif; ?>
+
+/* ✅ Special styling for Amla Juice product title (ProductId=6) */
+<?php if (isset($_GET['ProductId']) && $_GET['ProductId'] == '6'): ?>
+.amla-product-title {
+    text-align: left !important;
+    margin-bottom: 20px !important;
+}
+
+.amla-product-title span:first-child {
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.amla-product-title span:not(:first-child) {
+    font-size: 1em !important;
+    font-weight: 400 !important;
+    color: #666 !important;
+    margin-top: 5px !important;
+}
+
+@media (max-width: 768px) {
+    .amla-product-title span:first-child {
+        font-size: 1.2em !important;
+    }
+
+    .amla-product-title span:not(:first-child) {
+        font-size: 0.9em !important;
+    }
 }
 <?php endif; ?>
 
@@ -3292,7 +3342,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </div>
 </div>
       <!-- product info start -->
-      <section class="pro-page desktop-margin">
+      <section class="pro-page desktop-margin" style="padding: 0 30px;">
          <div class="container">
             <div class="row">
                   <!-- Product Images Section -->
@@ -3357,7 +3407,17 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                         </div>
                         <!-- Product Information Section -->
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 pro-info">
+                              <?php if (isset($_GET['ProductId']) && $_GET['ProductId'] == '6'): ?>
+                              <!-- Special formatting for Amla Juice (ProductId=6) -->
+                              <h4 class="amla-product-title">
+                                  <span style="display: block; line-height: 1.4; margin-bottom: 8px;">My Nutrify Herbal and Ayurveda – Wild Amla Juice (1 Litre)</span>
+                                  <span style="display: block; line-height: 1.4; font-size: 0.9em; color: #666;">Fresh Cold-Pressed Amla Juice |Helps Boosts Skin & Hair Health</span>
+                                  <span style="display: block; line-height: 1.4; font-size: 0.9em; color: #666;">| Helps Detox |Rich in Vitamin C | Natural Immunity Booster</span>
+                              </h4>
+                              <?php else: ?>
+                              <!-- Default formatting for other products -->
                               <h4><span><?php echo htmlspecialchars($product_data[0]["ProductName"]); ?></span></h4>
+                              <?php endif; ?>
                               <div class="rating">
                                  <i class="fa fa-star d-star"></i>
                                  <i class="fa fa-star d-star"></i>
@@ -3650,7 +3710,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       
       
     <!-- Display all product sections without categorization -->
-      <section class="" style="margin-top: 20px;">
+      <section class="" style="margin-top: 20px; padding: 0 30px;">
         <div class="container">
             <?php
             $filteredProductTitle = str_replace("My Nutrify Herbal & Ayurveda's", "", $product_data[0]["Title"]);
@@ -3670,6 +3730,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <section id="long-description-section" style="margin-top: 30px;">
                 <div class="container">
                     <div class="simple-description-content">
+                        <h2 class="product-description-title" style="font-size: 2.5rem; font-weight: 700; color: #333; text-align: center; margin-bottom: 25px;">
+                            Product <span style="color: #EA652D;">Description</span>
+                        </h2>
                         <div class="description-text" id="description-text">
                             <?php
                             $description = htmlspecialchars($product_details['Description']);
@@ -3720,8 +3783,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
             <?php if (!empty($ingredient_data) && is_array($ingredient_data)): ?>
             <div class="ingredients-container" >
-                <?php foreach ($ingredient_data as $ingredient): ?>
-                <div class="ingredients">
+                <?php
+                $total_ingredients = count($ingredient_data);
+                foreach ($ingredient_data as $index => $ingredient):
+                    // Check if this is one of the last 2 ingredients
+                    $is_last_two = ($index >= $total_ingredients - 2);
+                    $ingredient_class = $is_last_two ? 'ingredients last-two-ingredients' : 'ingredients';
+                ?>
+                <div class="<?php echo $ingredient_class; ?>">
                     <div class="image-container">
                         <img src="<?php echo !empty($ingredient['PhotoPath'])
                         ? "cms/images/ingredient/" . htmlspecialchars($ingredient['PhotoPath'])
@@ -4525,7 +4594,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     </script>
       <!-- product page tab end -->
       <!-- releted product start -->
-      <section class="section-b-padding pro-releted">
+      <section class="section-b-padding pro-releted" style="padding: 15px 30px;">
          <div class="container">
             <div class="row">
                <div class="col">
@@ -4660,7 +4729,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
       <!-- releted product end -->
 
       <!-- Banner Section Above Footer -->
-      <section class="banner-above-footer" style="width: 100%; margin: 40px 0 0 0; padding: 0;">
+      <section class="banner-above-footer" style="width: 100%; margin: 40px 0 0 0; padding: 0 30px;">
          <div class="container-fluid" style="padding: 0;">
             <div class="row" style="margin: 0;">
                <div class="col-12" style="padding: 0;">
