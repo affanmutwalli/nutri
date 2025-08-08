@@ -3272,6 +3272,27 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     flex-shrink: 0;
 }
 
+/* VS Badge - Left Side Positioned */
+.vs-badge {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 2px solid #EA652D;
+    border-radius: 50px;
+    padding: 12px 24px;
+    font-weight: 800;
+    color: #EA652D;
+    z-index: 10;
+    box-shadow: 0 6px 20px rgba(234, 101, 45, 0.2);
+    font-size: 16px;
+    letter-spacing: 2px;
+    /* Ensure it stays within comparison section */
+    margin: 0;
+    white-space: nowrap;
+}
+
 /* Simple VS Badge */
 .vs-badge {
     position: absolute;
@@ -3313,6 +3334,18 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 
     .comparison-column.right {
         border-radius: 0 0 16px 16px;
+    }
+
+    .vs-badge {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px 20px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        /* Keep it on left side in mobile view */
+        margin: 0;
     }
 
     .vs-badge {
@@ -3388,6 +3421,11 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
     .vs-badge {
         padding: 8px 16px;
         font-size: 12px;
+        /* Left side positioning on small screens */
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
  
