@@ -66,8 +66,11 @@ if (login_check($mysqli) == true)
 					// Handle ShowButton checkbox (if not checked, it won't be in $_POST)
 					$ShowButton = isset($_POST["ShowButton"]) ? 1 : 0;
 
-					$stmt = $mysqli->prepare("update banners set PhotoPath = ?, Title = ?, ShortDescription = ?, ShowButton = ? where BannerId= ? ");
-					$stmt->bind_param("sssii",$PhotoPath,$_POST["Title"],$_POST["ShortDescription"],$ShowButton,$_POST["BannerId"]);
+					// Handle Position field
+					$Position = isset($_POST["Position"]) ? intval($_POST["Position"]) : 0;
+
+					$stmt = $mysqli->prepare("update banners set PhotoPath = ?, Title = ?, ShortDescription = ?, ShowButton = ?, Position = ? where BannerId= ? ");
+					$stmt->bind_param("sssiii",$PhotoPath,$_POST["Title"],$_POST["ShortDescription"],$ShowButton,$Position,$_POST["BannerId"]);
 					$stmt->execute();
 					$stmt->close();
 	
@@ -89,13 +92,17 @@ if (login_check($mysqli) == true)
 					// Handle ShowButton checkbox (if not checked, it won't be in $_POST)
 					$ShowButton = isset($_POST["ShowButton"]) ? 1 : 0;
 
+					// Handle Position field
+					$Position = isset($_POST["Position"]) ? intval($_POST["Position"]) : 0;
+
 					$ParamArray=array();
 					$ParamArray[0]=$PhotoPath;
 					$ParamArray[1]=$_POST["Title"];
 					$ParamArray[2]=$_POST["ShortDescription"];
 					$ParamArray[3]=$ShowButton;
-					$InputDocId=$obj->fInsertNew("INSERT INTO banners (PhotoPath,Title,ShortDescription,ShowButton)
-					VALUES (?, ?, ?, ?)", "sssi",$ParamArray);
+					$ParamArray[4]=$Position;
+					$InputDocId=$obj->fInsertNew("INSERT INTO banners (PhotoPath,Title,ShortDescription,ShowButton,Position)
+					VALUES (?, ?, ?, ?, ?)", "sssii",$ParamArray);
 				
 					$_SESSION["QueryStatus"]="SAVED";
 					

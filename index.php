@@ -21,10 +21,10 @@ $analytics = initializeAnalytics();
 
 $obj = new main();
 $obj->connection();
-$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position");
+$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position","ShowButton");
 $ParamArray=array();
 $Fields=implode(",",$FieldNames);
-$banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,"s",$ParamArray);
+$banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Position ASC, BannerId ASC",$FieldNames,"s",$ParamArray);
 
 
 ?>
@@ -3296,7 +3296,7 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 /* Simple VS Badge */
 .vs-badge {
     position: absolute;
-    left: 50%;
+    left: 49%;
     top: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
@@ -5224,7 +5224,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <div class="home-s-content slide-c-r">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
+                        <?php if(isset($banners["ShowButton"]) && $banners["ShowButton"] == 1): ?>
                         <a href="products.php" class="btn btn-style1">Shop now</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
