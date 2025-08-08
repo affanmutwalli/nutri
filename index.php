@@ -2,6 +2,16 @@
 <html lang="en">
 <?php
 session_start();
+// PHANTOM PRODUCT MONITOR - INJECTED
+if (file_exists(__DIR__ . "/cart_monitor.php")) {
+    include_once __DIR__ . "/cart_monitor.php";
+    if (class_exists("CartMonitor")) {
+        $phantomMonitor = new CartMonitor();
+        $phantomMonitor->log("📍 CHECKPOINT: " . basename(__FILE__));
+        $phantomMonitor->checkForPhantomProducts();
+    }
+}
+
 include('includes/urls.php');
 include('database/dbconnection.php');
 
@@ -11,7 +21,7 @@ $analytics = initializeAnalytics();
 
 $obj = new main();
 $obj->connection();
-$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position");
+$FieldNames=array("BannerId","Title","ShortDescription","PhotoPath","Position","ShowButton");
 $ParamArray=array();
 $Fields=implode(",",$FieldNames);
 $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,"s",$ParamArray);
@@ -1773,14 +1783,17 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 }
 
 
-/* ✅ Clean Hero Banner - Text Only Overlay */
+/* ✅ Clean Hero Banner - Perfect Image Fitting */
 .img-back {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
+  /* Perfect image fitting for any size */
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
   position: relative;
   overflow: hidden;
   padding: 3rem 5rem;
@@ -1796,7 +1809,8 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+  /* Removed dark overlay for cleaner hero image */
+  background: transparent;
   z-index: 1;
 }
 
@@ -1838,10 +1852,57 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   letter-spacing: normal;
 }
 
+/* ✅ Enhanced Image Fitting for Different Aspect Ratios */
+.img-back {
+  /* Perfect fitting for any image size */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Ensure images always fill the container perfectly */
+.img-back[style*="background-image"] {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Handle very wide landscape images */
+.img-back {
+  background-attachment: scroll;
+}
+
+/* Handle very tall portrait images */
+@media (orientation: portrait) {
+  .img-back {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* Handle very wide landscape images */
+@media (orientation: landscape) {
+  .img-back {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* Fallback for older browsers */
+.img-back {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 /* ✅ Responsive Design - Clean Text Only */
 @media (max-width: 1200px) {
   .img-back {
     padding: 3rem 4rem;
+    /* Ensure proper fitting on smaller screens */
+    background-size: cover;
+    background-position: center center;
   }
 
   .home-s-content h1 {
@@ -1856,6 +1917,9 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
 @media (max-width: 992px) {
   .img-back {
     padding: 2.5rem 3rem;
+    /* Maintain perfect image fitting on tablets */
+    background-size: cover;
+    background-position: center center;
   }
 
   .home-s-content {
@@ -1876,6 +1940,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   .img-back {
     padding: 2rem;
     height: 60vh;
+    /* Ensure perfect image fitting on mobile */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: scroll;
   }
 
   .home-s-content span {
@@ -1895,6 +1963,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   .img-back {
     padding: 1.5rem;
     height: 50vh;
+    /* Perfect image fitting on small mobile devices */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: scroll;
   }
 
   .home-s-content {
@@ -1935,20 +2007,25 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ",$FieldNames,
   }
 }
 
-/* Tablet View */
+/* Tablet View - Enhanced Image Fitting */
 @media (max-width: 1024px) {
     .slider .items .img-back {
-        height:  300px; /* Adjust height for tablets */
+        height: 300px; /* Adjust height for tablets */
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
     }
 }
 
-/* Mobile View */
+/* Mobile View - Perfect Image Fitting */
 @media (max-width: 768px) {
     .slider .items .img-back {
         height: 200px; /* Adjust height for smaller screens */
+        background-size: cover;
         background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
     }
-  
 }
 #chat-icon {
     position: fixed;
@@ -5109,7 +5186,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                     <div class="home-s-content slide-c-r">
                         <span><?php echo htmlspecialchars($banners["Title"]); ?></span>
                         <h1><?php echo htmlspecialchars($banners["ShortDescription"]); ?></h1>
-                        <a href="products.php" class="btn btn-style1">Shop now</a>
+                        <?php if(isset($banners["ShowButton"]) && $banners["ShowButton"] == 1): ?>
+                            <a href="products.php" class="btn btn-style1">Shop now</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -10,13 +10,15 @@
 		function connection()
 		{
 			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-			set_exception_handler(function($e) {
-			error_log($e->getMessage());
-			exit('Error connecting to database'); //Should be a message a typical user could understand
-			});
-			$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
-			//$mysqli->set_charset("utf8mb4");
-			return $mysqli;
+			try {
+				$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+				//$mysqli->set_charset("utf8mb4");
+				return $mysqli;
+			} catch (Exception $e) {
+				error_log($e->getMessage());
+				// Don't exit here - let the calling code handle the error
+				return false;
+			}
 		}
 
 		

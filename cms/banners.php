@@ -27,12 +27,8 @@ $page="banners.php"
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
   <!-- Select2 -->
   <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -42,10 +38,6 @@ $page="banners.php"
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -78,12 +70,13 @@ $page="banners.php"
     $PhotoPath = "Choose File";
     $Title = "";
     $ShortDescription = "";
+    $ShowButton = 1; // Default to show button
 
     if(isset($_GET["BannerId"])){
-    $FieldNames = array("BannerId", "PhotoPath", "Title", "ShortDescription");
+    $FieldNames = array("BannerId", "PhotoPath", "Title", "ShortDescription", "ShowButton");
     $ParamArray = array($_GET["BannerId"]);
     $Fields = implode(",", $FieldNames);
-    
+
     // Assuming $obj is properly instantiated and MysqliSelect1 is defined
     $single_data = $obj->MysqliSelect1("SELECT " . $Fields . " FROM banners WHERE BannerId = ?", $FieldNames, "i", $ParamArray);
 
@@ -92,6 +85,7 @@ $page="banners.php"
       $PhotoPath = $single_data[0]["PhotoPath"];
       $Title = $single_data[0]["Title"];
       $ShortDescription = $single_data[0]["ShortDescription"];
+      $ShowButton = $single_data[0]["ShowButton"];
     }
   }
   ?>
@@ -134,14 +128,14 @@ $page="banners.php"
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
-                  <label for="Title">Banner Title</label>
-                  <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title" value="<?php echo htmlspecialchars($Title); ?>">
+                  <label for="Title">Banner Title <small class="text-muted">(Optional)</small></label>
+                  <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title (Optional)" value="<?php echo htmlspecialchars($Title); ?>">
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
-                  <label for="ShortDescription">Banner Short-Description</label>
-                  <input type="text" class="form-control" id="ShortDescription" name="ShortDescription" placeholder="Enter Short Description" value="<?php echo htmlspecialchars($ShortDescription); ?>">
+                  <label for="ShortDescription">Banner Short-Description <small class="text-muted">(Optional)</small></label>
+                  <input type="text" class="form-control" id="ShortDescription" name="ShortDescription" placeholder="Enter Short Description (Optional)" value="<?php echo htmlspecialchars($ShortDescription); ?>">
                 </div>
               </div>
     
@@ -152,6 +146,17 @@ $page="banners.php"
                         <input type="file" class="custom-file-input" id="PhotoPath" name="PhotoPath" onchange="updateFileLabel()">
                         <label class="custom-file-label" for="PhotoPath"><?php echo htmlspecialchars($PhotoPath); ?></label>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="ShowButton">Show "Shop Now" Button</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="ShowButton" name="ShowButton" value="1" <?php echo ($ShowButton == 1) ? 'checked' : ''; ?>>
+                        <label class="custom-control-label" for="ShowButton">Display "Shop Now" button on this banner</label>
+                    </div>
+                    <small class="form-text text-muted">Toggle this to show or hide the "Shop Now" button for this banner image.</small>
                 </div>
             </div>
 
@@ -191,17 +196,18 @@ $page="banners.php"
         </div>
         <div class="card-body">
           <?php
-			$FieldNames=array("BannerId","PhotoPath","Title","ShortDescription");
+			$FieldNames=array("BannerId","PhotoPath","Title","ShortDescription","ShowButton");
 			$ParamArray=array();
 			$Fields=implode(",",$FieldNames);
 			$all_data=$obj->MysqliSelect1("Select ".$Fields." from banners",$FieldNames,"",$ParamArray);
-			
+
 		  ?>
           <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                   	<th style="width:120px;">Image</th>
                   	<th style="width:120px;">Details</th>
+                  	<th style="width:80px;">Shop Now Button</th>
                   	<th style="width:10px;">Edit</th>
                     <th style="width:10px;">Delete</th>
                   </tr>
@@ -213,9 +219,14 @@ $page="banners.php"
     						for($i=0; $i<count($all_data); $i++)
     						{
     						
+    							$showButtonStatus = ($all_data[$i]["ShowButton"] == 1) ?
+    								'<span class="badge badge-success"><i class="fas fa-check"></i> Enabled</span>' :
+    								'<span class="badge badge-secondary"><i class="fas fa-times"></i> Disabled</span>';
+
     							echo '<tr>
     									<td><img src="images/banners/'.$all_data[$i]["PhotoPath"].'" width="100%"></td>
     									<td><p> Title : '.$all_data[$i]["Title"].'<br> Description : '.$all_data[$i]["ShortDescription"].'</p></td>
+    									<td class="text-center">'.$showButtonStatus.'</td>
     									<td><a href="banners.php?BannerId='.$all_data[$i]["BannerId"].'"><i class="btn btn-info btn-sm fa fa-edit fa-sm"></i></a></td>
     									<td><button onClick="javascript:fundelete('.$all_data[$i]["BannerId"].');" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default"><i class="fa fa-trash fa-sm"></i></button></td>
     								  </tr>';
@@ -256,28 +267,13 @@ $page="banners.php"
 </script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
 <!-- Select2 -->
 <script src="plugins/select2/js/select2.full.min.js"></script>
-<!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
+
 <!-- bs-custom-file-input -->
 <script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
 <script src="plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -296,8 +292,6 @@ $page="banners.php"
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
 <script>
   $(function () {
   	//Initialize Select2 Elements
@@ -350,33 +344,24 @@ function save_data()
 	
 	var Title = document.getElementById("Title").value;
     var ShortDescription = document.getElementById("ShortDescription").value;
-    	
-    	
-    	if(Title=="")
+    var PhotoPath = document.getElementById("PhotoPath").value;
+    var BannerId = document.getElementById("BannerId").value;
+
+    	// Remove validation for Title and Description - they are now optional
+    	$("#Title").removeClass("is-invalid");
+    	$("#ShortDescription").removeClass("is-invalid");
+
+    	// Only check if image is required (for new banners)
+    	if(BannerId == "" && PhotoPath == "")
     	{
     		AllRight=0;
-    		$('#Title').addClass('is-invalid');
-    		
-    
+    		$('#PhotoPath').addClass('is-invalid');
+    		errorstring="Banner Image is mandatory for new banners..!";
     	}
     	else
     	{
-    		$("#Title").removeClass("is-invalid");
+    		$("#PhotoPath").removeClass("is-invalid");
     	}
-    	
-    	if(ShortDescription=="")
-    	{
-    		AllRight=0;
-    		$('#ShortDescription').addClass('is-invalid');
-    		
-    
-    	}
-    	else
-    	{
-    		$("#ShortDescription").removeClass("is-invalid");
-    	}
-    	
-    	errorstring="Banner Image , Title, Description is mandetory..!";
     
 	
 	if(AllRight==1)
@@ -388,7 +373,7 @@ function save_data()
 											},
 						success: function(data){
 													if(data.response=="S")
-													{	
+													{
 														window.location="banners.php";
 													}
 													else
@@ -399,6 +384,15 @@ function save_data()
 														$("#ErrorMessage").delay(1000).fadeOut(400);
 														document.getElementById("loading").style.display="none";
 													}
+												},
+						error: function(xhr, status, error) {
+													console.log("AJAX Error: " + status + " - " + error);
+													console.log("Response: " + xhr.responseText);
+													$('#ErrorMessage').html("Error uploading banner. Please try again.");
+													$('#ErrorMessage').addClass('alert alert-danger alert-dismissible');
+													document.getElementById("ErrorMessage").style.display="block";
+													$("#ErrorMessage").delay(3000).fadeOut(400);
+													document.getElementById("loading").style.display="none";
 												}
 		}).submit();
 	}
@@ -442,14 +436,20 @@ function delete_info()
 											},
 						success: function(data){
 													if(data.response=="D")
-													{	
+													{
 														window.location="banners.php";
 													}
 													else
 													{
 														document.getElementById("ErrorMessage").innerHTML=data.msg;
-	
+														document.getElementById("loading").style.display="none";
 													}
+												},
+						error: function(xhr, status, error) {
+													console.log("Delete AJAX Error: " + status + " - " + error);
+													console.log("Response: " + xhr.responseText);
+													document.getElementById("ErrorMessage").innerHTML="Error deleting banner. Please try again.";
+													document.getElementById("loading").style.display="none";
 												}
 		}).submit();
 }

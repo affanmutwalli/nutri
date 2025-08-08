@@ -33,11 +33,24 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     exit();
 }
 
-// Validate required fields
-if (empty($data['name']) || empty($data['email']) || empty($data['phone']) || empty($data['address']) || empty($data['final_total']) || empty($data['products']) || empty($data['CustomerId'])) {
-    echo json_encode(["response" => "E", "message" => "Missing required fields"]);
-    exit();
+// Validate required fields (CustomerId not required for guest checkout)
+$requiredFields = ['name', 'email', 'phone', 'address', 'final_total', 'products'];
+$missingFields = [];
 
+foreach ($requiredFields as $field) {
+    if (empty($data[$field])) {
+        $missingFields[] = $field;
+    }
+}
+
+// For registered users, CustomerId is required
+if (isset($data['customerType']) && $data['customerType'] === 'Registered' && empty($data['CustomerId'])) {
+    $missingFields[] = 'CustomerId';
+}
+
+if (!empty($missingFields)) {
+    echo json_encode(["response" => "E", "message" => "Missing required fields: " . implode(', ', $missingFields)]);
+    exit();
 }
 
 // Create proper shipping address (address only, not customer details)
@@ -353,7 +366,7 @@ if ($InputDocId) {
 
     // Trigger auto-processing webhook GUARANTEED
     try {
-        $webhookUrl = "http://localhost/nutrify/nutri/auto_process_webhook.php";
+        $webhookUrl = "http://localhost/nutrify/auto_process_webhook.php";
         $postData = http_build_query(['order_id' => $newOrderId]);
 
         $context = stream_context_create([

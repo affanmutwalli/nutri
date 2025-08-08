@@ -442,7 +442,7 @@ if ($InputDocId) {
 
     // Trigger auto-processing webhook GUARANTEED
     try {
-        $webhookUrl = "http://localhost/nutrify/nutri/auto_process_webhook.php";
+        $webhookUrl = "http://localhost/nutrify/auto_process_webhook.php";
         $postData = http_build_query(['order_id' => $newOrderId]);
 
         $context = stream_context_create([

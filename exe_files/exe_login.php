@@ -1,5 +1,15 @@
 <?php
 session_start();
+// PHANTOM PRODUCT MONITOR - INJECTED
+if (file_exists(__DIR__ . "/cart_monitor.php")) {
+    include_once __DIR__ . "/cart_monitor.php";
+    if (class_exists("CartMonitor")) {
+        $phantomMonitor = new CartMonitor();
+        $phantomMonitor->log("📍 CHECKPOINT: " . basename(__FILE__));
+        $phantomMonitor->checkForPhantomProducts();
+    }
+}
+
 ob_start();
 
 // Set JSON header
@@ -42,9 +52,9 @@ if (!empty($_POST["email"])) {
                 // Only load database cart if session cart is empty to prevent phantom products
                 try {
                     if (file_exists('cart_persistence.php')) {
-                        include_once 'cart_persistence.php';
+                        include_once 'robust_cart_manager.php';
                         if (class_exists('CartPersistence')) {
-                            $cartManager = new CartPersistence();
+                            $cartManager = new RobustCartManager();
                             // Use loadCartFromDatabase instead of syncCart to prevent merging issues
                             $cartManager->loadCartFromDatabase($single_data[0]["CustomerId"]);
                         }
