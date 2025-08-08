@@ -591,7 +591,11 @@ if ($isLoggedIn) {
                                                 <a href="product.php?id=<?php echo $product_data[0]['ProductId']; ?>" class="product-name">
                                                     <?php echo $product_data[0]['ProductName']; ?>
                                                 </a>
-                                                
+
+                                                <div class="check-detail">
+                                                    <span class="check-code-blod">Code: <span><?php echo $product_data[0]['ProductCode']; ?></span></span>
+                                                </div>
+
                                                 <div class="check-detail">
                                                     <span class="check-size">Size: <?php echo $selectedSize; ?></span>
                                                 </div>
@@ -687,6 +691,10 @@ if ($isLoggedIn) {
                                                 class="product-name">
                                                 <?php echo $product_data[0]['ProductName']; ?>
                                             </a>
+
+                                            <div class="check-detail">
+                                                <span class="check-code-blod">Code: <span><?php echo $product_data[0]['ProductCode']; ?></span></span>
+                                            </div>
 
                                             <div class="check-detail">
                                                 <span class="check-size">Size: <?php echo $selected_size; ?></span>
@@ -1230,15 +1238,30 @@ if ($isLoggedIn) {
                 let imagePath = imageElement ? imageElement.src : "";
                 let offerPrice = offerPriceElement ? parseFloat(offerPriceElement.getAttribute("data-price")) || 0 : 0;
 
+                // Ensure we have a valid product code
+                if (!productCode || productCode.trim() === "") {
+                    productCode = `PROD${productId}`;
+                }
+
                 console.log(`Extracted data for item ${index + 1}:`, {
                     productId, productName, productCode, size, quantity, imagePath, offerPrice
                 });
 
-                // Validate extracted data
-                if (!productId || !productName || offerPrice <= 0) {
-                    console.error(`❌ Invalid product data for item ${index + 1}:`, {
-                        productId, productName, productCode, size, quantity, offerPrice
-                    });
+                // Validate extracted data with detailed error messages
+                if (!productId) {
+                    console.error(`❌ Missing product ID for item ${index + 1}`);
+                    return;
+                }
+                if (!productName || productName.trim() === "") {
+                    console.error(`❌ Missing product name for item ${index + 1}`);
+                    return;
+                }
+                if (offerPrice <= 0) {
+                    console.error(`❌ Invalid offer price (${offerPrice}) for item ${index + 1}`);
+                    return;
+                }
+                if (!quantity || isNaN(parseInt(quantity)) || parseInt(quantity) <= 0) {
+                    console.error(`❌ Invalid quantity (${quantity}) for item ${index + 1}`);
                     return;
                 }
 
@@ -1280,13 +1303,23 @@ if ($isLoggedIn) {
         }
 
         // PHANTOM_PRODUCT_FILTER: Remove ProductId 6 before sending
+        console.log("=== PHANTOM FILTER DEBUG ===");
+        console.log("Products BEFORE phantom filter:", products);
+        console.log("Products BEFORE phantom filter length:", products.length);
+
         products = products.filter(function(product) {
+            console.log("Checking product in filter:", product);
+            console.log("Product ID:", product.id, "Type:", typeof product.id);
             if (product.id == 6) {
                 console.log("PHANTOM PRODUCT BLOCKED: ProductId 6 removed from order");
                 return false;
             }
+            console.log("Product passed filter:", product.id);
             return true;
         });
+
+        console.log("Products AFTER phantom filter:", products);
+        console.log("Products AFTER phantom filter length:", products.length);
 
         // Create order data object based on checkout type
         orderData = {
@@ -1330,6 +1363,10 @@ if ($isLoggedIn) {
         } else if (orderData.paymentMethod === "COD") {
             if (isGuestCheckout) {
                 console.log("Calling sendGuestOrderData...");
+                console.log("=== PRE-SEND DEBUG ===");
+                console.log("orderData before sendGuestOrderData:", orderData);
+                console.log("orderData.products before sendGuestOrderData:", orderData.products);
+                console.log("orderData.products length before sendGuestOrderData:", orderData.products ? orderData.products.length : 'undefined');
                 sendGuestOrderData();
             } else {
                 console.log("Calling sendOrderData...");
@@ -1454,9 +1491,27 @@ function sendGuestOrderData() {
     console.log("Full order data object:", orderData);
     console.log("JSON string being sent:", JSON.stringify(orderData));
 
-    // Validate order data before sending
+    // Validate order data before sending with detailed debugging
+    console.log("=== VALIDATION DEBUG ===");
+    console.log("orderData object:", orderData);
+    console.log("orderData.products:", orderData.products);
+    console.log("orderData.products type:", typeof orderData.products);
+    console.log("orderData.products length:", orderData.products ? orderData.products.length : 'undefined');
+
     const requiredFields = ['name', 'email', 'phone', 'address', 'final_total', 'products'];
-    const missingFields = requiredFields.filter(field => !orderData[field] || (field === 'products' && orderData[field].length === 0));
+    const missingFields = [];
+
+    requiredFields.forEach(field => {
+        if (!orderData[field]) {
+            console.log(`❌ Field '${field}' is missing or falsy:`, orderData[field]);
+            missingFields.push(field);
+        } else if (field === 'products' && orderData[field].length === 0) {
+            console.log(`❌ Field '${field}' is empty array:`, orderData[field]);
+            missingFields.push(field);
+        } else {
+            console.log(`✅ Field '${field}' is valid:`, orderData[field]);
+        }
+    });
 
     if (missingFields.length > 0) {
         console.error("❌ Missing required fields before sending:", missingFields);
