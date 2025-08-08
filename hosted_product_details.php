@@ -1561,48 +1561,36 @@
 
   /* ✅ Desktop Grid Layout */
 .use-container {
-    display: flex
-;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding: 45px 15px;
-    width: 997px;
-    height: 257px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px 15px;
+    max-width: 1200px;
     margin: 0 auto;
 }
-
 
 /* Card Styling */
 .use-cart {
     background: white;
-    border-radius: 15px;
-    padding: 30px 20px;
+    border-radius: 12px;
+    padding: 15px;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .use-cart:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    border-color: #ff6b35;
+    transform: translateY(-5px);
 }
 
 .use-cart img {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
     margin-bottom: 15px;
     transition: transform 0.3s ease;
     border-radius: 50%;
-    padding: 12px;
+    padding: 8px;
     background: #fff;
     border: 2px solid #f0f0f0;
 }
@@ -1612,12 +1600,9 @@
 }
 
 .use-cart p {
-    font-size: 14px;
+    font-size: 16px;
     color: #305724;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 0;
-    text-align: center;
+    font-weight: 500;
 }
 /* Optional: Add padding to first/last items */
 .use-container > *:first-child {
@@ -1637,76 +1622,17 @@
     scrollbar-color: #EA652D transparent;
 }
 
-/* Key Benefits Section */
-.keybenefits {
-    border-top: 1px solid #D9D9D9;
-    border-bottom: 1px solid #D9D9D9;
-    padding-bottom: 1.5rem;
-    margin-top: 30px;
-}
-
-.keybenefits ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    grid-gap: 15px;
-    align-items: center;
-}
-
-.keybenefits ul li {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-gap: 10px;
-    align-items: center;
-}
-
-.keybenefits ul img {
-    width: 100%;
-}
-
-.keybenefits ul p {
-    margin: 0;
-    line-height: 1.5;
-}
-
-@media screen and (max-width: 750px) {
-    .keybenefits .pdsection-title {
-        text-align: center;
-    }
-    .keybenefits ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
-    }
-    .keybenefits ul p {
-        font-size: 14px;
-    }
-    .keybenefits ul li {
-        width: 45%;
-        grid-template-columns: 1fr;
-        grid-gap: 10px;
-        text-align: center;
-    }
-    .keybenefits ul img {
-        width: 60%;
-        margin: auto;
-    }
-}
-
 /* ✅ Mobile Carousel */
 @media (max-width: 768px) {
     .use-container {
         display: flex;
-        justify-content: flex-start;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
         padding: 20px 16px;
         gap: 16px;
+        grid-template-columns: unset;
     }
 
     .use-container::-webkit-scrollbar {
@@ -3385,7 +3311,30 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     <span class="new-price">Price not available</span>
                                  <?php } ?>
                               </div>
+                              <div class="product-description-container">
+                                 <?php
+                                 $productShortDesc = $product_data[0]["ShortDescription"] ?? "";
+                                 $productShortDescTruncated = mb_substr($productShortDesc, 0, 100, 'UTF-8');
+                                 $productHasMoreContent = mb_strlen($productShortDesc, 'UTF-8') > 100;
+                                 ?>
 
+                                 <p id="product-short-description-short">
+                                     <?php echo htmlspecialchars($productShortDescTruncated); ?>
+                                     <?php if ($productHasMoreContent): ?>
+                                         <span id="product-short-description-dots">...</span>
+                                     <?php endif; ?>
+                                 </p>
+
+                                 <?php if ($productHasMoreContent): ?>
+                                     <p id="product-short-description-full" style="display: none;">
+                                         <?php echo htmlspecialchars($productShortDesc); ?>
+                                     </p>
+
+                                     <button class="read-more-btn" id="product-short-read-more-btn" onclick="toggleDescription('product-short')">
+                                         Read More
+                                     </button>
+                                 <?php endif; ?>
+                              </div>
                               <h6 class="pro-size" style="margin-top: 5px;">Size: </h6>
                               <div class="pro-items">
                                  <?php if (!empty($sizes)) { ?>
@@ -3418,30 +3367,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                     </div>
                                  <?php } ?>
                               </div>
-
-                              <!-- Key Benefits Section -->
-                              <div class="keybenefits">
-                                 <h2 class="pdsection-title">Key Benefits</h2>
-                                 <ul>
-                                    <li>
-                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--weight-loss-6c8bf9.png?v=1702224046">
-                                       <p>Helps in weight management</p>
-                                    </li>
-                                    <li>
-                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--BURN-EXCESS-FAT-6fb562.png?v=1702224014">
-                                       <p>Helps burn excess fat</p>
-                                    </li>
-                                    <li>
-                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--Metabolism-7ac21a.png?v=1702223999">
-                                       <p>Helps boost metabolism</p>
-                                    </li>
-                                    <li>
-                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--lipid-level-203020.png?v=1702223990">
-                                       <p>Supports healthy lipid levels</p>
-                                    </li>
-                                 </ul>
-                              </div>
-
                               <button style="background-color: #ec7524; margin-top: 20px;" type="button" class="btn text-white" data-toggle="tooltip" data-placement="bottom" title="1 Coin = 1 Rupee. Earn Nutrify coins on each purchase.">
                                  <i class="fa fa-coins"></i>
                                  <span id="coins-message">Earn <?php echo $coins; ?> My Nutrify Coins On this Order.</span>
@@ -3468,13 +3393,9 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
 
 
                               </div>
-
-
                         </div>
                      </div>
                   </div>
-
-
                   <!-- Right-Side Info Section -->
                   <!--<div class="col-xl-3 col-lg-12 col-md-12 col-xs-12 pro-shipping">-->
                   <!--   <div class="product-service">-->
@@ -3728,7 +3649,32 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </div>
             <?php endif; ?>
             </section>
-
+            <section class="section-b-padding pro-releted" id="section3" style="margin-top: 15px;">
+                 <h1 class="product-details-title">
+                  Why Drink My Nutrify Herbal & Ayurveda's?
+                </h1>
+                <h2 class="product-details-subtitle">
+                    <span><?php echo nl2br(htmlspecialchars(trim($filteredProductTitle))); ?></span>
+                </h2>
+                <?php if (!empty($benefit_data)): ?>
+                <div class="benifit-container">
+                    <?php foreach ($benefit_data as $benefit): ?>
+                    <div class="benifit-cart">
+                        <img src="<?php echo !empty($benefit['PhotoPath'])
+                    ? 'cms/images/ingredient/' . htmlspecialchars($benefit['PhotoPath'])
+                    : 'images/default.jpg'; ?>"
+                            alt="<?php echo htmlspecialchars(pathinfo($benefit['PhotoPath'], PATHINFO_FILENAME)); ?>">
+                        <h4><?php echo htmlspecialchars($benefit['Title']); ?></h4>
+                        <p><?php echo nl2br(htmlspecialchars($benefit['ShortDescription'])); ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php else: ?>
+                <div class="benifit-container">
+                    <p style="text-align: center; color: #666; font-size: 16px; padding: 20px;">No benefits information available for this product.</p>
+                </div>
+                <?php endif; ?>
+                       </section>
             <section class=" pro-releted" id="section4">
                 
                 <h1 class="product-details-title">
@@ -4523,40 +4469,13 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                      <h2>Related Products</h2>
                   </div>
                   <div class="trending-products owl-carousel owl-theme">
-                     <?php
-                        // Get current product's category and subcategory for related products
-                        $currentCategoryId = $product_data[0]['CategoryId'];
-                        $currentSubCategoryId = $product_data[0]['SubCategoryId'];
-                        $currentProductId = $product_data[0]['ProductId'];
-
+                     <?php 
                         $FieldNames = array("ProductId", "ProductName", "PhotoPath");
+                        $ParamArray = array();
                         $Fields = implode(",", $FieldNames);
-
-                        // First try to get products from same subcategory, then same category, excluding current product
-                        $relatedQuery = "
-                            (SELECT " . $Fields . " FROM product_master
-                             WHERE SubCategoryId = ? AND ProductId != ?
-                             ORDER BY ProductName ASC LIMIT 8)
-                            UNION
-                            (SELECT " . $Fields . " FROM product_master
-                             WHERE CategoryId = ? AND SubCategoryId != ? AND ProductId != ?
-                             ORDER BY ProductName ASC LIMIT 4)
-                            ORDER BY ProductName ASC
-                            LIMIT 12
-                        ";
-
-                        $ParamArray = array($currentSubCategoryId, $currentProductId, $currentCategoryId, $currentSubCategoryId, $currentProductId);
-                        $related_products = $obj->MysqliSelect1($relatedQuery, $FieldNames, "iiiii", $ParamArray);
-
-                        // If no related products found, get some random products as fallback
-                        if (empty($related_products)) {
-                            $related_products = $obj->MysqliSelect1(
-                                "SELECT " . $Fields . " FROM product_master WHERE ProductId != ? ORDER BY ProductName ASC LIMIT 12",
-                                $FieldNames, "i", array($currentProductId)
-                            );
-                        }
-
-                        foreach($related_products as $products){
+                        $product_data = $obj->MysqliSelect1("SELECT " . $Fields . " FROM product_master ORDER BY RAND()", $FieldNames, "", $ParamArray);
+                        
+                        foreach($product_data as $products){
                             $FieldNamesPrice = array("OfferPrice", "MRP");
                             $ParamArrayPrice = array($products["ProductId"]);
                             $FieldsPrice = implode(",", $FieldNamesPrice);
@@ -4648,20 +4567,6 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
          </div>
       </section>
       <!-- releted product end -->
-
-      <!-- Banner Section Above Footer -->
-      <section class="banner-above-footer" style="width: 100%; margin: 40px 0 0 0; padding: 0;">
-         <div class="container-fluid" style="padding: 0;">
-            <div class="row" style="margin: 0;">
-               <div class="col-12" style="padding: 0;">
-                  <img src="cms/images/banners/Swasthyam-paramam-dhanam.-Swastha-jeevanasya-rahasyam.jpg"
-                       alt="Swasthyam Paramam Dhanam Banner"
-                       style="width: 100%; height: auto; display: block; object-fit: cover;">
-               </div>
-            </div>
-         </div>
-      </section>
-
       <!-- footer start -->
       <?php include("components/footer.php"); ?>
       <!-- footer end -->

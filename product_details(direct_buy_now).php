@@ -862,13 +862,40 @@
                      <h2>Related Products</h2>
                   </div>
                   <div class="trending-products owl-carousel owl-theme">
-                     <?php 
+                     <?php
+                        // Get current product's category and subcategory for related products
+                        $currentCategoryId = $product_data[0]['CategoryId'];
+                        $currentSubCategoryId = $product_data[0]['SubCategoryId'];
+                        $currentProductId = $product_data[0]['ProductId'];
+
                         $FieldNames = array("ProductId", "ProductName", "PhotoPath");
-                        $ParamArray = array();
                         $Fields = implode(",", $FieldNames);
-                        $product_data = $obj->MysqliSelect1("SELECT " . $Fields . " FROM product_master ORDER BY RAND()", $FieldNames, "", $ParamArray);
-                        
-                        foreach($product_data as $products){
+
+                        // First try to get products from same subcategory, then same category, excluding current product
+                        $relatedQuery = "
+                            (SELECT " . $Fields . " FROM product_master
+                             WHERE SubCategoryId = ? AND ProductId != ?
+                             ORDER BY ProductName ASC LIMIT 8)
+                            UNION
+                            (SELECT " . $Fields . " FROM product_master
+                             WHERE CategoryId = ? AND SubCategoryId != ? AND ProductId != ?
+                             ORDER BY ProductName ASC LIMIT 4)
+                            ORDER BY ProductName ASC
+                            LIMIT 12
+                        ";
+
+                        $ParamArray = array($currentSubCategoryId, $currentProductId, $currentCategoryId, $currentSubCategoryId, $currentProductId);
+                        $related_products = $obj->MysqliSelect1($relatedQuery, $FieldNames, "iiiii", $ParamArray);
+
+                        // If no related products found, get some random products as fallback
+                        if (empty($related_products)) {
+                            $related_products = $obj->MysqliSelect1(
+                                "SELECT " . $Fields . " FROM product_master WHERE ProductId != ? ORDER BY ProductName ASC LIMIT 12",
+                                $FieldNames, "i", array($currentProductId)
+                            );
+                        }
+
+                        foreach($related_products as $products){
                             $FieldNamesPrice = array("OfferPrice", "MRP");
                             $ParamArrayPrice = array($products["ProductId"]);
                             $FieldsPrice = implode(",", $FieldNamesPrice);
