@@ -7,9 +7,68 @@ $obj = new main();
 $obj->connection();
 sec_session_start();
 
-if (login_check($mysqli) == true) 
+if (login_check($mysqli) == true)
 {
 	//getPassword("admin",$mysqli);
+
+	// Handle AJAX banner sorting request
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_banner_order') {
+	    header('Content-Type: application/json');
+
+	    if (isset($_POST["bannerOrder"]) && !empty($_POST["bannerOrder"])) {
+	        try {
+	            $bannerOrder = json_decode($_POST["bannerOrder"], true);
+
+	            if (!$bannerOrder || !is_array($bannerOrder)) {
+	                echo json_encode(array("msg" => "Invalid banner order data", "response" => "E"));
+	                exit;
+	            }
+
+	            $mysqli->autocommit(FALSE);
+	            $success = true;
+
+	            foreach ($bannerOrder as $item) {
+	                if (isset($item['bannerId']) && isset($item['position'])) {
+	                    $bannerId = intval($item['bannerId']);
+	                    $position = intval($item['position']);
+
+	                    $stmt = $mysqli->prepare("UPDATE banners SET Position = ? WHERE BannerId = ?");
+	                    if ($stmt) {
+	                        $stmt->bind_param("ii", $position, $bannerId);
+	                        if (!$stmt->execute()) {
+	                            $success = false;
+	                            break;
+	                        }
+	                        $stmt->close();
+	                    } else {
+	                        $success = false;
+	                        break;
+	                    }
+	                }
+	            }
+
+	            if ($success) {
+	                $mysqli->commit();
+	                echo json_encode(array("msg" => "Banner order updated successfully", "response" => "S"));
+	            } else {
+	                $mysqli->rollback();
+	                echo json_encode(array("msg" => "Error updating banner order", "response" => "E"));
+	            }
+
+	            $mysqli->autocommit(TRUE);
+	            exit;
+
+	        } catch (Exception $e) {
+	            $mysqli->rollback();
+	            $mysqli->autocommit(TRUE);
+	            echo json_encode(array("msg" => "Error: " . $e->getMessage(), "response" => "E"));
+	            exit;
+	        }
+	    } else {
+	        echo json_encode(array("msg" => "No banner order data provided", "response" => "E"));
+	        exit;
+	    }
+	}
 ?>
 <?php
 $selected = "home.php";
@@ -36,8 +95,38 @@ $page="banners.php"
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- jQuery UI for sortable -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
+  <!-- Custom styles for banner sorting -->
+  <style>
+    .drag-handle {
+        color: #6c757d;
+        transition: color 0.2s;
+    }
+    .drag-handle:hover {
+        color: #007bff;
+        cursor: move;
+    }
+    .sortable-row {
+        transition: all 0.2s ease;
+    }
+    .ui-state-highlight {
+        height: 80px;
+        background-color: #f8f9fa;
+        border: 2px dashed #dee2e6;
+    }
+    .ui-sortable-helper {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        opacity: 0.9;
+    }
+    #sortable-banners tr:hover {
+        background-color: #f8f9fa;
+    }
+  </style>
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -71,9 +160,10 @@ $page="banners.php"
     $Title = "";
     $ShortDescription = "";
     $ShowButton = 1; // Default to show button
+    $Position = 0; // Default position
 
     if(isset($_GET["BannerId"])){
-    $FieldNames = array("BannerId", "PhotoPath", "Title", "ShortDescription", "ShowButton");
+    $FieldNames = array("BannerId", "PhotoPath", "Title", "ShortDescription", "ShowButton", "Position");
     $ParamArray = array($_GET["BannerId"]);
     $Fields = implode(",", $FieldNames);
 
@@ -86,6 +176,7 @@ $page="banners.php"
       $Title = $single_data[0]["Title"];
       $ShortDescription = $single_data[0]["ShortDescription"];
       $ShowButton = $single_data[0]["ShowButton"];
+      $Position = $single_data[0]["Position"];
     }
   }
   ?>
@@ -161,6 +252,16 @@ $page="banners.php"
             </div>
 
             </div>
+
+            <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Position">Display Order</label>
+                    <input type="number" class="form-control" id="Position" name="Position" value="<?php echo $Position; ?>" min="0" step="1">
+                    <small class="form-text text-muted">Lower numbers appear first. Use 0 for highest priority.</small>
+                </div>
+            </div>
+            </div>
     
             <div class="box-footer" id="ErrorBox">
               <p id="ErrorMessage"></p>
@@ -193,18 +294,22 @@ $page="banners.php"
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Image List</h3>
+          <div class="card-tools">
+            <small class="text-muted">Drag and drop rows to reorder banners</small>
+          </div>
         </div>
         <div class="card-body">
           <?php
-			$FieldNames=array("BannerId","PhotoPath","Title","ShortDescription","ShowButton");
+			$FieldNames=array("BannerId","PhotoPath","Title","ShortDescription","ShowButton","Position");
 			$ParamArray=array();
 			$Fields=implode(",",$FieldNames);
-			$all_data=$obj->MysqliSelect1("Select ".$Fields." from banners",$FieldNames,"",$ParamArray);
+			$all_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Position ASC, BannerId ASC",$FieldNames,"",$ParamArray);
 
 		  ?>
           <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                  	<th style="width:40px;">Order</th>
                   	<th style="width:120px;">Image</th>
                   	<th style="width:120px;">Details</th>
                   	<th style="width:80px;">Shop Now Button</th>
@@ -212,18 +317,19 @@ $page="banners.php"
                     <th style="width:10px;">Delete</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="sortable-banners">
                    	<?php
                    	    if($all_data != NULL)
                    	    {
     						for($i=0; $i<count($all_data); $i++)
     						{
-    						
+
     							$showButtonStatus = ($all_data[$i]["ShowButton"] == 1) ?
     								'<span class="badge badge-success"><i class="fas fa-check"></i> Enabled</span>' :
     								'<span class="badge badge-secondary"><i class="fas fa-times"></i> Disabled</span>';
 
-    							echo '<tr>
+    							echo '<tr data-banner-id="'.$all_data[$i]["BannerId"].'" class="sortable-row">
+    									<td class="text-center drag-handle" style="cursor: move;"><i class="fas fa-grip-vertical"></i><br><small>'.($all_data[$i]["Position"] ?? 0).'</small></td>
     									<td><img src="images/banners/'.$all_data[$i]["PhotoPath"].'" width="100%"></td>
     									<td><p> Title : '.$all_data[$i]["Title"].'<br> Description : '.$all_data[$i]["ShortDescription"].'</p></td>
     									<td class="text-center">'.$showButtonStatus.'</td>
@@ -288,6 +394,8 @@ $page="banners.php"
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<!-- jQuery UI for sortable -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -321,7 +429,11 @@ $page="banners.php"
     });
     
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
+      "ordering": false, // Disable default ordering for drag-drop
+      "paging": false // Disable paging for better drag-drop experience
       /*"buttons": ["excel", "pdf"]*/
     });/*.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')*/
     $('#example2').DataTable({
@@ -333,6 +445,9 @@ $page="banners.php"
       "autoWidth": false,
       "responsive": true,
     });
+
+    // Initialize sortable functionality
+    initializeBannerSorting();
   });
 </script>
 <script type="text/javascript">
@@ -456,8 +571,90 @@ function delete_info()
 $( document ).ready(function() {
     bsCustomFileInput.init();
    $(".alert").delay(1000).fadeOut(400);
-   
+
 });
+
+// Banner Sorting Functions
+function initializeBannerSorting() {
+    // Make the table body sortable
+    $("#sortable-banners").sortable({
+        handle: ".drag-handle",
+        cursor: "move",
+        placeholder: "ui-state-highlight",
+        helper: function(e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function(index) {
+                $(this).width($originals.eq(index).width());
+            });
+            return $helper;
+        },
+        update: function(event, ui) {
+            updateBannerOrder();
+        }
+    });
+
+    // Add visual feedback
+    $("#sortable-banners").disableSelection();
+}
+
+function updateBannerOrder() {
+    var bannerOrder = [];
+    $("#sortable-banners tr").each(function(index) {
+        var bannerId = $(this).data('banner-id');
+        if (bannerId) {
+            bannerOrder.push({
+                bannerId: bannerId,
+                position: index
+            });
+        }
+    });
+
+    // Send AJAX request to update order
+    $.ajax({
+        url: 'banners.php',
+        type: 'POST',
+        data: {
+            action: 'update_banner_order',
+            bannerOrder: JSON.stringify(bannerOrder)
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.response === 'S') {
+                // Update position numbers in the UI
+                $("#sortable-banners tr").each(function(index) {
+                    $(this).find('.drag-handle small').text(index);
+                });
+
+                // Show success message briefly
+                showSortMessage('Banner order updated successfully!', 'success');
+            } else {
+                showSortMessage('Error updating banner order: ' + response.msg, 'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            showSortMessage('Error updating banner order. Please try again.', 'error');
+            console.log("Sort AJAX Error: " + status + " - " + error);
+        }
+    });
+}
+
+function showSortMessage(message, type) {
+    var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
+                    message +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>' +
+                    '</div>';
+
+    $('.card-header').after(alertHtml);
+
+    // Auto-hide after 3 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut();
+    }, 3000);
+}
 </script>
 <script type="text/javascript" src="js/common_functions.js"></script>
 <script src="js/jquery.form.js" type="text/javascript"></script>

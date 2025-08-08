@@ -122,10 +122,27 @@ try {
     }
     
     // Create the order in database with Paid status (for online orders, we create after payment success)
-    $insertOrderQuery = "INSERT INTO order_master (
-        OrderId, CustomerId, CustomerType, OrderDate, Amount, PaymentStatus,
-        OrderStatus, ShipAddress, PaymentType, TransactionId, CreatedAt
-    ) VALUES (?, ?, ?, NOW(), ?, 'Paid', 'Placed', ?, ?, ?, NOW())";
+    // Handle both guest and registered users
+    logToFile("Processing order with CustomerType: " . ($orderData['CustomerType'] ?? 'NOT_SET'));
+    logToFile("Order data keys: " . implode(', ', array_keys($orderData)));
+
+    // Determine if this is a guest order
+    $isGuestOrder = isset($orderData['CustomerType']) && $orderData['CustomerType'] === 'Guest';
+
+    if ($isGuestOrder) {
+        logToFile("Detected GUEST order - using guest fields");
+        $insertOrderQuery = "INSERT INTO order_master (
+            OrderId, CustomerId, CustomerType, OrderDate, Amount, PaymentStatus,
+            OrderStatus, ShipAddress, PaymentType, TransactionId, CreatedAt,
+            GuestName, GuestEmail, GuestPhone
+        ) VALUES (?, ?, ?, NOW(), ?, 'Paid', 'Placed', ?, ?, ?, NOW(), ?, ?, ?)";
+    } else {
+        logToFile("Detected REGISTERED order - using standard fields");
+        $insertOrderQuery = "INSERT INTO order_master (
+            OrderId, CustomerId, CustomerType, OrderDate, Amount, PaymentStatus,
+            OrderStatus, ShipAddress, PaymentType, TransactionId, CreatedAt
+        ) VALUES (?, ?, ?, NOW(), ?, 'Paid', 'Placed', ?, ?, ?, NOW())";
+    }
 
     $stmt = $mysqli->prepare($insertOrderQuery);
 
@@ -144,15 +161,36 @@ try {
     $shipAddress = $orderData['ShipAddress'];
     $paymentType = $orderData['PaymentType'];
 
-    $stmt->bind_param("sisssss",
-        $orderId,
-        $customerId,
-        $customerType,
-        $amount,
-        $shipAddress,
-        $paymentType,
-        $razorpayPaymentId
-    );
+    if ($isGuestOrder) {
+        logToFile("Binding parameters for GUEST order");
+        $guestName = $orderData['GuestName'] ?? '';
+        $guestEmail = $orderData['GuestEmail'] ?? '';
+        $guestPhone = $orderData['GuestPhone'] ?? '';
+
+        $stmt->bind_param("sissssssss",
+            $orderId,
+            $customerId,
+            $customerType,
+            $amount,
+            $shipAddress,
+            $paymentType,
+            $razorpayPaymentId,
+            $guestName,
+            $guestEmail,
+            $guestPhone
+        );
+    } else {
+        logToFile("Binding parameters for REGISTERED order");
+        $stmt->bind_param("sisssss",
+            $orderId,
+            $customerId,
+            $customerType,
+            $amount,
+            $shipAddress,
+            $paymentType,
+            $razorpayPaymentId
+        );
+    }
 
     if (!$stmt->execute()) {
         logToFile("ERROR: Failed to create order - " . $stmt->error);

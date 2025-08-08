@@ -1642,8 +1642,16 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
     function initiateRazorpayPayment() {
         console.log("initiateRazorpayPayment started");
         console.log("Sending order data to backend:", orderData);
+        console.log("Guest checkout mode:", isGuestCheckout);
 
-        fetch("exe_files/rcus_place_order_online_simple.php", {
+        // Use different endpoints for guest vs registered users
+        const endpoint = isGuestCheckout ?
+            "exe_files/rcus_place_order_online_guest.php" :
+            "exe_files/rcus_place_order_online_simple.php";
+
+        console.log("Using endpoint:", endpoint);
+
+        fetch(endpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
