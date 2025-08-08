@@ -44,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = $result['message'];
                 $messageType = $result['type'];
                 break;
+            case 'toggle_shine':
+                $result = toggleCouponShine($_POST['coupon_id']);
+                $message = $result['message'];
+                $messageType = $result['type'];
+                break;
             case 'bulk_action':
                 $result = handleBulkAction($_POST);
                 $message = $result['message'];
@@ -136,6 +141,50 @@ function toggleCouponStatus($couponId) {
     }
 }
 
+function toggleCouponShine($couponId) {
+    global $mysqli;
+
+    try {
+        // First, check if IsShining column exists, if not add it
+        $checkColumn = "SELECT COUNT(*) as count FROM INFORMATION_SCHEMA.COLUMNS
+                       WHERE TABLE_SCHEMA = DATABASE()
+                       AND TABLE_NAME = 'enhanced_coupons'
+                       AND COLUMN_NAME = 'IsShining'";
+
+        $result = $mysqli->query($checkColumn);
+        $row = $result->fetch_assoc();
+
+        if ($row['count'] == 0) {
+            // Add IsShining column if it doesn't exist
+            $mysqli->query("ALTER TABLE enhanced_coupons ADD COLUMN IsShining TINYINT(1) DEFAULT 0 COMMENT 'Highlight this coupon in the dropdown'");
+        }
+
+        $query = "UPDATE enhanced_coupons SET IsShining = NOT COALESCE(IsShining, 0) WHERE id = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("i", $couponId);
+
+        if ($stmt->execute()) {
+            // Get the updated status
+            $selectQuery = "SELECT CouponCode, COALESCE(IsShining, 0) as IsShining FROM enhanced_coupons WHERE id = ?";
+            $selectStmt = $mysqli->prepare($selectQuery);
+            $selectStmt->bind_param("i", $couponId);
+            $selectStmt->execute();
+            $result = $selectStmt->get_result();
+
+            if ($row = $result->fetch_assoc()) {
+                $status = $row['IsShining'] ? 'enabled' : 'disabled';
+                return ['message' => "Shining feature {$status} for coupon {$row['CouponCode']}!", 'type' => 'success'];
+            } else {
+                return ['message' => 'Coupon shining status updated successfully!', 'type' => 'success'];
+            }
+        } else {
+            return ['message' => 'Error updating coupon shining status: ' . $mysqli->error, 'type' => 'error'];
+        }
+    } catch (Exception $e) {
+        return ['message' => 'Error: ' . $e->getMessage(), 'type' => 'error'];
+    }
+}
+
 function handleBulkAction($data) {
     global $mysqli;
     
@@ -219,7 +268,7 @@ $totalPages = ceil($totalCoupons / $limit);
 
 // Get coupons
 $coupons = [];
-$query = "SELECT * FROM enhanced_coupons $whereClause ORDER BY created_at DESC LIMIT $limit OFFSET $offset";
+$query = "SELECT *, COALESCE(IsShining, 0) as IsShining FROM enhanced_coupons $whereClause ORDER BY COALESCE(IsShining, 0) DESC, created_at DESC LIMIT $limit OFFSET $offset";
 
 try {
     if (!empty($params)) {
@@ -283,6 +332,45 @@ if (isset($_GET['edit']) && !empty($_GET['edit'])) {
     .status-inactive {
       background: #f8d7da;
       color: #721c24;
+    }
+
+    /* Shining Animations */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200px 0; }
+      100% { background-position: 200px 0; }
+    }
+
+    .shine-row {
+      background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+      position: relative;
+    }
+
+    .shine-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    .btn-shine {
+      background: linear-gradient(135deg, #ff9500, #ffb84d) !important;
+      border-color: #ff9500 !important;
+      color: white !important;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .btn-shine:hover {
+      background: linear-gradient(135deg, #e6850e, #e6a347) !important;
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -403,12 +491,17 @@ if (isset($_GET['edit']) && !empty($_GET['edit'])) {
                       <th>Usage</th>
                       <th>Valid Until</th>
                       <th>Status</th>
+                      <th>✨ Shining</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($coupons as $coupon): ?>
-                      <tr>
+                      <?php
+                      $isShining = isset($coupon['IsShining']) ? $coupon['IsShining'] : 0;
+                      $rowClass = $isShining ? 'shine-row' : '';
+                      ?>
+                      <tr class="<?php echo $rowClass; ?>">
                         <td><input type="checkbox" name="selected_coupons[]" value="<?php echo $coupon['id']; ?>"></td>
                         <td><span class="coupon-code"><?php echo htmlspecialchars($coupon['coupon_code']); ?></span></td>
                         <td><?php echo htmlspecialchars($coupon['coupon_name']); ?></td>
@@ -438,6 +531,15 @@ if (isset($_GET['edit']) && !empty($_GET['edit'])) {
                           <?php endif; ?>
                         </td>
                         <td>
+                          <?php
+                          $isShining = isset($coupon['IsShining']) ? $coupon['IsShining'] : 0;
+                          if ($isShining): ?>
+                            <span class="status-badge" style="background: linear-gradient(135deg, #ff9500, #ffb84d); color: white; animation: pulse 2s ease-in-out infinite;">✨ Shining</span>
+                          <?php else: ?>
+                            <span class="status-badge" style="background: #6c757d; color: white;">Regular</span>
+                          <?php endif; ?>
+                        </td>
+                        <td>
                           <div class="btn-group btn-group-sm">
                             <button class="btn btn-outline-primary" onclick="editCoupon(<?php echo $coupon['id']; ?>)">
                               <i class="fas fa-edit"></i>
@@ -445,9 +547,24 @@ if (isset($_GET['edit']) && !empty($_GET['edit'])) {
                             <form method="POST" class="d-inline">
                               <input type="hidden" name="action" value="toggle_status">
                               <input type="hidden" name="coupon_id" value="<?php echo $coupon['id']; ?>">
-                              <button type="submit" class="btn btn-outline-warning" 
+                              <button type="submit" class="btn btn-outline-warning"
                                       onclick="return confirm('Toggle coupon status?')">
                                 <i class="fas fa-toggle-<?php echo $coupon['is_active'] ? 'on' : 'off'; ?>"></i>
+                              </button>
+                            </form>
+                            <form method="POST" class="d-inline">
+                              <input type="hidden" name="action" value="toggle_shine">
+                              <input type="hidden" name="coupon_id" value="<?php echo $coupon['id']; ?>">
+                              <?php
+                              $isShining = isset($coupon['IsShining']) ? $coupon['IsShining'] : 0;
+                              $shineButtonClass = $isShining ? 'btn-warning' : 'btn-outline-secondary';
+                              $shineButtonStyle = $isShining ? 'background: linear-gradient(135deg, #ff9500, #ffb84d); border-color: #ff9500; animation: pulse 1.5s ease-in-out infinite;' : '';
+                              ?>
+                              <button type="submit" class="btn <?php echo $shineButtonClass; ?>"
+                                      style="<?php echo $shineButtonStyle; ?>"
+                                      onclick="return confirm('Toggle shining feature for this coupon?')"
+                                      title="<?php echo $isShining ? 'Remove shining effect' : 'Make this coupon shine'; ?>">
+                                <i class="fas fa-star"></i>
                               </button>
                             </form>
                           </div>

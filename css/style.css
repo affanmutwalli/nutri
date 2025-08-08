@@ -1161,7 +1161,7 @@ button.navbar-toggler span.line::after{
     justify-content: flex-start;
 }
 
-/* Modern Overlay Effect */
+/* ✅ Clean Hero Images - No Dark Overlay */
 .slider .home-slider .img-back::before {
     content: '';
     position: absolute;
@@ -1169,12 +1169,8 @@ button.navbar-toggler span.line::after{
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(45, 80, 22, 0.3) 0%,
-        rgba(0, 0, 0, 0.2) 50%,
-        rgba(45, 80, 22, 0.4) 100%
-    );
+    /* Removed dark overlay for bright, clear hero images */
+    background: transparent;
     z-index: 1;
 }
 

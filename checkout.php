@@ -17,25 +17,29 @@ include('database/dbconnection.php');
 $obj = new main();
 $obj->connection();
 
-// Check if user is logged in - redirect to login if not
-if(!isset($_SESSION["CustomerId"]) || empty($_SESSION["CustomerId"])){
-    header("Location: login.php");
-    exit();
+// Determine if user is logged in or guest
+$isLoggedIn = isset($_SESSION["CustomerId"]) && !empty($_SESSION["CustomerId"]);
+$isGuest = !$isLoggedIn;
+
+// Initialize customer and address data
+$customerData = [];
+$addressData = [];
+
+if ($isLoggedIn) {
+    // Get customer data for logged-in users
+    $FieldNames = array("CustomerId", "Name", "Email", "MobileNo", "IsActive");
+    $ParamArray = [$_SESSION["CustomerId"]];
+    $Fields = implode(",", $FieldNames);
+
+    $customerData = $obj->MysqliSelect1("SELECT $Fields FROM customer_master WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
+
+    $FieldNames = array("CustomerId", "Address", "State", "City","PinCode","Landmark");
+    $ParamArray = [$_SESSION["CustomerId"]];
+    $Fields = implode(",", $FieldNames);
+
+    // Get address data for registered users
+    $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
 }
-
-// Get customer data for logged-in users
-$FieldNames = array("CustomerId", "Name", "MobileNo", "IsActive");
-$ParamArray = [$_SESSION["CustomerId"]];
-$Fields = implode(",", $FieldNames);
-
-$customerData = $obj->MysqliSelect1("SELECT $Fields FROM customer_master WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
-
-$FieldNames = array("CustomerId", "Address", "State", "City","PinCode","Landmark");
-$ParamArray = [$_SESSION["CustomerId"]];
-$Fields = implode(",", $FieldNames);
-
-// Get address data for registered users
-$addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE CustomerId = ?", $FieldNames, "i", $ParamArray);
 
 ?>
 
@@ -109,6 +113,256 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
         height: 20px;
     }
 
+    /* Checkout Type Selector Styles */
+    .checkout-type-selector {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .checkout-options {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .checkout-option {
+        flex: 1;
+        min-width: 250px;
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .checkout-option:hover {
+        border-color: #ec6504;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(236, 101, 4, 0.1);
+    }
+
+    .checkout-option.active {
+        border-color: #ec6504;
+        background: linear-gradient(135deg, #fff 0%, #fff5f0 100%);
+        box-shadow: 0 5px 15px rgba(236, 101, 4, 0.15);
+    }
+
+    .checkout-option.active::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: #ec6504;
+    }
+
+    .option-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #ec6504, #ff8c00);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .checkout-option:not(.active) .option-icon {
+        background: #6c757d;
+    }
+
+    .option-content {
+        flex: 1;
+    }
+
+    .option-content h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .option-content p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .option-check {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #e9ecef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .checkout-option.active .option-check {
+        background: #ec6504;
+        border-color: #ec6504;
+    }
+
+    /* Guest checkout form styles */
+    .guest-checkout-notice {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        border: 1px solid #2196f3;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .guest-checkout-notice i {
+        color: #2196f3;
+        font-size: 18px;
+    }
+
+    .guest-checkout-notice p {
+        margin: 0;
+        color: #1976d2;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .checkout-options {
+            flex-direction: column;
+        }
+
+        .checkout-option {
+            min-width: 100%;
+        }
+    }
+
+    /* Enhanced Coupon Dropdown Styles */
+    .coupon-item {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .coupon-item:hover {
+        border-color: #ec6504;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(236, 101, 4, 0.1);
+    }
+
+    .coupon-item.shining {
+        background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+        border-color: #ff9500;
+        animation: couponShine 2s ease-in-out infinite;
+        box-shadow: 0 0 15px rgba(255, 149, 0, 0.3);
+    }
+
+    .coupon-item.shining::before {
+        content: '✨';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        animation: sparkle 1.5s ease-in-out infinite;
+    }
+
+    .coupon-item.shining .coupon-badge {
+        background: linear-gradient(135deg, #ff9500, #ffb84d) !important;
+        color: white !important;
+        font-weight: bold;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes couponShine {
+        0%, 100% { box-shadow: 0 0 15px rgba(255, 149, 0, 0.3); }
+        50% { box-shadow: 0 0 25px rgba(255, 149, 0, 0.5); }
+    }
+
+    @keyframes sparkle {
+        0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .coupon-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .coupon-code {
+        font-weight: bold;
+        color: #333;
+        font-size: 14px;
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px dashed #ccc;
+    }
+
+    .coupon-badge {
+        background: #28a745;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .coupon-description {
+        color: #666;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .coupon-savings {
+        color: #28a745;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .coupon-minimum {
+        color: #999;
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    .no-coupons-message {
+        text-align: center;
+        padding: 30px 20px;
+        color: #666;
+    }
+
+    .no-coupons-message i {
+        font-size: 48px;
+        color: #ddd;
+        margin-bottom: 15px;
+    }
 
     </style>
 
@@ -139,37 +393,111 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
                         <div class="billing-area">
                             <form>
                                 <h2>Billing & Shipping details</h2>
+
+                                <!-- Checkout Type Selector -->
+                                <div class="checkout-type-selector" style="margin-bottom: 30px;">
+                                    <div class="checkout-options">
+                                        <?php if ($isLoggedIn): ?>
+                                            <div class="checkout-option active" data-type="registered">
+                                                <div class="option-icon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <div class="option-content">
+                                                    <h4>Continue as <?php echo htmlspecialchars($customerData[0]['Name'] ?? 'Registered User'); ?></h4>
+                                                    <p>Your details are pre-filled</p>
+                                                </div>
+                                                <div class="option-check">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                            <div class="checkout-option" data-type="guest">
+                                                <div class="option-icon">
+                                                    <i class="fa fa-user-o"></i>
+                                                </div>
+                                                <div class="option-content">
+                                                    <h4>Checkout as Guest</h4>
+                                                    <p>No account required</p>
+                                                </div>
+                                                <div class="option-check">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="checkout-option active" data-type="guest">
+                                                <div class="option-icon">
+                                                    <i class="fa fa-user-o"></i>
+                                                </div>
+                                                <div class="option-content">
+                                                    <h4>Guest Checkout</h4>
+                                                    <p>Quick and easy checkout</p>
+                                                </div>
+                                                <div class="option-check">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                            <div class="checkout-option" data-type="login">
+                                                <div class="option-icon">
+                                                    <i class="fa fa-sign-in"></i>
+                                                </div>
+                                                <div class="option-content">
+                                                    <h4>Login to Account</h4>
+                                                    <p>Access saved addresses</p>
+                                                </div>
+                                                <div class="option-check">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
                                 <div class="billing-form">
+                                    <!-- Guest Checkout Notice -->
+                                    <div class="guest-checkout-notice" id="guest-notice" style="display: <?php echo $isGuest ? 'flex' : 'none'; ?>;">
+                                        <i class="fa fa-info-circle"></i>
+                                        <p>You're checking out as a guest. Your order details will be sent to your email.</p>
+                                    </div>
+
+                                    <!-- Registered User Notice -->
+                                    <?php if ($isLoggedIn): ?>
+                                    <div class="guest-checkout-notice" id="registered-notice" style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); border-color: #4caf50; display: flex;">
+                                        <i class="fa fa-check-circle" style="color: #4caf50;"></i>
+                                        <p style="color: #2e7d32;">Welcome back! Your saved details are pre-filled below.</p>
+                                    </div>
+                                    <?php endif; ?>
+
                                     <ul class="billing-ul">
                                         <li class="billing-li">
-                                            <label>Full Name</label>
-                                            <input type="text" name="Name" placeholder="Full Name"
+                                            <label>Full Name *</label>
+                                            <input type="text" name="Name" placeholder="Enter your full name" required
                                                 value="<?php echo !empty($customerData[0]['Name']) ? htmlspecialchars($customerData[0]['Name']) : ''; ?>">
                                         </li>
                                     </ul>
                                     <ul class="billing-ul input-2">
                                         <li class="billing-li">
-                                            <label>Email address</label>
-                                            <input type="text" name="mail" placeholder="Email address"
+                                            <label>Email address *</label>
+                                            <input type="email" name="mail" placeholder="Enter your email address" required
                                                 value="<?php echo !empty($customerData[0]['Email']) ? htmlspecialchars($customerData[0]['Email']) : ''; ?>">
+                                            <small style="color: #666; font-size: 12px;">Order confirmation will be sent to this email</small>
                                         </li>
                                         <li class="billing-li">
-                                            <label>Phone number</label>
-                                            <input type="text" name="phone" placeholder="Phone number"
+                                            <label>Phone number *</label>
+                                            <input type="tel" name="phone" placeholder="Enter your phone number" required
                                                 value="<?php echo !empty($customerData[0]['MobileNo']) ? htmlspecialchars($customerData[0]['MobileNo']) : ''; ?>">
+                                            <small style="color: #666; font-size: 12px;">For delivery updates</small>
                                         </li>
                                     </ul>
                                     <ul class="billing-ul">
                                         <li class="billing-li">
-                                            <label>Street address</label>
-                                            <input type="text" name="address" placeholder="Street address"
+                                            <label>Street address *</label>
+                                            <input type="text" name="address" placeholder="Enter your complete address" required
                                                 value="<?php echo !empty($addressData[0]['Address']) ? htmlspecialchars($addressData[0]['Address']) : ''; ?>">
                                         </li>
                                     </ul>
                                     <ul class="billing-ul">
                                         <li class="billing-li">
                                             <label>Landmark</label>
-                                            <input type="text" name="landmark" placeholder="Optional"
+                                            <input type="text" name="landmark" placeholder="Nearby landmark (optional)"
                                                 value="<?php echo !empty($addressData[0]['Landmark']) ? htmlspecialchars($addressData[0]['Landmark']) : ''; ?>">
                                         </li>
                                     </ul>
@@ -188,25 +516,25 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
                                             </select>
                                         </li>
                                     </ul> -->
-                                    <ul class="billing-ul">
+                                    <ul class="billing-ul input-2">
                                         <li class="billing-li">
-                                            <label>State</label>
-                                            <input type="text" name="state" id="state" placeholder="State"
+                                            <label>State *</label>
+                                            <input type="text" name="state" id="state" placeholder="Enter state" required
                                                 value="<?php echo !empty($addressData[0]['State']) ? htmlspecialchars($addressData[0]['State']) : ''; ?>">
                                         </li>
-                                    </ul>
-                                    <ul class="billing-ul">
                                         <li class="billing-li">
-                                            <label>City</label>
-                                            <input type="text" name="city" id="city" placeholder="City"
+                                            <label>City *</label>
+                                            <input type="text" name="city" id="city" placeholder="Enter city" required
                                                 value="<?php echo !empty($addressData[0]['City']) ? htmlspecialchars($addressData[0]['City']) : ''; ?>">
                                         </li>
                                     </ul>
                                     <ul class="billing-ul">
                                         <li class="billing-li">
-                                            <label>Pin code</label>
-                                            <input type="text" name="pincode" id="pincode" placeholder="Pin code"
+                                            <label>Pin code *</label>
+                                            <input type="text" name="pincode" id="pincode" placeholder="Enter 6-digit PIN code" required
+                                                pattern="[0-9]{6}" maxlength="6"
                                                 value="<?php echo !empty($addressData[0]['PinCode']) ? htmlspecialchars($addressData[0]['PinCode']) : ''; ?>">
+                                            <small style="color: #666; font-size: 12px;">City and state will be auto-filled</small>
                                         </li>
                                     </ul>
 
@@ -373,9 +701,48 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
 
                                         </div>
                                     </li>
-                                    <?php } 
+                                    <?php }
                                         }
-                                    }?>
+                                } else {
+                                    // No cart or buy_now data - show empty cart message
+                                    echo '<li class="empty-cart-message" style="text-align: center; padding: 40px; color: #666;">';
+                                    echo '<div style="font-size: 18px; margin-bottom: 10px;"><i class="fa fa-shopping-cart" style="font-size: 48px; color: #ddd; margin-bottom: 15px;"></i></div>';
+                                    echo '<h4>Your cart is empty</h4>';
+                                    echo '<p>Add some products to your cart to proceed with checkout.</p>';
+                                    echo '<div style="margin-top: 20px;">';
+                                    echo '<a href="index.php" style="color: #ec6504; text-decoration: none; font-weight: bold; margin-right: 20px;">← Continue Shopping</a>';
+                                    if ($isGuest) {
+                                        echo '<span style="color: #999;">|</span>';
+                                        echo '<a href="?test_guest=1" style="color: #28a745; text-decoration: none; font-weight: bold; margin-left: 20px;">Test Guest Checkout</a>';
+                                    }
+                                    echo '</div>';
+                                    echo '</li>';
+                                    $subtotal = 0; // Set subtotal to 0 for empty cart
+
+                                    // Add a test product for guest checkout testing
+                                    if ($isGuest && isset($_GET['test_guest'])) {
+                                        echo '<li class="checkout-item" style="border: 2px dashed #28a745; background: #f8fff8;">';
+                                        echo '<input type="hidden" name="product_id" value="999">';
+                                        echo '<div class="check-pro-img">';
+                                        echo '<img src="image/test-product.jpg" alt="Test Product" style="width: 80px; height: 80px; object-fit: cover; background: #f0f0f0;">';
+                                        echo '</div>';
+                                        echo '<div class="check-content">';
+                                        echo '<a href="#" class="product-name">Test Product (Guest Checkout Demo)</a>';
+                                        echo '<div class="check-detail">';
+                                        echo '<span class="check-code-blod">Code: <span>TEST001</span></span>';
+                                        echo '</div>';
+                                        echo '<div class="check-detail">';
+                                        echo '<span class="check-size">Size: Medium</span>';
+                                        echo '</div>';
+                                        echo '<div class="check-detail">';
+                                        echo '<span class="check-quantity">Quantity: 1</span>';
+                                        echo '</div>';
+                                        echo '<span class="offer-price" data-price="99" style="display: none;">₹99</span>';
+                                        echo '</div>';
+                                        echo '</li>';
+                                        $subtotal = 99; // Set test product price
+                                    }
+                                }?>
                                 </ul>
                             </div>
                             <h2>Your order</h2>
@@ -410,13 +777,32 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
                                     </li>
                                 </ul>
 
-                                <!-- Coupon Code Section -->
+                                <!-- Enhanced Coupon Code Section -->
                                 <div style="margin-top: 20px;" class="coupon-code-section">
                                     <form action="" class="apply-coupon-form">
-                                        <label style="margin-bottom:10px;" for="coupon-code">Apply Offer Code</label>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                            <label for="coupon-code">Apply Offer Code</label>
+                                            <button type="button" id="show-available-coupons" class="btn" style="background: #ec6504; color: white; padding: 5px 10px; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;">
+                                                <i class="fa fa-gift"></i> Available Offers
+                                            </button>
+                                        </div>
+
+                                        <!-- Available Coupons Dropdown -->
+                                        <div id="available-coupons-dropdown" style="display: none; margin-bottom: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 15px; max-height: 300px; overflow-y: auto;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                                <h6 style="margin: 0; color: #333;">Available Coupons for Your Order</h6>
+                                                <button type="button" id="close-coupons-dropdown" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #666;">&times;</button>
+                                            </div>
+                                            <div id="coupons-list">
+                                                <div style="text-align: center; padding: 20px; color: #666;">
+                                                    <i class="fa fa-spinner fa-spin"></i> Loading available coupons...
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="coupon-input-container">
                                             <input type="text" name="code" id="coupon-code"
-                                                placeholder="Enter offer code" class="coupon-input">
+                                                placeholder="Enter offer code or select from available offers" class="coupon-input">
                                             <a href="javascript:void(0)"
                                                 class="btn btn-style1 apply-coupon-btn">Apply</a>
                                         </div>
@@ -576,9 +962,14 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
     </script>
     <script>
     let orderData = {};
+    let isGuestCheckout = <?php echo $isGuest ? 'true' : 'false'; ?>;
 
-    // Initialize pincode auto-fill functionality
+    // Initialize checkout type switching and form functionality
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize checkout type selector
+        initializeCheckoutTypeSelector();
+
+        // Initialize pincode auto-fill functionality
         const pincodeInput = document.getElementById('pincode');
         if (pincodeInput) {
             pincodeInput.addEventListener('keyup', function () {
@@ -600,10 +991,91 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
         }
     });
 
+    // Initialize checkout type selector functionality
+    function initializeCheckoutTypeSelector() {
+        const checkoutOptions = document.querySelectorAll('.checkout-option');
+        const guestNotice = document.getElementById('guest-notice');
+        const registeredNotice = document.getElementById('registered-notice');
+
+        checkoutOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+
+                // Remove active class from all options
+                checkoutOptions.forEach(opt => opt.classList.remove('active'));
+
+                // Add active class to clicked option
+                this.classList.add('active');
+
+                // Handle different checkout types
+                if (type === 'guest') {
+                    handleGuestCheckout();
+                } else if (type === 'registered') {
+                    handleRegisteredCheckout();
+                } else if (type === 'login') {
+                    // Redirect to login page
+                    window.location.href = 'login.php?redirect=checkout';
+                }
+            });
+        });
+    }
+
+    function handleGuestCheckout() {
+        isGuestCheckout = true;
+        const guestNotice = document.getElementById('guest-notice');
+        const registeredNotice = document.getElementById('registered-notice');
+
+        // Show guest notice, hide registered notice
+        if (guestNotice) guestNotice.style.display = 'flex';
+        if (registeredNotice) registeredNotice.style.display = 'none';
+
+        // Clear form fields for guest checkout
+        clearFormFields();
+
+        console.log('Switched to guest checkout mode');
+    }
+
+    function handleRegisteredCheckout() {
+        isGuestCheckout = false;
+        const guestNotice = document.getElementById('guest-notice');
+        const registeredNotice = document.getElementById('registered-notice');
+
+        // Hide guest notice, show registered notice
+        if (guestNotice) guestNotice.style.display = 'none';
+        if (registeredNotice) registeredNotice.style.display = 'flex';
+
+        // Restore pre-filled data for registered users
+        restoreRegisteredUserData();
+
+        console.log('Switched to registered user checkout mode');
+    }
+
+    function clearFormFields() {
+        // Clear all form fields for guest checkout
+        const fields = ['Name', 'mail', 'phone', 'address', 'landmark', 'state', 'city', 'pincode'];
+        fields.forEach(fieldName => {
+            const field = document.querySelector(`input[name="${fieldName}"]`);
+            if (field) field.value = '';
+        });
+    }
+
+    function restoreRegisteredUserData() {
+        // This function would restore the original pre-filled data
+        // For now, we'll just reload the page to get the original data back
+        // In a more sophisticated implementation, we'd store the original values
+        location.reload();
+    }
+
     function placeOrder() {
         console.log("=== placeOrder function started ===");
-        let CustomerId = <?php echo isset($_SESSION["CustomerId"]) ? $_SESSION["CustomerId"] : 'null'; ?>;
-        console.log("CustomerId from session:", CustomerId);
+        console.log("Checkout mode:", isGuestCheckout ? "Guest" : "Registered");
+
+        // Handle CustomerId based on checkout type
+        let CustomerId = null;
+        if (!isGuestCheckout) {
+            CustomerId = <?php echo isset($_SESSION["CustomerId"]) ? $_SESSION["CustomerId"] : 'null'; ?>;
+        }
+        console.log("CustomerId:", CustomerId);
 
         // Get form elements with null checks
         let nameElement = document.querySelector('input[name="Name"]');
@@ -640,12 +1112,27 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
         let final_total = finalTotalElement.innerText ? finalTotalElement.innerText.trim() : '';
         let selectedPaymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
 
-        // Validate required fields
-        if (!name || !email || !phone || !address || !pincode || !state || !city || !final_total || !CustomerId) {
+        // Validate required fields (CustomerId not required for guest checkout)
+        let missingFields = [];
+        if (!name) missingFields.push('Name');
+        if (!email) missingFields.push('Email');
+        if (!phone) missingFields.push('Phone');
+        if (!address) missingFields.push('Address');
+        if (!pincode) missingFields.push('PIN Code');
+        if (!state) missingFields.push('State');
+        if (!city) missingFields.push('City');
+        if (!final_total) missingFields.push('Total Amount');
+
+        // For registered users, CustomerId is required
+        if (!isGuestCheckout && !CustomerId) {
+            missingFields.push('Customer ID (Please login)');
+        }
+
+        if (missingFields.length > 0) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Missing Information',
-                text: 'All fields are required. Please fill out the missing details.',
+                text: 'Please fill out the following required fields: ' + missingFields.join(', '),
                 confirmButtonColor: '#ec6504'
             });
             return;
@@ -662,8 +1149,8 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
             return;
         }
 
-        // Validate CustomerId is a valid number
-        if (!CustomerId || isNaN(CustomerId)) {
+        // Validate CustomerId only for registered users
+        if (!isGuestCheckout && (!CustomerId || isNaN(CustomerId))) {
             Swal.fire({
                 icon: 'error',
                 title: 'Session Error',
@@ -676,7 +1163,17 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
         }
 
         let products = [];
-        let checkoutItems = document.querySelectorAll(".checkout-item");
+        let allCheckoutItems = document.querySelectorAll(".checkout-item");
+
+        // Filter out empty cart messages and only get actual product items
+        let checkoutItems = Array.from(allCheckoutItems).filter(item => {
+            return item.querySelector("input[name='product_id']") !== null;
+        });
+
+        console.log("=== PRODUCT EXTRACTION DEBUG ===");
+        console.log("All checkout items found:", allCheckoutItems.length);
+        console.log("Valid product items found:", checkoutItems.length);
+        console.log("Valid checkout items:", checkoutItems);
 
         // Validate that there are products in the cart
         if (checkoutItems.length === 0) {
@@ -691,6 +1188,8 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
 
         checkoutItems.forEach((item, index) => {
             try {
+                console.log(`Processing checkout item ${index + 1}:`, item);
+
                 let productIdElement = item.querySelector("input[name='product_id']");
                 let productNameElement = item.querySelector(".product-name");
                 let productCodeElement = item.querySelector(".check-code-blod span");
@@ -699,9 +1198,17 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
                 let imageElement = item.querySelector(".check-pro-img img");
                 let offerPriceElement = item.querySelector(".offer-price");
 
+                console.log(`Item ${index + 1} elements found:`, {
+                    productIdElement: !!productIdElement,
+                    productNameElement: !!productNameElement,
+                    sizeElement: !!sizeElement,
+                    quantityElement: !!quantityElement,
+                    offerPriceElement: !!offerPriceElement
+                });
+
                 // Enhanced validation with detailed logging
                 if (!productIdElement) {
-                    console.error(`Missing product ID element for item ${index + 1}`);
+                    console.error(`❌ Missing product ID element for item ${index + 1}`);
                     return;
                 }
 
@@ -717,21 +1224,25 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
 
                 let productId = productIdElement.value;
                 let productName = productNameElement.innerText ? productNameElement.innerText.trim() : "";
-                let productCode = productCodeElement ? productCodeElement.innerText.trim() : "";
-                let size = sizeElement ? (sizeElement.innerText.split(": ")[1] || "").trim() : "";
+                let productCode = productCodeElement ? productCodeElement.innerText.trim() : `PROD${productId}`;
+                let size = sizeElement ? (sizeElement.innerText.split(": ")[1] || "").trim() : "Standard";
                 let quantity = quantityElement ? (quantityElement.innerText.split(": ")[1] || "1").trim() : "1";
                 let imagePath = imageElement ? imageElement.src : "";
-                let offerPrice = offerPriceElement ? (offerPriceElement.dataset.price || "1") : "1";
+                let offerPrice = offerPriceElement ? parseFloat(offerPriceElement.getAttribute("data-price")) || 0 : 0;
+
+                console.log(`Extracted data for item ${index + 1}:`, {
+                    productId, productName, productCode, size, quantity, imagePath, offerPrice
+                });
 
                 // Validate extracted data
-                if (!productId || !productName) {
-                    console.error(`Invalid product data for item ${index + 1}:`, {
+                if (!productId || !productName || offerPrice <= 0) {
+                    console.error(`❌ Invalid product data for item ${index + 1}:`, {
                         productId, productName, productCode, size, quantity, offerPrice
                     });
                     return;
                 }
 
-                products.push({
+                const productData = {
                     id: productId,
                     name: productName,
                     code: productCode,
@@ -739,23 +1250,45 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
                     quantity: quantity,
                     image: imagePath,
                     offer_price: offerPrice
-                });
+                };
+
+                console.log(`✅ Successfully extracted product ${index + 1}:`, productData);
+                products.push(productData);
             } catch (error) {
-                console.error(`Error processing product ${index + 1}:`, error);
+                console.error(`❌ Error processing product ${index + 1}:`, error);
             }
         });
+
+        console.log(`Total products extracted: ${products.length}`);
 
         // Validate that we have valid products
         if (products.length === 0) {
             Swal.fire({
-                icon: 'error',
-                title: 'Product Error',
-                text: 'Unable to process cart items. Please refresh the page and try again.',
-                confirmButtonColor: '#ec6504'
+                icon: 'warning',
+                title: 'Empty Cart',
+                text: 'Your cart is empty. Please add some products before placing an order.',
+                confirmButtonColor: '#ec6504',
+                showCancelButton: true,
+                cancelButtonText: 'Continue Shopping',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = 'index.php';
+                }
             });
             return;
         }
 
+        // PHANTOM_PRODUCT_FILTER: Remove ProductId 6 before sending
+        products = products.filter(function(product) {
+            if (product.id == 6) {
+                console.log("PHANTOM PRODUCT BLOCKED: ProductId 6 removed from order");
+                return false;
+            }
+            return true;
+        });
+
+        // Create order data object based on checkout type
         orderData = {
             name: name,
             email: email,
@@ -767,19 +1300,14 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
             city: city,
             final_total: final_total,
             paymentMethod: selectedPaymentMethod,
-            
-                        // PHANTOM_PRODUCT_FILTER: Remove ProductId 6 before sending
-                        products = products.filter(function(product) {
-                            if (product.ProductId == 6) {
-                                console.log("PHANTOM PRODUCT BLOCKED: ProductId 6 removed from order");
-                                return false;
-                            }
-                            return true;
-                        });
-                        products: products,
-            CustomerId: CustomerId,
-            customerType: 'Registered'
+            products: products,
+            customerType: isGuestCheckout ? 'Guest' : 'Registered'
         };
+
+        // Add CustomerId only for registered users
+        if (!isGuestCheckout && CustomerId) {
+            orderData.CustomerId = CustomerId;
+        }
 
         // Debug logging - log products being sent to prevent phantom products
         console.log("Products being sent in order:", products);
@@ -793,17 +1321,24 @@ $addressData = $obj->MysqliSelect1("SELECT $Fields FROM customer_address WHERE C
     }
 
     function checkPaymentType() {
-    console.log("checkPaymentType called, payment method:", orderData.paymentMethod);
-    if (orderData.paymentMethod === "Online") {
-        console.log("Calling initiateRazorpayPayment...");
-        initiateRazorpayPayment();
-    } else if (orderData.paymentMethod === "COD") {
-        console.log("Calling sendOrderData...");
-        sendOrderData();
-    } else {
-        console.error("Unknown payment method:", orderData.paymentMethod);
+        console.log("checkPaymentType called, payment method:", orderData.paymentMethod);
+        console.log("Customer type:", orderData.customerType);
+
+        if (orderData.paymentMethod === "Online") {
+            console.log("Calling initiateRazorpayPayment...");
+            initiateRazorpayPayment();
+        } else if (orderData.paymentMethod === "COD") {
+            if (isGuestCheckout) {
+                console.log("Calling sendGuestOrderData...");
+                sendGuestOrderData();
+            } else {
+                console.log("Calling sendOrderData...");
+                sendOrderData();
+            }
+        } else {
+            console.error("Unknown payment method:", orderData.paymentMethod);
+        }
     }
-}
 
 function sendOrderData() {
     console.log("Sending COD order data:", orderData);
@@ -905,6 +1440,111 @@ function sendOrderData() {
     })
     .catch(error => {
         console.error("Order placement error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Network Error',
+            text: 'Unable to place order. Please check your connection and try again.',
+            confirmButtonColor: '#ec6504'
+        });
+    });
+}
+
+function sendGuestOrderData() {
+    console.log("=== SENDING GUEST ORDER DATA ===");
+    console.log("Full order data object:", orderData);
+    console.log("JSON string being sent:", JSON.stringify(orderData));
+
+    // Validate order data before sending
+    const requiredFields = ['name', 'email', 'phone', 'address', 'final_total', 'products'];
+    const missingFields = requiredFields.filter(field => !orderData[field] || (field === 'products' && orderData[field].length === 0));
+
+    if (missingFields.length > 0) {
+        console.error("❌ Missing required fields before sending:", missingFields);
+        Swal.fire({
+            icon: 'error',
+            title: 'Data Error',
+            text: 'Missing required data: ' + missingFields.join(', '),
+            confirmButtonColor: '#ec6504'
+        });
+        return;
+    }
+
+    console.log("✅ All required fields present, sending request...");
+
+    fetch("exe_files/rcus_place_order_guest.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text(); // Get as text first to handle non-JSON responses
+    })
+    .then(responseText => {
+        console.log("Raw response:", responseText);
+
+        // Try to parse as JSON
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error("JSON parse error:", parseError);
+            console.error("Response text:", responseText);
+            throw new Error("Server returned invalid JSON response: " + responseText.substring(0, 100));
+        }
+
+        console.log("Guest order response data:", data);
+
+        if (data.response === "S") {
+            console.log("Guest order placed successfully:", data);
+
+            // Show success message for guest orders
+            Swal.fire({
+                icon: 'success',
+                title: 'Order Placed Successfully!',
+                html: `
+                    <div style="text-align: left; margin: 20px 0;">
+                        <p><strong>Order ID:</strong> ${data.order_id}</p>
+                        <p><strong>Total Amount:</strong> ₹${data.amount}</p>
+                        <p><strong>Payment Method:</strong> ${data.payment_status === 'Due' ? 'Cash on Delivery' : 'Online Payment'}</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="margin: 0; color: #666; font-size: 14px;">
+                            <i class="fa fa-info-circle" style="color: #17a2b8;"></i>
+                            Order confirmation has been sent to <strong>${orderData.email}</strong>
+                        </p>
+                    </div>
+                `,
+                confirmButtonText: 'Continue Shopping',
+                confirmButtonColor: '#ec6504',
+                showCancelButton: true,
+                cancelButtonText: 'Track Order',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Continue shopping - redirect to home page
+                    window.location.href = 'index.php';
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Track order - redirect to order tracking page
+                    window.location.href = `track-order.php?order_id=${data.order_id}`;
+                }
+            });
+
+        } else {
+            console.error("Guest order placement failed:", data);
+            Swal.fire({
+                icon: 'error',
+                title: 'Order Failed!',
+                text: data.message || "Unknown error occurred.",
+                confirmButtonColor: '#ec6504'
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Guest order placement error:", error);
         Swal.fire({
             icon: 'error',
             title: 'Network Error',
@@ -1331,6 +1971,119 @@ function sendOrderPlacedWhatsappTemplate(orderData) {
             console.error('Error clearing cart display:', error);
         }
     }
+
+    // Enhanced Coupon Dropdown Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const showCouponsBtn = document.getElementById('show-available-coupons');
+        const couponsDropdown = document.getElementById('available-coupons-dropdown');
+        const closeCouponsBtn = document.getElementById('close-coupons-dropdown');
+        const couponsList = document.getElementById('coupons-list');
+        const couponInput = document.getElementById('coupon-code');
+
+        // Show available coupons
+        showCouponsBtn.addEventListener('click', function() {
+            if (couponsDropdown.style.display === 'none' || !couponsDropdown.style.display) {
+                showAvailableCoupons();
+                couponsDropdown.style.display = 'block';
+                showCouponsBtn.innerHTML = '<i class="fa fa-gift"></i> Hide Offers';
+            } else {
+                couponsDropdown.style.display = 'none';
+                showCouponsBtn.innerHTML = '<i class="fa fa-gift"></i> Available Offers';
+            }
+        });
+
+        // Close coupons dropdown
+        closeCouponsBtn.addEventListener('click', function() {
+            couponsDropdown.style.display = 'none';
+            showCouponsBtn.innerHTML = '<i class="fa fa-gift"></i> Available Offers';
+        });
+
+        function showAvailableCoupons() {
+            // Get current order amount
+            const finalTotalElement = document.getElementById('final-total');
+            const orderAmount = finalTotalElement ? parseFloat(finalTotalElement.innerText.replace(/[^\d.]/g, '')) || 0 : 0;
+
+            console.log("=== COUPON DROPDOWN DEBUG ===");
+            console.log("Final total element:", finalTotalElement);
+            console.log("Order amount detected:", orderAmount);
+            console.log("Final total text:", finalTotalElement ? finalTotalElement.innerText : 'Element not found');
+
+            // Show loading
+            couponsList.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: #666;">
+                    <i class="fa fa-spinner fa-spin"></i> Loading available coupons...
+                </div>
+            `;
+
+            // Fetch available coupons
+            fetch('exe_files/fetch_available_coupons.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    order_amount: Math.max(orderAmount, 1000) // Use at least 1000 for testing
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Available coupons response:', data);
+                displayAvailableCoupons(data.coupons || [], orderAmount);
+            })
+            .catch(error => {
+                console.error('Error fetching coupons:', error);
+                couponsList.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #dc3545;">
+                        <i class="fa fa-exclamation-triangle"></i><br>
+                        Failed to load coupons. Please try again.
+                    </div>
+                `;
+            });
+        }
+
+        function displayAvailableCoupons(coupons, orderAmount) {
+            if (coupons.length === 0) {
+                couponsList.innerHTML = `
+                    <div class="no-coupons-message">
+                        <i class="fa fa-gift"></i><br>
+                        <h6>No coupons available</h6>
+                        <p>Add more items to unlock exciting offers!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let couponsHtml = '';
+            coupons.forEach(coupon => {
+                const shiningClass = coupon.is_shining ? 'shining' : '';
+                const badgeClass = coupon.is_shining ? 'coupon-badge' : 'coupon-badge';
+
+                couponsHtml += `
+                    <div class="coupon-item ${shiningClass}" onclick="selectCoupon('${coupon.code}')">
+                        <div class="coupon-header">
+                            <span class="coupon-code">${coupon.code}</span>
+                            <span class="${badgeClass}">${coupon.discount_display}</span>
+                        </div>
+                        <div class="coupon-description">${coupon.description}</div>
+                        <div class="coupon-savings">You save: ₹${coupon.potential_discount}</div>
+                        <div class="coupon-minimum">Minimum order: ₹${coupon.minimum_order}</div>
+                    </div>
+                `;
+            });
+
+            couponsList.innerHTML = couponsHtml;
+        }
+
+        // Global function to select coupon
+        window.selectCoupon = function(couponCode) {
+            couponInput.value = couponCode;
+            couponsDropdown.style.display = 'none';
+            showCouponsBtn.innerHTML = '<i class="fa fa-gift"></i> Available Offers';
+
+            // Auto-apply the selected coupon
+            document.querySelector('.apply-coupon-btn').click();
+        };
+    });
 
     </script>
     

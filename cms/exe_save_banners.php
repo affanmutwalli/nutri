@@ -1,17 +1,32 @@
 <?php ob_start(); ?>
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 include('includes/urls.php');
 include('database/dbconnection.php');
 $obj = new main();
-$obj->connection();
+$connection = $obj->connection();
+
+// Check if database connection failed
+if ($connection === false) {
+	error_log("Banner upload: Database connection failed");
+	echo json_encode(array("msg"=> "Database connection failed. Please try again later.","response"=>"E"));
+	exit;
+}
+
 ini_set('max_execution_time',300);
-	
+
 sec_session_start();
 	
-if (login_check($mysqli) == true) 
+if (login_check($mysqli) == true)
 {
+		// Debug: Log that we're in the login check
+		error_log("Banner upload: Login check passed");
+
 		$upload_url="images/banners/";
 		$ValidFile=true;
 	
@@ -48,8 +63,11 @@ if (login_check($mysqli) == true)
 						$PhotoPath = $UploadPhoto;
 					}
 					
-					$stmt = $mysqli->prepare("update banners set PhotoPath = ?, Title = ?, ShortDescription = ? where BannerId= ? ");
-					$stmt->bind_param("sssi",$PhotoPath,$_POST["Title"],$_POST["ShortDescription"],$_POST["BannerId"]);
+					// Handle ShowButton checkbox (if not checked, it won't be in $_POST)
+					$ShowButton = isset($_POST["ShowButton"]) ? 1 : 0;
+
+					$stmt = $mysqli->prepare("update banners set PhotoPath = ?, Title = ?, ShortDescription = ?, ShowButton = ? where BannerId= ? ");
+					$stmt->bind_param("sssii",$PhotoPath,$_POST["Title"],$_POST["ShortDescription"],$ShowButton,$_POST["BannerId"]);
 					$stmt->execute();
 					$stmt->close();
 	
@@ -68,12 +86,16 @@ if (login_check($mysqli) == true)
 						$PhotoPath = $UploadPhoto;
 					}
 					
+					// Handle ShowButton checkbox (if not checked, it won't be in $_POST)
+					$ShowButton = isset($_POST["ShowButton"]) ? 1 : 0;
+
 					$ParamArray=array();
 					$ParamArray[0]=$PhotoPath;
 					$ParamArray[1]=$_POST["Title"];
 					$ParamArray[2]=$_POST["ShortDescription"];
-					$InputDocId=$obj->fInsertNew("INSERT INTO banners (PhotoPath,Title,ShortDescription)
-					VALUES (?, ?, ?)", "sss",$ParamArray);
+					$ParamArray[3]=$ShowButton;
+					$InputDocId=$obj->fInsertNew("INSERT INTO banners (PhotoPath,Title,ShortDescription,ShowButton)
+					VALUES (?, ?, ?, ?)", "sssi",$ParamArray);
 				
 					$_SESSION["QueryStatus"]="SAVED";
 					
@@ -82,9 +104,15 @@ if (login_check($mysqli) == true)
 			}
 		}
 		else{
-	
-			echo json_encode(array("msg"=> "Select valid file","response"=>"E")); 	
+
+			echo json_encode(array("msg"=> "Select valid file","response"=>"E"));
 		}
+	}
+	else
+	{
+		// Debug: Log login failure
+		error_log("Banner upload: Login check failed");
+		echo json_encode(array("msg"=> "Authentication failed. Please login again.","response"=>"E"));
 	}
 
 ?>
