@@ -38,8 +38,7 @@ Footer
 /*====================================
 Google Font
 =====================================*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 /*====================================
 Typography
 =====================================*/
@@ -76,9 +75,11 @@ html, body {
 body{
     color: #222;
     font-size: 14px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Jost', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     line-height: normal;
-    font-weight: 400;
     letter-spacing: 0.5px;
 }
 body, html{
@@ -94,8 +95,32 @@ h6{
     color: #222;
     margin: 0;
     padding: 0;
-    font-weight: 600;
+    font-family: 'Jost', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     line-height: normal;
+}
+
+/* Description elements with Jost font weight 400 and consistent font size */
+.blog-description,
+.pro-description,
+p.blog-description,
+p.list-description,
+p.search-pro-desc,
+p.info-description,
+p.review-desck,
+p.r-description,
+p.trems-desc,
+ul.tab-description,
+.faq-desc,
+.bold-description,
+.color-description {
+    font-family: "Jost", sans-serif !important;
+    font-optical-sizing: auto !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: 14px !important;
 }
 :focus{
     outline: none;
@@ -106,7 +131,7 @@ a{
     text-decoration: none;
 }
 a:hover{
-    color: #ec6504;
+    color: #FF4500;
     text-decoration: none;
 }
 a,
@@ -181,10 +206,10 @@ body.hidden {
     color: #fff;
     font-size: 14px;
     padding: 10px 30px;
-    background-color: #305724;
+    background-color: #2E8B57;
     
     font-weight: 600;
-    border: 2px solid #305724;
+    border: 2px solid #2E8B57;
     border-radius: 25px;
 }
 .btn-style1:hover {
@@ -387,7 +412,7 @@ body.hidden {
     max-width: 100%;
 }
 .top1 ul.top-home li.top-home-li .r-search .modal-content{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     border: none;
     border-radius: 0px;
 }
@@ -416,7 +441,7 @@ body.hidden {
     right: 0;
     height: 100%;
     width: 40px;
-    background-color: #305724;
+    background-color: #2E8B57;
     border: none;
     border-radius: 100%;
     line-height: 0;
@@ -446,7 +471,7 @@ body.hidden {
 }
 @keyframes blinker{
     50%{
-        color: #ec6504;
+        color: #FF4500;
     }
 }
 /* header top css */
@@ -894,7 +919,7 @@ button.navbar-toggler span.line::after{
     display: flex;
     align-items: center;
     font-weight: 500;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Jost', sans-serif;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link:first-child a.link-title {
     padding-left: 20px;
@@ -907,7 +932,7 @@ button.navbar-toggler span.line::after{
     display: flex;
     align-items: center;
     position: relative;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-weight: 500;
 }
 /* Offers menu item styling - using more compatible approach */
@@ -927,7 +952,7 @@ button.navbar-toggler span.line::after{
     text-transform: uppercase;
     font-weight: 600;
     line-height: 1;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Jost', sans-serif;
     border-radius: 2px;
 }
 .megamenu-content .mainwrap ul.main-menu li.menu-link a.link-title span.sp-link-title span.hot::before{
@@ -1678,7 +1703,7 @@ button.navbar-toggler span.line::after{
     position: absolute;
     bottom: 50%;
     transform: translateY(50%);
-    background-color: #ec6504;
+    background-color: #FF7F00;
     color: #fff;
     font-size: 20px;
     margin: 0;
@@ -2037,7 +2062,7 @@ button.navbar-toggler span.line::after{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #ec6504;
+    color: #FF7F00;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;
@@ -2130,7 +2155,7 @@ button.navbar-toggler span.line::after{
     margin-top: 23px;
 }
 .home-countdown1 .back-img .deal-content ul.contdown_row li.countdown_section{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     position: relative;
     width: 70px;
     height: 70px;
@@ -3017,7 +3042,7 @@ a.scroll:hover span{
 .cart-area .cart-details .cart-all-pro .qty-item .plus-minus a.quick-wishlist{
     width: 40px;
     height: 40px;
-    background-color: #ec6504;
+    background-color: #FF7F00;
     color: #fff;
     font-size: 16px;
     margin-left: 10px;
@@ -3027,7 +3052,7 @@ a.scroll:hover span{
     border-radius: 100%;
 }
 .cart-area .cart-details .cart-all-pro .qty-item .center a.pro-remove{
-    color: #ec6504;
+    color: #FF4500;
     margin-top: 15px;
     text-decoration: underline;
     display: flex;
@@ -3999,7 +4024,7 @@ a.scroll:hover span{
     font-weight: 600;
 }
 .sit-map-area ul.site-map-main li.site-main-title h4.title a.site-title:before{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     content: "";
     position: absolute;
     top: 10px;
@@ -4018,12 +4043,12 @@ a.scroll:hover span{
 }
 .sit-map-area ul.site-map-main li.site-main-title ul.site-main-link a.shop-main{
     position: relative;
-    color: #ec6504;
+    color: #FF7F00;
     font-size: 16px;
     font-weight: 500;
 }
 .sit-map-area ul.site-map-main li.site-main-title ul.site-main-link a.shop-main:before{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     content: "";
     position: absolute;
     top: 8px;
@@ -4044,7 +4069,7 @@ a.scroll:hover span{
     position: relative;
 }
 .sit-map-area ul.site-map-main li.site-main-title ul.site-main-link li.fruit-link a:before{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     content: "";
     position: absolute;
     top: 6px;
@@ -4112,11 +4137,11 @@ a.scroll:hover span{
     border-radius: 25px;
 }
 .fnf-area a.submit{
-    background-color: #ec6504;
+    background-color: #FF7F00;
     color: #fff;
     padding: 9px 25px;
     border-radius: 25px;
-    border: 2px solid #ec6504;
+    border: 2px solid #FF7F00;
     position: absolute;
     top: 0px;
     right: 0px;
@@ -4129,10 +4154,10 @@ a.scroll:hover span{
 .fnf-area a.back-home{
     margin-top: 30px;
     padding: 12px 25px;
-    background-color: #ec6504;
+    background-color: #FF7F00;
     color: #fff;
     font-weight: 500;
-    border: 2px solid #ec6504;
+    border: 2px solid #FF7F00;
     border-radius: 25px;
 }
 .fnf-area a.back-home:hover{
@@ -5005,7 +5030,7 @@ a.scroll:hover span{
     text-align: center;
 }
 .account-link a{
-    color: #ec6504;
+    color: #FF7F00;
     text-decoration: underline;
 }
 .add-area a.address-link{
@@ -5020,7 +5045,7 @@ a.scroll:hover span{
     display: block;
 }
 .add-area a.address-link:hover{
-    color: #ec6504;
+    color: #FF7F00;
 }
 .add-area .address-link i{
     display: block;
@@ -9002,7 +9027,7 @@ a.scroll:hover span{
 .full-blog-style-2 .blog-start .blog-content .blog-title h6 a:hover,
 .left-style-2-blog .blog-start .blog-content .blog-title h6 a:hover,
 .right-style-2-blog .blog-start .blog-content .blog-title h6 a:hover{
-    color: #5fa800;
+    color: #2E8B57;
 }
 .full-blog-style-2 .blog-start .blog-content p.blog-description,
 .left-style-2-blog .blog-start .blog-content p.blog-description,
@@ -9020,7 +9045,7 @@ a.scroll:hover span{
 .full-blog-style-2 .blog-start .blog-content .more-blog a.read-link,
 .left-style-2-blog .blog-start .blog-content .more-blog a.read-link,
 .right-style-2-blog .blog-start .blog-content .more-blog a.read-link{
-    color: #5fa800;
+    color: #2E8B57;
     font-size: 14px;
     font-weight: 600;
 }
@@ -10006,7 +10031,7 @@ a.scroll:hover span{
 .full-blog-list-style-3 .blog-start .blog-content .more-blog a.read-link,
 .left-blog-list-style-3 .blog-start .blog-content .more-blog a.read-link,
 .right-blog-style-3 .blog-start .blog-content .more-blog a.read-link{
-    color: #5fa800;
+    color: #2E8B57;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -11043,7 +11068,7 @@ a.scroll:hover span{
 .full-blog-style-5 .blog-start .blog-content .more-blog a.read-link,
 .left-blog-style-5 .blog-start .blog-content .more-blog a.read-link,
 .right-blog-style-5 .blog-start .blog-content .more-blog a.read-link{
-    color: #ec6504;
+    color: #FF7F00;
     font-size: 14px;
     font-weight: 600;
 }
@@ -12006,10 +12031,10 @@ a.scroll:hover span{
 .full-blog-details-style-6 .single-blog-content .b-link a,
 .left-blog-details-style-6 .single-blog-content .b-link a,
 .right-blog-details-style-6 .single-blog-content .b-link a{
-    background-color: #73841b;
+    background-color: #2E8B57;
     padding: 5px 10px;
     color: #fff;
-    border: 2px solid #73841b;
+    border: 2px solid #2E8B57;
     border-radius: 4px;
 }
 .full-blog-details-style-6 .single-blog-content .b-link a:hover,
@@ -12017,7 +12042,7 @@ a.scroll:hover span{
 .right-blog-details-style-6 .single-blog-content .b-link a:hover{
     background-color: transparent;
     color: #000;
-    border-color: #73841b;
+    border-color: #2E8B57;
 }
 .full-blog-details-style-6 .single-blog-content .blog-social,
 .left-blog-details-style-6 .single-blog-content .blog-social,

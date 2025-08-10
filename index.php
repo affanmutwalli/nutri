@@ -73,19 +73,21 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     <link rel="stylesheet" type="text/css" href="css/product-name-fix.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Google Fonts for Krishna Ayurved Style -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
     
     <style>
-    /* Krishna Ayurveda Inspired Design System */
+    /* Krishna Ayurveda Inspired Design System - Vibrant Colors */
     :root {
-        --primary-green: #305724;
-        --primary-orange: #EA652D;
-        --secondary-orange: #ec6504;
-        --light-green: #E6F7D8;
-        --light-orange: #FCE2CF;
-        --text-dark: #2c3e50;
-        --text-light: #7f8c8d;
+        --primary-green: #2E8B57; /* Vibrant Neem Green */
+        --primary-orange: #FF7F00; /* Vibrant Turmeric Orange */
+        --secondary-orange: #FF4500; /* Vibrant Saffron */
+        --light-green: #CCFFCC; /* Light Tulsi Green */
+        --light-orange: #FFE4B5; /* Light Turmeric */
+        --text-dark: #333333; /* Dark Text */
+        --text-light: #333333; /* Dark Text */
         --white: #ffffff;
         --border-light: #e0e0e0;
         --shadow-light: 0 4px 12px rgba(0,0,0,0.1);
@@ -102,9 +104,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     }
 
     .section-title h2 {
-        font-family: "Inter", "Harmonia Sans", sans-serif !important;
+        font-family: "Jost", sans-serif !important;
+        font-optical-sizing: auto;
         font-size: 28px !important;
-        font-weight: 700 !important;
+        font-weight: 500 !important;
         color: var(--text-dark) !important;
         text-align: center !important;
         line-height: 1.3 !important;
@@ -221,8 +224,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
         padding: 0;
         border-radius: 32px;
         cursor: pointer;
-        font-family: "Inter", sans-serif;
-        font-weight: 400;
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
         font-size: 14px;
         text-decoration: none;
         display: flex;
@@ -368,9 +373,11 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     }
 
     .caption h3 {
-        font-family: "Inter", sans-serif;
+        font-family: "Jost", sans-serif;
+        font-optical-sizing: auto;
         font-size: 18px;
-        font-weight: 600;
+        font-weight: 500;
+        font-style: normal;
         color: var(--text-dark);
         margin-bottom: 12px;
         line-height: 1.3;
@@ -3272,31 +3279,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     flex-shrink: 0;
 }
 
-/* VS Badge - Left Side Positioned */
-.vs-badge {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fff;
-    border: 2px solid #EA652D;
-    border-radius: 50px;
-    padding: 12px 24px;
-    font-weight: 800;
-    color: #EA652D;
-    z-index: 10;
-    box-shadow: 0 6px 20px rgba(234, 101, 45, 0.2);
-    font-size: 16px;
-    letter-spacing: 2px;
-    /* Ensure it stays within comparison section */
-    margin: 0;
-    white-space: nowrap;
-}
-
 /* Simple VS Badge */
 .vs-badge {
     position: absolute;
-    left: 49%;
+    left:49%;
     top: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
@@ -3334,18 +3320,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
 
     .comparison-column.right {
         border-radius: 0 0 16px 16px;
-    }
-
-    .vs-badge {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 10px 20px;
-        font-size: 14px;
-        letter-spacing: 1px;
-        /* Keep it on left side in mobile view */
-        margin: 0;
     }
 
     .vs-badge {
@@ -3421,11 +3395,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     .vs-badge {
         padding: 8px 16px;
         font-size: 12px;
-        /* Left side positioning on small screens */
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
     }
 }
  

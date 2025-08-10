@@ -17,6 +17,15 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
       $obj = new main();
       $obj->connection();
 
+      // Helper function to format file size
+      function formatFileSize($bytes) {
+          if ($bytes == 0) return '0 Bytes';
+          $k = 1024;
+          $sizes = array('Bytes', 'KB', 'MB', 'GB');
+          $i = floor(log($bytes) / log($k));
+          return round($bytes / pow($k, $i), 2) . ' ' . $sizes[$i];
+      }
+
       // Handle case when no product ID is provided
       if (!isset($_GET['ProductId'])) {
           header("Location: index.php");
@@ -180,7 +189,18 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
               $product_details = $product_details_data[0];
           }
 
-          
+          // Fetch product documents (PDFs)
+          $FieldNames = array("document_id", "document_title", "document_type", "file_name", "file_path", "file_size", "upload_date");
+          $ParamArray = array($productId);
+          $Fields = implode(",", $FieldNames);
+          $product_documents = $obj->MysqliSelect1(
+              "SELECT " . $Fields . " FROM product_documents WHERE product_id = ? AND is_active = 1 ORDER BY display_order ASC, upload_date DESC",
+              $FieldNames,
+              "i",
+              $ParamArray
+          );
+
+
           $FieldNames = array("IngredientId", "ProductId", "PhotoPath", "IngredientName");
           $ParamArray = array($productId);
           $Fields = implode(",", $FieldNames);         
@@ -1224,6 +1244,33 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
         }
     }
 
+    /* Product Documents Styling */
+    .document-card {
+        transition: all 0.3s ease !important;
+    }
+
+    .document-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        border-color: #EA652D !important;
+    }
+
+    .document-card .btn:hover {
+        background: linear-gradient(135deg, #d55a26, #e6742e) !important;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .documents-grid {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+        }
+
+        .document-card {
+            padding: 15px !important;
+        }
+    }
+
     /* Product Description */
     .product-details-description {
         font-size: 16px;
@@ -1707,28 +1754,55 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
 
 .keybenefits ul {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     list-style: none;
     margin: 0;
     padding: 0;
-    grid-gap: 15px;
+    grid-gap: 15px 20px;
     align-items: center;
+    justify-items: center;
 }
 
 .keybenefits ul li {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-gap: 10px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    max-width: 180px;
 }
 
 .keybenefits ul img {
-    width: 100%;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-bottom: 10px;
 }
 
 .keybenefits ul p {
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.4;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.keybenefits ul li:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.keybenefits ul li:hover img {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 1200px) {
+    .keybenefits ul {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: 12px 18px;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -1736,23 +1810,55 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
         text-align: center;
     }
     .keybenefits ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: 15px 12px;
     }
     .keybenefits ul p {
-        font-size: 14px;
+        font-size: 11px;
     }
     .keybenefits ul li {
-        width: 45%;
-        grid-template-columns: 1fr;
-        grid-gap: 10px;
-        text-align: center;
+        max-width: 100px;
     }
     .keybenefits ul img {
-        width: 60%;
-        margin: auto;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .keybenefits ul {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-gap: 15px 10px;
+    }
+    .keybenefits ul li {
+        max-width: 130px;
+    }
+    .keybenefits ul img {
+        width: 45px;
+        height: 45px;
+    }
+    .keybenefits ul p {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .keybenefits ul {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-gap: 18px;
+    }
+    .keybenefits ul li {
+        max-width: 200px;
+    }
+    .keybenefits ul img {
+        width: 50px;
+        height: 50px;
+    }
+    .keybenefits ul p {
+        font-size: 12px;
     }
 }
 
@@ -3509,6 +3615,14 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                        <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--lipid-level-203020.png?v=1702223990">
                                        <p>Supports healthy lipid levels</p>
                                     </li>
+                                    <li>
+                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--weight-loss-6c8bf9.png?v=1702224046">
+                                       <p>Boosts immunity</p>
+                                    </li>
+                                    <li>
+                                       <img src="https://cdn.shopify.com/s/files/1/0528/7378/9615/t/28/assets/1dbd53174515--Metabolism-7ac21a.png?v=1702223999">
+                                       <p>Improves digestion</p>
+                                    </li>
                                  </ul>
                               </div>
 
@@ -3753,6 +3867,46 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </section>
             <?php endif; ?>
 
+            <!-- Product Documents Section -->
+            <?php if (!empty($product_documents)): ?>
+            <section id="product-documents-section" style="margin-top: 30px;">
+                <div class="container">
+                    <div class="simple-description-content">
+                        <h2 class="product-description-title" style="font-size: 2.5rem; font-weight: 700; color: #333; text-align: center; margin-bottom: 25px;">
+                            Product <span style="color: #EA652D;">Lab Reports & Certificates</span>
+                        </h2>
+                        <div class="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                            <?php foreach ($product_documents as $document): ?>
+                            <div class="document-card" style="border: 2px solid #f0f0f0; border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s ease; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <div class="document-icon" style="font-size: 3rem; color: #EA652D; margin-bottom: 15px;">
+                                    📄
+                                </div>
+                                <h4 style="color: #333; margin-bottom: 10px; font-weight: 600; font-size: 1.3rem;">
+                                    <?php echo htmlspecialchars($document['document_title']); ?>
+                                </h4>
+                                <p style="color: #EA652D; margin-bottom: 8px; text-transform: capitalize; font-size: 30px; font-weight: 600;">
+                                    <?php echo str_replace('_', ' ', htmlspecialchars($document['document_type'])); ?>
+                                </p>
+                                <p style="color: #999; font-size: 0.9rem; margin-bottom: 15px;">
+                                    <?php echo htmlspecialchars($document['file_name']); ?>
+                                    <?php if ($document['file_size']): ?>
+                                    <br><small>(<?php echo formatFileSize($document['file_size']); ?>)</small>
+                                    <?php endif; ?>
+                                </p>
+                                <a href="cms/<?php echo htmlspecialchars($document['file_path']); ?>"
+                                   target="_blank"
+                                   class="btn btn-primary"
+                                   style="background: linear-gradient(135deg, #EA652D, #ff8533); border: none; padding: 10px 20px; border-radius: 25px; color: white; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                                    View PDF
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <?php endif; ?>
+
             <section class="section-b-padding pro-releted" id="section2">
                 <h1 class="product-details-title">
                     Key <span>INGREDIENTS</span>
@@ -3782,6 +3936,12 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <?php endif; ?>
 
             <?php if (!empty($ingredient_data) && is_array($ingredient_data)): ?>
+            <!-- Ingredients Heading -->
+            <div class="ingredients-heading-section" style="text-align: center; margin: 30px 0 20px 0;">
+                <h2 style="color: #333; font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: 2px; text-transform: uppercase;">
+                    <span style="color: #EA652D;">INGREDIENTS</span>
+                </h2>
+            </div>
             <div class="ingredients-container" >
                 <?php
                 $total_ingredients = count($ingredient_data);
@@ -3806,6 +3966,26 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                 <p style="text-align: center; color: #666; font-size: 16px; padding: 20px;">No ingredients information available for this product.</p>
             </div>
             <?php endif; ?>
+
+            <!-- Amla Juice Description Section -->
+            <div class="amla-description-section" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="container">
+                    <div class="amla-description-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
+                        <h3 style="color: #333; font-size: 1.8rem; font-weight: 700; margin-bottom: 25px; line-height: 1.3;">
+                            About Our <span style="color: #EA652D;">Wild Amla Juice</span>
+                        </h3>
+                        <div style="color: #555; font-size: 1.1rem; line-height: 1.8; text-align: justify; font-family: 'Arial', sans-serif;">
+                            <p style="margin-bottom: 20px;">
+                                This nutrient-dense Wild Amla Juice is derived from naturally grown, hand-harvested wild Indian gooseberries, a rich source of Vitamin C, polyphenols, and flavonoids. Known in Ayurveda as a powerful rasayana (rejuvenator), amla delivers potent antioxidants that neutralize free radicals, reduce oxidative stress, and promote cardiovascular and digestive health.
+                            </p>
+                            <p style="margin-bottom: 0;">
+                                Its high vitamin and mineral profile supports glowing skin, healthy hair, and strong nails, while also enhancing liver detoxification and metabolic efficiency. Cold-pressed for maximum nutrient retention, this juice offers a wholesome, preservative-free way to nourish your body from within.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             </section>
 
             <section class=" pro-releted" id="section4">

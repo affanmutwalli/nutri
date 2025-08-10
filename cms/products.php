@@ -329,6 +329,55 @@
                                             <textarea class="form-control" id="LongDescription" name="LongDescription" placeholder="Enter Long Description for product details page" rows="6"><?php echo htmlspecialchars($LongDescription); ?></textarea>
                                         </div>
                                     </div>
+
+                                <!-- Product Documents Section -->
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Product Documents (PDF Files)</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Document Title</label>
+                                                        <input type="text" class="form-control" id="DocumentTitle" placeholder="Enter document title (e.g., Lab Report, Certificate)">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Document Type</label>
+                                                        <select class="form-control" id="DocumentType">
+                                                            <option value="lab_report">Lab Report</option>
+                                                            <option value="certificate">Certificate</option>
+                                                            <option value="test_report">Test Report</option>
+                                                            <option value="specification">Specification</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>PDF File</label>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="DocumentFile" accept=".pdf">
+                                                            <label class="custom-file-label" for="DocumentFile">Choose PDF file</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-success" onclick="addDocument()">Add Document</button>
+
+                                            <!-- Documents List -->
+                                            <div id="documents-list" style="margin-top: 20px;">
+                                                <h5>Uploaded Documents:</h5>
+                                                <div id="documents-container">
+                                                    <!-- Documents will be loaded here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row" style="margin: bottom 10px;">
                                     <div class="col-sm-12">
                                     <label>Sizes, Offer Price, and MRP</label>
@@ -771,6 +820,154 @@
                 }
             });
 
+        </script>
+
+        <!-- Product Documents JavaScript -->
+        <script>
+            // Load existing documents when editing a product
+            function loadProductDocuments(productId) {
+                if (productId) {
+                    fetch('get_product_documents.php?ProductId=' + productId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                displayDocuments(data.documents);
+                            }
+                        })
+                        .catch(error => console.error('Error loading documents:', error));
+                }
+            }
+
+            // Display documents in the list
+            function displayDocuments(documents) {
+                const container = document.getElementById('documents-container');
+                container.innerHTML = '';
+
+                if (documents.length === 0) {
+                    container.innerHTML = '<p class="text-muted">No documents uploaded yet.</p>';
+                    return;
+                }
+
+                documents.forEach(doc => {
+                    const docElement = document.createElement('div');
+                    docElement.className = 'document-item border p-3 mb-2';
+                    docElement.innerHTML = `
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>${doc.document_title}</strong><br>
+                                <small class="text-muted">${doc.document_type.replace('_', ' ').toUpperCase()}</small>
+                            </div>
+                            <div class="col-md-4">
+                                <small>${doc.file_name}</small><br>
+                                <small class="text-muted">${formatFileSize(doc.file_size)}</small>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a href="${doc.file_path}" target="_blank" class="btn btn-sm btn-info">View PDF</a>
+                                <button onclick="deleteDocument(${doc.document_id})" class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(docElement);
+                });
+            }
+
+            // Add new document
+            function addDocument() {
+                const productId = document.getElementById('ProductId').value;
+                const title = document.getElementById('DocumentTitle').value;
+                const type = document.getElementById('DocumentType').value;
+                const fileInput = document.getElementById('DocumentFile');
+
+                if (!productId) {
+                    alert('Please save the product first before adding documents.');
+                    return;
+                }
+
+                if (!title || !fileInput.files[0]) {
+                    alert('Please enter document title and select a PDF file.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('ProductId', productId);
+                formData.append('DocumentTitle', title);
+                formData.append('DocumentType', type);
+                formData.append('DocumentFile', fileInput.files[0]);
+
+                fetch('upload_product_document.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('Response text:', text);
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.success) {
+                            alert('Document uploaded successfully!');
+                            document.getElementById('DocumentTitle').value = '';
+                            fileInput.value = '';
+                            loadProductDocuments(productId);
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        alert('Server error: ' + text);
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert('Network error uploading document: ' + error.message);
+                });
+            }
+
+            // Delete document
+            function deleteDocument(documentId) {
+                if (confirm('Are you sure you want to delete this document?')) {
+                    fetch('delete_product_document.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({document_id: documentId})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Document deleted successfully!');
+                            const productId = document.getElementById('ProductId').value;
+                            loadProductDocuments(productId);
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error deleting document.');
+                    });
+                }
+            }
+
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // Load documents when page loads if editing
+            document.addEventListener('DOMContentLoaded', function() {
+                const productId = document.getElementById('ProductId').value;
+                if (productId) {
+                    loadProductDocuments(productId);
+                }
+            });
         </script>
 
         <script type="text/javascript" src="js/common_functions.js"></script>
