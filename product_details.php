@@ -329,7 +329,7 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
 .Discount-p-discount {
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 12px 18px;
     background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
     color: white;
     font-size: 14px;
@@ -678,7 +678,7 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
             
             .size-box {
                 border: 1px solid #ddd; /* Default border */
-                padding: 15px;
+                padding: 20px;
                 border-radius: 8px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 background-color: #fff;
@@ -1759,24 +1759,30 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     list-style: none;
     margin: 0;
     padding: 0;
-    grid-gap: 15px 20px;
+    gap: 40px 60px;
     align-items: center;
     justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .keybenefits ul li {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    max-width: 180px;
+    text-align: left;
+    width: 100%;
+    max-width: 350px;
+    gap: 15px;
+    justify-self: center;
 }
 
 .keybenefits ul img {
     width: 70px;
     height: 70px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .keybenefits ul p {
@@ -1785,6 +1791,7 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     font-size: 14px;
     color: #333;
     font-weight: 500;
+    text-align: left;
 }
 
 .keybenefits ul li:hover {
@@ -1799,9 +1806,9 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
 
 @media screen and (max-width: 1200px) {
     .keybenefits ul {
+        gap: 30px 40px;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        grid-gap: 12px 18px;
     }
 }
 
@@ -1810,9 +1817,12 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
         text-align: center;
     }
     .keybenefits ul {
+        gap: 25px 15px;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        grid-gap: 15px 12px;
+    }
+    .keybenefits ul li {
+        max-width: 250px;
     }
     .keybenefits ul p {
         font-size: 11px;
@@ -1828,12 +1838,13 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
 
 @media screen and (max-width: 480px) {
     .keybenefits ul {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        grid-gap: 15px 10px;
+        gap: 25px 15px;
+        flex-direction: column;
+        align-items: center;
     }
     .keybenefits ul li {
-        max-width: 130px;
+        max-width: 100%;
+        justify-content: center;
     }
     .keybenefits ul img {
         width: 45px;
@@ -1841,17 +1852,18 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     }
     .keybenefits ul p {
         font-size: 11px;
+        text-align: center;
     }
 }
 
 @media screen and (max-width: 360px) {
     .keybenefits ul {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        grid-gap: 18px;
+        gap: 20px;
+        flex-direction: column;
     }
     .keybenefits ul li {
-        max-width: 200px;
+        max-width: 100%;
+        justify-content: center;
     }
     .keybenefits ul img {
         width: 50px;
@@ -1859,8 +1871,11 @@ if (file_exists(__DIR__ . "/cart_monitor.php")) {
     }
     .keybenefits ul p {
         font-size: 12px;
+        text-align: center;
     }
 }
+
+
 
 /* ✅ Mobile Carousel */
 @media (max-width: 768px) {
@@ -3626,6 +3641,8 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
                                  </ul>
                               </div>
 
+
+
                               <button style="background-color: #ec7524; margin-top: 20px;" type="button" class="btn text-white" data-toggle="tooltip" data-placement="bottom" title="1 Coin = 1 Rupee. Earn Nutrify coins on each purchase.">
                                  <i class="fa fa-coins"></i>
                                  <span id="coins-message">Earn <?php echo $coins; ?> My Nutrify Coins On this Order.</span>
@@ -3938,7 +3955,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             <?php if (!empty($ingredient_data) && is_array($ingredient_data)): ?>
             <!-- Ingredients Heading -->
             <div class="ingredients-heading-section" style="text-align: center; margin: 30px 0 20px 0;">
-                <h2 style="color: #333; font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: 2px; text-transform: uppercase;">
+                <h2 style="color: #333; font-size: 3.2rem; font-weight: 700; margin: 0; letter-spacing: 2px; text-transform: uppercase;">
                     <span style="color: #EA652D;">INGREDIENTS</span>
                 </h2>
             </div>
@@ -3967,24 +3984,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
             </div>
             <?php endif; ?>
 
-            <!-- Amla Juice Description Section -->
-            <div class="amla-description-section" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <div class="container">
-                    <div class="amla-description-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
-                        <h3 style="color: #333; font-size: 1.8rem; font-weight: 700; margin-bottom: 25px; line-height: 1.3;">
-                            About Our <span style="color: #EA652D;">Wild Amla Juice</span>
-                        </h3>
-                        <div style="color: #555; font-size: 1.1rem; line-height: 1.8; text-align: justify; font-family: 'Arial', sans-serif;">
-                            <p style="margin-bottom: 20px;">
-                                This nutrient-dense Wild Amla Juice is derived from naturally grown, hand-harvested wild Indian gooseberries, a rich source of Vitamin C, polyphenols, and flavonoids. Known in Ayurveda as a powerful rasayana (rejuvenator), amla delivers potent antioxidants that neutralize free radicals, reduce oxidative stress, and promote cardiovascular and digestive health.
-                            </p>
-                            <p style="margin-bottom: 0;">
-                                Its high vitamin and mineral profile supports glowing skin, healthy hair, and strong nails, while also enhancing liver detoxification and metabolic efficiency. Cold-pressed for maximum nutrient retention, this juice offers a wholesome, preservative-free way to nourish your body from within.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             </section>
 

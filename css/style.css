@@ -467,12 +467,6 @@ body.hidden {
 }
 .top1 ul.top-home li.top-home-li .top-content p span.top-c{
     font-weight: 600;
-    animation: blinker .7s infinite;
-}
-@keyframes blinker{
-    50%{
-        color: #FF4500;
-    }
 }
 /* header top css */
 .header-main-area{
@@ -1543,6 +1537,44 @@ button.navbar-toggler span.line::after{
     .slider .home-slider .owl-nav button.owl-next {
         right: 15px;
     }
+}
+
+/* Force disable ALL animations on slider buttons and navigation */
+.swiper-buttons a,
+.swiper-buttons button,
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-prev-slider,
+.swiper-next-slider,
+.slider-swiper-next,
+.slider-swiper-prev,
+.owl-nav button,
+.owl-prev,
+.owl-next,
+button.owl-prev,
+button.owl-next,
+.main-slider .slider-area .swiper-buttons a,
+.main-slider .slider-area .swiper-buttons button,
+.home-slider .owl-nav button,
+.slider .home-slider .owl-nav button,
+.swiper-buttons a.pulse,
+.swiper-buttons button.pulse,
+.swiper-buttons a.animated,
+.swiper-buttons button.animated,
+.offers-badge,
+.btn-shine {
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
 }
 /* Banner grid css */
 .t-banner1 .home-offer-banner{

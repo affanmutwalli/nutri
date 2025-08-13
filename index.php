@@ -287,7 +287,6 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
     /* Dynamic State Classes */
     .rewards-element.guest-user {
         background: linear-gradient(135deg, #ff8c00, #ffa500);
-        animation: gentle-pulse 3s ease-in-out infinite;
         border-color: rgba(45, 80, 22, 0.3);
     }
 
@@ -305,15 +304,10 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
 
     .rewards-element.special-offer {
         background: linear-gradient(135deg, #2d5016, #ff8c00);
-        animation: rainbow-pulse 2s ease-in-out infinite;
         border-color: rgba(255, 165, 0, 0.6);
     }
 
     /* Additional Dynamic Animations */
-    @keyframes gentle-pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.03); }
-    }
 
     @keyframes intense-shake {
         0%, 100% { transform: translateX(0) rotate(0deg); }
@@ -3402,8 +3396,8 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
   /* ✅ Desktop Grid Layout */
 .use-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -3412,28 +3406,48 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
 /* Card Styling */
 .use-cart {
     background: white;
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 15px;
+    padding: 20px 15px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .use-cart:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    border-color: #ff6b35;
 }
 
 .use-cart img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+    border-radius: 50%;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #f0f0f0;
+}
+
+.use-cart:hover img {
+    transform: scale(1.1);
 }
 
 .use-cart p {
-    font-size: 16px;
+    font-size: 14px;
     color: #305724;
-    font-weight: 500;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    text-align: center;
 }
 /* Optional: Add padding to first/last items */
 .use-container > *:first-child {
@@ -3451,6 +3465,14 @@ $banner_data=$obj->MysqliSelect1("Select ".$Fields." from banners ORDER BY Posit
 
 .use-container:hover {
     scrollbar-color: #EA652D transparent;
+}
+
+/* ✅ Tablet Layout */
+@media (max-width: 992px) and (min-width: 769px) {
+    .use-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
 }
 
 /* ✅ Mobile Carousel */
@@ -4946,12 +4968,7 @@ src="https://www.facebook.com/tr?id=1209485663860371&ev=PageView&noscript=1"
     transform: translateY(-2px);
 }
 
-/* Pulse Animation for New/Featured Categories */
-@keyframes wellness-pulse {
-    0% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
-    50% { box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3); }
-    100% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1); }
-}
+/* Pulse Animation for New/Featured Categories - DISABLED */
 
 /* Floating Animation */
 @keyframes wellness-float {
@@ -8703,7 +8720,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Show popup when DOM is ready - Single trigger only
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - attempting to show popup');
-    setTimeout(showPromoPopup, 2000); // Show after 2 seconds
+    setTimeout(showPromoPopup, 30000); // Show after 30 seconds
 
 
 });

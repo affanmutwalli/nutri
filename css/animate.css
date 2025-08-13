@@ -76,7 +76,7 @@
   }
 
   50% {
-    transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1, 1, 1);
   }
 
   to {
@@ -84,8 +84,22 @@
   }
 }
 
-.pulse {
-  animation-name: pulse;
+.pulse,
+.animated.pulse,
+.pulse.infinite,
+.animated.pulse.infinite {
+  animation: none !important;
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  transition: none !important;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
 }
 
 @keyframes rubberBand {

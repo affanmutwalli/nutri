@@ -378,6 +378,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <div class="row" style="margin: bottom 10px;">
                                     <div class="col-sm-12">
                                     <label>Sizes, Offer Price, and MRP</label>
@@ -822,6 +825,30 @@
 
         </script>
 
+        <!-- About Product JavaScript -->
+        <script>
+            // Initialize Summernote for about sections
+            $(document).ready(function() {
+                // Initialize summernote
+                $('.summernote').summernote({
+                    height: 200,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ]
+                });
+
+
+            });
+
+
+        </script>
+
         <!-- Product Documents JavaScript -->
         <script>
             // Load existing documents when editing a product
@@ -972,6 +999,9 @@
 
         <script type="text/javascript" src="js/common_functions.js"></script>
         <script src="js/jquery.form.js" type="text/javascript"></script>
+
+
+
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
                 <div class="modal-content">

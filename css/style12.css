@@ -304,12 +304,6 @@ body.hidden {
 }
 .top-12 ul.top-home li.top-home-li .top-content p span.top-c{
     font-weight: 400;
-    animation: blinker .7s infinite;
-}
-@keyframes blinker{
-    50%{
-        color: #f2b737;
-    }
 }
 /* search text css */
 .top-12 ul.top-home li.top-home-li.search-area .search {

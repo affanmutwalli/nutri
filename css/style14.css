@@ -482,12 +482,6 @@ body.hidden {
 }
 .top-notification-area ul.notification-ul li.offer-text p span {
     font-weight: 600;
-    animation: blinker 0.7s infinite;
-}
-@keyframes blinker {
-  50% {
-    color: #eaab49;
-  }
 }
 .top-notification-area ul.notification-ul li.top-url ul.url-ul {
     display: flex;

@@ -353,12 +353,6 @@ body.hidden {
 }
 .top-2 ul.top-home li.top-home-li .top-content p span.top-c{
     font-weight: 600;
-    animation: blinker .7s infinite;
-}
-@keyframes blinker{
-    50%{
-        color: #5fa800;
-    }
 }
 /* currency account css */
 .top-2 ul.top-home li.top-home-li .currency{

@@ -365,7 +365,6 @@ if (isset($_GET['edit']) && !empty($_GET['edit'])) {
       background: linear-gradient(135deg, #ff9500, #ffb84d) !important;
       border-color: #ff9500 !important;
       color: white !important;
-      animation: pulse 2s ease-in-out infinite;
     }
 
     .btn-shine:hover {

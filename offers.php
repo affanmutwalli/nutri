@@ -117,15 +117,8 @@ $mysqli = $obj->connection();
             left: 15px;
             z-index: 10;
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-            animation: pulse 2s infinite;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4); }
         }
 
         .product-card {

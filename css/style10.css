@@ -363,12 +363,6 @@ body.hidden {
 }
 .top-7 ul.top-home li.top-home-li .top-content p span.top-c{
     font-weight: 600;
-    animation: blinker .7s infinite;
-}
-@keyframes blinker{
-    50%{
-        color: #ee6c4d;
-    }
 }
 /* call text css */
 .top-7 ul.top-home li.top-home-li.call-area {
@@ -1523,54 +1517,88 @@ button.navbar-toggler span.line::after{
     align-items: center;
     justify-content: center;
     border-radius: 100%;
+    /* Force disable ALL animations */
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
 }
-.home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn:before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  display: block;
-  width: 80px;
-  height: 80px;
-  background: #ee6c4d;
-  border-radius: 50%;
-  animation: pulse-border 1500ms ease-out infinite;
-}
-.home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn:after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  display: block;
-  width: 80px;
-  height: 80px;
-  background: #ee6c4d;
-  border-radius: 50%;
-  transition: all 200ms;
-}
-.home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn:hover:after {
-  background-color: darken(#ee6c4d, 10%);
-}
-@keyframes pulse-border {
-  0% {
-    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
-    opacity: 0;
-  }
-}
+
+
+
 
 .home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn svg {
     color: #fff;
     width: 25px;
     height: 25px;
     z-index: 2;
+}
+
+/* Force disable ALL animations on video button and related classes */
+.video-btn,
+.video-btn.pulse,
+.video-btn.animated,
+.video-btn.blink,
+a.video-btn,
+a.video-btn.pulse,
+a.video-btn.animated,
+a.video-btn.blink {
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
+}
+
+/* Force disable ALL animations on slider buttons and navigation */
+.swiper-buttons a,
+.swiper-buttons button,
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-prev-slider,
+.swiper-next-slider,
+.slider-swiper-next,
+.slider-swiper-prev,
+.owl-nav button,
+.owl-prev,
+.owl-next,
+button.owl-prev,
+button.owl-next,
+.main-slider .slider-area .swiper-buttons a,
+.main-slider .slider-area .swiper-buttons button,
+.home-slider .owl-nav button,
+.slider .home-slider .owl-nav button,
+.swiper-buttons a.pulse,
+.swiper-buttons button.pulse,
+.swiper-buttons a.animated,
+.swiper-buttons button.animated {
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
 }
 /* video model css */
 .home-banner iframe {

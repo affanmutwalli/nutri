@@ -27,11 +27,7 @@ laptop css
         width: 60px;
         height: 60px;
     }
-    .home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn:before,
-    .home-banner .banner-area .banner-item.banner-2 .banner-text a.video-btn:after {
-        width: 60px;
-        height: 60px;
-    }
+
     /* footer css */
     .footer-10 ul.footer-ul li.footer-li.footer-logo .desc-area {
         max-width: 100%;

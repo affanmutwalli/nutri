@@ -406,12 +406,6 @@ body.hidden {
 }
 .top-6 ul.top-home li.top-home-li p.t-offer span.top-off{
     font-weight: 600;
-    animation: blinker .7s infinite;
-}
-@keyframes blinker{
-    50%{
-        color: #73841b;
-    }
 }
 .top-6 ul.top-home li.top-home-li ul.top-dropdown li.top-dropdown-li{
     position: relative;
